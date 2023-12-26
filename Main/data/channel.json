@@ -1,0 +1,34 @@
+{
+  "channelMainInfo": {
+    "channelBanner": "",
+    "channelLogo": "",
+    "channelName": "",
+    "channelSubCount": "",
+    "channelIconNotif": "",
+    "channelVerified": "",
+    "channelServices": ""
+  },
+  "channelSort": {
+    "channelSortPopularity": "",
+    "channelSortGudToBest": "",
+    "channelSortLength": "",
+    "channelSortAge": "",
+    "channelSortDate": "",
+    "channelSortSearch": ""
+  },
+  "channelMidLeft": {
+    "channelMdLft-nav-home": "",
+    "channelMdLft-nav-vdo": "",
+    "channelMdLft-nav-story": "",
+    "channelMdLft-nav-gem": "",
+    "channelMdLft-nav-gcDiscussion": "",
+    "channelMdLft-nav-about": "",
+    "channelMdLft-nav-services": ""
+  },
+  "channelVidCard": {
+    "channelVideoThumb": "",
+    "channelVideoTitle": "",
+    "channelVideoViews": "",
+    "channelVideoTime": ""
+  }
+}

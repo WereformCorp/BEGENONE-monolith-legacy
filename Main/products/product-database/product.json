@@ -1,0 +1,27 @@
+[
+  {
+    "specificationId": "",
+    "productId": 1,
+    "title": "",
+    "description": "",
+    "thumbnail": "",
+    "specification": {
+      "productOwner": "",
+      "productOptions": "",
+      "productGallery": [
+        {
+          "mainImage": ""
+        },
+        {
+          "gallery": ""
+        },
+        {
+          "videoPresentation": ""
+        }
+      ],
+      "productPublishDate": ""
+    },
+    "productReviewId": "",
+    "AddToCard": true
+  }
+]

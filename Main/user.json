@@ -1,0 +1,263 @@
+{
+  "user": {
+    "id": 0,
+    "name": {
+      "firstname": "Areesh",
+      "lastname": "Alam"
+    },
+    "e-address": {
+      "phoneNumber": "012356789",
+      "emailAddress": "areeshpersonal5@gmail.com"
+    },
+    "displayInfo": {
+      "displayId": "areeshalam21",
+      "displayName": "Areesh Alam",
+      "displayImage": "imgs/Display-Image"
+    },
+    "channelSettings": {
+      "channels": [
+        {
+          "channelId": 0,
+          "channelName": "MonsterBoss",
+          "channelDisplayImg": "imgs/Channel-Display-Image",
+          "channelBanner": "imgs/Channel-Banner-Image",
+          "channelAbout": "1000 Words Text Limit",
+          "channelLinks": [
+            {
+              "id": 0,
+              "linkUrl": "url/link",
+              "linkDisplayImage": "imgs/link-Display-Image"
+            }
+          ],
+          "channelComments": true,
+          "channelCommentsFilter": {
+            "keyword1": "Offesive",
+            "keyword2": "Vulgar",
+            "keyword3": "Cursive"
+          },
+          "channelUploads": [
+            {
+              "uploadChannelId": 0,
+              "uploadChannel": "Monster Boss",
+              "uploadId": 0,
+              "uploadType": "video/mp4"
+            },
+            {
+              "uploadChannelId": 0,
+              "uploadChannel": "Monster Boss",
+              "uploadId": 1,
+              "uploadType": "communityPost"
+            }
+          ],
+          "channelStories": [
+            {
+              "storyId": 0,
+              "storyType": "video/mp4",
+              "storyViewers": {
+                "users": [
+                  {
+                    "id": 0,
+                    "userDisplayId": "areeshalam21",
+                    "userDisplayImg": "imgs/story-User-Display-Image"
+                  },
+                  {
+                    "id": 1,
+                    "userDisplayId": "JarryUllah54",
+                    "userDisplayImg": "imgs/story-User-Display-Image"
+                  }
+                ]
+              },
+              "storyViews": 5423,
+              "storyShare": true,
+              "allowUsersToLike": true,
+              "allowUsersToComment": true,
+              "storyDownload": true
+            },
+            {
+              "storyId": 1,
+              "storyType": "video/mp4",
+              "storyViewers": {
+                "users": [
+                  {
+                    "id": 0,
+                    "userDisplayId": "areeshalam21",
+                    "userDisplayImg": "imgs/story-User-Display-Image"
+                  },
+                  {
+                    "id": 1,
+                    "userDisplayId": "JarryUllah54",
+                    "userDisplayImg": "imgs/story-User-Display-Image"
+                  }
+                ]
+              },
+              "storyViews": 5423,
+              "storyShare": true,
+              "allowUsersToLike": true,
+              "allowUsersToComment": true,
+              "storyDownload": true
+            }
+          ]
+        }
+      ]
+    },
+    "platformSettings": {
+      "platformMode": {
+        "simple": true,
+        "advance": false,
+        "prefessional": false,
+        "fullyFetched": false
+      },
+      "platformLanguage": "English",
+      "platformUI": {
+        "allow": true,
+        "borderType": {
+          "notched": true,
+          "rouded": false,
+          "slightRadius": false
+        },
+        "boxShadow": {
+          "value": {
+            "low": true,
+            "mid": false,
+            "high": false
+          },
+          "shadowColor": {
+            "darkBlack": true,
+            "heavenLight": false,
+            "flameRed": false,
+            "aquaBlue": false,
+            "natureGreen": false,
+            "sunnyYellow": false
+          },
+          "shadowAxis": {
+            "up": true,
+            "down": false,
+            "upRight": false,
+            "downRight": false,
+            "upLeft": false,
+            "downLeft": false
+          },
+          "shadowRadius": {
+            "low": true,
+            "mid": false,
+            "high": false
+          },
+          "shadowSpread": {
+            "low": true,
+            "mid": false,
+            "high": false
+          },
+          "shadowOpacity": {
+            "low": true,
+            "mid": false,
+            "high": false
+          }
+        },
+        "boxStrokes": {
+          "value": {
+            "low": true,
+            "mid": false,
+            "high": false
+          },
+          "strokeColor": {
+            "darkBlack": true,
+            "heavenLight": false,
+            "flameRed": false,
+            "aquaBlue": false,
+            "natureGreen": false,
+            "sunnyYellow": false
+          },
+          "strokePosition": {
+            "inside": true,
+            "center": false,
+            "outside": false
+          }
+        },
+        "platformThemes": {
+          "darkBlack": true,
+          "heavenLight": false,
+          "flameRed": false,
+          "aquaBlue": false,
+          "natureGreen": false,
+          "sunnyYellow": false
+        },
+        "platformIcons": [
+          {
+            "iconListId": 0,
+            "iconList": {
+              "iconNavLeft": {
+                "lockScreen": "",
+                "miniMovies": "",
+                "playlist": "",
+                "channels": "",
+                "services": "",
+                "gems": "",
+                "stories": "",
+                "settings": ""
+              },
+              "iconNavMid": {
+                "search": "",
+                "mic": "",
+                "bookmark": ""
+              },
+              "iconNavRight": {
+                "profileImage": "",
+                "algorithm": "",
+                "apps": "",
+                "marketplace": "",
+                "notifications": "",
+                "videoUpload": "",
+                "moreOptions": ""
+              },
+              "iconsVideoCardTick": "",
+              "iconVideoPlayer": {
+                "backwards": "",
+                "forwards": "",
+                "play": "",
+                "volume": "",
+                "cinema": "",
+                "miniPlayer": "",
+                "settings": "",
+                "transcript": "",
+                "fullscreen": ""
+              },
+              "iconVideoNav": {
+                "like": "",
+                "dislike": "",
+                "comment": "",
+                "share": "",
+                "save": "",
+                "options": "",
+                "audio": ""
+              }
+            }
+          }
+        ]
+      },
+      "platformUX": {
+        "scrollType": "HARD SCROLL | SMOOTH SCROLL",
+        "resolution": "SCREEN HEIGHT | SCREEN WIDTH",
+        "cookies": "",
+        "popup": false
+      },
+      "tokens": {
+        "bronze": "",
+        "silver": "",
+        "gold": "",
+        "platinum": "",
+        "diamond": "",
+        "crown": ""
+      }
+    },
+    "marketPlace": [
+      {
+        "productId": "",
+        "title": "",
+        "description": "",
+        "thumbnail": "",
+        "specificationId": 1,
+        "AddToCard": true
+      }
+    ]
+  }
+}

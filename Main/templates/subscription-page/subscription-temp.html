@@ -1,0 +1,82 @@
+<section class="sect-mid-header">
+  <h2 class="sect-midHead-heading">CHANNELS</h2>
+  <div class="sect-midHead-chCatgs">
+    <button class="chCatgs-subscribed">SUBSCRIBED</button>
+    <hr class="sect-midHead-chCatgs-hr" width="3px" />
+    <button class="chCatgs-recoms">RECOMMEDATION</button>
+    <hr class="sect-midHead-chCatgs-hr" />
+    <button class="chCatgs-industries">INDUSTRIES</button>
+  </div>
+  <img
+    src="imgs/Right Section/svgs/bars-solid.svg"
+    class="chCatgs-moreOptsIcon"
+  />
+</section>
+<hr
+  style="
+    border: 1px solid rgb(120, 120, 120, 0.3);
+    border-radius: 10px;
+    align-self: center;
+    justify-self: center;
+  "
+  width="100%"
+/>
+<section class="sect-mid-chList">
+  <div class="chList-channels chList-channel-{%SBSCRP_CH-INDEX%}">
+    <img src="{%SBSCRP_CH-IMG%}" class="chList-chnl-img" />
+  </div>
+  <hr
+    style="
+      height: 60%;
+      background-color: #fff;
+      border-radius: 10px;
+      align-self: center;
+    "
+    width="3px"
+  />
+</section>
+<hr
+  style="
+    border: 1px solid rgb(120, 120, 120, 0.3);
+    border-radius: 10px;
+    align-self: center;
+    justify-self: center;
+  "
+  width="100%"
+/>
+<section class="sect-mid-chSlctd">
+  <div class="chSlctd-rows chSlctd-row-1">
+    <img src="{%SBSCRP_CHSLCT-BANNER%}" class="chSlctd-row1-banner" />
+  </div>
+  <div class="chSlctd-rows chSlctd-row-2">
+    <div class="chSltd-row2-chDtls">
+      <img src="{%SBSCRP_CHSLCT-CH-IMG%}" class="chSlctd-row2-chImg" />
+      <div class="chSltd-chDtls-Nm_N_subCnt">
+        <h2 class="chSltd-chDtls-chName">{%SBSCRP_CH-NAME%}</h2>
+        <h4 class="chSltd-chDtls-subCount">
+          <span class="chSltd-chDtls-subsNmbr">{%SBSCRP_CH-SUBCOUNT%}</span>
+          <span class="chSltd-chDtls-subsText">Subscribers</span>
+        </h4>
+        <h4 class="chSltd-chDtls-unChkd-content">
+          <span class="chDtls-unchkdText">Unchecked Posts: </span>
+          <span class="chDtls-unchkdAmnt">{%SBSCRP_CH-UNCHECKED-POSTS%}</span>
+        </h4>
+      </div>
+    </div>
+    <button class="chSltd-row2-chOpenBtn">View Channel</button>
+  </div>
+  <div class="chSlctd-rows chSlctd-row-3">
+    <div class="content-containers content-container-{%SBSCRP_CH-VIDEO_INDEX%}">
+      <img src="{%SBSCRP_CH-VIDEO-THUMB%}" class="sectionHead-thumbNail" />
+
+      <section class="section-details">
+        <h4 class="section-details-title">{%SBSCRP_CH-VIDEO_TITLE%}</h4>
+
+        <div class="sectionHead-views_N_date">
+          <h5 class="sectionHead-views">{%SBSCRP_CH-VIDEO_VIEWS%}</h5>
+          <h5 class="sectionHead-date">{%SBSCRP_CH-VIDEO_TIME%}</h5>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

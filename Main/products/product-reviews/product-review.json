@@ -1,0 +1,17 @@
+[
+  {
+    "totalReviews": ""
+  },
+  {
+    "specificationId": "",
+    "productId": "",
+    "productReviewId": "",
+    "reviewContainer": {
+      "review-account-id": "",
+      "display-name": "",
+      "publish-date": "",
+      "review-rating": "",
+      "review-message": ""
+    }
+  }
+]

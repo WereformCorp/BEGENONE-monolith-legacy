@@ -1,0 +1,368 @@
+// {
+//   "users": [
+//     {
+//       "userId": 1,
+//       "name": {
+//         "firstName": "Areesh",
+//         "lastName": "Alam"
+//       },
+
+//       "e_address": {
+//         "phoneNumber": "0123456789",
+//         "emailAddress": "areeshpersonal5@gmail.com"
+//       },
+
+//       "diaplayInfo": {
+//         "displayName": "Areesh Alam",
+//         "displayId": "areeshalam21",
+//         "displayImage": "imgs/profile-image.jpeg"
+//       },
+
+//       "channelSettings": {
+//         "channelName": "Areesh Alam21",
+//         "channelId": "areeshalamChannel21",
+//         "channelImage": "imgs/channel-image.jpeg",
+//         "channelBannerImage": "imgs/channel-banner-img.jpeg",
+//         "channelAbout": "My name is Areesh Alam. and this is the 'About' part of my channel.",
+//         "Links": [
+//           {
+//             "linkId": 1,
+//             "linkUrl": "https://www.wrhsc.com",
+//             "linkDisplayImage": "imgs/linkDisplayImage"
+//           },
+//           {
+//             "linkId": 2,
+//             "linkUrl": "https://www.alislam.com",
+//             "linkDisplayImage": "imgs/linkDisplayImage"
+//           },
+//           {
+//             "linkId": 3,
+//             "linkUrl": "https://www.alhakam.com",
+//             "linkDisplayImage": "imgs/linkDisplayImage"
+//           }
+//         ],
+
+//         "comments": true,
+//         "commentFilter": [
+//           {
+//             "keyword-1": "Cursing Words"
+//           },
+//           {
+//             "keyword-2": "Bad Words"
+//           },
+//           {
+//             "keyword-3": "Vulgar Words"
+//           }
+//         ],
+
+//         "uploads": [
+//           {
+//             "uploadType": {
+//               "type": "video/mp4, video/mkv",
+//               "uploadId": 0,
+//               "uploadTitle": "This is the title of first video uploaded",
+//               "uploadDescription": "This is the description of the {VIDEO_TYPE} content and can have upto a limit of 20,000 words.",
+//               "uploadThumbnail": "imgs/uploadThumbnail.jpeg",
+//               "uploadViews": "230,000,000",
+//               "uploadLikes": "430,000",
+//               "uploadSections": [
+//                 {
+//                   "sectionId": 0,
+//                   "sectionTitle": "This is the Title of Section 01",
+//                   "sectionDescription": "This is the Description of Section 01",
+//                   "sectionThumbnail": "imgs/sectionThumbnailofUpload.jpeg",
+//                   "sectionTimestamps": "00:00 | 23:04"
+//                 }
+//               ],
+
+//               "uploadSponsors": [
+//                 {
+//                   "sponsorType": "Single",
+//                   "sponsorID": 0,
+//                   "sponsorCompanyName": "ABCD.INC",
+//                   "sponsorProductName": "Astronaut VPN",
+//                   "sponsorProductDescription": "This is the description of the Astronaut VPN",
+//                   "sonsorProductVideo": "videos/sponsorProductVideo.mp4",
+//                   "sponsorProductImages": [
+//                     {
+//                       "productImageId": 0,
+//                       "productImage": "imgs/sponsorProductImage-0.jpeg"
+//                     },
+//                     {
+//                       "productImageId": 1,
+//                       "productImage": "imgs/sponsorProductImage-1.jpeg"
+//                     }
+//                   ],
+
+//                   "sponsorCompanyWebsite": "abcd-inc.com",
+//                   "sponsorProductWebsite": "abcd-inc.com",
+//                   "sponsorProductPromoCode": "ABCD153",
+//                   "sponsorMsgAdOwner": "Hi Everyone, How Are You? Hope You Are Well. This Is A Quick Message From Me The Owner Of ABCD INC. This is a Great Product. This Actually Work Perfectly On All Devices. It Has Server From All Over The World In Over More Than 150+ Countries. There Are Free Servers As Well As Premium One. And You Can Also See Which Server Is Having A Good Ping.",
+
+//                   "sponsorMsgContentCreator": "Thanks For Sponcering Such A Great Product Of Your. I Really Love It ❤️."
+//                 },
+//                 {
+//                   "sponsorType": "Single",
+//                   "sponsorCompanyName": "ABCD.INC",
+//                   "sponsorProductName": "Astronaut VPN",
+//                   "sponsorProductDescription": "This is the description of the Astronaut VPN",
+//                   "sonsorProductVideo": "videos/sponsorProductVideo.mp4",
+//                   "sponsorProductImages": [
+//                     {
+//                       "productImageId": 0,
+//                       "productImage": "imgs/sponsorProductImage-0.jpeg"
+//                     },
+//                     {
+//                       "productImageId": 1,
+//                       "productImage": "imgs/sponsorProductImage-1.jpeg"
+//                     }
+//                   ],
+
+//                   "sponsorCompanyWebsite": "abcd-inc.com",
+//                   "sponsorProductWebsite": "abcd-inc.com",
+//                   "sponsorProductPromoCode": "ABCD153",
+//                   "sponsorMsgAdOwner": "Hi Everyone, How Are You? Hope You Are Well. This Is A Quick Message From Me The Owner Of ABCD INC. This is a Great Product. This Actually Work Perfectly On All Devices. It Has Server From All Over The World In Over More Than 150+ Countries. There Are Free Servers As Well As Premium One. And You Can Also See Which Server Is Having A Good Ping.",
+
+//                   "sponsorMsgContentCreator": "Thanks For Sponcering Such A Great Product Of Your. I Really Love It ❤️."
+//                 }
+//               ],
+
+//               "uploadComments": [
+//                 {
+//                   "commentId": 0,
+//                   "commentDisplayId": "areeshalam21",
+//                   "commentAccountName": "Areesh Alam",
+//                   "commentAccountDp": "imgs/uploadCommentAccountsDp.jpeg",
+//                   "commentUploadTime": {
+//                     "commentUploadHour": "12",
+//                     "commentUploadMinute": "21",
+//                     "commentUploadDay": "21",
+//                     "commentUploadMonthIndex": "11",
+//                     "commentUploadMonthName": "November",
+//                     "commentUploadMonthYear": "2023",
+//                     "commentUploadTimeAgo": "31,536,000 (Seconds)"
+//                   },
+//                   "commentText": "This is a comment on an Upload (video) with the id: 0",
+//                   "commentLikes": "45",
+//                   "commentDislikes": "05"
+//                 }
+//               ],
+
+//               "uploadRecommendation": [
+//                 {
+//                   "uploadId": 7,
+//                   "uploadTitle": "This is the title of the recommended video {7 (index)}",
+//                   "uploadDescription": "This is the description of the video {7 (index)}",
+//                   "uploadThumbnail": "imgs/uploadThumbnail.jpeg",
+//                   "uploadChannelName": "areeshalam21",
+//                   "uploadChannelVerified": true,
+//                   "uploadTime": "19:00 Uhr",
+//                   "uploadViews": "230,000,000"
+//                 },
+
+//                 {
+//                   "uploadId": 13,
+//                   "uploadTitle": "This is the title of the recommended video {13 (index)}",
+//                   "uploadDescription": "This is the description of the video {13 (index)}",
+//                   "uploadThumbnail": "imgs/uploadThumbnail.jpeg",
+//                   "uploadChannelName": "areeshalam21",
+//                   "uploadChannelVerified": true,
+//                   "uploadTime": "19:00 Uhr",
+//                   "uploadViews": "230,000,000"
+//                 },
+
+//                 {
+//                   "uploadId": 54,
+//                   "uploadTitle": "This is the title of the recommended video {54 (index)}",
+//                   "uploadDescription": "This is the description of the video {54 (index)}",
+//                   "uploadThumbnail": "imgs/uploadThumbnail.jpeg",
+//                   "uploadChannelName": "areeshalam21",
+//                   "uploadChannelVerified": true,
+//                   "uploadTime": "19:00 Uhr",
+//                   "uploadViews": "230,000,000"
+//                 },
+
+//                 {
+//                   "uploadId": 12,
+//                   "uploadTitle": "This is the title of the recommended video {12 (index)}",
+//                   "uploadDescription": "This is the description of the video {12 (index)}",
+//                   "uploadThumbnail": "imgs/uploadThumbnail.jpeg",
+//                   "uploadChannelName": "areeshalam21",
+//                   "uploadChannelVerified": true,
+//                   "uploadTime": "19:00 Uhr",
+//                   "uploadViews": "230,000,000"
+//                 }
+//               ]
+//             }
+//           },
+
+//           {
+//             "uploadType": {
+//               "type": "Community_Discussion/media -> (text + images + videos + links)",
+//               "uploadTitle": "This is the title of the Community Post (if needed - Optional)",
+//               "uploadCommunityPost": "This is the community post with the index of {3421} in the database",
+//               "upload_CD_Views": "143,433",
+//               "upload_CD_Time": "12 p.m.",
+//               "upload_CD_Likes": "12,450",
+
+//               "upload_CD_": "MORE OPTIONS WILL BE ADDED SOON...-----------------------------------------------..."
+//             }
+//           }
+//         ],
+//         "stories_Setting": {
+//           "storyId": 43,
+//           "storyContent": "videos/storyVideo.mp4",
+//           "story_Viewers": {
+//             "allowSpecific": true,
+//             "users": [
+//               { "userDisplayId": "areeshalam21" },
+//               { "userDisplayId": "bilalAhmadShahzad52" },
+//               { "userDisplayId": "jarryUllah342" }
+//             ]
+//           },
+//           "story_Views": "5,352",
+//           "saveStories": {
+//             "save": true,
+//             "playlistToSave": "story_Playlist (name of Playlist)"
+//           },
+
+//           "allowUserToLike": true,
+//           "allowUserToComment": false,
+//           "downloadStories": false,
+
+//           "allow_hashTags": {
+//             "allowEveryone": false,
+
+//             "allowOnly": {
+//               "allow": true,
+//               "users": [
+//                 { "userDisplayId": "areeshalam21" },
+//                 { "userDisplayId": "bilalAhmadShahzad52" },
+//                 { "userDisplayId": "jarryUllah342" }
+//               ]
+//             },
+//             "allowEveryoneExcept": {
+//               "allow": true,
+//               "exceptUsers": [
+//                 { "userDisplayId": "areeshalam21" },
+//                 { "userDisplayId": "bilalAhmadShahzad52" },
+//                 { "userDisplayId": "jarryUllah342" }
+//               ]
+//             }
+//           }
+//         }
+//       },
+
+//       "platformSettings": {
+//         "platformMode": {
+//           "simple": true,
+//           "advance": false,
+//           "professional": false,
+//           "technical": false
+//         },
+
+//         "languages": [
+//           {
+//             "languageId": 1,
+//             "urdu": true
+//           },
+//           {
+//             "languageId": 2,
+//             "english": false
+//           },
+//           {
+//             "languageId": 3,
+//             "spanish": false
+//           },
+//           {
+//             "languageId": 4,
+//             "dutch": false
+//           }
+//         ],
+
+//         "userInterface": [
+//           {
+//             "userInterfaceId": 1,
+//             "userInterfaceType": "border",
+//             "uiBorderType": {
+//               "uiBorderTypeId": 1,
+//               "notched": true,
+//               "round": false,
+//               "slightRadius": false
+//             },
+
+//             "uiBoxShadow": [
+//               {
+//                 "uiBoxShadowId": 1,
+//                 "uiBoxShadowValue": "5px",
+//                 "uiBoxShadowColor": "#202020",
+//                 "uiBoxShadow_Axis": {
+//                   "uiBoxShadow_X-Axis": "10px",
+//                   "uiBoxShadow_Y-Axis": "10px"
+//                 },
+
+//                 "uiBoxShadowRadius": "10px",
+//                 "uiBoxShadowSpread": "10px",
+//                 "uiBoxShadowOpacity": 0.9
+//               }
+//             ],
+
+//             "uiBoxStrokes": [
+//               {
+//                 "uiBoxStrokesId": 1,
+//                 "uiBoxStrokesValue": "1px",
+//                 "uiBoxStrokesColor": "#202020",
+//                 "uiBoxStrokesPosition": {
+//                   "inside": true,
+//                   "center": false,
+//                   "outside": false
+//                 },
+//                 "uiBoxStrokesLevel": "I Don't Know Yet What These Are..."
+//               }
+//             ],
+
+//             "uiFontSettings": [
+//               {
+//                 "uiFS_FontFamily": "Montserrat",
+//                 "uiFS_FontSize": "Small | Medium | Big or 10px 20px or Automatic"
+//               }
+//             ],
+
+//             "uiOverviewColumns": " 'It should be either: 2, 3, 4 or 5 columns and not more than 5"
+//           }
+//         ],
+
+//         "userExperience": {
+//           "uxScrollType": {
+//             "hardscroll": true,
+//             "smoothscroll": false
+//           },
+
+//           "uxResolution": "Low Res | Mid Res | High Res",
+//           "uxResoltionPerfection": {
+//             "uxRP_ScreenHeight": "1000px",
+//             "uxRP_ScreenWidth": "1500px"
+//           },
+
+//           "uxCookiesSettings": {
+//             "No-Values Yet! Add Here...": "-------------"
+//           },
+
+//           "uxPagePopUp": true
+//         },
+
+//         "UI_platformTheme": "Flame Red | Aqua Blue | Dark Black | Heaven Light | Nature Green | Sunny Yellow",
+//         "token": "Bronze | Silver | Gold | Platinum | Diamond | Crown"
+//       },
+
+//       "lockAccount": {
+//         "sevenDigit_NumericPassword": "032-583-9",
+//         "faceRecognition": "-----------------------------------",
+//         "fingerPrint": "---------------------------------------",
+//         "usbPinPassword": "------------------------------------",
+//         "twelveDigitPassword": "ALPHA2453534",
+//         "bJenuineCard": "--------------------------------------"
+//       }
+//     }
+//   ]
+// }

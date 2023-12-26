@@ -1,0 +1,42 @@
+{
+    "notif-catg-icons": {
+        "notif-catg-icon-vid": "",
+        "notif-catg-icon-shop": "",
+        "notif-catg-icon-category": "",
+        "notif-catg-icon-userAcc": ""
+    },
+    "notif-ctntVdo": {
+        "notif-ctnt-vdo": "",
+        "notif-ctnt-heading": "",
+        "notif-ctnt-time": ""
+    },
+    "notif-ctntCmnt": {
+        "notif-cmnt-accImg": "",
+        "notif-cmnt-accName": "",
+        "notif-cmnt-time": "",
+        "notif-cmnt-text": ""
+    },
+    "notif-ctntCmnt-like": {
+        "notif-cmntLiked-accImg": "",
+        "notif-cmntLiked-accName": "",
+        "notif-cmntLiked-time": "",
+        "notif-cmntLiked-text": ""
+    },
+    "notif-cntCmnt-reply": {
+        "notif-cmntReply-accImg": "",
+        "notif-cmntReply-accName": "",
+        "notif-cmntReply-time": "",
+        "notif-cmntReply-text": ""
+    },
+    "notif-ctntUpdates": {
+        "updates-accImage": "",
+        "updates-rankTitle": "",
+        "updates-accName": "",
+        "updates-time-day": "",
+        "updates-time-date": "",
+        "updates-time-hour": "",
+        "updates-time-minute": "",
+        "updates-time-meridian": "",
+        "updates-update-message": ""
+    }
+}
