@@ -10,33 +10,58 @@ const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
 const AppError = require('./utils/appError');
-const channelRoutes = require('./routes/channelRoutes');
-const cdmRoutes = require('./routes/cdmRoutes');
-const lvmRoutes = require('./routes/lvmRoutes');
-const svmRoutes = require('./routes/svmRoutes');
-const sponsorRoutes = require('./routes/sponsorRoutes');
-const storyRoutes = require('./routes/storyRoutes');
-const viewsRoutes = require('./routes/viewsRoutes');
-const marketRoutes = require('./routes/marketRoutes');
-const productRoutes = require('./routes/productRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-const userRoutes = require('./routes/userRoutes');
+const channelRouter = require('./routes/channelRoutes');
+const cdmRouter = require('./routes/cdmRoutes');
+const lvmRouter = require('./routes/lvmRoutes');
+const svmRouter = require('./routes/svmRoutes');
+const sponsorRouter = require('./routes/sponsorRoutes');
+const storyRouter = require('./routes/storyRoutes');
+const viewsRouter = require('./routes/viewsRoutes');
+const marketRouter = require('./routes/marketRoutes');
+const productRouter = require('./routes/productRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
+const userRouter = require('./routes/userRoutes');
 
 // Start Express App
 const app = express();
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+try {
+  app.set('view engine', 'pug');
+  app.set('views', path.join(__dirname, 'views'));
 
-// Serving static files
-app.use(express.static(path.join(__dirname, 'public')));
+  // Serving static files
+  app.use(express.static(path.join(__dirname, 'public')));
 
-// Development Logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+  // Development Logging
+  if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+  }
+
+  // Test Middlewares
+  app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    // console.log(req.cookies);
+    next();
+  });
+
+  // 3) ROUTE
+  app.use('/', viewsRouter);
+  app.use('/api/v1/user', userRouter);
+  app.use('/api/v1/lvm', lvmRouter);
+  app.use('/api/v1/svm', svmRouter);
+  app.use('/api/v1/cdm', cdmRouter);
+  app.use('/api/v1/channel', channelRouter);
+  app.use('/api/v1/marketplace', marketRouter);
+  app.use('/api/v1/products', productRouter);
+  app.use('/api/v1/reviews', reviewRouter);
+  app.use('/api/v1/sponsors', sponsorRouter);
+  app.use('/api/v1/story', storyRouter);
+
+  app.get('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
+} catch (err) {
+  console.log(err.message);
 }
-
-// 3) ROUTE
-app.use('/', viewsRotuer);
 
 module.exports = app;
