@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+
+const storySchema = mongoose.Schema({
+  views: Number,
+  likes: Number,
+  audio: Boolean,
+  video: String,
+  viewers: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      select: 'Name Photo Time',
+    },
+  ],
+  time: {
+    type: Date,
+    default: Date.now(),
+  },
+  endIn: {
+    type: Date,
+    default: Date.now().add(24, 'hours'), // Set expiration 24 hours from creation
+  },
+  channel: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Channel',
+    select: 'Name _id displayImage',
+  },
+});
+
+// THIS IS HOW THE VIDEO WILL GET REMOVED AFTER 24 HOURS
+// const now = Date.now();
+// const stories = await Story.find({ endIn: { $gt: now } }); // Only retrieve non-expired
+
+const Story = mongoose.model('Story', storySchema);
+
+module.exports = Story;

@@ -11,9 +11,7 @@ const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
-const cdmRouter = require('./routes/cdmRoutes');
-const lvmRouter = require('./routes/lvmRoutes');
-const svmRouter = require('./routes/svmRoutes');
+const discussionRouter = require('./routes/discussionRoutes');
 const sponsorRouter = require('./routes/sponsorRoutes');
 const storyRouter = require('./routes/storyRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
@@ -47,8 +45,6 @@ try {
   // 3) ROUTE
   app.use('/', viewsRouter);
   app.use('/api/v1/user', userRouter);
-  app.use('/api/v1/lvm', lvmRouter);
-  app.use('/api/v1/svm', svmRouter);
   app.use('/api/v1/cdm', cdmRouter);
   app.use('/api/v1/channel', channelRouter);
   app.use('/api/v1/marketplace', marketRouter);
