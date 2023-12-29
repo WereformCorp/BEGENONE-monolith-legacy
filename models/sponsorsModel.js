@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const sponsorSchema = mongoose.Schema({
+  channelLogo: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Channel',
+    select: 'name displayImage',
+  },
   companyLogo: {
     type: String,
     required: true,
@@ -29,7 +34,7 @@ const sponsorSchema = mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id displayImage',
+    select: 'name _id displayImage',
   },
   companyWebsite: {
     type: String,
@@ -56,7 +61,7 @@ const sponsorSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    select: 'Name _id Photo',
+    select: 'name _id Photo',
   },
 });
 

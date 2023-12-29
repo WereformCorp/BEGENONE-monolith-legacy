@@ -38,22 +38,16 @@ const channelSchema = mongoose.Schema({
     },
   ],
   commentFilters: [String],
-  lvmodel: [
+  video: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'LVM',
+      ref: 'Video',
     },
   ],
   cdmodel: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'CDM',
-    },
-  ],
-  svmodel: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'SVM',
     },
   ],
   user: {

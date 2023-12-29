@@ -1,27 +1,23 @@
-[
-  {
-    "specificationId": "",
-    "productId": 1,
-    "title": "",
-    "description": "",
-    "thumbnail": "",
-    "specification": {
-      "productOwner": "",
-      "productOptions": "",
-      "productGallery": [
-        {
-          "mainImage": ""
-        },
-        {
-          "gallery": ""
-        },
-        {
-          "videoPresentation": ""
-        }
-      ],
-      "productPublishDate": ""
-    },
-    "productReviewId": "",
-    "AddToCard": true
-  }
-]
+{
+  "title": "An Amazing TShirt!",
+  "description": "One of the best t-shirts to every made in today's time.",
+  "thumbnail": "img/thumbnailProduct.jpeg",
+  "channel": "7c3a34sdfs34ed14eb5c17645c9108",
+  "specification": {
+    "owner": "7c3a34sdfs34ed14eb5c17645c9108",
+    "gallery": [
+      "img/galleryImage-1.jpeg",
+      "img/galleryImage-2.jpeg",
+      "img/galleryImage-3.jpeg"
+    ],
+    "date": "2023-12-16T10:51:25.838+00:00"
+  },
+  "user": "7c3a34sdfs34ed14eb5c17645c9108",
+  "reviews": [
+    "7c3a34sdfs34ed14eb5c17645c9108",
+    "7c3a34sdfs34ed14eb5c17645c9108",
+    "7c3a34sdfs34ed14eb5c17645c9108"
+  ],
+  "price": 40,
+  "paid": false
+}

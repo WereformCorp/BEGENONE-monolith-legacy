@@ -18,7 +18,6 @@ const videoSchema = mongoose.Schema({
   dislikes: Number,
   section: [
     {
-      type: Array,
       thumbnail: {
         type: String,
         default: 'img/default.jpeg',
