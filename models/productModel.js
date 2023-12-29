@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
-const productSchema = mongoose.Schema.ObjectId({
+const productSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
     minLength: 3,
     maxLength: 50,
   },
@@ -29,9 +28,11 @@ const productSchema = mongoose.Schema.ObjectId({
       select: 'Name Photo',
     },
     gallery: {
-      type: String,
-      min: 1,
-      max: 6,
+      type: [String],
+      validate: [
+        (value) => value.length >= 1 && value.length <= 6, // Ensure length is between 1 and 6
+        'Gallery must have between 1 and 6 images.', // Custom error message
+      ],
     },
     date: [
       {

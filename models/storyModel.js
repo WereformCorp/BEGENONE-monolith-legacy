@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const storySchema = mongoose.Schema({
+const storySchema = new mongoose.Schema({
   views: Number,
   likes: Number,
   audio: Boolean,
@@ -17,8 +17,7 @@ const storySchema = mongoose.Schema({
     default: Date.now(),
   },
   endIn: {
-    type: Date,
-    default: Date.now().add(24, 'hours'), // Set expiration 24 hours from creation
+    type: Date, // Set expiration 24 hours from creation
   },
   channel: {
     type: mongoose.Schema.ObjectId,

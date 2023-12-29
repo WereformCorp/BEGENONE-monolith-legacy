@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
 
-const videoSchema = mongoose.Schema({
+const videoSchema = new mongoose.Schema({
   title: {
     type: String,
     minLength: 1,
-    maxLength: 120,
-    default: Date.now(),
+    maxLength: 200,
   },
   description: {
     type: String,
-    required: false,
     maxLength: 10000,
   },
   thumbnail: String,
@@ -26,7 +24,6 @@ const videoSchema = mongoose.Schema({
       title: {
         type: String,
         required: true,
-        unique: true,
         minLength: 1,
         maxLength: 30,
       },

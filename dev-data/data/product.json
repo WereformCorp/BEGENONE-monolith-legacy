@@ -2,22 +2,18 @@
   "title": "An Amazing TShirt!",
   "description": "One of the best t-shirts to every made in today's time.",
   "thumbnail": "img/thumbnailProduct.jpeg",
-  "channel": "7c3a34sdfs34ed14eb5c17645c9108",
+  "channel": null,
   "specification": {
-    "owner": "7c3a34sdfs34ed14eb5c17645c9108",
+    "owner": null,
     "gallery": [
       "img/galleryImage-1.jpeg",
       "img/galleryImage-2.jpeg",
       "img/galleryImage-3.jpeg"
     ],
-    "date": "2023-12-16T10:51:25.838+00:00"
+    "date": null
   },
-  "user": "7c3a34sdfs34ed14eb5c17645c9108",
-  "reviews": [
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108"
-  ],
+  "user": null,
+  "reviews": [null],
   "price": 40,
   "paid": false
 }

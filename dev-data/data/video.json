@@ -12,18 +12,10 @@
       "title": "Earthquakes Using HAARP"
     }
   ],
-  "channel": "7c3a34sdfs34ed14eb5c17645c9108",
+  "channel": null,
   "bookmark": false,
-  "sponsors": [
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108"
-  ],
-  "comments": [
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108",
-    "7c3a34sdfs34ed14eb5c17645c9108"
-  ],
+  "sponsors": [null],
+  "comments": [null],
   "audio": true,
   "video": "video/defaultVideo.mp4"
 }

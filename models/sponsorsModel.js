@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const sponsorSchema = mongoose.Schema({
+const sponsorSchema = new mongoose.Schema({
   channelLogo: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
@@ -26,7 +26,7 @@ const sponsorSchema = mongoose.Schema({
     maxLength: 500,
   },
   gallery: {
-    type: String,
+    type: [String],
     required: true,
     min: 1,
     max: 6,

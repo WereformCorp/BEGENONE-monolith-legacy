@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const discussionSchema = mongoose.Schema({
+const discussionSchema = new mongoose.Schema({
   heading: {
     type: String,
     maxLength: 100,
@@ -13,7 +13,7 @@ const discussionSchema = mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id Photo',
+    select: 'name _id displayImage',
   },
   time: {
     type: Date,
@@ -24,7 +24,7 @@ const discussionSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  discussionTest: {
+  discussionText: {
     type: String,
     required: true,
     minLength: 1,

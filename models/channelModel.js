@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const channelSchema = mongoose.Schema({
-  username: {
+const channelSchema = new mongoose.Schema({
+  channelUsername: {
     type: String,
     required: true,
     unique: true,
@@ -18,13 +18,13 @@ const channelSchema = mongoose.Schema({
   bannerImage: String,
   about: {
     type: String,
-    maxLength: 700,
+    maxLength: 1000,
   },
   products: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Review',
-      select: 'Name _id thumbnail ratings price',
+      select: 'name _id thumbnail ratings price',
     },
   ],
   commentToggle: {

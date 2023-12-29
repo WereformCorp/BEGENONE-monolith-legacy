@@ -1,5 +1,5 @@
 {
-  "channelLogo": "img/displayImage.jpeg",
+  "channelLogo": null,
   "companyLogo": "channel/logo.jpeg",
   "companyName": "World Ecosystem Reform Corporation",
   "productName": "BeGenuine",
@@ -9,12 +9,12 @@
     "img/galleryImg-2.jpeg",
     "img/galleryImg-3.jpeg"
   ],
-  "channel": "7c3a34sdfs34ed14eb5c17645c9108",
+  "channel": null,
   "companyWebsite": "wereform.com.au",
   "productWebsite": "begenuine.wereform.com.au",
   "productPromoCode": "HAARP24",
   "messageAdOwner": "Hi I'm the owner who sponsored this ad, kindly check the product!",
   "messageContentCreator": "Hi I'm the content creator who have partnered with this ad owner sponsored this ad, kindly check the product!",
-  "video": "7c3a34sdfs34ed14eb5c17645c9108",
-  "user": "7c3a34sdfs34ed14eb5c17645c9108"
+  "video": null,
+  "user": null
 }

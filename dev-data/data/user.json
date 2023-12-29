@@ -9,12 +9,13 @@
   "eAddress": {
     "phoneNumber": "0123456789",
     "email": "areeshpersonal5@gmail.com",
-    "password": "examplePassword@Areeshalam.Begenuine"
+    "password": "examplePasswordAreeshalam",
+    "passwordConfirm": "examplePasswordAreeshalam"
   },
-  "channel": "7c3a34sdfs34ed14eb5c17645c9108",
+  "channel": null,
   "token": "Bronze",
   "lockAccount": {
-    "numeric": 1234567,
+    "numeric": 12345,
     "alphabetic": "ThisIsAPassword"
   },
   "platformSettings": {

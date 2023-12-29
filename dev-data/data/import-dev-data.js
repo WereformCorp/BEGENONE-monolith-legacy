@@ -2,54 +2,68 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const channelRouter = require('./routes/channelRoutes');
-const cdmRouter = require('./routes/cdmRoutes');
-const lvmRouter = require('./routes/lvmRoutes');
-const svmRouter = require('./routes/svmRoutes');
-const sponsorRouter = require('./routes/sponsorRoutes');
-const storyRouter = require('./routes/storyRoutes');
-const viewsRouter = require('./routes/viewsRoutes');
-const marketRouter = require('./routes/marketRoutes');
-const productRouter = require('./routes/productRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
-const userRouter = require('./routes/userRoutes');
+const Channel = require(`../../models/channelModel`);
+const Comment = require('../../models/commentModel');
+const Discussion = require('../../models/discussionModel');
+const Product = require('../../models/productModel');
+const Review = require('../../models/reviewsModel');
+const Sponsor = require('../../models/sponsorsModel');
+const Story = require('../../models/storyModel');
+const User = require('../../models/userModel');
+const Video = require('../../models/videoModel');
 
 dotenv.config({ path: './config.env' });
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
+  process.env.DATABASE_PASSWORD,
 );
 
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-    // useUnifiedTopology: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log(`DB Connections Successfull! 🔥🔥`));
 
 // READ JSON FILE
-const channels = JSON.parse(
-  fs.readFileSync(`${__dirname}/channel.json`, 'utf-8')
+const channel = JSON.parse(
+  fs.readFileSync(`${__dirname}/channel.json`, 'utf-8'),
 );
-
-console.log(channels);
-// const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
-// const reviews = JSON.parse(
-//   fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
-// );
+const comment = JSON.parse(
+  fs.readFileSync(`${__dirname}/comment.json`, 'utf-8'),
+);
+const discussion = JSON.parse(
+  fs.readFileSync(`${__dirname}/discussion.json`, 'utf-8'),
+);
+const product = JSON.parse(
+  fs.readFileSync(`${__dirname}/product.json`, 'utf-8'),
+);
+const review = JSON.parse(
+  fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8'),
+);
+const sponsor = JSON.parse(
+  fs.readFileSync(`${__dirname}/sponsor.json`, 'utf-8'),
+);
+const story = JSON.parse(fs.readFileSync(`${__dirname}/story.json`, 'utf-8'));
+const user = JSON.parse(fs.readFileSync(`${__dirname}/user.json`, 'utf-8'));
+const video = JSON.parse(fs.readFileSync(`${__dirname}/video.json`, 'utf-8'));
 
 // IMPORT DATA INTO DATABASE
 const importData = async () => {
   try {
-    // await Tour.create(tours);
-    // await User.create(users, { validateBeforeSave: false });
-    // await Review.create(reviews);
+    await Channel.create(channel);
+    await Comment.create(comment);
+    await Discussion.create(discussion);
+    await Product.create(product);
+    await Review.create(review);
+    await Sponsor.create(sponsor);
+    await Story.create(story);
+    await Video.create(video);
+    await User.create(user);
     console.log('Data Successfully Loaded!');
   } catch (err) {
-    console.log(err);
+    console.log(err, err.message);
   }
   process.exit();
 };
@@ -57,9 +71,15 @@ const importData = async () => {
 // DELETE ALL DATA FROM DATABASE
 const deleteData = async () => {
   try {
-    // await Tour.deleteMany();
-    // await User.deleteMany();
-    // await Review.deleteMany();
+    await Channel.deleteMany(channel);
+    await Comment.deleteMany(comment);
+    await Discussion.deleteMany(discussion);
+    await Product.deleteMany(product);
+    await Review.deleteMany(review);
+    await Sponsor.deleteMany(sponsor);
+    await Story.deleteMany(story);
+    await Video.deleteMany(video);
+    await User.deleteMany(user);
     console.log('Data Successfully Deleted!');
     process.exit();
   } catch (err) {
@@ -68,7 +88,7 @@ const deleteData = async () => {
 };
 
 if (process.argv[2] === '--import') {
-  // importData();
+  importData();
 } else if (process.argv[2] === '--delete') {
-  // deleteData();
+  deleteData();
 }

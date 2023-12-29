@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
-    required: true,
     firstName: {
       type: String,
       required: true,
@@ -50,14 +49,7 @@ const userSchema = mongoose.Schema({
     },
     passwordConfirm: {
       type: String,
-      required: [true, 'Please Confirm Your Password'],
-      validate: {
-        // This only works on CREATE and SAVE!!!
-        validator: function (el) {
-          return el === this.password;
-        },
-        message: 'Passwords are not the same!',
-      },
+      required: [true, 'Please confirm your password'],
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -71,17 +63,17 @@ const userSchema = mongoose.Schema({
     type: String,
     enum: {
       values: ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Crown'],
-      default: 'Bronze',
     },
+    default: 'Bronze',
   },
   lockAccount: {
     numeric: {
       type: Number,
-      max: 7,
+      maxLength: 8,
     },
     alphabetic: {
       type: String,
-      max: 20,
+      maxLength: 20,
     },
   },
   platformSettings: {
@@ -90,16 +82,14 @@ const userSchema = mongoose.Schema({
       required: true,
       enum: {
         values: ['Simple', 'Advance', 'Professional', 'Enterprise'],
+        message: 'Mode is either Simple, Advance, Professional or Enterprise',
       },
-      message: 'Mode is either Simple, Advance, Professional or Enterprise',
       default: 'Simple',
     },
     languages: [String],
     gui: {
-      required: true,
       enum: {
         values: ['Variation-1', 'Variation-2', 'Variation-3'],
-        default: 'Variation-1',
       },
     },
     ux: {
@@ -107,8 +97,8 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: {
           values: ['Smooth', 'Hard'],
-          default: 'Hard',
         },
+        default: 'Hard',
       },
       popUp: {
         type: Boolean,

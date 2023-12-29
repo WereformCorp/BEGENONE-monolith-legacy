@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const commentSchema = mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   user: [
     {
       type: mongoose.Schema.ObjectId,
@@ -25,12 +25,14 @@ const commentSchema = mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id displayImage',
+    select: 'name _id displayImage',
   },
   dislike: Number,
   reply: {
-    type: Boolean,
-    default: false,
+    isReply: {
+      type: Boolean,
+      default: false,
+    },
     comment: {
       type: mongoose.Schema.ObjectId,
       ref: 'Comment',
