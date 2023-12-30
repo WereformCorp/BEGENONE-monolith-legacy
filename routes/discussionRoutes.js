@@ -1,3 +1,5 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const discussionController = require('../controllers/discussionController');
+const authController = require('../controllers/authController');
 
-console.log(mongoose);
+const router = express.Router();

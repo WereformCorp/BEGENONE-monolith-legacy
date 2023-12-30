@@ -1,12 +1,7 @@
-// exports.getOverview = async (req, res, next) => {
-//   // 1) Get Tour Data from Tour Collection
-//   const tours = await Tour.find();
+// const express = require('express');
+// const viewsController = require('../controllers/viewsController');
+// // const authController = require('../controllers/authController');
 
-//   // 2) Built Template
+// const router = express.Router();
 
-//   // 3) Render that template using tour data from step 1)
-//   res.status(200).render('./main/overview', {
-//     title: 'All Tours',
-//     tours,
-//   });
-// };
+// router.get('/', viewsController.getOverview);

@@ -5,13 +5,7 @@
   "views": 100,
   "likes": 10,
   "dislikes": 2,
-  "section": [
-    {
-      "thumbnail": "img/default.jpeg",
-      "timeStamp": "01:15-03:20",
-      "title": "Earthquakes Using HAARP"
-    }
-  ],
+  "section": [null],
   "channel": null,
   "bookmark": false,
   "sponsors": [null],

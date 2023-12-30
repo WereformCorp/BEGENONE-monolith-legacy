@@ -23,7 +23,6 @@ const videoSchema = new mongoose.Schema({
       timeStamp: String, // WILL Calculate the time in other functions and send them as a string
       title: {
         type: String,
-        required: true,
         minLength: 1,
         maxLength: 30,
       },
