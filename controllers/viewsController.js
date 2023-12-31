@@ -9,8 +9,11 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   if (!videos) next(new AppError(`There are no videos to be found.`, 404));
 
   // 3) Render that template using tour data from step 1)
-  res.status(200).render('views/main/contents/mainVideo', {
-    title: 'All Tours',
+  // res.status(200).render('../views/main/contents/mainVideo', {
+  res.status(200).render('../views/main/mainVideoCard', {
+    title: 'All Videos',
     videos,
   });
 });
+
+// //////////////////// THE ABOVE CODE IS A SAMPLE CODE AND IS THERE JUST FOR TESTING PURPOSES

@@ -1,0 +1,55 @@
+.sect-mid-contentContainer {
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  column-gap: 40px;
+  row-gap: 50px;
+  flex-wrap: wrap;
+}
+
+.content-containers {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  row-gap: 10px;
+  cursor: pointer;
+}
+
+.section-Header {
+  display: flex;
+  /* justify-content: start; */
+  column-gap: 20px;
+  align-items: center;
+}
+
+.sectionHead-chLogo {
+  height: 30px;
+}
+
+.sectionHead-dtls {
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.sectionHead-chName_N_sub {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHead-chName {
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: lexend;
+}
+
+.sectionHead-chSubCnt {
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.sectionHead-tick {
+  height: 20px;
+}
