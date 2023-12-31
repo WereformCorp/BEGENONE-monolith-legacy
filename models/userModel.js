@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
+// const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -12,10 +12,7 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
-  displayImage: {
-    type: String,
-    default: 'img/default.jpeg',
-  },
+  displayImage: String,
   username: {
     type: String,
     required: true,
@@ -30,16 +27,12 @@ const userSchema = new mongoose.Schema({
     maxLength: 30,
   },
   eAddress: {
-    phoneNumber: {
-      type: Number,
-      required: true,
-    },
+    phoneNumber: Number,
     email: {
       type: String,
       required: true,
       unique: true,
       lowercase: true,
-      validate: [validator.isEmail, 'Please enter a valid email.'],
     },
     password: {
       type: String,
@@ -63,8 +56,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: {
       values: ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Crown'],
+      default: 'Bronze',
     },
-    default: 'Bronze',
   },
   lockAccount: {
     numeric: {
@@ -109,6 +102,10 @@ const userSchema = new mongoose.Schema({
         default: false,
       },
     },
+  },
+  accountCreatedAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
+    required: [true, 'A Video Must Have A Title.'],
     minLength: 1,
     maxLength: 200,
   },
   description: {
     type: String,
+    required: false,
     maxLength: 10000,
   },
   thumbnail: String,
@@ -16,16 +18,9 @@ const videoSchema = new mongoose.Schema({
   dislikes: Number,
   section: [
     {
-      thumbnail: {
-        type: String,
-        default: 'img/default.jpeg',
-      },
+      thumbnail: String,
       timeStamp: String, // WILL Calculate the time in other functions and send them as a string
-      title: {
-        type: String,
-        minLength: 1,
-        maxLength: 30,
-      },
+      sectTitle: String,
     },
   ],
   channel: {
@@ -53,5 +48,7 @@ const videoSchema = new mongoose.Schema({
 });
 
 const Video = mongoose.model('Video', videoSchema);
+
+// Video.createIndexes([{ name: 1, unique: true }]);
 
 module.exports = Video;

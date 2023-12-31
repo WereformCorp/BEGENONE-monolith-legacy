@@ -13,14 +13,13 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     defaut: Date.now(),
   },
-  comment: [
-    {
-      type: String,
-      required: true,
-      minLength: 1,
-      maxLength: 5000,
-    },
-  ],
+  comment: {
+    type: String,
+    required: true,
+    minLength: 1,
+    maxLength: 5000,
+  },
+
   likes: Number,
   channel: {
     type: mongoose.Schema.ObjectId,

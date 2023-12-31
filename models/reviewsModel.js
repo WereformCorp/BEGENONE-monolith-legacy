@@ -4,7 +4,7 @@ const reviewSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    select: 'Name _id Photo',
+    select: 'name _id photo',
   },
   time: {
     type: Date,
@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id displayImage',
+    select: 'name _id displayImage',
   },
   review: {
     type: String,

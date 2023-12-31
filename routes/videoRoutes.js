@@ -4,7 +4,15 @@ const videoController = require('../controllers/videoController');
 
 const router = express.Router();
 
-router.route('/').get(videoController.getAllVideos);
-router.route('/:id').patch(videoController.updateVideo);
+router
+  .route('/')
+  .get(videoController.getAllVideos)
+  .post(videoController.createVideo);
+
+router
+  .route('/:id')
+  .get(videoController.getVideo)
+  .patch(videoController.updateVideo)
+  .delete(videoController.deleteVideo);
 
 module.exports = router;

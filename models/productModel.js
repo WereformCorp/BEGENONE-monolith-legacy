@@ -19,13 +19,13 @@ const productSchema = new mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id displayImage',
+    select: 'name _id displayImage',
   },
   specification: {
     owner: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      select: 'Name Photo',
+      select: 'name',
     },
     gallery: {
       type: [String],
@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    select: 'Name _id Photo',
+    select: 'name _id',
   },
   reviews: [
     {
@@ -58,7 +58,7 @@ const productSchema = new mongoose.Schema({
   },
   paid: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
