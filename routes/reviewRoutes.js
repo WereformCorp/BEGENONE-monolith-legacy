@@ -15,4 +15,6 @@ router
   .patch(reviewController.updateReview)
   .delete(reviewController.deleteReview);
 
+// router.use('/:productId/review', reviewController.getProductReview); // THE "getProductReview" function is not implemented yet!
+
 module.exports = router;

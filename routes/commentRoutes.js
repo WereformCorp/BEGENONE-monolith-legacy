@@ -2,12 +2,12 @@ const express = require('express');
 const commentController = require('../controllers/commentController');
 // const authController = require('../controllers/authController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(commentController.getAllComments)
-  .post(commentController.createComment);
+  .post(commentController.setVideoIds, commentController.createComment);
 
 router
   .route('/:id')

@@ -15,16 +15,17 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 });
 
 exports.getVideo = catchAsync(async (req, res, next) => {
-  const data = await Video.findById(req.params.id);
+  let query = Video.findById(req.params.id);
+  query = query.populate({ path: 'comments' });
+  const data = await query;
 
-  if (!data) next(new AppError(`Data Not Found!`, 404));
+  if (!data) return next(new AppError(`Data Not Found!`, 404));
 
   res.status(200).json({
     status: 'Success',
     data,
   });
 });
-
 exports.updateVideo = catchAsync(async (req, res, next) => {
   try {
     const data = await Video.findByIdAndUpdate(req.params.id, req.body, {

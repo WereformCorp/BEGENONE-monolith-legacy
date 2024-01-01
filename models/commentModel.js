@@ -1,48 +1,52 @@
 const mongoose = require('mongoose');
 
-const commentSchema = new mongoose.Schema({
-  user: [
-    {
+const commentSchema = new mongoose.Schema(
+  {
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      select: 'Name _id photo',
-      // This will show up in case there is no channel registered to that user's account
+      // required: [true, 'Comment must belong to a user.'],
     },
-  ],
-  time: {
-    type: Date,
-    defaut: Date.now(),
-  },
-  comment: {
-    type: String,
-    required: true,
-    minLength: 1,
-    maxLength: 5000,
-  },
 
-  likes: Number,
-  channel: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Channel',
-    select: 'name _id displayImage',
-  },
-  dislike: Number,
-  reply: {
-    isReply: {
-      type: Boolean,
-      default: false,
+    time: {
+      type: Date,
+      defaut: Date.now(),
     },
     comment: {
+      type: String,
+      required: true,
+      minLength: 1,
+      maxLength: 5000,
+    },
+
+    likes: Number,
+    channel: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Comment',
+      ref: 'Channel',
+      select: 'name _id displayImage',
+    },
+    dislike: Number,
+    reply: {
+      isReply: {
+        type: Boolean,
+        default: false,
+      },
+      comment: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Comment',
+      },
+    },
+    video: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Video',
+      required: [true, 'Comment must belong to a video.'],
     },
   },
-  video: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Video',
-    select: '_id',
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
-});
+);
 
 const Comment = mongoose.model('Comment', commentSchema);
 

@@ -2,6 +2,12 @@ const Comment = require('../models/commentModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+exports.setVideoIds = (req, res, next) => {
+  if (!req.body.video) req.body.video = req.params.videoId;
+
+  next();
+};
+
 exports.getAllComments = catchAsync(async (req, res, next) => {
   const comments = await Comment.find();
 
