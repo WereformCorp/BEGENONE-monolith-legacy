@@ -1,16 +1,16 @@
 const express = require('express');
 const videoController = require('../controllers/videoController');
-const commentRouter = require('./commentRoutes');
 const sponsorRouter = require('./sponsorRoutes');
-const discussionRouter = require('./discussionRoutes');
+const commentRouter = require('./commentRoutes');
 // const authController = require('../controllers/authController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(videoController.getAllVideos)
-  .post(videoController.createVideo);
+  // .post(videoController.createVideo) // CREATE VIDEO WITHOUT REFERRING TO THE CHANNEL !!! DONOT NOT USE
+  .post(videoController.setChannelIds, videoController.createVideo);
 
 router
   .route('/:id')
@@ -18,8 +18,9 @@ router
   .patch(videoController.updateVideo)
   .delete(videoController.deleteVideo);
 
-router.use('/:videoId/comments', commentRouter);
+// router.use('/:videoId/comments', commentRouter); // WILL USE IT LATER
 router.use('/:videoId/sponsors', sponsorRouter);
-router.use('/:videoId/discussions', discussionRouter);
+router.use('/:videoId/comments', commentRouter);
+// router.use('/:videoId/wires', wireRouter); // WIRES DON'T HAPPEN ON VIDEOS RATHER ON CHANNEL
 
 module.exports = router;

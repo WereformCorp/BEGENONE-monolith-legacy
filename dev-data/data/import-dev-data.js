@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 const Channel = require(`../../models/channelModel`);
 const Comment = require('../../models/commentModel');
-const Discussion = require('../../models/discussionModel');
+const Wire = require('../../models/wireModel');
 const Product = require('../../models/productModel');
 const Review = require('../../models/reviewsModel');
 const Sponsor = require('../../models/sponsorsModel');
@@ -33,9 +33,7 @@ const channel = JSON.parse(
 const comment = JSON.parse(
   fs.readFileSync(`${__dirname}/comment.json`, 'utf-8'),
 );
-const discussion = JSON.parse(
-  fs.readFileSync(`${__dirname}/discussion.json`, 'utf-8'),
-);
+const wire = JSON.parse(fs.readFileSync(`${__dirname}/wire.json`, 'utf-8'));
 const product = JSON.parse(
   fs.readFileSync(`${__dirname}/product.json`, 'utf-8'),
 );
@@ -54,7 +52,7 @@ const importData = async () => {
   try {
     await Channel.create(channel);
     await Comment.create(comment);
-    await Discussion.create(discussion);
+    await Wire.create(wire);
     await Product.create(product);
     await Review.create(review);
     await Sponsor.create(sponsor);
@@ -73,7 +71,7 @@ const deleteData = async () => {
   try {
     await Channel.deleteMany(channel);
     await Comment.deleteMany(comment);
-    await Discussion.deleteMany(discussion);
+    await Wire.deleteMany(wire);
     await Product.deleteMany(product);
     await Review.deleteMany(review);
     await Sponsor.deleteMany(sponsor);

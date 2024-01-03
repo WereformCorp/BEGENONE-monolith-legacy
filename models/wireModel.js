@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const discussionSchema = new mongoose.Schema({
+const wireSchema = new mongoose.Schema({
   heading: {
     type: String,
     maxLength: 100,
@@ -24,7 +24,7 @@ const discussionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  discussionText: {
+  wireText: {
     type: String,
     required: true,
     minLength: 1,
@@ -32,6 +32,15 @@ const discussionSchema = new mongoose.Schema({
   },
 });
 
-const Discussion = mongoose.model('Discussion', discussionSchema);
+wireSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'channel',
+    select: '_id -videos',
+  });
 
-module.exports = Discussion;
+  next();
+});
+
+const Wire = mongoose.model('Wire', wireSchema);
+
+module.exports = Wire;

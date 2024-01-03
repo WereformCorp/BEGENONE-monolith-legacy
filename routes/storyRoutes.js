@@ -2,12 +2,12 @@ const express = require('express');
 const storyController = require('../controllers/storyController');
 // const authController = require('../controllers/authController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(storyController.getAllStories)
-  .post(storyController.createStory);
+  .post(storyController.setChannelIds, storyController.createStory);
 
 router
   .route('/:id')

@@ -23,8 +23,13 @@ const channelSchema = new mongoose.Schema({
   products: [
     {
       type: mongoose.Schema.ObjectId,
+      ref: 'Product',
+    },
+  ],
+  reviews: [
+    {
+      type: mongoose.Schema.ObjectId,
       ref: 'Review',
-      select: 'name _id thumbnail ratings price',
     },
   ],
   commentToggle: {
@@ -38,16 +43,16 @@ const channelSchema = new mongoose.Schema({
     },
   ],
   commentFilters: [String],
-  video: [
+  videos: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Video',
     },
   ],
-  cdmodel: [
+  wires: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'CDM',
+      ref: 'Wire',
     },
   ],
   user: {
@@ -66,6 +71,52 @@ const channelSchema = new mongoose.Schema({
       ref: 'Story',
     },
   ],
+  tagsList: [
+    {
+      type: String,
+    },
+  ],
+});
+
+channelSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'sponsors',
+    select:
+      '-__v -video -gallery -companyLogo -productDescription -companyWebsite -productWebsite -productPromoCode -messageAdOwner -messageContentCreator',
+  });
+
+  this.populate({
+    path: 'reviews',
+    select: '-__v',
+  });
+
+  this.populate({
+    path: 'videos',
+    select:
+      '-bookmark -sponsors -comments -tags -description -thumbnail -section -channel -audio -videos -__v',
+  });
+
+  this.populate({
+    path: 'products',
+    select: '-specification -reviews -paid -description -thumbnail -__v',
+  });
+
+  this.populate({
+    path: 'comments',
+    select: '-__v',
+  });
+
+  this.populate({
+    path: 'story',
+    select: '-__v',
+  });
+
+  this.populate({
+    path: 'wires',
+    select: '-__v',
+  });
+
+  next();
 });
 
 const Channel = mongoose.model('Channel', channelSchema);

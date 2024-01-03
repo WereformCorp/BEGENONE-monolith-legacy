@@ -39,8 +39,20 @@ const videoSchema = new mongoose.Schema(
       },
     ],
 
+    comments: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+
     audio: Boolean,
-    video: String,
+    videos: String,
+    tags: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -49,17 +61,45 @@ const videoSchema = new mongoose.Schema(
 );
 
 videoSchema.pre('save', function (next) {
-  if (!this.video) {
+  if (!this.videos) {
     throw new Error('Video path is required');
   }
   next();
 });
 
-videoSchema.virtual('comments', {
-  ref: 'Comment',
-  foreignField: 'video',
-  localField: '_id',
+// videoSchema.virtual('comments', {
+//   ref: 'Comment',
+//   foreignField: 'video',
+//   localField: '_id',
+// });
+
+videoSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'comments',
+    select: '_id',
+  });
+
+  this.populate({
+    path: 'channel',
+    select:
+      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -user -displayImage -reviews',
+  });
+
+  this.populate({
+    path: 'sponsors',
+    select:
+      '-__v -video -gallery -companyLogo -productDescription -companyWebsite -productWebsite -productPromoCode -messageAdOwner -messageContentCreator',
+  });
+
+  next();
 });
+
+// videoSchema.pre('save', function (next) {
+//   if (this.comments) {
+//     console.log(this.comments);
+//   }
+//   next();
+// });
 
 const Video = mongoose.model('Video', videoSchema);
 

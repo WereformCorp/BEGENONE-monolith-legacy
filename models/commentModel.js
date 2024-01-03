@@ -39,7 +39,6 @@ const commentSchema = new mongoose.Schema(
     video: {
       type: mongoose.Schema.ObjectId,
       ref: 'Video',
-      required: [true, 'Comment must belong to a video.'],
     },
   },
   {
@@ -47,6 +46,28 @@ const commentSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
+
+commentSchema.pre('save', function (next) {
+  if (this.reply.isReply === false) this.reply.comment = [];
+
+  next();
+});
+
+// commentSchema.pre(/^find/, function (next) {
+//   //   this.populate({
+//   //     path: 'tour',
+//   //     select: 'name',
+//   //   }).populate({
+//   //     path: 'user',
+//   //     select: 'name photo',
+//   //   });
+
+//   this.populate({
+//     path: 'video',
+//   });
+
+//   next();
+// });
 
 const Comment = mongoose.model('Comment', commentSchema);
 

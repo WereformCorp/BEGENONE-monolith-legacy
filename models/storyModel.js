@@ -22,7 +22,6 @@ const storySchema = new mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'Name _id displayImage',
   },
 });
 

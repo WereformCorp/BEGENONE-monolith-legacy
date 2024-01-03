@@ -1,9 +1,26 @@
+const mongoose = require('mongoose');
 const Video = require('../models/videoModel');
+const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+exports.setChannelIds = (req, res, next) => {
+  if (!req.body.channel) req.body.channel = req.params.channelId;
+
+  console.log(req.body.channel);
+
+  if (!mongoose.Types.ObjectId.isValid(req.body.channel)) {
+    return next(new AppError('Invalid channel ID', 400));
+  }
+
+  next();
+};
+
 exports.getAllVideos = catchAsync(async (req, res, next) => {
   const data = await Video.find();
+  // .populate({
+  //   path: 'comments',
+  // });
 
   if (!data) next(new AppError(`Data Not Found!`, 404));
 
@@ -15,17 +32,26 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 });
 
 exports.getVideo = catchAsync(async (req, res, next) => {
-  let query = Video.findById(req.params.id);
-  query = query.populate({ path: 'comments' });
-  const data = await query;
+  try {
+    const data = await Video.findById(req.params.id);
+    // .populate({
+    //   path: 'comments',
+    // });
 
-  if (!data) return next(new AppError(`Data Not Found!`, 404));
+    console.log(data);
 
-  res.status(200).json({
-    status: 'Success',
-    data,
-  });
+    if (!data) return next(new AppError(`Data Not Found!`, 404));
+
+    if (data)
+      return res.status(200).json({
+        status: 'Success',
+        data,
+      });
+  } catch (err) {
+    console.error(err);
+  }
 });
+
 exports.updateVideo = catchAsync(async (req, res, next) => {
   try {
     const data = await Video.findByIdAndUpdate(req.params.id, req.body, {
@@ -52,21 +78,32 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       description: req.body.description,
       thumbnail: req.body.thumbnail,
       section: req.body.section,
-      channel: req.body.channel,
+      channel: req.params.channelId,
       bookmark: req.body.bookmark,
       sponsors: req.body.sponsors,
       comments: req.body.comments,
       audio: req.body.audio,
-      video: req.body.video,
+      videos: req.body.videos,
     });
+
+    await Channel.findByIdAndUpdate(
+      req.params.channelId,
+      { videos: videoData._id },
+      { new: true, select: '_id' },
+    );
+
+    if (!videoData)
+      Channel.findByIdAndUpdate(req.params.channelId, { videos: [] });
 
     if (!videoData) next(new AppError(`Data Not Found!`, 404));
     if (!videoData.section) videoData.section = [];
+    // if (videoData.channel) videoData.channel = videoData.channel._id;
 
-    res.status(201).json({
-      status: 'Success',
-      data: videoData,
-    });
+    if (videoData)
+      return res.status(201).json({
+        status: 'Success',
+        data: videoData,
+      });
   } catch (err) {
     console.log(err, err.message);
   }

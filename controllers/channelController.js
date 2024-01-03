@@ -1,9 +1,14 @@
 const Channel = require('../models/channelModel');
+const Video = require('../models/videoModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getAllChannels = catchAsync(async (req, res, next) => {
   const channels = await Channel.find();
+  // .populate({
+  //   path: 'videos',
+  //   select: '_id',
+  // });
 
   if (!channels) next(new AppError(`Data Not Found!`, 404));
 
@@ -15,14 +20,24 @@ exports.getAllChannels = catchAsync(async (req, res, next) => {
 });
 
 exports.getChannel = catchAsync(async (req, res, next) => {
-  const channel = await Channel.findById(req.params.id);
+  try {
+    const channel = await Channel.findById(req.params.id);
+    // .populate({
+    //   path: 'videos',
+    //   select: '_id',
+    // })
+    // .execPopulate();
 
-  if (!channel) next(new AppError(`Channels Not Found!`, 404));
+    if (!channel) return next(new AppError(`Channels Not Found!`, 404));
 
-  res.status(200).json({
-    status: 'Success',
-    channel,
-  });
+    if (channel)
+      return res.status(200).json({
+        status: 'Success',
+        data: channel,
+      });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 exports.updateChannel = catchAsync(async (req, res, next) => {
@@ -54,15 +69,28 @@ exports.createChannel = catchAsync(async (req, res, next) => {
       bannerImage: req.body.bannerImage,
       about: req.body.about,
       products: req.body.products,
+      reviews: req.body.reviews,
       commentToggle: req.body.commentToggle,
       comments: req.body.comments,
       commentFilters: req.body.commentFilters,
-      video: req.body.video,
-      cdmodel: req.body.cdmodel,
+      videos: req.body.videos,
+      wires: req.body.wires,
       user: req.body.user,
       sponsors: req.body.sponsors,
       story: req.body.story,
     });
+
+    const videos = await Video.findById(channelData.forEach((el) => el.videos));
+    const sponsorsId = videos.sponsors;
+
+    await Channel.findByIdAndUpdate(
+      channelData._id,
+      { sponsors: sponsorsId._id },
+      { new: true, select: '_id' },
+    );
+
+    if (!channelData)
+      Channel.findByIdAndUpdate(req.params.channelId, { sponsors: [] });
 
     if (!channelData) next(new AppError(`Data Not Found!`, 404));
     // if (!channelData.section) channelData.section = [];

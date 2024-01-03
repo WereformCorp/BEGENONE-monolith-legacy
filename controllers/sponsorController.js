@@ -1,6 +1,19 @@
+const mongoose = require('mongoose');
 const Sponsor = require('../models/sponsorsModel');
+const Video = require('../models/videoModel');
+const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+exports.setVideoIds = (req, res, next) => {
+  if (!req.body.video) req.body.video = req.params.videoId;
+
+  if (!mongoose.Types.ObjectId.isValid(req.body.video)) {
+    return next(new AppError('Invalid Video ID', 400));
+  }
+
+  next();
+};
 
 exports.getAllSponsors = catchAsync(async (req, res, next) => {
   const sponsors = await Sponsor.find();
@@ -57,7 +70,30 @@ exports.createSponsor = catchAsync(async (req, res, next) => {
       productPromoCode: req.body.productPromoCode,
       messageAdOwner: req.body.messageAdOwner,
       messageContentCreator: req.body.messageContentCreator,
+      video: req.params.videoId,
     });
+
+    if (!(await Video.findById(req.params.videoId)))
+      return next(new AppError(`Video Not Found!`, 404));
+
+    await Video.findByIdAndUpdate(
+      req.params.videoId,
+      { sponsors: sponsorData._id },
+      { new: true },
+    );
+
+    if (!sponsorData)
+      Channel.findByIdAndUpdate(req.params.videoId, { sponsors: [] });
+
+    const video = await Video.findById(sponsorData.video);
+    await Channel.findByIdAndUpdate(
+      video.channel._id,
+      { $push: { sponsors: sponsorData._id } },
+      { new: true, select: '_id' },
+    );
+
+    if (!sponsorData)
+      Channel.findByIdAndUpdate(video.channel._id, { sponsors: [] });
 
     if (!sponsorData) next(new AppError(`Data Not Found!`, 404));
 

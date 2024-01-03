@@ -65,6 +65,15 @@ const sponsorSchema = new mongoose.Schema({
   },
 });
 
+// sponsorSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'video',
+//     select: '_id',
+//   });
+
+//   next();
+// });
+
 const Sponsor = mongoose.model('Sponsor', sponsorSchema);
 
 module.exports = Sponsor;

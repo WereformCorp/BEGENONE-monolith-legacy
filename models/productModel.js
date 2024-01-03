@@ -19,7 +19,6 @@ const productSchema = new mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'name _id displayImage',
   },
   specification: {
     owner: {

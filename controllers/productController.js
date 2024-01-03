@@ -1,6 +1,20 @@
+const mongoose = require('mongoose');
 const Product = require('../models/productModel');
+const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+exports.setChannelIds = (req, res, next) => {
+  if (!req.body.channel) req.body.channel = req.params.channelId;
+
+  console.log(req.body.channel);
+
+  if (!mongoose.Types.ObjectId.isValid(req.body.channel)) {
+    return next(new AppError('Invalid channel ID', 400));
+  }
+
+  next();
+};
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const products = await Product.find();
@@ -54,14 +68,26 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         gallery: req.body.specification.gallery,
       },
       price: req.body.price,
+      channel: req.params.channelId,
+      reviews: req.body.reviews,
     });
+
+    await Channel.findByIdAndUpdate(
+      req.params.channelId,
+      { $push: { products: productData._id } },
+      { new: true, select: '_id' },
+    );
+
+    if (!productData)
+      Channel.findByIdAndUpdate(req.params.channelId, { products: [] });
 
     if (!productData) next(new AppError(`Data Not Found!`, 404));
 
-    res.status(201).json({
-      status: 'Success',
-      data: productData,
-    });
+    if (productData)
+      return res.status(201).json({
+        status: 'Success',
+        data: productData,
+      });
   } catch (err) {
     console.log(err, err.message);
   }

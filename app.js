@@ -12,7 +12,7 @@ const helmet = require('helmet');
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
 const commentRouter = require('./routes/commentRoutes');
-const discussionRouter = require('./routes/discussionRoutes');
+const wireRouter = require('./routes/wireRoutes');
 const productRouter = require('./routes/productRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const sponsorRouter = require('./routes/sponsorRoutes');
@@ -99,7 +99,7 @@ app.use((req, res, next) => {
 app.use('/', viewsRouter);
 app.use('/api/v1/channels', channelRouter);
 app.use('/api/v1/comments', commentRouter);
-app.use('/api/v1/discussions', discussionRouter);
+app.use('/api/v1/wires', wireRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/sponsors', sponsorRouter);

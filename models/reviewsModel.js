@@ -19,7 +19,6 @@ const reviewSchema = new mongoose.Schema({
   channel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
-    select: 'name _id displayImage',
   },
   review: {
     type: String,

@@ -1,6 +1,20 @@
+const mongoose = require('mongoose');
 const Story = require('../models/storyModel');
+const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+exports.setChannelIds = (req, res, next) => {
+  if (!req.body.channel) req.body.channel = req.params.channelId;
+
+  console.log(req.body.channel);
+
+  if (!mongoose.Types.ObjectId.isValid(req.body.channel)) {
+    return next(new AppError('Invalid channel ID', 400));
+  }
+
+  next();
+};
 
 exports.getAllStories = catchAsync(async (req, res, next) => {
   const stories = await Story.find();
@@ -48,7 +62,17 @@ exports.createStory = catchAsync(async (req, res, next) => {
   try {
     const storyData = await Story.create({
       video: req.body.video,
+      channel: req.params.channelId,
     });
+
+    await Channel.findByIdAndUpdate(
+      req.params.channelId,
+      { story: storyData._id },
+      { new: true, select: '_id' },
+    );
+
+    if (!storyData)
+      Channel.findByIdAndUpdate(req.params.channelId, { story: [] });
 
     if (!storyData) next(new AppError(`Data Not Found!`, 404));
 
