@@ -5,12 +5,14 @@ const catchAsync = require('../utils/catchAsync');
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
-  if (!users) next(new AppError(`Users Not Found!`, 404));
+  if (!users) return next(new AppError(`Users Not Found!`, 404));
 
   res.status(200).json({
     status: 'Success',
     results: users.length,
-    users,
+    data: {
+      users,
+    },
   });
 });
 
@@ -76,7 +78,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
       },
     });
 
-    if (!userData) next(new AppError(`Data Not Found!`, 404));
+    if (!userData) return next(new AppError(`Data Not Found!`, 404));
 
     res.status(201).json({
       status: 'Success',

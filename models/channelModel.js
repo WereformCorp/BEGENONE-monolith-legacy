@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const channelSchema = new mongoose.Schema({
-  channelUsername: {
+  channelUserName: {
     type: String,
     required: true,
     unique: true,
@@ -114,6 +114,11 @@ channelSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'wires',
     select: '-__v',
+  });
+
+  this.populate({
+    path: 'user',
+    // select: '-__v',
   });
 
   next();

@@ -91,7 +91,7 @@ app.use(express.urlencoded({ extended: true })); // limit: '10kb'
 // Test Middlewares
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  // console.log(req.cookies);
+  console.log(req.headers);
   next();
 });
 
@@ -113,8 +113,11 @@ app.use('/api/v1/videos', videoRouter);
 //   });
 // });
 
+// eslint-disable-next-line arrow-body-style
 app.get('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  return next(
+    new AppError(`Can't find ${req.originalUrl} on this server!`, 404),
+  );
 });
 
 module.exports = app;

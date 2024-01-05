@@ -48,7 +48,7 @@ exports.getVideo = catchAsync(async (req, res, next) => {
         data,
       });
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 });
 

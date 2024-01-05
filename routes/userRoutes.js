@@ -1,10 +1,22 @@
 const express = require('express');
 const userController = require('../controllers/userController');
+const channelRouter = require('./channelRoutes');
+const authController = require('../controllers/authController');
 // const viewsController = require('../controllers/viewsController');
-// const channelRouter = require('./channelRoutes');
-// const authController = require('../controllers/authController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
+
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
+
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
+
+router.patch(
+  '/updateMyPassword',
+  authController.protect,
+  authController.updatePassword,
+);
 
 router
   .route('/')
@@ -19,5 +31,7 @@ router
 
 // router.use('/tokens', viewsController.getTokens); // HAVEN'T SET THE "GET TOKENS FUNCTION YET!"
 // router.use('/channel', channelRouter);
+
+router.use('/:userId/channel', channelRouter);
 
 module.exports = router;

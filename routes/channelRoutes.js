@@ -9,14 +9,14 @@ const wireRouter = require('./wireRoutes');
 // const sponsorRouter = require('./sponsorRoutes');
 // const reviewRouter = require('./reviewRoutes');
 // const commentRouter = require('./commentRoutes');
-const userRouter = require('./userRoutes');
+// const userRouter = require('./userRoutes');
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(channelController.getAllChannels)
-  .post(channelController.createChannel);
+  .post(channelController.setUserIds, channelController.createChannel);
 
 router
   .route('/:id')
@@ -32,7 +32,5 @@ router.use('/:channelId/wire', wireRouter); // SUCCESS !!! 👍
 
 // router.use('/:channelId/reviews', reviewRouter);
 // router.use('/:channelId/comments', commentRouter);
-
-router.use('/user', userRouter);
 
 module.exports = router;

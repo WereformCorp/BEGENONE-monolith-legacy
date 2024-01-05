@@ -1,7 +1,21 @@
+const mongoose = require('mongoose');
 const Channel = require('../models/channelModel');
+const User = require('../models/userModel');
 const Video = require('../models/videoModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+exports.setUserIds = (req, res, next) => {
+  if (!req.body.user) req.body.user = req.params.userId;
+
+  console.log(req.body.user);
+
+  if (!mongoose.Types.ObjectId.isValid(req.body.user)) {
+    return next(new AppError('Invalid User ID', 400));
+  }
+
+  next();
+};
 
 exports.getAllChannels = catchAsync(async (req, res, next) => {
   const channels = await Channel.find();
@@ -63,7 +77,7 @@ exports.updateChannel = catchAsync(async (req, res, next) => {
 exports.createChannel = catchAsync(async (req, res, next) => {
   try {
     const channelData = await Channel.create({
-      channelUsername: req.body.channelUsername,
+      channelUserName: req.body.channelUserName,
       name: req.body.name,
       displayImage: req.body.displayImage,
       bannerImage: req.body.bannerImage,
@@ -75,13 +89,28 @@ exports.createChannel = catchAsync(async (req, res, next) => {
       commentFilters: req.body.commentFilters,
       videos: req.body.videos,
       wires: req.body.wires,
-      user: req.body.user,
+      user: req.params.userId,
       sponsors: req.body.sponsors,
       story: req.body.story,
     });
 
-    const videos = await Video.findById(channelData.forEach((el) => el.videos));
-    const sponsorsId = videos.sponsors;
+    await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        channel: channelData._id,
+      },
+      { new: true, select: '_id' },
+    );
+
+    if (!channelData)
+      User.findByIdAndUpdate(req.params.userId, { channel: [] });
+
+    const videos = await Video.find({ _id: { $in: channelData.videos } });
+    // const sponsorsId = videos.sponsors;
+    const sponsorsId = videos.reduce(
+      (acc, video) => acc.concat(video.sponsors),
+      [],
+    );
 
     await Channel.findByIdAndUpdate(
       channelData._id,
