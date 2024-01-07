@@ -35,7 +35,7 @@ const wireSchema = new mongoose.Schema({
 wireSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'channel',
-    select: '_id -videos',
+    select: '_id',
   });
 
   next();

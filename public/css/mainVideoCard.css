@@ -10,7 +10,7 @@
 .content-containers {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 300px;
   row-gap: 10px;
   cursor: pointer;
 }
@@ -23,7 +23,8 @@
 }
 
 .sectionHead-chLogo {
-  height: 30px;
+  height: 35px;
+  border-radius: 8px;
 }
 
 .sectionHead-dtls {
@@ -40,7 +41,7 @@
 }
 
 .sectionHead-chName {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   font-family: lexend;
 }
@@ -52,4 +53,39 @@
 
 .sectionHead-tick {
   height: 20px;
+}
+
+.section-details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.section-details-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-height: 4.4rem;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.sectionHead-views {
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.sectionHead-date {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sectionHead-views_N_date {
+  display: flex;
+  column-gap: 25px;
+  justify-content: start;
 }

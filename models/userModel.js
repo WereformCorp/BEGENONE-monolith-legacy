@@ -14,7 +14,10 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
-  displayImage: String,
+  photo: {
+    type: String,
+    default: 'default.jpeg',
+  },
   username: {
     type: String,
     required: true,
@@ -85,11 +88,7 @@ const userSchema = new mongoose.Schema({
   platformSettings: {
     mode: {
       type: String,
-      required: true,
-      enum: {
-        values: ['Simple', 'Advance', 'Professional', 'Enterprise'],
-        message: 'Mode is either Simple, Advance, Professional or Enterprise',
-      },
+      enum: ['Simple', 'Advance', 'Professional', 'Enterprise'],
       default: 'Simple',
     },
     languages: [String],
@@ -120,12 +119,23 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 userSchema.pre('save', function (next) {
   if (!this.isModified('eAddress.password') || this.isNew) return next();
 
   this.eAddress.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  // This points to the current query
+  this.find({ active: { $ne: false } });
   next();
 });
 

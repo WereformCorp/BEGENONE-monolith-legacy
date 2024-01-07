@@ -17,6 +17,10 @@ const videoSchema = new mongoose.Schema(
     views: Number,
     likes: Number,
     dislikes: Number,
+    time: {
+      type: Date,
+      default: Date.now(),
+    },
     section: [
       {
         thumbnail: String,
@@ -53,6 +57,10 @@ const videoSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -82,7 +90,7 @@ videoSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'channel',
     select:
-      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -user -displayImage -reviews',
+      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -user -reviews',
   });
 
   this.populate({
@@ -90,6 +98,14 @@ videoSchema.pre(/^find/, function (next) {
     select:
       '-__v -video -gallery -companyLogo -productDescription -companyWebsite -productWebsite -productPromoCode -messageAdOwner -messageContentCreator',
   });
+
+  this.populate({
+    path: 'user',
+    select: 'displayImage',
+  });
+
+  // if (this.views.length >= 1000 && this.views.length < 10000)
+  //   this.views = this.views.toString().split('');
 
   next();
 });

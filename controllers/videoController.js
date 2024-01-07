@@ -1,76 +1,14 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerController');
 
-exports.setChannelIds = (req, res, next) => {
-  if (!req.body.channel) req.body.channel = req.params.channelId;
-
-  console.log(req.body.channel);
-
-  if (!mongoose.Types.ObjectId.isValid(req.body.channel)) {
-    return next(new AppError('Invalid channel ID', 400));
-  }
-
-  next();
-};
-
-exports.getAllVideos = catchAsync(async (req, res, next) => {
-  const data = await Video.find();
-  // .populate({
-  //   path: 'comments',
-  // });
-
-  if (!data) next(new AppError(`Data Not Found!`, 404));
-
-  res.status(200).json({
-    status: 'Success',
-    results: data.length,
-    data,
-  });
-});
-
-exports.getVideo = catchAsync(async (req, res, next) => {
-  try {
-    const data = await Video.findById(req.params.id);
-    // .populate({
-    //   path: 'comments',
-    // });
-
-    console.log(data);
-
-    if (!data) return next(new AppError(`Data Not Found!`, 404));
-
-    if (data)
-      return res.status(200).json({
-        status: 'Success',
-        data,
-      });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-exports.updateVideo = catchAsync(async (req, res, next) => {
-  try {
-    const data = await Video.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-
-    if (!data) {
-      return next(new AppError('No document Found with that ID', 404));
-    }
-
-    res.status(200).json({
-      status: 'success',
-      data,
-    });
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
+exports.getAllVideos = factory.getAll(Video);
+exports.getVideo = factory.getOne(Video);
+exports.updateVideo = factory.updateOne(Video);
+exports.deleteVideo = factory.deleteOne(Video);
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
     const videoData = await Video.create({
@@ -78,45 +16,38 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       description: req.body.description,
       thumbnail: req.body.thumbnail,
       section: req.body.section,
-      channel: req.params.channelId,
+      channel: req.user.channel._id,
       bookmark: req.body.bookmark,
       sponsors: req.body.sponsors,
       comments: req.body.comments,
       audio: req.body.audio,
       videos: req.body.videos,
+      user: req.user.id,
     });
 
+    // Gets the Id of the Video from the videoData and Updates the channel's Video Field "videoData._id".
     await Channel.findByIdAndUpdate(
-      req.params.channelId,
+      req.user.channel._id,
       { videos: videoData._id },
       { new: true, select: '_id' },
     );
 
+    // If No Video Data - Then Videos Array Should Be Empty
     if (!videoData)
-      Channel.findByIdAndUpdate(req.params.channelId, { videos: [] });
+      await Channel.findByIdAndUpdate(req.user.channel._id, { videos: [] });
 
-    if (!videoData) next(new AppError(`Data Not Found!`, 404));
+    // If No Video Data - Then Return Error Message: Data Not Found
+    if (!videoData) return next(new AppError(`Data Not Found!`, 404));
+
+    // If No Section in Video Data - Then Section Array in Video Data should be empty
     if (!videoData.section) videoData.section = [];
-    // if (videoData.channel) videoData.channel = videoData.channel._id;
 
+    // If There is Video Data, Send a Response
     if (videoData)
       return res.status(201).json({
         status: 'Success',
         data: videoData,
       });
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
-exports.deleteVideo = catchAsync(async (req, res, next) => {
-  try {
-    const data = await Video.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'Success',
-      data,
-    });
   } catch (err) {
     console.log(err, err.message);
   }

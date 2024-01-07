@@ -1,79 +1,41 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+// const multer = require('multer');
 const Channel = require('../models/channelModel');
 const User = require('../models/userModel');
 const Video = require('../models/videoModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerController');
 
-exports.setUserIds = (req, res, next) => {
-  if (!req.body.user) req.body.user = req.params.userId;
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/imgs/users');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+//   },
+// });
 
-  console.log(req.body.user);
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith('image')) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError(`Not an image! Please upload only images.`, 400), false);
+//   }
+// };
 
-  if (!mongoose.Types.ObjectId.isValid(req.body.user)) {
-    return next(new AppError('Invalid User ID', 400));
-  }
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: multerFilter,
+// });
 
-  next();
-};
+// exports.uploadUserPhoto = upload.single('displayImage');
 
-exports.getAllChannels = catchAsync(async (req, res, next) => {
-  const channels = await Channel.find();
-  // .populate({
-  //   path: 'videos',
-  //   select: '_id',
-  // });
-
-  if (!channels) next(new AppError(`Data Not Found!`, 404));
-
-  res.status(200).json({
-    status: 'Success',
-    results: channels.length,
-    channels,
-  });
-});
-
-exports.getChannel = catchAsync(async (req, res, next) => {
-  try {
-    const channel = await Channel.findById(req.params.id);
-    // .populate({
-    //   path: 'videos',
-    //   select: '_id',
-    // })
-    // .execPopulate();
-
-    if (!channel) return next(new AppError(`Channels Not Found!`, 404));
-
-    if (channel)
-      return res.status(200).json({
-        status: 'Success',
-        data: channel,
-      });
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-exports.updateChannel = catchAsync(async (req, res, next) => {
-  try {
-    const channel = await Channel.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-
-    if (!channel) {
-      return next(new AppError('No document Found with that ID', 404));
-    }
-
-    // if (channel.channelUsername)
-    res.status(200).json({
-      status: 'success',
-      channel,
-    });
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
+exports.getAllChannels = factory.getAll(Channel);
+exports.getChannel = factory.getOne(Channel);
+exports.updateChannel = factory.updateOne(Channel);
+exports.deleteChannel = factory.deleteOne(Channel);
 exports.createChannel = catchAsync(async (req, res, next) => {
   try {
     const channelData = await Channel.create({
@@ -89,13 +51,13 @@ exports.createChannel = catchAsync(async (req, res, next) => {
       commentFilters: req.body.commentFilters,
       videos: req.body.videos,
       wires: req.body.wires,
-      user: req.params.userId,
-      sponsors: req.body.sponsors,
+      user: req.user._id,
+      sponsors: [req.body.sponsors],
       story: req.body.story,
     });
 
     await User.findByIdAndUpdate(
-      req.params.userId,
+      req.user._id,
       {
         channel: channelData._id,
       },
@@ -103,7 +65,7 @@ exports.createChannel = catchAsync(async (req, res, next) => {
     );
 
     if (!channelData)
-      User.findByIdAndUpdate(req.params.userId, { channel: [] });
+      await User.findByIdAndUpdate(req.user._id, { channel: [] });
 
     const videos = await Video.find({ _id: { $in: channelData.videos } });
     // const sponsorsId = videos.sponsors;
@@ -119,29 +81,20 @@ exports.createChannel = catchAsync(async (req, res, next) => {
     );
 
     if (!channelData)
-      Channel.findByIdAndUpdate(req.params.channelId, { sponsors: [] });
+      await Channel.findByIdAndUpdate(channelData._id, { sponsors: [] });
 
-    if (!channelData) next(new AppError(`Data Not Found!`, 404));
+    if (!channelData) return next(new AppError(`Data Not Found!`, 404));
     // if (!channelData.section) channelData.section = [];
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'Success',
       data: channelData,
     });
   } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
-exports.deleteChannel = catchAsync(async (req, res, next) => {
-  try {
-    const channel = await Channel.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'Success',
-      channel,
+    return res.json({
+      status: 'fail',
+      message: err.message,
+      err,
     });
-  } catch (err) {
-    console.log(err, err.message);
   }
 });

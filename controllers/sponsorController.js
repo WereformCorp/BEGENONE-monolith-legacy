@@ -4,58 +4,61 @@ const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerController');
 
 exports.setVideoIds = (req, res, next) => {
   if (!req.body.video) req.body.video = req.params.videoId;
-
-  if (!mongoose.Types.ObjectId.isValid(req.body.video)) {
+  if (!mongoose.Types.ObjectId.isValid(req.body.video))
     return next(new AppError('Invalid Video ID', 400));
-  }
-
   next();
 };
 
-exports.getAllSponsors = catchAsync(async (req, res, next) => {
-  const sponsors = await Sponsor.find();
+exports.getAllSponsors = factory.getAll(Sponsor);
+exports.getSponsor = factory.getOne(Sponsor);
+exports.updateSponsor = factory.updateOne(Sponsor);
+exports.deleteSponsor = factory.deleteOne(Sponsor);
 
-  if (!sponsors) next(new AppError(`Sponsors Not Found!`, 404));
+// exports.getAllSponsors = catchAsync(async (req, res, next) => {
+//   const sponsors = await Sponsor.find();
 
-  res.status(200).json({
-    status: 'Success',
-    results: sponsors.length,
-    sponsors,
-  });
-});
+//   if (!sponsors) next(new AppError(`Sponsors Not Found!`, 404));
 
-exports.getSponsor = catchAsync(async (req, res, next) => {
-  const sponsors = await Sponsor.findById(req.params.id);
+//   res.status(200).json({
+//     status: 'Success',
+//     results: sponsors.length,
+//     sponsors,
+//   });
+// });
 
-  if (!sponsors) next(new AppError(`Product Not Found!`, 404));
+// exports.getSponsor = catchAsync(async (req, res, next) => {
+//   const sponsors = await Sponsor.findById(req.params.id);
 
-  res.status(200).json({
-    status: 'Success',
-    sponsors,
-  });
-});
+//   if (!sponsors) next(new AppError(`Product Not Found!`, 404));
 
-exports.updateSponsor = catchAsync(async (req, res, next) => {
-  try {
-    const sponsors = await Sponsor.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+//   res.status(200).json({
+//     status: 'Success',
+//     sponsors,
+//   });
+// });
 
-    if (!sponsors) {
-      return next(new AppError('No document Found with that ID', 404));
-    }
+// exports.updateSponsor = catchAsync(async (req, res, next) => {
+//   try {
+//     const sponsors = await Sponsor.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//     });
 
-    res.status(200).json({
-      status: 'success',
-      sponsors,
-    });
-  } catch (err) {
-    console.log(err, err.message);
-  }
-});
+//     if (!sponsors) {
+//       return next(new AppError('No document Found with that ID', 404));
+//     }
+
+//     res.status(200).json({
+//       status: 'success',
+//       sponsors,
+//     });
+//   } catch (err) {
+//     console.log(err, err.message);
+//   }
+// });
 
 exports.createSponsor = catchAsync(async (req, res, next) => {
   try {
@@ -85,10 +88,10 @@ exports.createSponsor = catchAsync(async (req, res, next) => {
     if (!sponsorData)
       Channel.findByIdAndUpdate(req.params.videoId, { sponsors: [] });
 
-    const video = await Video.findById(sponsorData.video);
+    const video = await Video.findById(req.params.videoId);
     await Channel.findByIdAndUpdate(
       video.channel._id,
-      { $push: { sponsors: sponsorData._id } },
+      { sponsors: sponsorData._id },
       { new: true, select: '_id' },
     );
 
@@ -102,19 +105,23 @@ exports.createSponsor = catchAsync(async (req, res, next) => {
       data: sponsorData,
     });
   } catch (err) {
-    console.log(err, err.message);
-  }
-});
-
-exports.deleteSponsor = catchAsync(async (req, res, next) => {
-  try {
-    const sponsors = await Sponsor.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'Success',
-      sponsors,
+    return res.json({
+      status: 'fail',
+      message: err.message,
+      err,
     });
-  } catch (err) {
-    console.log(err, err.message);
   }
 });
+
+// exports.deleteSponsor = catchAsync(async (req, res, next) => {
+//   try {
+//     const sponsors = await Sponsor.findByIdAndDelete(req.params.id);
+
+//     res.status(204).json({
+//       status: 'Success',
+//       sponsors,
+//     });
+//   } catch (err) {
+//     console.log(err, err.message);
+//   }
+// });

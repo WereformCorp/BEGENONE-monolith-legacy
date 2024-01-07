@@ -1,36 +1,22 @@
 const express = require('express');
 const channelController = require('../controllers/channelController');
-// getChannel = require('../controllers/getChannel');
-// const authController = require('../controllers/authController');
-const videoRouter = require('./videoRoutes');
-const storyRouter = require('./storyRoutes');
-const productRouter = require('./productRoutes');
-const wireRouter = require('./wireRoutes');
-// const sponsorRouter = require('./sponsorRoutes');
-// const reviewRouter = require('./reviewRoutes');
-// const commentRouter = require('./commentRoutes');
-// const userRouter = require('./userRoutes');
+const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(channelController.getAllChannels)
-  .post(channelController.setUserIds, channelController.createChannel);
+  .post(authController.protect, channelController.createChannel);
 
 router
   .route('/:id')
   .get(channelController.getChannel)
-  .patch(channelController.updateChannel)
-  .delete(channelController.deleteChannel);
-
-router.use('/:channelId/video', videoRouter); // SUCCESS !!! 👍
-router.use('/:channelId/story', storyRouter);
-router.use('/:channelId/product', productRouter);
-// router.use('/:channelId/sponsor', sponsorRouter); // SUCCESS !!! 👍
-router.use('/:channelId/wire', wireRouter); // SUCCESS !!! 👍
-
-// router.use('/:channelId/reviews', reviewRouter);
-// router.use('/:channelId/comments', commentRouter);
+  .patch(
+    authController.protect,
+    // channelController.uploadUserPhoto,
+    channelController.updateChannel,
+  )
+  .delete(authController.protect, channelController.deleteChannel);
 
 module.exports = router;

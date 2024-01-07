@@ -1,6 +1,5 @@
 const express = require('express');
 const userController = require('../controllers/userController');
-const channelRouter = require('./channelRoutes');
 const authController = require('../controllers/authController');
 // const viewsController = require('../controllers/viewsController');
 
@@ -18,6 +17,16 @@ router.patch(
   authController.updatePassword,
 );
 
+router.patch(
+  '/updateMe',
+  authController.protect,
+  userController.uploadUserPhoto,
+  userController.updateMe,
+);
+
+router.patch('/updateMe', authController.protect, userController.updateMe);
+router.delete('/deleteMe', userController.deleteMe);
+
 router
   .route('/')
   .get(userController.getAllUsers)
@@ -28,10 +37,5 @@ router
   .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
-
-// router.use('/tokens', viewsController.getTokens); // HAVEN'T SET THE "GET TOKENS FUNCTION YET!"
-// router.use('/channel', channelRouter);
-
-router.use('/:userId/channel', channelRouter);
 
 module.exports = router;

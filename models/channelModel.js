@@ -118,7 +118,7 @@ channelSchema.pre(/^find/, function (next) {
 
   this.populate({
     path: 'user',
-    // select: '-__v',
+    select: '_id',
   });
 
   next();

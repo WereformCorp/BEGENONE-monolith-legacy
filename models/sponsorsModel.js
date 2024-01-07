@@ -63,6 +63,10 @@ const sponsorSchema = new mongoose.Schema({
     ref: 'User',
     select: 'name _id Photo',
   },
+  time: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 // sponsorSchema.pre(/^find/, function (next) {

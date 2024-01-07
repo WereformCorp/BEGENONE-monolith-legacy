@@ -15,20 +15,21 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  // const cookieOptions = {
-  //   expires: new Date(
-  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * (24 * 60 * 60 * 1000),
-  //   ),
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * (24 * 60 * 60 * 1000),
+    ),
 
-  //   httpOnly: true,
-  // };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  // res.cookie();
-  // res.cookie('jwt', token, cookieOptions);
+  res.cookie('jwt', token, cookieOptions);
 
-  // // Remove Password in Output
-  // user.password = undefined;
+  // Remove Password in Output
+  user.eAddress.password = undefined;
+
+  console.log(user.displayImage);
 
   res.status(statusCode).json({
     status: 'success',
@@ -49,7 +50,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       displayImage: req.body.displayImage,
       username: req.body.username,
       displayName: req.body.displayName,
-      role: req.body.role,
+      // role: req.body.role,
       eAddress: {
         phoneNumber: req.body.eAddress.phoneNumber,
         email: req.body.eAddress.email,
@@ -77,6 +78,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     if (!newUser) return next(new AppError(`Data Not Found!`, 404));
 
     createSendToken(newUser, 201, res);
+
+    // console.log(newUser.displayImage);
   } catch (err) {
     console.log(err, err.message);
   }
@@ -85,7 +88,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body.eAddress;
 
-  console.log(`EMAIL: ${email}`, `PASSWORD: ${password}`);
+  // console.log(`EMAIL: ${email}`, `PASSWORD: ${password}`);
 
   // 1) Check if the email and password exist
   if (!email || !password) {
@@ -119,7 +122,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   }
 
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     return next(
@@ -150,6 +153,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 
