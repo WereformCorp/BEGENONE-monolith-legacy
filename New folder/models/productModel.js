@@ -1,0 +1,66 @@
+const mongoose = require('mongoose');
+
+const productSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    minLength: 3,
+    maxLength: 50,
+  },
+  description: {
+    type: String,
+    required: true,
+    maxLength: 300,
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+  },
+  channel: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Channel',
+  },
+  specification: {
+    owner: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      select: 'name',
+    },
+    gallery: {
+      type: [String],
+      validate: [
+        (value) => value.length >= 1 && value.length <= 6, // Ensure length is between 1 and 6
+        'Gallery must have between 1 and 6 images.', // Custom error message
+      ],
+    },
+    date: [
+      {
+        type: Date,
+        default: Date.now(),
+      },
+    ],
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    select: 'name _id',
+  },
+  reviews: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Review',
+    },
+  ],
+  price: {
+    type: Number,
+    required: [true, `Product Must Have A Price.`],
+  },
+  paid: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product;

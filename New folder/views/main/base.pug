@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+  head
+    block head
+      meta(charset='UTF-8')
+      meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      
+      block additionalStyles
+      link(rel='stylesheet', href='/css/style.css')
+      link(rel='stylesheet', href='/css/_header.css')
+      link(rel='stylesheet', href='/css/sect-left.css')
+      link(rel='stylesheet', href='/css/sect-right.css')
+      link(rel='stylesheet', href='/css/mediaQueries copy 2.css')
+      
+      link(rel='preconnect', href='https://fonts.googleapis.com')
+      link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+      link(href='https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Exa:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Giga:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Mega:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Peta:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Tera:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Zetta:wght@100;200;300;400;500;600;700;800;900&family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap', rel='stylesheet')
+      title #{title}
+
+  
+  body
+    main.container
+      // LEFT NAVIGATION
+      include _leftNav
+
+      section#sect-2.section-middle
+        // HEADER
+        include _header
+
+        //- section.sect-mid-contentContainer
+          // CONTENT
+        block content
+
+      // RIGHT NAVIGATION
+      include _rightNav
+
+      // BOTTOM NAVIGATION
+      include _bottomNav
+    
+    script(src='/js/videoPlayer.js')

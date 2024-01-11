@@ -1,0 +1,13 @@
+{
+  "user": null,
+  "time": null,
+  "comment": ["This is a comment hurray!"],
+  "likes": 12,
+  "channel": null,
+  "dislike": 3,
+  "reply": {
+    "isReply": false,
+    "comment": null
+  },
+  "video": null
+}
