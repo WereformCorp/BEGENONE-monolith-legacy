@@ -7,7 +7,7 @@ block append head
 block content
   section.sect-mid-contentContainer
     each video in videos 
-      a(href=`/watch/${video._id}`)
+      a(href=`/watch/${video._id}`).ctnt-ctnr-link
         .content-containers.content-container-1
             section.section-Header
               img.sectionHead-chLogo(src=`/imgs/users/${video.channel.displayImage}`)

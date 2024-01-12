@@ -926,6 +926,7 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
   max-width: 16rem;
   border-radius: 10px;
+  padding: 0.65rem;
   row-gap: 10px;
   cursor: pointer;
   border: transparent;
