@@ -1,0 +1,82 @@
+extends ../../../main/base
+
+block append head
+  link(rel='stylesheet', href='/css/upload.css')
+  link(rel='stylesheet', href='/css/uploadMediaQueries.css')
+
+
+block content
+  //- include _rightNavSettings
+
+  section.sect-mid-contentContainer
+    h1.upload-heading UPLOAD CONTENT
+    .upload_n_promote
+      .ctnt-upload
+        .ctnt-upload-rows.ctnt-upload-row-1
+          .ctnt-file
+            h4.ctnt-file-h4 CONTENT
+            button.ctnt-file-btn U
+            input.ctnt-file-input(type='url', name='', id='')
+          .ctnt-thumb
+            h4.ctnt-thumb-h4 THUMBNAIL
+            button.ctnt-thumb-btn UPLOAD
+            img(src='/imgs/thumbnails/thumbnail-659cf1fbb77c200efcc2abec-1704794899919.jpeg', alt='')
+        .ctnt-upload-rows.ctnt-upload-row-2
+          h3.upload-title TITLE (Heading)
+          input.upload-title-input(placeholder="Type your content's heading here..", type='text', name='', id='')
+        .ctnt-upload-rows.ctnt-upload-row-3
+          h3.upload-description Description
+          textarea.upload-description-textarea(name='', id='', cols='30', rows='10')
+        .ctnt-upload-rows.ctnt-upload-row-4
+          button.upload-opt-kids Kids
+          button.upload-opt-old Old
+          input.upload-opt-tags(type='text', placeholder='Type your content related tags here')
+        .ctnt-upload-rows.ctnt-upload-row-5
+          .ctnt-comments
+            h3 Comments
+            button.ctnt-cmnt-enable Enable
+            button.ctnt-cmnt-disable Disable
+          .ctnt-links-in-comments
+            h3 Links
+            button.links-in-cmnt-enable Enable
+            button.links-in-cmnt-disable Disable
+          .ctnt-subs
+            h3 Substitles
+            button.ctnt-subs-enable Add
+            button.ctnt-subs-disable History
+          .ctnt-reminder
+            h3 Reminder
+            button.ctnt-reminder-enable GIF
+            button.ctnt-reminder-disable Templates
+        .ctnt-upload-rows.ctnt-upload-row-6
+          .ctnt-transcript
+            h3 Transcript
+            button.transcript-btn-type Type
+            button.transcript-btn-upload Upload
+          .ctnt-playlist
+            h3 Playlist
+            button.playlist-btn-select Select
+            button.playlist-btn-add Add
+          .ctnt-download
+            h3 Download
+            button.download-btn-enable Enable
+            button.download-btn-disable Disable
+        //
+          <div class="ctnt-upload-rows ctnt-upload-row-7"></div>
+          <div class="ctnt-upload-rows ctnt-upload-row-8"></div>
+      .ctnt-promote
+        h3 MANAGE YOUR REACH
+        .ctnt-imp-pts
+          h4 Impression Points
+          input.ctnt-imp-points-input(type='number')
+          button Exchange Points
+        .ctnt-promote-settings
+          h4.ctnt-promote-h4 PROMOTE
+          input.ctnt-promote-input(type='text', placeholder='Input a value', id='')
+        .ctnt-upgrade-plan
+          h4.ctnt-upgrade-plan-h3
+            | Upgrade your plan even higher?
+          button.ctnt-upgrade-plan-btn MarketPlace
+        .ctnt-sponsorship
+          h4.ctnt-sponsorship-h4 SPONSORSHIP
+          button.ctnt-sponsorship-btn View Page

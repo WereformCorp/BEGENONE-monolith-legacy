@@ -7,16 +7,21 @@ const router = express.Router({ mergeParams: true });
 router
   .route('/')
   .get(channelController.getAllChannels)
-  .post(authController.protect, channelController.createChannel);
+  .post(authController.protect, channelController.createChannel)
+  .patch(
+    authController.protect,
+    channelController.uploadImages,
+    channelController.updateChannel,
+  );
 
 router
   .route('/:id')
   .get(channelController.getChannel)
-  .patch(
-    authController.protect,
-    channelController.uploadUserPhoto,
-    channelController.updateChannel,
-  )
+  // .patch(
+  //   authController.protect,
+  //   channelController.uploadUserPhoto,
+  //   channelController.updateChannel,
+  // )
   .delete(authController.protect, channelController.deleteChannel);
 
 // router

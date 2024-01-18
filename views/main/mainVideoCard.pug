@@ -1,16 +1,16 @@
 extends base
 
 block append head
-  link(rel='stylesheet', href='/css/mainVideoCard.css')
-  
+  link(rel='stylesheet', href='/css/videoCard.css')
 
 block content
+  //- - var useCustomLeftNav = false
   section.sect-mid-contentContainer
     each video in videos 
       a(href=`/watch/${video._id}`).ctnt-ctnr-link
         .content-containers.content-container-1
             section.section-Header
-              img.sectionHead-chLogo(src=`/imgs/users/${video.channel.displayImage}`)
+              img.sectionHead-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
               .sectionHead-dtls
                 .sectionHead-chName_N_sub
                   h3.sectionHead-chName= video.channel.name

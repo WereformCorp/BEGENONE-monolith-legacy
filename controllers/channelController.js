@@ -1,4 +1,5 @@
 // const mongoose = require('mongoose');
+const fs = require('fs');
 const multer = require('multer');
 const Channel = require('../models/channelModel');
 const User = require('../models/userModel');
@@ -7,13 +8,57 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerController');
 
-const multerStorageDP = multer.diskStorage({
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const destinationFolder =
+//       file.fieldname === 'displayImage' ? 'users' : 'banners';
+//     // cb(null, `public/imgs/${destinationFolder}`);
+//     cb(null, `public/imgs/users/${req.user._id}/${destinationFolder}`);
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     const fieldName = file.fieldname;
+
+//     // Remove the old file before saving the new one
+//     if (req.user.channel[fieldName]) {
+//       const oldFilePath = `public/imgs/users/${req.user._id}/${fieldName}s/${req.user.channel[fieldName]}`;
+//       fs.unlinkSync(oldFilePath);
+//     }
+
+//     cb(null, `${fieldName}-${req.user.channel._id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/imgs/users');
+    const destinationFolder =
+      file.fieldname === 'displayImage' ? 'display-images' : 'banner-images';
+    const userFolderPath = `public/imgs/users/${req.user._id}`;
+    const finalDestination = `${userFolderPath}/${destinationFolder}`;
+
+    // Check if the user folder exists, create it if not
+    if (!fs.existsSync(userFolderPath)) {
+      fs.mkdirSync(userFolderPath);
+    }
+
+    // Check if the destination folder exists, create it if not
+    if (!fs.existsSync(finalDestination)) {
+      fs.mkdirSync(finalDestination);
+    }
+
+    cb(null, finalDestination);
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user.channel._id}-${Date.now()}.${ext}`);
+    const fieldName = file.fieldname;
+
+    // Remove the old file before saving the new one
+    if (req.user.channel[fieldName]) {
+      const oldFilePath = `public/imgs/users/${req.user._id}/${fieldName}s/${req.user.channel[fieldName]}`;
+      fs.unlinkSync(oldFilePath);
+    }
+
+    cb(null, `${fieldName}-${req.user.channel._id}-${Date.now()}.${ext}`);
   },
 });
 
@@ -26,40 +71,64 @@ const multerFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage: multerStorageDP,
+  storage: multerStorage,
   fileFilter: multerFilter,
 });
 
-exports.uploadUserPhoto = upload.single('displayImage');
+// const uploadBanner = multer({
+//   storage: multerStorageBanner,
+//   fileFilter: multerFilter,
+// });
+
+exports.uploadImages = upload.fields([
+  { name: 'displayImage', maxCount: 1 },
+  { name: 'bannerImage', maxCount: 1 },
+]);
+// exports.uploadChannelBanner = uploadBanner.single('banner');
 
 exports.getAllChannels = factory.getAll(Channel);
 exports.getChannel = factory.getOne(Channel);
 exports.deleteChannel = factory.deleteOne(Channel);
 exports.getAllChannels = factory.getAll(Channel);
-
-// const filterObj = (obj, ...allowedFields) => {
-//   const newObj = {};
-//   Object.keys(obj).forEach((el) => {
-//     if (allowedFields.includes(el)) newObj[el] = obj[el];
-//   });
-//   return newObj;
-// };
-
 exports.updateChannel = catchAsync(async (req, res, next) => {
   try {
     // Create the update object
     const updateObject = { ...req.body };
 
     // If req.file is present, add displayImage to updateObject
-    if (req.file) {
-      updateObject.displayImage = req.file.filename;
+    // if (req.files) {
+    //   // Check if displayImage is provided
+    //   if (req.files.displayImage) {
+    //     updateObject.displayImage = req.files.displayImage[0].filename;
+    //   }
+
+    //   // Check if bannerImage is provided
+    //   if (req.files.bannerImage) {
+    //     updateObject.bannerImage = req.files.bannerImage[0].filename;
+    //   }
+    // }
+
+    if (req.files) {
+      // Loop through each uploaded file
+      Object.keys(req.files).forEach((fieldname) => {
+        const uploadedFile = req.files[fieldname][0];
+
+        // Check if the file is a displayImage or bannerImage
+        if (fieldname === 'displayImage' || fieldname === 'bannerImage') {
+          // Remove the old file before saving the new one
+          if (req.user.channel[fieldname]) {
+            const oldFilePath = `public/imgs/users/${req.user._id}/${fieldname}s/${req.user.channel[fieldname]}`;
+            fs.unlinkSync(oldFilePath);
+          }
+
+          // Update the corresponding field in updateObject
+          updateObject[fieldname] = uploadedFile.filename;
+        }
+      });
     }
 
-    // const filteredBody = filterObj(req.body, 'name', 'email');
-    // if (req.file) filteredBody.photo = req.file.filename;
-
     const channelData = await Channel.findByIdAndUpdate(
-      req.params.id,
+      req.user.channel._id,
       updateObject,
       {
         new: true,
@@ -116,10 +185,8 @@ exports.createChannel = catchAsync(async (req, res, next) => {
 
     await User.findByIdAndUpdate(
       req.user._id,
-      {
-        channel: channelData._id,
-      },
-      { new: true, select: '_id' },
+      { channel: channelData._id },
+      { new: true },
     );
 
     if (!channelData)

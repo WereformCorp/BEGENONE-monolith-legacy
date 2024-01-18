@@ -1,0 +1,168 @@
+@media (max-width: 1450px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .sect-mid-nav {
+    grid-template-columns: 0.8fr 1fr;
+  }
+}
+
+@media (max-width: 1050px) {
+  .sect-mid-nav {
+    grid-template-columns: 0.7fr 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .nav-slctvKit-select {
+    display: none;
+  }
+
+  .sect-mid-nav {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .sect-mid-contentContainer {
+    padding: 2rem;
+  }
+
+  .other-userInfo,
+  .lang_theme {
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .platform-mode {
+    justify-content: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, max-content);
+    grid-template-rows: repeat(3, max-content);
+  }
+
+  .mode_enterprise {
+    grid-column: 2/3;
+  }
+}
+
+@media (max-width: 950px) {
+  .nav-sort,
+  .searchBar-keywordBox {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .eAddress-heading-h1 {
+    justify-self: center;
+  }
+
+  .platform-mode {
+    justify-content: center;
+    justify-items: center;
+    grid-template-columns: repeat(2, max-content);
+    grid-template-rows: repeat(3, max-content);
+  }
+
+  .electronic-address {
+    text-align: center;
+  }
+
+  .full_user_name {
+    row-gap: 3rem;
+  }
+
+  .email_phNumber {
+    justify-content: center;
+  }
+
+  .changePassword {
+    grid-template-columns: repeat(1, max-content);
+    grid-template-rows: repeat(4, max-content);
+    justify-content: center;
+  }
+
+  .old_password {
+    grid-row: 1/2;
+    grid-column: 1/2;
+  }
+
+  .confirm_password {
+    grid-row: 2/3;
+    grid-column: 1/2;
+  }
+
+  .new_password {
+    grid-row: 3/4;
+    grid-column: 1/2;
+  }
+
+  .channel_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .channel_info img {
+    width: 8rem;
+    height: 8rem;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .srd-link-texts,
+  .nav-cat_N_sort {
+    display: none;
+  }
+
+  .bjenuine-text-mediaQuery {
+    display: flex;
+  }
+
+  .bjenuine-text-header {
+    display: none;
+  }
+
+  .sect-lft-dwn {
+    align-content: center;
+  }
+
+  .srd-link-Icons {
+    width: 25px;
+  }
+
+  .section-left {
+    display: none;
+  }
+
+  .container {
+    grid-template-columns: 6fr max-content;
+  }
+}
+
+@media (max-width: 740px) {
+  .sect-mid-nav {
+    grid-template-columns: 3fr 1fr;
+  }
+
+  .searchBar-search-Icon {
+    display: none;
+  }
+
+  .searchBar-InputField {
+    width: 70%;
+  }
+
+  .bjenuine-text-mediaQuery {
+    font-size: 20px;
+    align-self: center;
+  }
+}
+@media (max-width: 450px) {
+  .searchBar-InputField {
+    display: grid;
+  }
+}

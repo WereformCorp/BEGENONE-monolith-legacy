@@ -4,6 +4,8 @@ html(lang='en')
     block head
       meta(charset='UTF-8')
       meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      link(rel='icon', type='image/x-icon', href='/imgs/Begenuine FavIcon.png')
+
       link(rel='stylesheet', href='/css/style.css')
       link(rel='stylesheet', href='/css/_header.css')
       link(rel='stylesheet', href='/css/sect-left.css')
@@ -19,7 +21,10 @@ html(lang='en')
   body
     main.container
       // LEFT NAVIGATION
-      include _leftNav
+      if locals.useCustomLeftNav
+        include ../settings/channel/uploads/_leftNavSettings
+      else
+        include _leftNav
 
       section#sect-2.section-middle
         // HEADER

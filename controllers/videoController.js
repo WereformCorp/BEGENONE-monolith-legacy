@@ -73,6 +73,23 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
     // console.log(allIds);
 
     const data = await Video.find({ channel: allIds });
+    // .populate({
+    //   path: 'channel',
+    //   populate: {
+    //     path: 'user',
+    //     model: 'User',
+    //     select: '_id',
+    //   },
+    // });
+
+    // const data = await Video.find({ channel: { $in: allIds } }).populate({
+    //   path: 'channel',
+    //   populate: {
+    //     path: 'user',
+    //     model: 'User',
+    //     select: '_id',
+    //   },
+    // });
 
     // const comment = await Comment.find({ video: ObjectId(data._id) });
 

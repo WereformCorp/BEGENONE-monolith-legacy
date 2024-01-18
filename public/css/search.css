@@ -65,7 +65,7 @@
   border: 1px solid rgb(120, 120, 120, 0.3);
   border-radius: 10px;
   height: max-content;
-  row-gap: 50px;
+  row-gap: 2rem;
 }
 
 .resultContent-box {
@@ -73,12 +73,13 @@
   grid-template-columns: 1.5fr 3fr;
   column-gap: 20px;
   border: transparent;
+  padding: 1rem;
+  border: 1px solid transparent;
   transition: all 0.2s ease-in-out;
   border-radius: 15px;
 }
 
 .resultContent-box:hover {
-  padding: 1rem;
   border: 1px solid rgb(120, 120, 120, 0.3);
   background-color: rgb(61, 61, 61, 0.2);
   cursor: pointer;

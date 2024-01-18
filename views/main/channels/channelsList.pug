@@ -1,14 +1,18 @@
 extends ../base
 
+block append head
+  link(rel='stylesheet', href='/css/channelList.css')
+  link(rel='stylesheet', href='/css/videoCard.css')
+
 block content
   section.sect-mid-contentContainer
     section.sect-mid-header
       h2.sect-midHead-heading CHANNELS
       .sect-midHead-chCatgs
         button.chCatgs-subscribed SUBSCRIBED
-        hr.sect-midHead-chCatgs-hr(width='3px')
+        //- hr.sect-midHead-chCatgs-hr(width='3px')
         button.chCatgs-recoms RECOMMEDATION
-        hr.sect-midHead-chCatgs-hr
+        //- hr.sect-midHead-chCatgs-hr
         button.chCatgs-industries INDUSTRIES
       img.chCatgs-moreOptsIcon(src='imgs/Right Section/svgs/bars-solid.svg')
     hr(style='\
@@ -33,7 +37,7 @@ block content
         img.chSlctd-row1-banner(src='imgs/banners/Banner.png')
       .chSlctd-rows.chSlctd-row-2
         .chSltd-row2-chDtls
-          img.chSlctd-row2-chImg(src='imgs/Middle Nav/Video card/channelImage.png')
+          img.chSlctd-row2-chImg(src='/imgs/users/default.jpeg')
           .chSltd-chDtls-Nm_N_subCnt
             h2.chSltd-chDtls-chName Areesh Alam
             h4.chSltd-chDtls-subCount
@@ -43,6 +47,7 @@ block content
               span.chDtls-unchkdText Unchecked Posts: 
               span.chDtls-unchkdAmnt 12
         button.chSltd-row2-chOpenBtn View Channel
+      
       .chSlctd-rows.chSlctd-row-3
         each video in videos
           a(href=`/watch/${video._id}`) 
@@ -57,4 +62,4 @@ block content
                     |  Views
                   h5.sectionHead-date
                   - const videoDate = new Date(video.time)
-                    span.cmmnt-date= videoDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                    span.sectionHead-date= videoDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})

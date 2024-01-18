@@ -1,0 +1,27 @@
+body {
+  background-color: #202020;
+}
+
+body::-webkit-scrollbar {
+  width: 7px;
+  background-color: #202020;
+}
+
+body::-webkit-scrollbar-track {
+  margin: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  width: 7px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.sect-mid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}

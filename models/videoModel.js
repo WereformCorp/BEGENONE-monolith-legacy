@@ -101,7 +101,7 @@ videoSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'channel',
     select:
-      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -user -reviews',
+      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -reviews',
   })
     .populate({
       path: 'comments',
@@ -111,11 +111,11 @@ videoSchema.pre(/^find/, function (next) {
       path: 'sponsors',
       select:
         '-__v -video -gallery -companyLogo -productDescription -companyWebsite -productWebsite -productPromoCode -messageAdOwner -messageContentCreator',
-    })
-    .populate({
-      path: 'user',
-      select: 'displayImage',
     });
+  // .populate({
+  //   path: 'user',
+  //   select: '_id displayImage',
+  // });
 
   next();
 });

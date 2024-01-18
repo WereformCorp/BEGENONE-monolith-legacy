@@ -18,7 +18,10 @@ const channelSchema = new mongoose.Schema({
     type: String,
     default: 'default.jpeg',
   },
-  bannerImage: String,
+  bannerImage: {
+    type: String,
+    default: 'Banner.png',
+  },
   about: {
     type: String,
     maxLength: 1000,
@@ -104,8 +107,7 @@ channelSchema.pre(/^find/, function (next) {
 
   this.populate({
     path: 'videos',
-    select:
-      '-bookmark -sponsors -comments -tags -description -thumbnail -section -channel -audio -videos -__v',
+    select: '-__v',
   });
 
   this.populate({

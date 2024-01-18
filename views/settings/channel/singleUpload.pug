@@ -1,0 +1,126 @@
+extends ../../main/base
+
+block append head
+  link(rel="stylesheet", href="/css/singleUpload.css")
+  link(rel="stylesheet", href="/css/singleUploadMediaQueries.css")
+
+block content
+  section.sect-mid-contentContainer
+    h1.upload-heading UPLOAD CONTENT
+    .upload_n_promote
+      .ctnt-upload
+        .ctnt-upload-rows.ctnt-upload-row-1
+          .ctnt-thumb
+            h4.ctnt-thumb-h4 THUMBNAIL
+            button.ctnt-thumb-btn UPLOAD
+            img.ctnt-thumb-img(src='/imgs/thumbnails/thumbnail-659cf1fbb77c200efcc2abec-1704794899919.jpeg', alt='')
+        .ctnt-upload-rows.ctnt-upload-row-2
+          h3.upload-title TITLE (Heading)
+          input.upload-title-input(placeholder="Type your content's heading here..", type='text', name='', id='')
+        .ctnt-upload-rows.ctnt-upload-row-3
+          h3.upload-description Description
+          textarea.upload-description-textarea(name='', id='', cols='30', rows='10')
+        .ctnt-upload-rows.ctnt-upload-row-4
+          button.upload-opt-kids Kids
+          button.upload-opt-old Old
+          input.upload-opt-tags(type='text', placeholder='Type your content related tags here')
+        .ctnt-upload-rows.ctnt-upload-row-5
+          .ctnt-comments
+            h3 Comments
+            button.ctnt-cmnt-enable Enable
+            button.ctnt-cmnt-disable Disable
+          .ctnt-links-in-comments
+            h3 Links
+            button.links-in-cmnt-enable Enable
+            button.links-in-cmnt-disable Disable
+          .ctnt-subs
+            h3 Substitles
+            button.ctnt-subs-enable Add
+            button.ctnt-subs-disable History
+          .ctnt-reminder
+            h3 Reminder
+            button.ctnt-reminder-enable GIF
+            button.ctnt-reminder-disable Templates
+        .ctnt-upload-rows.ctnt-upload-row-6
+          .ctnt-transcript
+            h3 Transcript
+            button.transcript-btn-type Type
+            button.transcript-btn-upload Upload
+          .ctnt-playlist
+            h3 Playlist
+            button.playlist-btn-select Select
+            button.playlist-btn-add Add
+          .ctnt-download
+            h3 Download
+            button.download-btn-enable Enable
+            button.download-btn-disable Disable
+        .ctnt-upload-rows.ctnt-upload-row-7
+          .analytics
+            h1.analytics-heading ANALYTICS
+            .analytics-container
+              .analytics-contents.analytics-content-1
+                h2.analytics-views-h2 TOTAL VIEWS
+                h4.analytics-views-h4 204,042
+              .analytics-contents.analytics-content-2
+                h2.analytics-cmnt-h2 TOTAL COMMENTS
+                h4.analytics-cmnt-h4 15,524
+              .analytics-contents.analytics-content-3
+                h2.analytics-likes-h2 TOTAL LIKES
+                h4.analytics-likes-h4 15,524
+              .analytics-contents.analytics-content-4
+                h2.analytics-imps-h2 TOTAL IMPRESSIONS
+                h4.analytics-imps-h4 15,524
+              .analytics-contents.analytics-content-5
+                h2.analytics-ctr-h2 CTR
+                h4.analytics-ctr-h4 15,524
+              .analytics-contents.analytics-content-6
+                h2.analytics-engagement-h2 ENGAGMENT RATE
+                h4.analytics-engagement-h4 25%
+              .analytics-contents.analytics-content-7
+                h2.analytics-audience-h2 AUDIENCE INCREASED
+                h4.analytics-audience-h4 5.2%
+          .comments
+            h2.comments-heading COMMENTS
+            section.ctnt-comments-2
+              .ctnt-cmmnt-filter
+                h4.ctnt-cmmnt-filter-h4 Filter:
+                button.ctnt-cmmntFltr-date Recent
+                svg.ctnt-cmmntFltr-popular.icon.icon-fire
+                  use(xlink:href='#icon-fire')
+                    symbol#icon-fire(viewBox='0 0 32 32')
+                      path(d='M19.031 0.069c-0.269 0.156-0.962 0.738-1.569 1.306-1.569 1.469-2.781 3.119-3.744 5.075-1.106 2.244-1.556 4.475-1.694 8.325l-0.044 1.15-0.225-0.063c-0.463-0.131-0.863-0.394-1.35-0.887-0.769-0.781-1.244-1.706-1.619-3.181-0.244-0.938-0.363-1.106-0.781-1.106-0.475 0-1.519 0.9-2.15 1.863-1.219 1.85-1.8 4.162-1.819 7.2-0.006 1.512 0.063 2.131 0.369 3.294 1.1 4.162 4.387 7.45 8.55 8.55 1.069 0.281 1.806 0.369 3.044 0.369 1.606 0 2.769-0.206 4.25-0.756 3.144-1.169 5.781-3.819 6.962-6.975 0.637-1.712 0.869-3.331 0.731-5.2-0.163-2.244-0.606-3.981-1.475-5.825-0.706-1.494-1.275-2.387-3.188-5.019-1.4-1.931-1.831-2.588-2.288-3.5-0.594-1.188-0.881-2.244-0.981-3.612-0.050-0.637-0.075-0.725-0.212-0.863-0.181-0.181-0.575-0.256-0.769-0.144zM17.331 20.406c0.087 0.175 0.512 0.844 0.956 1.5 0.875 1.306 1.262 2.056 1.456 2.813 0.387 1.512 0.325 2.512-0.225 3.656-0.238 0.494-0.369 0.675-0.794 1.094-0.813 0.806-1.663 1.175-2.725 1.175s-1.912-0.369-2.725-1.175c-0.425-0.413-0.556-0.6-0.794-1.094-0.387-0.8-0.512-1.431-0.463-2.35 0.037-0.681 0.175-1.431 0.325-1.794l0.075-0.181 0.156 0.275c0.287 0.481 0.662 0.85 1.069 1.044 0.688 0.331 1.281 0.319 1.519-0.044 0.094-0.137 0.119-0.369 0.156-1.262 0.050-1.175 0.119-1.712 0.319-2.406 0.15-0.525 0.613-1.438 0.988-1.931l0.269-0.356 0.137 0.363c0.081 0.2 0.212 0.506 0.3 0.675z')
+              section.ctnt-cmmnt-list
+                .ctnt-cmmnt-listItems.ctnt-cmmnt-listItem-1
+                  img.ctnt-cmmnt-logo(src='imgs/default.jpeg', height='45px')
+                  .ctnt-cmmnt-dtls
+                    .ctnt-cmmnt-accDetails
+                      h4.cmmnt-accDtls Areesh Alam
+                      h6.cmmnt-date
+                        span.ctnt-cmmntDate-day 06
+                        |  /
+                        span.ctnt-cmmntDate-month 12
+                        |  /
+                        span.ctnt-cmmntDate-year 2022
+                    h4.ctnt-cmmnt-textCmmnt
+                      | Lorem ipsum dolor, sit amet consectetur adipisicing
+                      | elit. Dolor eveniet debitis ratione quaerat incidunt
+                      | nemo commodi impedit repellendus, enim porro esse,
+                      | voluptates quo nihil minus adipisci unde similique,
+                      | nostrum ad.
+                    button.ctnt-cmmnt-reply Reply
+      .ctnt-promote
+        h3 MANAGE YOUR REACH
+        .ctnt-imp-pts
+          h4 Impression Points
+          input.ctnt-imp-points-input(type='number')
+          button Exchange Points
+        .ctnt-promote
+          h4.ctnt-promote-h4 PROMOTE
+          input.ctnt-promote-input(type='text', placeholder='Input a value', id='')
+        .ctnt-upgrade-plan
+          h4.ctnt-upgrade-plan-h3
+            | Upgrade your plan even higher?
+          button.ctnt-upgrade-plan-btn MarketPlace
+        .ctnt-sponsorship
+          h4.ctnt-sponsorship-h4 SPONSORSHIP
+          button.ctnt-sponsorship-btn View Page

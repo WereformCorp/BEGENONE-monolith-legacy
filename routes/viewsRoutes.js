@@ -1,12 +1,33 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
-// const authController = require('../controllers/authController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.route('/').get(viewsController.getOverview);
-router.route('/watch/:videoId').get(viewsController.watchVideo);
-router.route('/channels').get(viewsController.channelsList);
-router.route('/search').get(viewsController.search);
+router.get('/', authController.isLoggedIn, viewsController.getOverview);
+router.get('/signup', viewsController.signup);
+router.get('/login', authController.isLoggedIn, viewsController.login);
+router.get('/watch/:videoId', viewsController.watchVideo);
+router.get('/channels', authController.protect, viewsController.channelsList);
+router.get('/search', viewsController.search);
+router.get('/clipZ/watch/', viewsController.clipZ);
+router.get('/user', authController.protect, viewsController.userProfile);
+router.get('/upload', authController.protect, viewsController.upload);
+router.get(
+  '/user-channel',
+  authController.protect,
+  viewsController.userChannel,
+);
+router.get(
+  '/channel-settings',
+  authController.protect,
+  viewsController.channelSettings,
+);
+router.get('/all-uploads', authController.protect, viewsController.allVideos);
+router.get(
+  '/all-uploads/video',
+  authController.protect,
+  viewsController.singleVideo,
+);
 
 module.exports = router;

@@ -69,10 +69,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
   },
-  subscribedChannels: [
+  subscribers: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Channel',
+      ref: 'User',
     },
   ],
   token: {
@@ -171,6 +171,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
       this.eAddress.passwordChangedAt.getTime() / 1000,
       10,
     );
+
     return JWTTimestamp < changedTimeStamp;
   }
 
@@ -197,6 +198,8 @@ userSchema.pre(/^find/, function (next) {
 
   this.populate({
     path: 'channel',
+    select:
+      '_id __v products videos sponsors commentToggle comments commentFilters wires story tagsList bannerImage about user reviews',
   });
 
   next();

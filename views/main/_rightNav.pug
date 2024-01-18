@@ -1,11 +1,44 @@
 section#sect-3.section-right
   .sect-rgt-icons
     section.sect-rgt-icon-list
-      .sect-rgt-icon-list-container.sect-rgt-icon-1
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
-          use(xlink:href='#icon-circle-user-solid')
-            symbol#icon-circle-user-solid(viewBox='0 0 32 32')
-              path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
+      if isRoot
+        if user && user.channel
+          - const userId = user._id
+          //- - console.log(user.channel)
+          a(href="/user-channel")
+            .sect-rgt-icon-list-container.sect-rgt-icon-1
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
+        else
+          a(href="/login")
+            .sect-rgt-icon-list-container.sect-rgt-icon-1
+              svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
+                use(xlink:href='#icon-circle-user-solid')
+                  symbol#icon-circle-user-solid(viewBox='0 0 32 32')
+                    path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
+      else if !isRoot
+        if user && user.channel
+          a(href="/user-channel")
+            .sect-rgt-icon-list-container.sect-rgt-icon-1
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
+        else
+          a(href="/login")
+            .sect-rgt-icon-list-container.sect-rgt-icon-1
+              svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
+                use(xlink:href='#icon-circle-user-solid')
+                  symbol#icon-circle-user-solid(viewBox='0 0 32 32')
+                    path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
+      //- else if isRoot
+      //-   if !user && !user.channel
+      //-     a(href="/user-channel")
+      //-       .sect-rgt-icon-list-container.sect-rgt-icon-1
+      //-         img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
+      //-   else
+      //-     a(href="/login")
+      //-       .sect-rgt-icon-list-container.sect-rgt-icon-1
+      //-         svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
+      //-           use(xlink:href='#icon-circle-user-solid')
+      //-             symbol#icon-circle-user-solid(viewBox='0 0 32 32')
+      //-               path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
       .sect-rgt-icon-list-container.sect-rgt-icon-2
         svg.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid
           use(xlink:href='#icon-brain-solid')
@@ -30,11 +63,12 @@ section#sect-3.section-right
           use(xlink:href='#icon-bell-solid')
             symbol#icon-bell-solid(viewBox='0 0 28 32')
               path(d='M14 0c-1.106 0-2 0.894-2 2v1.2c-4.563 0.925-8 4.963-8 9.8v1.175c0 2.938-1.081 5.775-3.031 7.975l-0.463 0.519c-0.525 0.587-0.65 1.431-0.331 2.15s1.038 1.181 1.825 1.181h24c0.788 0 1.5-0.462 1.825-1.181s0.194-1.563-0.331-2.15l-0.462-0.519c-1.95-2.2-3.031-5.031-3.031-7.975v-1.175c0-4.838-3.438-8.875-8-9.8v-1.2c0-1.106-0.894-2-2-2zM16.831 30.831c0.75-0.75 1.169-1.769 1.169-2.831h-8c0 1.063 0.419 2.081 1.169 2.831s1.769 1.169 2.831 1.169 2.081-0.419 2.831-1.169z')
-      .sect-rgt-icon-list-container.sect-rgt-icon-6
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid
-          use(xlink:href='#icon-video-solid')
-            symbol#icon-video-solid(viewBox='0 0 36 32')
-              path(d='M0 8c0-2.206 1.794-4 4-4h16c2.206 0 4 1.794 4 4v16c0 2.206-1.794 4-4 4h-16c-2.206 0-4-1.794-4-4v-16zM34.944 6.237c0.65 0.35 1.056 1.025 1.056 1.763v16c0 0.738-0.406 1.413-1.056 1.762s-1.438 0.313-2.056-0.1l-6.887-4.594v-10.137l0.887-0.594 6-4c0.612-0.406 1.4-0.45 2.056-0.1z')
+      a(href="/upload") 
+        .sect-rgt-icon-list-container.sect-rgt-icon-6
+          svg.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid
+            use(xlink:href='#icon-video-solid')
+              symbol#icon-video-solid(viewBox='0 0 36 32')
+                path(d='M0 8c0-2.206 1.794-4 4-4h16c2.206 0 4 1.794 4 4v16c0 2.206-1.794 4-4 4h-16c-2.206 0-4-1.794-4-4v-16zM34.944 6.237c0.65 0.35 1.056 1.025 1.056 1.763v16c0 0.738-0.406 1.413-1.056 1.762s-1.438 0.313-2.056-0.1l-6.887-4.594v-10.137l0.887-0.594 6-4c0.612-0.406 1.4-0.45 2.056-0.1z')
     .sect-rgt-icon-list-container.sect-rgt-icon-7
       svg.sect-rgt-icons-imgs.sect-rgt-icon-img-7.icon.icon-bars-solid
         use(xlink:href='#icon-bars-solid')

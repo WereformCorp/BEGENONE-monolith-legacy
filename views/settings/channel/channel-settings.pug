@@ -1,0 +1,76 @@
+extends ../../main/base
+
+block append head
+  link(rel="stylesheet", href="/css/chSettings.css")
+  link(rel="stylesheet", href="/css/chMediaQueries.css")
+
+block content
+  section.sect-mid-contentContainer
+    h1.channel-setting-h1 CHANNEL SETTINGS
+    .logo_n_banner
+      .ch-logo
+        img(src=`/imgs/users/${channel.displayImage}`)
+      .ch-banner
+        img(src='/imgs/banners/Banner.png')
+    .ch-main-settings
+      .ch-main-details
+        .ch-name
+          h3.ch-name-h3 CHANNEL NAME
+          input.ch-name-input(placeholder='Type a Channel Name', type='text')
+        .ch-about
+          h3.ch-about-h3 ABOUT
+          textarea.ch-about-textarea(placeholder='Enter Your Channels About Information Here.', cols='30', rows='6')
+        .ch-id
+          h3.ch-id-h3 CHANNEL ID
+          input.ch-id-input(placeholder='i.e. areeshalam21', type='text', name='', id='')
+        .ch-links
+          h3.ch-links-h3 LINKS
+          input.ch-links-input(placeholder='add link here', type='text', name='', id='')
+      .ch-comments
+        .ch-comments-permission
+          h3.ch-comments-h3 COMMENTS
+          .ch-comments-btns
+            button.ch-comments-btn-enable Enable
+            button.ch-comments-btn-disable Disable
+        .ch-comments-filter
+          h3.ch-comments-filter-h3 COMMENT FILTERS
+          h6.ch-comments-filter-h6 Forbidden Words
+          input.ch-comments-filter-input(type='text', name='', id='')
+    .ch-details
+      .ch-details-col-1
+        .ch-dtls-uploads
+          .ch-dtls-header
+            h3.ch-dtls-h3-heading UPLOADS
+            h3.ch-dtls-h3-allUpload All Uploads
+          
+          each video in channel.videos
+            .ch-dtls-vdo-card
+              img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
+              .ch-dtls-vdo-meta
+                h3.ch-dtls-vdo-title= video.title
+
+                - const videoTime = new Date(video.time)
+                h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                h3.ch-dtls-vdo-views= video.views
+        .ch-dtls-subscribers
+          .ch-dtls-subs-heading
+            h3.ch-dtls-subs-h3 SUBSCRIPTION
+            h4.ch-dtls-subs-h4 View All
+          .ch-dtls-subs-container
+            .ch-dtls-subs.ch-dtls-sub-1
+              img.ch-dtls-subs-img(src='/imgs/users/default.jpeg')
+              h3.ch-dtls-subs-name Areesh Alam
+              h3.ch-dtls-subs-date 12 Jan 2021
+            
+        .ch-dtls-story
+          h2.ch-dtls-story-h2 STORIES SETTINGS
+          .story-settings.story-setting-1
+            h4.story-settings-h4
+              | Allow Users to comment your story
+            button.story-settings-allow Allow
+            button.story-settings-deny Deny
+      .ch-dtls-col-2
+        .ch-dtls-about-owner
+          h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
+          button.ch-dtls-about-owner-save-btn SAVE IT
+          textarea.ch-dtls-about-owner-textarea(cols='30', rows='10')

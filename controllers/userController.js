@@ -68,7 +68,10 @@ exports.uploadUserPhoto = upload.single('photo');
 // });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find().populate({
+    path: 'channel',
+    select: '-__v',
+  });
 
   if (!users) return next(new AppError(`Users Not Found!`, 404));
 
@@ -82,7 +85,10 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).populate({
+    path: 'channel',
+    select: '-__v',
+  });
 
   if (!user) next(new AppError(`User Not Found!`, 404));
 
@@ -112,7 +118,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.file);
+  // console.log(req.file);
 
   // 1) Create error if user posts password data
   const sensitiveFields = ['password', 'passwordConfirm', 'phoneNumber'];
@@ -134,7 +140,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     new: true,
   });
   if (req.file) updatedUser.photo = req.file.filename;
-  console.log(updatedUser.photo);
+  // console.log(updatedUser.photo);
 
   res.status(200).json({
     status: 'success',

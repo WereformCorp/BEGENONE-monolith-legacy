@@ -69,6 +69,16 @@ app.use((req, res, next) => {
   next();
 });
 
+const attachUserToLocals = (req, res, next) => {
+  if (req.user) {
+    res.locals.user = req.user;
+  }
+  next();
+};
+
+// Apply the middleware to all routes
+app.use(attachUserToLocals);
+
 // 3) ROUTE
 app.use('/', viewsRouter);
 app.use('/api/v1/channels', channelRouter);

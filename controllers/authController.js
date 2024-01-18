@@ -29,8 +29,6 @@ const createSendToken = (user, statusCode, res) => {
   // Remove Password in Output
   user.eAddress.password = undefined;
 
-  console.log(user.displayImage);
-
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -70,9 +68,10 @@ exports.signup = catchAsync(async (req, res, next) => {
         ux: {
           scroll: req.body.platformSettings.ux.scroll,
           popUp: req.body.platformSettings.ux.popUp,
-          cookies: req.body.platformSettings.ux.cookies,
+          // cookies: req.body.platformSettings.ux.cookies,
         },
       },
+      channel: req.body.channel,
     });
 
     if (!newUser) return next(new AppError(`Data Not Found!`, 404));
@@ -88,8 +87,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body.eAddress;
 
-  // console.log(`EMAIL: ${email}`, `PASSWORD: ${password}`);
-
   // 1) Check if the email and password exist
   if (!email || !password) {
     return next(new AppError(`Please provide email and password`, 400));
@@ -99,7 +96,6 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ 'eAddress.email': email }).select(
     '+eAddress.password',
   );
-  // const correct = await user.correctPassword(password, user.eAddress.password);
 
   if (
     !user ||
@@ -115,23 +111,27 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) GETTING TOKEN AND CHECK OF IT'S THERE
   let token;
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
-
-  // console.log(token);
 
   if (!token) {
     return next(
       new AppError(`You are not logged in. Please log in to get access`, 401),
     );
   }
+
+  // console.log('Token:', token);
   // 2) VERIFICATION TOKEN
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
+  // console.log(decoded);
   // 3) CHECK IF USER STILL EXISTS
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
@@ -265,32 +265,33 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-// exports.isLoggedIn = async (req, res, next) => {
-//   if (req.cookies.jwt) {
-//     try {
-//       // Verifies the token
-//       const decoded = await promisify(jwt.verify)(
-//         req.cookies.jwt,
-//         process.env.JWT_SECRET,
-//       );
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // Verifies the token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET,
+      );
 
-//       // 2) Check if User still exists
-//       const currentUser = await User.findById(decoded.id);
-//       if (!currentUser) {
-//         return next();
-//       }
+      // 2) Check if User still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
 
-//       // 3) Check if User changed password after the Token was issued
-//       if (currentUser.changedPasswordAfter(decoded.iat)) {
-//         return next();
-//       }
+      // 3) Check if User changed password after the Token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
 
-//       // THERE IS A LOGGED IN USER
-//       res.locals.user = currentUser;
-//       return next();
-//     } catch (err) {
-//       return next();
-//     }
-//   }
-//   next();
-// };
+      // THERE IS A LOGGED IN USER
+      res.user = currentUser;
+      res.locals.user = currentUser;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};

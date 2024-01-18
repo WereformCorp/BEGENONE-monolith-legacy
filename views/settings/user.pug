@@ -1,0 +1,72 @@
+extends ../main/base
+
+block append head
+  link(rel='stylesheet', href='/css/user.css')
+  link(rel='stylesheet', href='/css/profileMediaQueries.css')
+
+block content
+    section.sect-mid-contentContainer
+      h1.user-heading-h1 USER SETTINGS
+      .basic-details
+        section.identification
+          img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+          .full_user_name
+            .firstname
+              h2 First Name
+              input(placeholder=`${user.name.firstName}`, type='text')
+            .secondname
+              h2 Second Name
+              input(placeholder=`${user.name.secondName}`, type='text')
+            .username
+              h2 Username
+              input(placeholder='Type your username', type='text')
+        section.electronic-address
+          h2.eAddress-heading-h1 ELECTRONIC ADDRESS
+          .email_phNumber
+            .email
+              h2 Email
+              input(placeholder='Type your email here', type='text')
+            .phoneNumber
+              h2 Phone Number
+              input(placeholder='Type your phone number here', type='text')
+          .changePassword
+            .old_password
+              h2 Old Password
+              input(placeholder='Type your old password here', type='text')
+            .confirm_password
+              h2 Confirm Password
+              input(placeholder='Type your old password here', type='text')
+            .new_password
+              h2 New Password
+              input(placeholder='Type your old password here', type='text')
+            button.submit_password_info Submit
+      .other-userInfo
+        .channel_info
+          h3 CHANNEL ASSOCIATED
+          img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+          a(href=`/user-channel`) 
+            .ch_details
+              h4.ch_details_chUsername= '@' + channel.channelUserName
+              h4.ch_details_chname= channel.name
+              button S
+        .token_info
+          h2 TOKENS
+          a(href="/tokens") 
+            button GET TOKEN
+        .lock_screen
+          h2 LOCK
+          a(href="/lock")
+            button GOTO
+      .platform-mode
+        h2 PLATFORM MODE
+        button.mode_simple Simple
+        button.mode_advance Advance
+        button.mode_professional Professional
+        button.mode_enterprise Enterprise
+      .lang_theme
+        .language-details
+          h2 LANGUAGE
+          button SELECT LANGUAGE
+        .themes-details
+          h2 THEMES
+          button GOTO

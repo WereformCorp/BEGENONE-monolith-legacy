@@ -12,8 +12,13 @@
 }
 
 .searchBar-search-Icon {
-  /* filter: invert(); */
+  background-color: rgb(60, 60, 60, 0.2);
+  /* width: 1.4rem;
+  height: 1.4rem; */
   align-self: center;
+  cursor: pointer;
+  /* padding: 1rem; */
+  font-size: 1rem;
 }
 
 .nav-search {
@@ -33,15 +38,21 @@
   width: 60%;
   height: 45px;
   flex-shrink: 0;
-  border-radius: 15px;
-  border: 1px solid rgba(120, 120, 120, 0.5);
-  background: rgba(60, 60, 60, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(120, 120, 120, 0.3);
+  background: transparent;
   outline: none;
-  padding: 10px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  transition: all 0.2s ease-in-out;
 }
 
-/* .searchBar-InputField::placeholder {
-} */
+.searchBar-InputField:hover,
+.searchBar-InputField:focus,
+.searchBar-InputField:active {
+  background: rgba(60, 60, 60, 0.2);
+}
 
 .searchBar-InputField[type='text'] {
   font-family: montserrat;

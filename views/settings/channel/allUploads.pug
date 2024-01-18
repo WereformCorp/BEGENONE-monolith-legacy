@@ -1,0 +1,28 @@
+extends ../../main/base
+
+block append head
+  link(rel="stylesheet", href="/css/video.css")
+  link(rel="stylesheet", href="/css/videoMediaQueries.css")
+
+block content
+  section.sect-mid-contentContainer
+    h1.video-heading MANAGE VIDEOS
+    .video-containers
+      each video in videos
+        .video-ctnt-cntnr.video-ctnt-cntnr-1
+          img.video-ctnt-thumb(src=`/imgs/thumbnails/${video.thumbnail}`)
+          .video-headers
+            h3.video-title= video.title
+            h4.video-description= video.description
+          .video-details
+            .video-date
+              h3.video-date-h3 Date:
+              - const videoTime = new Date(video.time)
+              h4.video-date-h4= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+            .video-views
+              h3.video-views-h3 Views:
+              h4.video-views-h4= video.views
+            .video-visibillity
+              h3.video-visibillity-h3 Visibility:
+              h4.video-visibillity-h4 Everyone
+          button.video-btn-insights INSIGHTS

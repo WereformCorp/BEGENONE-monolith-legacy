@@ -1,15 +1,19 @@
 extends ../base
 
+block append head
+  link(rel='stylesheet', href='/css/mainVideo.css')
+  link(rel='stylesheet', href='/css/videoCard.css')
+
 block content
     section.sect-mid-contentContainer
       section.sect-mid-videoPlayer
         section.sect-mid-vdoP-c1
           section.sect-mid-vdoP-dtls
-            img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.displayImage}`)
+            img.sect-mid-vdoP-chLogo(src=`/imgs/users/${user.channel.user._id}/display-images/${user.channel.displayImage}`)
             .sect-mid-vdoP-name_N_subCount
               h4.vdoP-name= video.channel.name
               h5.vdoP-subsCount
-                span 239,000,000
+                span= video.channel.subscribersCount
                 |  Subscribers
             .sect-mid-vdo_subscribe
               button.sect-mid-vdoP-subsBtn Subscribe
@@ -145,11 +149,6 @@ block content
                           h4.cmmnt-accDtls= comment.channel.name
                           - const commentDate = new Date(comment.time)
                           h6.cmmnt-date= commentDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                            //- span.ctnt-cmmntDate-day 06
-                            //- |  /
-                            //- span.ctnt-cmmntDate-month 12
-                            //- |  /
-                            //- span.ctnt-cmmntDate-year 2022
                         .cmmnt-fltrs
                           svg.cmmnt-fltr-like.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
                             use(xlink:href='#icon-thumbs-up-solid')
@@ -175,7 +174,7 @@ block content
             a(href=`/watch/${singleVideo._id}`)
               .content-containers.content-container-1
                 section.section-Header
-                  img.sectionHead-chLogo(src=`/imgs/users/${singleVideo.channel.displayImage}`)
+                  img.sectionHead-chLogo(src=`/imgs/users/${singleVideo.channel.user._id}/display-images/${singleVideo.channel.displayImage}`)
                   h3.sectionHead-chName= singleVideo.channel.name
                   img.sectionHead-tick(src='/imgs/Middle Nav/video card/tick-square 8.png')
                 img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
