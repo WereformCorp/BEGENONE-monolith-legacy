@@ -9,7 +9,7 @@ block content
     h1.channel-setting-h1 CHANNEL SETTINGS
     .logo_n_banner
       .ch-logo
-        img(src=`/imgs/users/${channel.displayImage}`)
+        img(src=`/imgs/users/${userData._id}/display-images/${channel.displayImage}`)
       .ch-banner
         img(src='/imgs/banners/Banner.png')
     .ch-main-settings
@@ -43,15 +43,16 @@ block content
             h3.ch-dtls-h3-heading UPLOADS
             h3.ch-dtls-h3-allUpload All Uploads
           
-          each video in channel.videos
-            .ch-dtls-vdo-card
-              img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
-              .ch-dtls-vdo-meta
-                h3.ch-dtls-vdo-title= video.title
+          .ch-dtls-vdo-card-container
+            each video in channel.videos
+              .ch-dtls-vdo-card
+                img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
+                .ch-dtls-vdo-meta
+                  h3.ch-dtls-vdo-title= video.title
 
-                - const videoTime = new Date(video.time)
-                h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                h3.ch-dtls-vdo-views= video.views
+                  - const videoTime = new Date(video.time)
+                  h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                  h3.ch-dtls-vdo-views= video.views
         .ch-dtls-subscribers
           .ch-dtls-subs-heading
             h3.ch-dtls-subs-h3 SUBSCRIPTION

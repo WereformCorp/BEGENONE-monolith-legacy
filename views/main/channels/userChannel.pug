@@ -7,11 +7,17 @@ block append head
 block content
   section.sect-mid-contentContainer
     section.sect-mid-rows.sect-mid-row-1
-      img(src=`/imgs/users/${userId}/banner-images/${channel.bannerImage}`, width='100%')
+      if channel.bannerImage
+      img.sect-mid-banner-img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`, width='100%')
+      //- else if channel.bannerImage === undefined
+      //-   img.sect-mid-banner-img(src=`/imgs/default-banner-image.jpg`, width='100%')
     section.sect-mid-rows.sect-mid-row-2
       section.sect-mid-chDetails
         section.sect-mid-logo
-          img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+          if channel.displayImage
+            img.sect-mid-logo-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
+          else if channel.displayImage === undefined
+            img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
         section.sect-mid-awards
           svg.sect-mid-awards-tick.icon.icon-checkmark2
             use(xlink:href='#icon-checkmark2')
@@ -103,7 +109,7 @@ block content
               symbol#icon-service-solid(viewBox='0 0 40 32')
                 path(d='M34 15.5v0.206l4.356-4.356c1.369-1.369 1.369-3.581 0-4.95l-4.881-4.875c-1.369-1.369-3.581-1.369-4.95 0l-2.506 2.506c-0.169-0.019-0.344-0.031-0.519-0.031h-7c-2.319 0-4.225 1.75-4.475 4h-0.025v7.5c0 1.381 1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5v-4.5c0 0 0-0.006 0-0.006v-0.994h9.5c0 0 0 0 0.006 0h0.494c2.762 0 5 2.238 5 5v0.5zM21 12v3.5c0 2.488-2.012 4.5-4.5 4.5s-4.5-2.012-4.5-4.5v-7.412c-2.244 0.387-4.112 2.019-4.75 4.263l-1.031 3.6-4.575 4.575c-1.369 1.369-1.369 3.581 0 4.95l4.881 4.881c1.369 1.369 3.581 1.369 4.95 0l2.356-2.356c0.056 0 0.113 0.006 0.169 0.006h10c1.656 0 3-1.344 3-3 0-0.35-0.063-0.688-0.169-1h0.169c1.656 0 3-1.344 3-3 0-0.8-0.313-1.525-0.825-2.063 1.606-0.313 2.819-1.725 2.825-3.425v-0.025c-0.006-1.925-1.569-3.487-3.5-3.487 0 0 0 0 0 0h-7.5z')
       section.sect-mid-ctnt-vdos
-        section.sect-mid-contentContainer
+        section.sect-mid-contentContainer-vdo
           each video in channel.videos
             a(href=`/watch/${video._id}`)
               .content-containers.content-container-1
@@ -117,3 +123,77 @@ block content
                       |  Views
                     - const videoTime = new Date(video.time)
                     h5.sectionHead-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+        section.sect-mid-rows.sect-mid-row-3
+      section.sect-mid-ch-about
+        h1.sect-mid-ch-about-h1 ABOUT
+        h4.sect-mid-ch-about-text
+          | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam
+          | provident, temporibus, ipsa nobis corporis cupiditate eum
+          | reiciendis quos eveniet repellat, harum quae. Hic illo
+          | doloribus, tenetur minus, quos perspiciatis obcaecati dolorum
+          | voluptas reprehenderit recusandae aperiam aliquam neque delectus
+          | possimus fugit.
+      section.sect-mid-ch-wire
+        h1.ch-wire-h1 Wire
+        .ch-wire-header
+          img.ch-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
+          .ch-wire-header-meta
+            h3.wire-header-name Areesh Alam
+            h3.wire-header-subs 500,000 Subscribers
+          .ch-wire-header-date_views
+            h3.wire-header-date 19 Jan 2024
+            h3.wire-header-views 50,423 Views
+        h4.sect-mid-ch-wire-text
+          | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam
+          | provident, temporibus, ipsa nobis corporis cupiditate eum
+          | reiciendis quos eveniet repellat, harum quae. Hic illo
+          | doloribus, tenetur minus, quos perspiciatis obcaecati dolorum
+          | voluptas reprehenderit recusandae aperiam aliquam neque delectus
+          | possimus fugit.
+      section.sect-mid-ctnt-home
+        h1.sect-mid-ctnt-home-h1 HOME
+        .featuredVideo
+          video.featuredVideo-video(width='640', height='360', controls='')
+            source(src='/video/sample-video.mp4', type='video/mp4')
+          h2.featuredVideo-title
+            | THIS IS THE TITLE OF THE SAMPLE VIDEO HERE AND IT&rdquo;S LENGTH
+            | COULD EXTEND UPTO 100 CHARACTERS
+        .most-popular
+          h2.most-popular-h2 MOST POPULAR
+          section.sect-mid-ctnt-popular-vdo
+            .content-containers.content-container-1
+              img.sectionHead-thumbNail(src='imgs/Middle Nav/Video card/thumbnail.png')
+              section.section-details
+                h4.section-details-title
+                  | This is the Title of the video that is being displayed.
+                  | This is the Title of the video that is being displayed.
+                hr(width='50px')
+                .sectionHead-views_N_date
+                  h5.sectionHead-views
+                    span.views 124,000
+                    |  Views
+                  h5.sectionHead-date
+                    span
+                      | 19 
+                      span hours
+                    |  ago
+        .ctnt-home-wires
+          h1.ctnt-home-wire-h1 Wire
+          section.sect-mid-ctntRecom-wire
+            section.ctnt-home-wire
+              .ctnt-home-wire-header
+                img.ctnt-home-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
+                .ctnt-home-wire-header-meta
+                  h3.ctnt-home-wire-header-name Areesh Alam
+                  h3.ctnt-home-wire-header-subs
+                    | 500,000 Subscribers
+                .ctnt-home-wire-header-date_views
+                  h3.wire-header-date 19 Jan 2024
+                  h3.wire-header-views 50,423 Views
+              h4.ctnt-home-wire-text
+                | Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                | Ullam provident, temporibus, ipsa nobis corporis
+                | cupiditate eum reiciendis quos eveniet repellat, harum
+                | quae. Hic illo doloribus, tenetur minus, quos perspiciatis
+                | obcaecati dolorum voluptas reprehenderit recusandae
+                | aperiam aliquam neque delectus possimus fugit.

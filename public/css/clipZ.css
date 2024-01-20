@@ -188,22 +188,24 @@
   background-color: transparent;
   border: none;
   outline: none;
+  font-size: 1.25rem;
 }
 
 .vdo-ctrls-items:hover {
   cursor: pointer;
 }
 
-.vdo-ctrls-icons {
-  /* filter: invert(); */
-  /* height: 20px; */
+.vdo-item-play {
+  display: flex;
+}
+
+.vdo-item-pause {
+  display: none;
 }
 
 .section-ctnt-nav {
   display: flex;
-  /* flex-direction: column; */
   height: max-content;
-  /* row-gap: 5px; */
   padding: 10px;
   background-color: rgb(60, 60, 60, 0.3);
   border: 1px solid rgb(120, 120, 120, 0.5);
@@ -221,7 +223,6 @@
 }
 
 .sect-ctnt-nav-icon {
-  /* filter: invert(); */
   width: 20px;
 }
 

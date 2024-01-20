@@ -1,20 +1,91 @@
+const fs = require('fs');
 const multer = require('multer');
 // const sharp = require('sharp');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
-const multerStorage = multer.diskStorage({
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const destinationFolder =
+//       file.fieldname === 'displayImage' ? 'display-images' : 'banner-images';
+//     const userFolderPath = `public/imgs/users/${req.user._id}`;
+//     const finalDestination = `${userFolderPath}/${destinationFolder}`;
+
+//     // Check if the user folder exists, create it if not
+//     if (!fs.existsSync(userFolderPath)) {
+//       fs.mkdirSync(userFolderPath);
+//     }
+
+//     // Check if the destination folder exists, create it if not
+//     if (!fs.existsSync(finalDestination)) {
+//       fs.mkdirSync(finalDestination);
+//     }
+
+//     cb(null, finalDestination);
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     const fieldName = file.fieldname;
+
+//     // Remove the old file before saving the new one
+//     if (req.user.channel[fieldName]) {
+//       const oldFilePath = `public/imgs/users/${req.user._id}/${fieldName}s/${req.user.channel[fieldName]}`;
+//       fs.unlinkSync(oldFilePath);
+//     }
+
+//     cb(null, `${fieldName}-${req.user.channel._id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith('image')) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError(`Not an image! Please upload only images.`, 400), false);
+//   }
+// };
+
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: multerFilter,
+// });
+
+const multerPhotoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/imgs/users');
+    const destinationFolder =
+      file.fieldname === 'photo' ? 'user-display-picture' : '';
+    const userPhotoFolderPath = `public/imgs/users/${req.user._id}`;
+    const finalDestination = `${userPhotoFolderPath}/${destinationFolder}`;
+
+    // Check if the user-photo folder exists, create it if not
+    if (!fs.existsSync(userPhotoFolderPath)) {
+      fs.mkdirSync(userPhotoFolderPath, { recursive: true });
+    }
+
+    if (!fs.existsSync(finalDestination)) {
+      fs.mkdirSync(finalDestination);
+    }
+
+    cb(null, finalDestination);
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+    const fieldName = file.fieldname;
+
+    // Remove the old file before saving the new one
+    if (req.user[fieldName]) {
+      const oldFilePath = `public/imgs/users/${req.user._id}/user-display-picture/${req.user[fieldName]}`;
+      if (fs.existsSync(oldFilePath)) {
+        fs.unlinkSync(oldFilePath);
+      }
+    }
+
+    cb(null, `${fieldName}-${req.user._id}-${Date.now()}.${ext}`);
   },
 });
 
-const multerFilter = (req, file, cb) => {
+const multerPhotoFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
@@ -22,12 +93,35 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
+const uploadPhoto = multer({
+  storage: multerPhotoStorage,
+  fileFilter: multerPhotoFilter,
 });
 
-exports.uploadUserPhoto = upload.single('photo');
+exports.uploadUserPhoto = uploadPhoto.single('photo');
+
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/imgs/users');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith('image')) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError(`Not an image! Please upload only images.`, 400), false);
+//   }
+// };
+
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: multerFilter,
+// });
 
 // exports.uploadTourImages = upload.fields([
 //   { name: 'imageCover', maxCount: 1 },
@@ -136,13 +230,21 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 3) Update User document
-  const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
+  let updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
     new: true,
   });
-  if (req.file) updatedUser.photo = req.file.filename;
-  // console.log(updatedUser.photo);
+  // if (req.file) updatedUser.photo = req.file.filename;
 
-  res.status(200).json({
+  if (req.file) {
+    updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { photo: req.file.filename },
+      { new: true },
+    );
+  }
+  console.log(updatedUser.photo);
+
+  return res.status(200).json({
     status: 'success',
     data: {
       user: updatedUser,

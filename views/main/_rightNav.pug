@@ -1,10 +1,24 @@
 section#sect-3.section-right
   .sect-rgt-icons
     section.sect-rgt-icon-list
-      if isRoot
+      if user && user.channel
+        - const userId = user._id
+        - console.log(userId)
+        //- - console.log(user.channel)
+        a(href="/user-channel")
+          .sect-rgt-icon-list-container.sect-rgt-icon-1
+            if userData && userData.channel
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
+      else
+        a(href="/login")
+          .sect-rgt-icon-list-container.sect-rgt-icon-1
+            svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
+              use(xlink:href='#icon-circle-user-solid')
+                symbol#icon-circle-user-solid(viewBox='0 0 32 32')
+                  path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
+      //- else if !isRoot
         if user && user.channel
           - const userId = user._id
-          //- - console.log(user.channel)
           a(href="/user-channel")
             .sect-rgt-icon-list-container.sect-rgt-icon-1
               img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
@@ -15,30 +29,6 @@ section#sect-3.section-right
                 use(xlink:href='#icon-circle-user-solid')
                   symbol#icon-circle-user-solid(viewBox='0 0 32 32')
                     path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
-      else if !isRoot
-        if user && user.channel
-          a(href="/user-channel")
-            .sect-rgt-icon-list-container.sect-rgt-icon-1
-              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
-        else
-          a(href="/login")
-            .sect-rgt-icon-list-container.sect-rgt-icon-1
-              svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
-                use(xlink:href='#icon-circle-user-solid')
-                  symbol#icon-circle-user-solid(viewBox='0 0 32 32')
-                    path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
-      //- else if isRoot
-      //-   if !user && !user.channel
-      //-     a(href="/user-channel")
-      //-       .sect-rgt-icon-list-container.sect-rgt-icon-1
-      //-         img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
-      //-   else
-      //-     a(href="/login")
-      //-       .sect-rgt-icon-list-container.sect-rgt-icon-1
-      //-         svg.sect-rgt-icons-imgs.sect-rgt-icon-img-1.icon.icon-circle-user-solid
-      //-           use(xlink:href='#icon-circle-user-solid')
-      //-             symbol#icon-circle-user-solid(viewBox='0 0 32 32')
-      //-               path(d='M24.938 24.012c-1.381-2.4-3.975-4.012-6.938-4.012h-4c-2.963 0-5.556 1.613-6.938 4.012 2.2 2.45 5.387 3.988 8.938 3.988s6.738-1.544 8.938-3.988zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16v0c0 8.837-7.163 16-16 16s-16-7.163-16-16v0zM16 17c2.485 0 4.5-2.015 4.5-4.5s-2.015-4.5-4.5-4.5v0c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5v0z')
       .sect-rgt-icon-list-container.sect-rgt-icon-2
         svg.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid
           use(xlink:href='#icon-brain-solid')

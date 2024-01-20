@@ -40,39 +40,40 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   try {
-    const newUser = await User.create({
-      name: {
-        firstName: req.body.name.firstName,
-        secondName: req.body.name.secondName,
-      },
-      displayImage: req.body.displayImage,
-      username: req.body.username,
-      displayName: req.body.displayName,
-      // role: req.body.role,
-      eAddress: {
-        phoneNumber: req.body.eAddress.phoneNumber,
-        email: req.body.eAddress.email,
-        password: req.body.eAddress.password,
-        passwordConfirm: req.body.eAddress.passwordConfirm,
-        passwordChangedAt: req.body.eAddress.passwordChangedAt,
-        passwordResetToken: req.body.eAddress.passwordResetToken,
-      },
-      lockAccount: {
-        numeric: req.body.lockAccount.numeric,
-        alphabetic: req.body.lockAccount.alphabetic,
-      },
-      platformSettings: {
-        mode: req.body.platformSettings.mode,
-        languages: req.body.platformSettings.languages,
-        gui: req.body.platformSettings.gui,
-        ux: {
-          scroll: req.body.platformSettings.ux.scroll,
-          popUp: req.body.platformSettings.ux.popUp,
-          // cookies: req.body.platformSettings.ux.cookies,
-        },
-      },
-      channel: req.body.channel,
-    });
+    const newUser = await User.create(req.body);
+    //   {
+    //   name: {
+    //     firstName: req.body.name.firstName,
+    //     secondName: req.body.name.secondName,
+    //   },
+    //   displayImage: req.body.displayImage,
+    //   username: req.body.username,
+    //   displayName: req.body.displayName,
+    //   // role: req.body.role,
+    //   eAddress: {
+    //     phoneNumber: req.body.eAddress.phoneNumber,
+    //     email: req.body.eAddress.email,
+    //     password: req.body.eAddress.password,
+    //     passwordConfirm: req.body.eAddress.passwordConfirm,
+    //     passwordChangedAt: req.body.eAddress.passwordChangedAt,
+    //     passwordResetToken: req.body.eAddress.passwordResetToken,
+    //   },
+    //   lockAccount: {
+    //     numeric: req.body.lockAccount.numeric,
+    //     alphabetic: req.body.lockAccount.alphabetic,
+    //   },
+    //   platformSettings: {
+    //     mode: req.body.platformSettings.mode,
+    //     languages: req.body.platformSettings.languages,
+    //     gui: req.body.platformSettings.gui,
+    //     ux: {
+    //       scroll: req.body.platformSettings.ux.scroll,
+    //       popUp: req.body.platformSettings.ux.popUp,
+    //       // cookies: req.body.platformSettings.ux.cookies,
+    //     },
+    //   },
+    //   channel: req.body.channel,
+    // }
 
     if (!newUser) return next(new AppError(`Data Not Found!`, 404));
 

@@ -9,6 +9,8 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
+const authController = require('./controllers/authController');
+
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
 const commentRouter = require('./routes/commentRoutes');
@@ -68,6 +70,26 @@ app.use((req, res, next) => {
   // console.log(req.headers);
   next();
 });
+
+app.use(authController.isLoggedIn);
+
+// Middleware to redirect to the main page if the user is already logged in
+// const redirectIfLoggedIn = function (req, res, next) {
+//   // if (req.user) {
+//   //   res.locals.user = req.user;
+//   // }
+
+//   if (req.user) {
+//     // If the user is logged in, redirect to the main page
+//     return res.redirect('/');
+//   }
+
+//   // If the user is not logged in, proceed to the next middleware/route handler
+//   next();
+// };
+
+// // Apply redirectIfLoggedIn middleware for the '/login' and '/signup' routes
+// app.use(['/login', '/signup'], redirectIfLoggedIn);
 
 const attachUserToLocals = (req, res, next) => {
   if (req.user) {

@@ -1,13 +1,9 @@
-// const mongoose = require('mongoose');
 const multer = require('multer');
 const Channel = require('../models/channelModel');
 const Video = require('../models/videoModel');
-// const Comment = require('../models/commentModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerController');
-
-// const { ObjectId } = mongoose.Types;
 
 const multerStorageDP = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -34,11 +30,8 @@ const upload = multer({
 
 exports.uploadThumbnail = upload.single('thumbnail');
 
-// exports.getAllVideos = factory.getAll(Video);
 exports.getVideo = factory.getOne(Video);
-// exports.updateVideo = factory.updateOne(Video);
 exports.deleteVideo = factory.deleteOne(Video);
-
 exports.updateVideo = catchAsync(async (req, res, next) => {
   try {
     const data = await Video.findByIdAndUpdate(req.params.id, req.body, {
@@ -68,35 +61,8 @@ exports.updateVideo = catchAsync(async (req, res, next) => {
 exports.getAllVideos = catchAsync(async (req, res, next) => {
   try {
     const channels = await Channel.find();
-
     const allIds = channels.map((item) => item._id);
-    // console.log(allIds);
-
     const data = await Video.find({ channel: allIds });
-    // .populate({
-    //   path: 'channel',
-    //   populate: {
-    //     path: 'user',
-    //     model: 'User',
-    //     select: '_id',
-    //   },
-    // });
-
-    // const data = await Video.find({ channel: { $in: allIds } }).populate({
-    //   path: 'channel',
-    //   populate: {
-    //     path: 'user',
-    //     model: 'User',
-    //     select: '_id',
-    //   },
-    // });
-
-    // const comment = await Comment.find({ video: ObjectId(data._id) });
-
-    // console.log(comment);
-
-    // if (!data.channel.id) data.select = false;
-    // const data = await Video.find({ channel: req.user.channel.id });
     if (!data)
       return next(new AppError(`Data you are looking for, do not exist.`, 404));
     return res.status(200).json({
@@ -115,6 +81,8 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
+    console.log(req.file);
+
     const videoData = {
       title: req.body.title,
       description: req.body.description,
@@ -129,13 +97,6 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       user: req.user.id,
       time: Date.now(),
     };
-
-    // const updateObject = { ...req.body };
-
-    // If req.file is present, add displayImage to updateObject
-    if (req.file) {
-      videoData.thumbnail = req.file.filename;
-    }
 
     const createdVideo = await Video.create(videoData);
 

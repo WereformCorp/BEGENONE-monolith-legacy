@@ -30,7 +30,7 @@ a {
 }
 
 /* //////////////////////////////// */
-
+/* 
 .icon {
   display: inline-block;
   width: 1em;
@@ -41,7 +41,7 @@ a {
 }
 .icon-lock-solid {
   width: 0.875em;
-}
+} */
 
 /* ///////////////////////////////// SECTION LEFT /////////////////////////////////// */
 
@@ -171,7 +171,7 @@ a {
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-width: 26rem;
 
   font-size: 1.8rem;
   font-weight: 800;

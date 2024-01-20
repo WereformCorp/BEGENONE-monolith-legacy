@@ -205,6 +205,10 @@
     grid-template-rows: max-content 1fr;
   }
 
+  .section-right {
+    display: none;
+  }
+
   .section-left {
     display: none;
   }
@@ -226,10 +230,6 @@
 
   .vdo-ctrlPanel {
     padding: 1rem;
-  }
-
-  .section-middle {
-    /* width: 100vw; */
   }
 
   .section-bottom {
@@ -256,6 +256,7 @@
     flex-direction: row;
     height: max-content;
     width: 100%;
+    justify-content: center;
   }
 
   .sect-lft-dwn-links {
@@ -266,10 +267,6 @@
   .sect-lft-dwn-link-1,
   .sect-lft-dwn-link-3,
   .sect-lft-dwn-link-6 {
-    display: none;
-  }
-
-  .section-right {
     display: none;
   }
 

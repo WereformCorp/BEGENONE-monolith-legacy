@@ -4,10 +4,16 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+router.get('/tokens', viewsController.tokens);
+
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
-router.get('/watch/:videoId', viewsController.watchVideo);
+router.get(
+  '/watch/:videoId',
+  authController.isLoggedIn,
+  viewsController.watchVideo,
+);
 router.get('/channels', authController.protect, viewsController.channelsList);
 router.get('/search', viewsController.search);
 router.get('/clipZ/watch/', viewsController.clipZ);
@@ -18,6 +24,9 @@ router.get(
   authController.protect,
   viewsController.userChannel,
 );
+
+router.get('/channel/:id', viewsController.singleChannel);
+
 router.get(
   '/channel-settings',
   authController.protect,

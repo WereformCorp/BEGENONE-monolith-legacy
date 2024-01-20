@@ -48,6 +48,7 @@ a {
 .container {
   display: grid;
   grid-template-columns: max-content 6fr 0.5fr;
+  position: relative;
 }
 
 /* ///////////////////////////////// SECTION MIDDLE /////////////////////////////////// */

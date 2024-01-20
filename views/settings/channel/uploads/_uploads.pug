@@ -4,29 +4,30 @@ block append head
   link(rel='stylesheet', href='/css/upload.css')
   link(rel='stylesheet', href='/css/uploadMediaQueries.css')
 
-
 block content
-  //- include _rightNavSettings
-
-  section.sect-mid-contentContainer
+  form.sect-mid-contentContainer
     h1.upload-heading UPLOAD CONTENT
+    .progress-container
+      #progressBar.progress-bar
     .upload_n_promote
       .ctnt-upload
         .ctnt-upload-rows.ctnt-upload-row-1
           .ctnt-file
             h4.ctnt-file-h4 CONTENT
-            button.ctnt-file-btn U
-            input.ctnt-file-input(type='url', name='', id='')
+            //- button.ctnt-file-btn U
+            label.ctnt-file-btn(for='video') Upload
+            input#videoFile(type='file', name='video', accept='video/*')
+            input.ctnt-file-input(type='url')
           .ctnt-thumb
             h4.ctnt-thumb-h4 THUMBNAIL
             button.ctnt-thumb-btn UPLOAD
             img(src='/imgs/thumbnails/thumbnail-659cf1fbb77c200efcc2abec-1704794899919.jpeg', alt='')
         .ctnt-upload-rows.ctnt-upload-row-2
           h3.upload-title TITLE (Heading)
-          input.upload-title-input(placeholder="Type your content's heading here..", type='text', name='', id='')
+          input#title.upload-title-input(placeholder="Type your content's heading here..", type='text')
         .ctnt-upload-rows.ctnt-upload-row-3
           h3.upload-description Description
-          textarea.upload-description-textarea(name='', id='', cols='30', rows='10')
+          textarea#description.upload-description-textarea(cols='30', rows='10')
         .ctnt-upload-rows.ctnt-upload-row-4
           button.upload-opt-kids Kids
           button.upload-opt-old Old
@@ -72,7 +73,7 @@ block content
           button Exchange Points
         .ctnt-promote-settings
           h4.ctnt-promote-h4 PROMOTE
-          input.ctnt-promote-input(type='text', placeholder='Input a value', id='')
+          input.ctnt-promote-input(type='text', placeholder='Input a value')
         .ctnt-upgrade-plan
           h4.ctnt-upgrade-plan-h3
             | Upgrade your plan even higher?
@@ -80,3 +81,7 @@ block content
         .ctnt-sponsorship
           h4.ctnt-sponsorship-h4 SPONSORSHIP
           button.ctnt-sponsorship-btn View Page
+    button.form-submit Create Video
+  
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+  script(src="js/upload-video.js")

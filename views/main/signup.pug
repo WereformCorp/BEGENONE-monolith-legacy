@@ -15,35 +15,43 @@ html(lang='en')
   body
     .container
       .headings
-        h1.login-heading BeGenuine
-        h3.login-subHeading
+        h1.signup-heading BeGenuine
+        h3.signup-subHeading
           | Welcome To The Light
           br
           span.subheading-note (Btw, Don&apos;t worry about the theme, you can change it later)
-      form.login-form
+      form.signup-form
         .firstname
-          h3.login-firstname
+          h3.signup-firstname
             | First Name
             span.star *
-          input.login-firstname-input(type='text', name='', id='', placeholder='Enter your first name')
+          input#firstName.signup-firstname-input(type='text', placeholder='Enter your first name')
         .lastname
-          h3.login-lastname
-            | Last Name
+          h3.signup-lastname
+            | Second Name
             span.star *
-          input.login-lastname-input(type='text', name='', id='', placeholder='Enter your last name')
+          input#secondName.signup-lastname-input(type='text', placeholder='Enter your second name')
         .email
-          h3.login-email
+          h3.signup-email
             | Email
             span.star *
-          input.login-email-input(type='text', name='', id='', placeholder='Enter your email')
+          input#email.signup-email-input(type='text', placeholder='Enter your email')
         .password
-          h3.login-password
+          h3.signup-password
             | Password
             span.star *
-          input.login-password-input(type='text', name='', id='', placeholder='Enter your password')
+          input#password.signup-password-input(type='text', placeholder='Enter your password')
         .password-confirm
-          h3.login-password-confirm
+          h3.signup-password-confirm
             | Password Confirm
             span.star *
-          input.login-password-confirm-input(type='text', name='', id='', placeholder='Enter your password confirm')
+          input#passwordConfirm.signup-password-confirm-input(type='text', placeholder='Enter your password confirm')
+        .username
+          h3.signup-username
+            | Username
+            span.star *
+          input#username.username-input(type='text', placeholder='Enter your password confirm')
         button.submit-form-btn SUBMIT
+    
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+    script(src="/js/signup.js") 

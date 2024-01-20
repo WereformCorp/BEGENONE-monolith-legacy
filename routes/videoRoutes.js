@@ -1,4 +1,5 @@
 const express = require('express');
+
 const videoController = require('../controllers/videoController');
 const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
@@ -6,14 +7,12 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router
-  .route('/')
-  .get(videoController.getAllVideos)
-  .post(
-    authController.protect,
-    videoController.uploadThumbnail,
-    videoController.createVideo,
-  );
+router.route('/').get(videoController.getAllVideos).post(
+  authController.protect,
+  videoController.uploadThumbnail,
+  // videoController.uploadVideo,
+  videoController.createVideo,
+);
 
 router
   .route('/:id')

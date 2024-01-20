@@ -1,44 +1,59 @@
 /* eslint-disable */
-// import '@babel/polyfill';
-// import { login } from './login';
-// const login = require('login');
+const notifBtn = document.querySelector('.sect-rgt-icon-5');
+const homeSectionBtn = document.querySelector('.ctnt-nav-item-1');
+const videosSectionBtn = document.querySelector('.ctnt-nav-item-2');
+// const homeSectionBtn = document.querySelector('.ctnt-nav-item-3');
+// const homeSectionBtn = document.querySelector('.ctnt-nav-item-4');
+const wiresSectionBtn = document.querySelector('.ctnt-nav-item-5');
+const aboutSectionBtn = document.querySelector('.ctnt-nav-item-6');
 
-// const axios = require('axios');
+const homeSection = document.querySelector('.sect-mid-ctnt-home');
+const videoSection = document.querySelector('.sect-mid-ctnt-vdos');
+const aboutSection = document.querySelector('.sect-mid-ch-about');
+const wiresSection = document.querySelector('.sect-mid-ch-wire');
+const notifPanel = document.querySelector('.sect-notification-panel');
 
-// DOM ELEMENTS
-const loginForm = document.querySelector('.login-form');
+notifBtn.addEventListener('click', (event) => {
+  notifPanel.style.visibility =
+    notifPanel.style.visibility === 'visible' ? 'hidden' : 'visible';
 
-const login = async (email, password) => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
-      data: {
-        eAddress: {
-          email,
-          password,
-        },
-      },
-    });
+  event.stopPropagation();
+});
 
-    console.log('RESPONSE:', res);
-
-    if (res.data.status === 'success') {
-      // showAlert('success', 'Logged In Successfully!');
-      window.setTimeout(() => {
-        location.assign('/');
-      }, 1500);
-    }
-  } catch (err) {
-    console.log('error:', err);
+window.addEventListener('click', (event) => {
+  // Check if the clicked element is outside the notifPanel
+  if (
+    !notifPanel.contains(event.target) &&
+    notifPanel.style.visibility === 'visible'
+  ) {
+    notifPanel.style.visibility = 'hidden';
   }
-};
+});
 
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+homeSectionBtn.addEventListener('click', (e) => {
+  videoSection.style.display = 'none';
+  aboutSection.style.display = 'none';
+  wiresSection.style.display = 'none';
+  homeSection.style.display = 'flex';
+});
 
-  console.log(`EMAIL: ${email}`, `PASSWORD: ${password}`);
-  login(email, password);
+videosSectionBtn.addEventListener('click', (e) => {
+  homeSection.style.display = 'none';
+  aboutSection.style.display = 'none';
+  wiresSection.style.display = 'none';
+  videoSection.style.display = 'flex';
+});
+
+wiresSectionBtn.addEventListener('click', (e) => {
+  homeSection.style.display = 'none';
+  aboutSection.style.display = 'none';
+  videoSection.style.display = 'none';
+  wiresSection.style.display = 'flex';
+});
+
+aboutSectionBtn.addEventListener('click', (e) => {
+  homeSection.style.display = 'none';
+  videoSection.style.display = 'none';
+  wiresSection.style.display = 'none';
+  aboutSection.style.display = 'flex';
 });

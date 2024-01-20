@@ -1,10 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const { JSDOM } = require('jsdom');
-
-const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
-
-// Now you can interact with the DOM using dom.window.document
-const { document } = dom.window;
+/* eslint-disable */
 
 const video = document.querySelector('.sect-mid-vdoPlayer-video');
 const backward = document.querySelector('.vdo-ctrls-item-1');
@@ -21,6 +15,7 @@ const bufferLine = document.querySelector('.vdo-bufferLine');
 // const vdoBackwardBtn = document.querySelector('.vdo-item-backward');
 // const vdoForwardBtn = document.querySelector('.vdo-item-forward');
 const play = document.querySelector('.vdo-item-play');
+const pause = document.querySelector('.vdo-item-pause');
 const changeVolumeIcon = document.querySelector('.vdo-item-volume');
 // const cinemaMode = document.querySelector('.vdo-item-cinemaMode');
 // const picInpic = document.querySelector('.vdo-item-picInpic');
@@ -33,25 +28,16 @@ video.controls = true;
 // Get the video element
 
 // Add an event listener to the play/pause button
-playNpause.addEventListener('click', () => {
+playNpause.addEventListener('click', (event) => {
   // If the video is playing, pause it
   if (video.paused) {
     video.play();
-    play.src = 'imgs/Middle Nav/svgs/pause-solid.svg';
+    play.style.display = 'none';
+    pause.style.display = 'flex';
   } else {
     video.pause();
-    play.src = 'imgs/Middle Nav/svgs/play-solid.svg';
-  }
-});
-
-video.addEventListener('click', (event) => {
-  // If the video is playing, pause it
-  if (video.paused) {
-    video.play();
-    play.src = 'imgs/Middle Nav/svgs/pause-solid.svg';
-  } else {
-    video.pause();
-    play.src = 'imgs/Middle Nav/svgs/play-solid.svg';
+    play.style.display = 'flex';
+    pause.style.display = 'none';
   }
 
   event.stopPropagation();
@@ -65,13 +51,41 @@ fullscreen.addEventListener('click', () => {
   else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
 });
 
+function toggleControlsVisibility() {
+  if (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement
+  ) {
+    // Hide custom controls in fullscreen
+    videoCtrlPanel.style.display = 'none';
+  } else {
+    // Show custom controls outside fullscreen
+    videoCtrlPanel.style.display = 'grid';
+  }
+}
+
+document.addEventListener('fullscreenchange', toggleControlsVisibility);
+document.addEventListener('webkitfullscreenchange', toggleControlsVisibility);
+document.addEventListener('mozfullscreenchange', toggleControlsVisibility);
+
+// function toggleFullscreen() {
+//   if (video.requestFullscreen) {
+//     video.requestFullscreen();
+//   } else if (video.webkitRequestFullscreen) {
+//     video.webkitRequestFullscreen();
+//   } else if (video.mozRequestFullScreen) {
+//     video.mozRequestFullScreen();
+//   }
+// }
+
 video.addEventListener('dblclick', () => {
   if (video.webkitIsFullScreen) {
     video.webkitExitFullscreen();
     // videoCtrlPanel.style.display = "block";
   } else {
     video.webkitRequestFullscreen();
-    videoCtrlPanel.style.display = 'none';
+    // videoCtrlPanel.style.display = 'none';
   }
 });
 

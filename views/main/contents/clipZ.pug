@@ -17,7 +17,7 @@ block content
               symbol#icon-down-solid(viewBox='0 0 32 32')
                 path(d='M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16v0c8.837 0 16-7.163 16-16s-7.163-16-16-16v0zM8.438 15.063c-0.588-0.588-0.588-1.537 0-2.119s1.537-0.588 2.119 0l5.438 5.438 5.437-5.438c0.587-0.588 1.538-0.588 2.119 0s0.587 1.537 0 2.119l-6.488 6.5c-0.587 0.587-1.537 0.587-2.119 0l-6.506-6.5z')
         section.sect-ctntDtls-vdoContainer
-          video.sect-mid-vdoPlayer-video
+          video.sect-mid-vdoPlayer-video(controls)
             source(src='/video/clipZ.mp4', type='video/mp4')
           .vdo-bufferLine-container
             .vdo-bufferLine
@@ -47,6 +47,10 @@ block content
                 use(xlink:href='#icon-play-solid')
                   symbol#icon-play-solid(viewBox='0 0 24 32')
                     path(d='M4.563 2.438c-0.925-0.569-2.087-0.587-3.031-0.056s-1.531 1.531-1.531 2.619v22c0 1.087 0.588 2.087 1.531 2.619s2.106 0.506 3.031-0.056l18-11c0.894-0.544 1.438-1.512 1.438-2.563s-0.544-2.012-1.438-2.563l-18-11z')
+              svg.vdo-ctrls-items.vdo-item-pause.icon.icon-pause-solid.icon.icon-pause-solid
+                use(xlink:href='#icon-pause-solid')
+                  symbol#icon-pause-solid(viewBox='0 0 20 32')
+                    path(d='M3 4c-1.656 0-3 1.344-3 3v18c0 1.656 1.344 3 3 3h2c1.656 0 3-1.344 3-3v-18c0-1.656-1.344-3-3-3h-2zM15 4c-1.656 0-3 1.344-3 3v18c0 1.656 1.344 3 3 3h2c1.656 0 3-1.344 3-3v-18c0-1.656-1.344-3-3-3h-2z')
             button.vdo-ctrls-items.vdo-ctrls-item-4
               svg.vdo-ctrls-icons.vdo-item-volume.icon-clipz.icon-volume-xmark-solid
                 use(xlink:href='#icon-volume-xmark-solid')
@@ -100,3 +104,4 @@ block content
                 use(xlink:href='#icon-music-solid')
                   symbol#icon-music-solid(viewBox='0 0 32 32')
                     path(d='M31.194 0.394c0.506 0.375 0.806 0.975 0.806 1.606v21c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-9.1l-16 4.8v13.012c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-14.287c0-0.881 0.581-1.662 1.425-1.919l20-6c0.606-0.181 1.262-0.069 1.769 0.313z')
+    script(src="/js/videoPlayer.js") 
