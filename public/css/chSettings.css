@@ -491,14 +491,20 @@ body {
   outline: none;
 }
 
+.ch-dtls-col-2 {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  align-items: end;
+}
+
 .ch-dtls-about-owner {
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  grid-template-rows: max-content 1fr;
+  display: flex;
+  flex-direction: column;
   row-gap: 1rem;
   column-gap: 3rem;
 
-  align-items: center;
+  /* align-items: center; */
 }
 
 .ch-dtls-about-owner-h2 {
@@ -510,17 +516,20 @@ body {
 }
 
 .ch-dtls-about-owner-save-btn {
-  grid-column: 2/-1;
-  grid-row: 1/2;
-
   background-color: rgb(60, 60, 60, 0.3);
   border: 1px solid rgb(120, 120, 120, 0.2);
   border-radius: 8px;
   outline: none;
 
-  width: 8rem;
+  justify-self: end !important;
+
+  width: 10rem;
   height: 2.5rem;
   font-weight: 800;
+}
+
+.ch-dtls-about-owner-save-btn:hover {
+  cursor: pointer;
 }
 
 .ch-dtls-about-owner-textarea {

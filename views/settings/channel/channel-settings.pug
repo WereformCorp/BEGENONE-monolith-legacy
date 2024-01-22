@@ -9,7 +9,12 @@ block content
     h1.channel-setting-h1 CHANNEL SETTINGS
     .logo_n_banner
       .ch-logo
-        img(src=`/imgs/users/${userData._id}/display-images/${channel.displayImage}`)
+        if channel && channel.displayImage
+          img(src=`/imgs/users/${userData._id}/display-images/${channel.displayImage}`)
+        else if channel === undefined
+          img(src=`/imgs/default-user-photo.jpg`)
+        else if channel && channel.displayImage === undefined
+          img(src=`/imgs/default-user-photo.jpg`)
       .ch-banner
         img(src='/imgs/banners/Banner.png')
     .ch-main-settings
@@ -44,15 +49,19 @@ block content
             h3.ch-dtls-h3-allUpload All Uploads
           
           .ch-dtls-vdo-card-container
-            each video in channel.videos
-              .ch-dtls-vdo-card
-                img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
-                .ch-dtls-vdo-meta
-                  h3.ch-dtls-vdo-title= video.title
+            if channel && channel.videos
+              each video in channel.videos
+                .ch-dtls-vdo-card
+                  if channel.displayImage
+                      img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
+                  else if channel.displayImage === undefined
+                      img.ch-dtls-vdo-thumb(src=`/imgs/default-user-photo.jpg`)
+                  .ch-dtls-vdo-meta
+                    h3.ch-dtls-vdo-title= video.title
 
-                  - const videoTime = new Date(video.time)
-                  h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                  h3.ch-dtls-vdo-views= video.views
+                    - const videoTime = new Date(video.time)
+                    h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                    h3.ch-dtls-vdo-views= video.views
         .ch-dtls-subscribers
           .ch-dtls-subs-heading
             h3.ch-dtls-subs-h3 SUBSCRIPTION
@@ -73,5 +82,8 @@ block content
       .ch-dtls-col-2
         .ch-dtls-about-owner
           h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
-          button.ch-dtls-about-owner-save-btn SAVE IT
           textarea.ch-dtls-about-owner-textarea(cols='30', rows='10')
+        if channel === undefined
+          button.ch-dtls-about-owner-save-btn Create Channel
+        else
+          button.ch-dtls-about-owner-save-btn Save
