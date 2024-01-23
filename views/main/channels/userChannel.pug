@@ -7,16 +7,16 @@ block append head
 block content
   section.sect-mid-contentContainer
     section.sect-mid-rows.sect-mid-row-1
-      if channel.bannerImage
-      img.sect-mid-banner-img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`, width='100%')
-      //- else if channel.bannerImage === undefined
-      //-   img.sect-mid-banner-img(src=`/imgs/default-banner-image.jpg`, width='100%')
+      if user && user.channel && user.channel.bannerImage
+        img.sect-mid-banner-img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`, width='100%')
+      else
+        img.sect-mid-banner-img(src=`/imgs/default-banner-image.jpg`, width='100%')
     section.sect-mid-rows.sect-mid-row-2
       section.sect-mid-chDetails
         section.sect-mid-logo
-          if channel.displayImage
+          if user && user.channel && user.channel.displayImage
             img.sect-mid-logo-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
-          else if channel.displayImage === undefined
+          else
             img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
         section.sect-mid-awards
           svg.sect-mid-awards-tick.icon.icon-checkmark2
@@ -31,7 +31,8 @@ block content
           h4.sect-mid-accDtls-chName= channel.name
           h4.sect-mid-accDtls-subsCount= channel.subscribersCount + ' ' + 'Subscribers'
         .sect-mid-accDtls-subsBtn
-          button.sect-mid-accDtls-subscribe Subscribe
+          //- a(href=`/channels/${channel._id}/subscribe`)
+          button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Subscribe
           button.sect-mid-accDtls-notification
             svg.sect-mid-accDtls-notify-icon.icon.icon-bell-solid
               use(xlink:href='#icon-bell-solid')
@@ -136,7 +137,7 @@ block content
       section.sect-mid-ch-wire
         h1.ch-wire-h1 Wire
         .ch-wire-header
-          img.ch-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
+          //- img.ch-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
           .ch-wire-header-meta
             h3.wire-header-name Areesh Alam
             h3.wire-header-subs 500,000 Subscribers
@@ -161,28 +162,29 @@ block content
         .most-popular
           h2.most-popular-h2 MOST POPULAR
           section.sect-mid-ctnt-popular-vdo
-            .content-containers.content-container-1
-              img.sectionHead-thumbNail(src='imgs/Middle Nav/Video card/thumbnail.png')
-              section.section-details
-                h4.section-details-title
-                  | This is the Title of the video that is being displayed.
-                  | This is the Title of the video that is being displayed.
-                hr(width='50px')
-                .sectionHead-views_N_date
-                  h5.sectionHead-views
-                    span.views 124,000
-                    |  Views
-                  h5.sectionHead-date
-                    span
-                      | 19 
-                      span hours
-                    |  ago
+            if video && video.thumbnail
+              .content-containers.content-container-1
+                img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+                section.section-details
+                  h4.section-details-title
+                    | This is the Title of the video that is being displayed.
+                    | This is the Title of the video that is being displayed.
+                  hr(width='50px')
+                  .sectionHead-views_N_date
+                    h5.sectionHead-views
+                      span.views 124,000
+                      |  Views
+                    h5.sectionHead-date
+                      span
+                        | 19 
+                        span hours
+                      |  ago
         .ctnt-home-wires
           h1.ctnt-home-wire-h1 Wire
           section.sect-mid-ctntRecom-wire
             section.ctnt-home-wire
               .ctnt-home-wire-header
-                img.ctnt-home-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
+                //- img.ctnt-home-wire-header-img(src='imgs/Middle Nav/Video card/channelImage.png', height='30px')
                 .ctnt-home-wire-header-meta
                   h3.ctnt-home-wire-header-name Areesh Alam
                   h3.ctnt-home-wire-header-subs
@@ -197,3 +199,6 @@ block content
                 | quae. Hic illo doloribus, tenetur minus, quos perspiciatis
                 | obcaecati dolorum voluptas reprehenderit recusandae
                 | aperiam aliquam neque delectus possimus fugit.
+
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+  script(src="/js/subscribe.js")

@@ -25,7 +25,7 @@ router.get(
   viewsController.userChannel,
 );
 
-router.get('/channel/:id', viewsController.singleChannel);
+router.get('/channels/:id', viewsController.singleChannel);
 
 router.get(
   '/channel-settings',

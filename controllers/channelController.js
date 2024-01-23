@@ -8,27 +8,6 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerController');
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     const destinationFolder =
-//       file.fieldname === 'displayImage' ? 'users' : 'banners';
-//     // cb(null, `public/imgs/${destinationFolder}`);
-//     cb(null, `public/imgs/users/${req.user._id}/${destinationFolder}`);
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     const fieldName = file.fieldname;
-
-//     // Remove the old file before saving the new one
-//     if (req.user.channel[fieldName]) {
-//       const oldFilePath = `public/imgs/users/${req.user._id}/${fieldName}s/${req.user.channel[fieldName]}`;
-//       fs.unlinkSync(oldFilePath);
-//     }
-
-//     cb(null, `${fieldName}-${req.user.channel._id}-${Date.now()}.${ext}`);
-//   },
-// });
-
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const destinationFolder =
@@ -87,27 +66,30 @@ exports.uploadImages = upload.fields([
 // exports.uploadChannelBanner = uploadBanner.single('banner');
 
 exports.getAllChannels = factory.getAll(Channel);
-exports.getChannel = factory.getOne(Channel);
+exports.getChannel = catchAsync(async (req, res, next) => {
+  try {
+    const data = await Channel.findById(req.params.id);
+    if (!data)
+      return next(new AppError(`Data you are looking for, do not exist.`, 404));
+
+    return res.status(200).json({
+      status: 'Success',
+      data,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      status: 'fail',
+      message: err.message,
+      err,
+    });
+  }
+});
 exports.deleteChannel = factory.deleteOne(Channel);
 exports.getAllChannels = factory.getAll(Channel);
 exports.updateChannel = catchAsync(async (req, res, next) => {
   try {
     // Create the update object
     const updateObject = { ...req.body };
-
-    // If req.file is present, add displayImage to updateObject
-    // if (req.files) {
-    //   // Check if displayImage is provided
-    //   if (req.files.displayImage) {
-    //     updateObject.displayImage = req.files.displayImage[0].filename;
-    //   }
-
-    //   // Check if bannerImage is provided
-    //   if (req.files.bannerImage) {
-    //     updateObject.bannerImage = req.files.bannerImage[0].filename;
-    //   }
-    // }
-
     if (req.files) {
       // Loop through each uploaded file
       Object.keys(req.files).forEach((fieldname) => {

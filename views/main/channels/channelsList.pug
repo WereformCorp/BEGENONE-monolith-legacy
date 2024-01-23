@@ -22,16 +22,29 @@ block content
     justify-self: center;\
     ', width='100%')
     section.sect-mid-chList
-      each channel in channels
-        .chList-channels.chList-channel-1
-          img.chList-chnl-img(src=`/imgs/users/default.jpeg`)
-        hr(style='\
-        height: 60%;\
-        background-color: #fff;\
-        border-radius: 10px;\
-        align-self: center;\
-        ', width='3px')
-
+      if channel
+        each channel in channels
+          .chList-channels.chList-channel-1
+            if user && user.channel && user.channel.displayImage
+                  - const userId = user._id
+                  - console.log(userId)
+                    img.chList-chnl-img(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+            else
+              img.chList-chnl-img(src="/imgs/default-user-photo.jpg")
+          //- img.chList-chnl-img(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
+        //- hr(style='\
+        //- height: 60%;\
+        //- background-color: #fff;\
+        //- border-radius: 10px;\
+        //- align-self: center;\
+        //- ', width='3px')
+    hr(style='\
+    border: 1px solid rgb(120, 120, 120, 0.3);\
+    border-radius: 10px;\
+    align-self: center;\
+    justify-self: center;\
+    margin-bottom: 1rem;\
+    ', width='100%')
     section.sect-mid-chSlctd
       .chSlctd-rows.chSlctd-row-1
         img.chSlctd-row1-banner(src='/imgs/banners/Banner.png')
@@ -41,7 +54,11 @@ block content
           .chSltd-chDtls-Nm_N_subCnt
             h2.chSltd-chDtls-chName Areesh Alam
             h4.chSltd-chDtls-subCount
-              span.chSltd-chDtls-subsNmbr= channel.subscribersCount
+              if channel
+                - const subChLength = channel.subscribedChannels.length
+                span.chSltd-chDtls-subsNmbr= subChLength
+              else
+                span.chSltd-chDtls-subsNmbr 0 
               span.chSltd-chDtls-subsText Subscribers
             h4.chSltd-chDtls-unChkd-content
               span.chDtls-unchkdText Unchecked Posts: 

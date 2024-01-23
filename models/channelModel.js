@@ -26,6 +26,12 @@ const channelSchema = new mongoose.Schema({
     type: String,
     maxLength: 1000,
   },
+  subscribers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   subscribersCount: {
     type: Number,
     default: 0,

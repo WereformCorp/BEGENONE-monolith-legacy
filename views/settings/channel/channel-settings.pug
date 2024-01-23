@@ -9,14 +9,17 @@ block content
     h1.channel-setting-h1 CHANNEL SETTINGS
     .logo_n_banner
       .ch-logo
-        if channel && channel.displayImage
-          img(src=`/imgs/users/${userData._id}/display-images/${channel.displayImage}`)
-        else if channel === undefined
-          img(src=`/imgs/default-user-photo.jpg`)
-        else if channel && channel.displayImage === undefined
+        if user && user.channel && user.channel.displayImage
+            - const userId = user._id
+            - console.log(userId)
+            img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+        else
           img(src=`/imgs/default-user-photo.jpg`)
       .ch-banner
-        img(src='/imgs/banners/Banner.png')
+        if user && user.channel && user.channel.bannerImage
+          img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`)
+        else
+          img.ch-banner-img(src='/imgs/default-banner-image.jpg')
     .ch-main-settings
       .ch-main-details
         .ch-name
@@ -26,11 +29,11 @@ block content
           h3.ch-about-h3 ABOUT
           textarea.ch-about-textarea(placeholder='Enter Your Channels About Information Here.', cols='30', rows='6')
         .ch-id
-          h3.ch-id-h3 CHANNEL ID
-          input.ch-id-input(placeholder='i.e. areeshalam21', type='text', name='', id='')
+          h3.ch-id-h3 USERNAME
+          input.ch-id-input(placeholder='i.e. areeshalam21', type='text')
         .ch-links
           h3.ch-links-h3 LINKS
-          input.ch-links-input(placeholder='add link here', type='text', name='', id='')
+          input.ch-links-input(placeholder='add link here', type='text')
       .ch-comments
         .ch-comments-permission
           h3.ch-comments-h3 COMMENTS
@@ -40,13 +43,14 @@ block content
         .ch-comments-filter
           h3.ch-comments-filter-h3 COMMENT FILTERS
           h6.ch-comments-filter-h6 Forbidden Words
-          input.ch-comments-filter-input(type='text', name='', id='')
+          input.ch-comments-filter-input(type='text')
     .ch-details
       .ch-details-col-1
         .ch-dtls-uploads
           .ch-dtls-header
             h3.ch-dtls-h3-heading UPLOADS
-            h3.ch-dtls-h3-allUpload All Uploads
+            a(href="/all-uploads")
+              h3.ch-dtls-h3-allUpload All Uploads
           
           .ch-dtls-vdo-card-container
             if channel && channel.videos
@@ -61,17 +65,23 @@ block content
 
                     - const videoTime = new Date(video.time)
                     h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                    h3.ch-dtls-vdo-views= video.views
+                    h3.ch-dtls-vdo-views= video.views + " "
+                      | views
+            else
+              p There are no uploads to be found!
         .ch-dtls-subscribers
           .ch-dtls-subs-heading
             h3.ch-dtls-subs-h3 SUBSCRIPTION
             h4.ch-dtls-subs-h4 View All
           .ch-dtls-subs-container
             .ch-dtls-subs.ch-dtls-sub-1
-              img.ch-dtls-subs-img(src='/imgs/users/default.jpeg')
-              h3.ch-dtls-subs-name Areesh Alam
-              h3.ch-dtls-subs-date 12 Jan 2021
-            
+              if channel && channel.subscribedChannels
+                img.ch-dtls-subs-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
+                //- img.(src='/imgs/users/default.jpeg')
+                h3.ch-dtls-subs-name Areesh Alam
+                h3.ch-dtls-subs-date 12 Jan 2021
+              else
+                p.no-sub-found You don't have any subscribers. How sad 🥲 I wish you have happy griefs. Take Care 😉
         .ch-dtls-story
           h2.ch-dtls-story-h2 STORIES SETTINGS
           .story-settings.story-setting-1
@@ -83,7 +93,8 @@ block content
         .ch-dtls-about-owner
           h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
           textarea.ch-dtls-about-owner-textarea(cols='30', rows='10')
-        if channel === undefined
-          button.ch-dtls-about-owner-save-btn Create Channel
-        else
-          button.ch-dtls-about-owner-save-btn Save
+        if user
+          if user.channel
+            button.ch-dtls-about-owner-save-btn Save
+          else if user.channel === undefined
+           button.ch-dtls-about-owner-save-btn Create Channel

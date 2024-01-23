@@ -16,7 +16,7 @@
   top: 2rem;
   height: 40rem;
   align-self: start;
-  z-index: 100;
+  z-index: 1000000000;
   grid-column: 2/3;
   justify-self: end;
 }

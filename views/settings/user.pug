@@ -59,7 +59,7 @@ block content
         a(href=`/user-channel`) 
           .ch_details
             if channel
-              h4.ch_details_chUsername= `'@' ${channel.channelUserName}`
+              h4.ch_details_chUsername= `@${channel.channelUserName}`
               h4.ch_details_chname= channel.name
               button S
             else
@@ -88,6 +88,6 @@ block content
         h2 THEMES
         button GOTO
     button.logoutBtn Logout
-    
+
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/logout.js")

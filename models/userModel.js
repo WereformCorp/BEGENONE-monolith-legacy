@@ -68,10 +68,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
   },
-  subscribers: [
+  subscribedChannels: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Channel',
     },
   ],
   token: {
@@ -199,6 +199,8 @@ userSchema.pre(/^find/, function (next) {
     path: 'channel',
     select:
       '_id __v products videos sponsors commentToggle comments commentFilters wires story tagsList bannerImage about user reviews',
+  }).populate({
+    path: 'subscribedChannels',
   });
 
   next();

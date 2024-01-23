@@ -10,14 +10,19 @@ block content
       a(href=`/watch/${video._id}`).ctnt-ctnr-link
         .content-containers.content-container-1
             section.section-Header
-              img.sectionHead-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+              if user && user.channel && user.channel.displayImage
+                - const userId = user._id
+                - console.log(userId)
+                  img.sectionHead-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+              else
+                img.sectionHead-chLogo(src="/imgs/default-user-photo.jpg")
               .sectionHead-dtls
                 .sectionHead-chName_N_sub
                   h3.sectionHead-chName= video.channel.name
                   h5.sectionHead-chSubCnt
-                    span= video.channel.subscribersCount
+                    span= video.channel.subscribers.length
                     |  Subscribers
-                img.sectionHead-tick(src='/imgs/Middle Nav/Video card/tick-square 8.png')
+                //- img.sectionHead-tick(src='/imgs/Middle Nav/Video card/tick-square 8.png')
             //- img.sectionHead-thumbNail(src=`/imgs/users/${userData._id}/thumbnails/${video.thumbnail}`)
             img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
             section.section-details

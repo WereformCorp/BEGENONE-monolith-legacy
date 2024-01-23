@@ -38,6 +38,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
   );
   const videoData = video.data.data;
   const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+  const { channel } = videoData;
   const localUser = res.locals.user;
   await Video.findByIdAndUpdate(videoData._id, { $inc: { views: 1 } });
   let userData;
@@ -57,6 +58,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     video: videoData,
     manyVideos: videos.data.data,
     user: res.locals.user,
+    channel,
     comments,
     userData,
   });
@@ -91,16 +93,23 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.channelsList = catchAsync(async (req, res, next) => {
-  const channels = await axios.get('http://127.0.0.1:3000/api/v1/channels');
-  const videoData = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
   const userData = await User.findById(res.locals.user._id).populate('channel');
-  const channel = channels.data.data.map((obj) => obj); // THIS WON'T GIVE RESULTS OF SOME SPECIFIED CHANNEL BECAUSE There is no Id associated to it so how can it give a number to fill in its place on the page while there are multiple documents and how will it know which one to select. so we have set a default id of a channel and give that channel's details while allowing other channel list to be shown as well on the top.
+  let channels;
+  if (userData.subscribedChannels) channels = userData.subscribedChannels;
+  let channel;
+  if (userData.channel)
+    channel = await axios.get(
+      `http://127.0.0.1:3000/api/v1/channels/${userData.channel._id}`,
+    );
+  const videoData = await axios.get(`http://127.0.0.1:3000/api/v1/videos`);
+  // const channel = channels.data.data.map((obj) => obj);
   const videos = videoData.data.data;
   res.status(200).render('../views/main/channels/channelsList', {
     title: `THIS IS CHANNELS LIST PAGE`,
     channels,
     channel,
     videos,
+    user: res.locals.user,
     userData,
   });
 });
@@ -154,11 +163,12 @@ exports.userChannel = catchAsync(async (req, res, next) => {
   const { channel } = userData;
   const userId = channel.user._id;
 
-  console.log(channel.bannerImage);
+  // console.log(channel.bannerImage);
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     userData,
     channel,
+    user: res.locals.user,
     userId,
   });
 });
@@ -169,7 +179,7 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   );
   const extractedData = data.data.data;
   const channelData = await Channel.findById(extractedData._id);
-  console.log(extractedData.bannerImage);
+  console.log(`CHANNEL ID 🔥🔥: ${channelData._id}`);
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     channel: channelData,
@@ -182,6 +192,7 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
   res.status(200).render(`../views/settings/channel/channel-settings`, {
     title: `Channel Settings`,
     channel,
+    user: res.locals.user,
     useCustomLeftNav: true,
     userData,
   });
@@ -189,10 +200,15 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
 
 exports.allVideos = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
-  const { videos } = userData.channel;
+  let videos;
+  if (userData.channel) {
+    // eslint-disable-next-line prefer-destructuring
+    videos = userData.channel.videos;
+  }
   res.status(200).render(`../views/settings/channel/allUploads`, {
     title: `All Uploads`,
     videos,
+    user: res.locals.user,
     useCustomLeftNav: true,
     userData,
   });
@@ -211,5 +227,6 @@ exports.tokens = catchAsync(async (req, res, next) => {
   res.status(200).render(`../views/main/tokens/allTokens`, {
     title: `Tokens | Pricing`,
     userData,
+    useCustomLeftNav: true,
   });
 });

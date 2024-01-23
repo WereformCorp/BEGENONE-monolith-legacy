@@ -1,10 +1,4 @@
 /* eslint-disable */
-// import '@babel/polyfill';
-// import { login } from './login';
-// const login = require('login');
-
-// const axios = require('axios');
-
 // DOM ELEMENTS
 const loginForm = document.querySelector('.login-form');
 

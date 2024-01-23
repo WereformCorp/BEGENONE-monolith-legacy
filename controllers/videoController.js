@@ -81,12 +81,14 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
-    console.log(req.file);
+    console.log(`USER CHANNEL ID: ${req.user.channel._id}`);
+
+    if (!req.file) console.log('REQ.FILE NOT FOUND!!');
 
     const videoData = {
       title: req.body.title,
       description: req.body.description,
-      thumbnail: req.body.thumbnail,
+      thumbnail: req.file ? req.file.filename : req.body.thumbnail,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,

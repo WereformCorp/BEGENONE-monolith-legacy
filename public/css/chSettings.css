@@ -142,19 +142,23 @@ body {
   max-width: 50rem;
 }
 
-.ch-banner img {
-  width: 100%;
+.ch-banner-img {
   border-radius: 1rem;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 596 / 119;
 }
 
 .ch-main-settings {
   display: flex;
-  /* grid-template-columns: repeat(2, max-content); */
   width: 100%;
   column-gap: 2rem;
   row-gap: 2rem;
   justify-content: center;
   flex-wrap: wrap;
+  padding-top: 2rem;
+
+  border-top: 1px solid rgb(120, 120, 120, 0.3);
 }
 
 .ch-main-details {
@@ -384,11 +388,23 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 30rem;
   row-gap: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
 
   border-left: 1px solid rgb(120, 120, 120, 0.3);
+}
+
+.no-sub-found {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-height: 4.4rem;
+  -webkit-line-clamp: 3;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20rem;
 }
 
 .ch-dtls-subscribers {

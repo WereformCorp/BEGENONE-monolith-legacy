@@ -1,5 +1,6 @@
 const express = require('express');
 const channelController = require('../controllers/channelController');
+const subscribeController = require('../controllers/subscribeController');
 const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
@@ -17,13 +18,13 @@ router
 router
   .route('/:id')
   .get(channelController.getChannel)
-  // .patch(
-  //   authController.protect,
-  //   channelController.uploadUserPhoto,
-  //   channelController.updateChannel,
-  // )
   .delete(authController.protect, channelController.deleteChannel);
 
+router.post(
+  '/:id/subscribe',
+  authController.protect,
+  subscribeController.subscribe,
+);
 // router
 //   .route('/:channelId/deactivate')
 //   .delete(authController.protect, channelController.deactivateChannelAndVideos);
