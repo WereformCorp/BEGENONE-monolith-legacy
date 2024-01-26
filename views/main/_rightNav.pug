@@ -1,15 +1,15 @@
 section#sect-3.section-right
   .sect-rgt-icons
     section.sect-rgt-icon-list
-      if user
-        if user.channel && user.channel.displayImage
+      if userData
+        if userData.channel
           - const userId = user._id
-          - console.log(userId)
-          //- - console.log(user.channel)
           a(href="/user-channel")
             .sect-rgt-icon-list-container.sect-rgt-icon-1
-              if userData && userData.channel
+              if user.channel && user.channel.displayImage
                 img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
+              else
+                img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/default-user-photo.jpg`)
         else
           a(href="/channel-settings") 
             img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="/imgs/default-user-photo.jpg")

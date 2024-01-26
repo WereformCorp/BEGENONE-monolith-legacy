@@ -12,10 +12,13 @@ html(lang='en')
       link(rel='stylesheet', href='/css/sect-right.css')
       link(rel='stylesheet', href='/css/_notificationPanel.css')
       link(rel='stylesheet', href='/css/mediaQueries.css')
+      script(src='https://releases.transloadit.com/uppy/v3.21.0/uppy.min.js')
+      link(rel='stylesheet', href='https://releases.transloadit.com/uppy/v3.21.0/uppy.min.css')
       
       link(rel='preconnect', href='https://fonts.googleapis.com')
       link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
       link(href='https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Exa:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Giga:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Mega:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Peta:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Tera:wght@100;200;300;400;500;600;700;800;900&family=Lexend+Zetta:wght@100;200;300;400;500;600;700;800;900&family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap', rel='stylesheet')
+      script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
       title #{title}
 
   
@@ -41,6 +44,7 @@ html(lang='en')
       // BOTTOM NAVIGATION
       include _bottomNav
       include _notificationPanel
-    
-    script(src='/js/videoPlayer.js')
+
     script(src='/js/index.js')
+    //- script(src='https://releases.transloadit.com/uppy/v3.21.0/uppy.legacy.min.js')
+    //- script(src='/js/videoPlayer.js')

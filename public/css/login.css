@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  background-color: #202020;
+  background-color: #101010;
 }
 
 a {
@@ -58,9 +58,19 @@ a {
 
 .login-form {
   display: grid;
-  grid-template-rows: repeat(4, 6.5rem);
+  grid-template-rows: repeat(2, 6.5rem) max-content 6.5rem;
   flex-direction: column;
   row-gap: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.signup-text {
+  width: max-content;
+  font-weight: 300;
+}
+
+.signup-text:hover {
+  cursor: pointer;
 }
 
 .firstname,

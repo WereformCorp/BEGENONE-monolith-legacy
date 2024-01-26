@@ -142,6 +142,7 @@ exports.userProfile = catchAsync(async (req, res, next) => {
   res.status(200).render(`../views/settings/user`, {
     title: 'USER PROFILE',
     userData,
+    user: res.locals.user,
     channel,
     userId,
     channelUserId,
@@ -161,7 +162,8 @@ exports.upload = catchAsync(async (req, res, next) => {
 exports.userChannel = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
   const { channel } = userData;
-  const userId = channel.user._id;
+  // let userId;
+  // if (channel) userId = channel.user._id;
 
   // console.log(channel.bannerImage);
   res.status(200).render(`../views/main/channels/userChannel`, {
@@ -169,7 +171,7 @@ exports.userChannel = catchAsync(async (req, res, next) => {
     userData,
     channel,
     user: res.locals.user,
-    userId,
+    // userId,
   });
 });
 

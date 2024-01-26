@@ -4,6 +4,7 @@ block append head
   link(rel='stylesheet', href='/css/mainVideo.css')
   link(rel='stylesheet', href='/css/videoCard.css')
   link(rel='stylesheet', href='/css/mainVideoMediaQueries.css')
+  link(rel='stylesheet', href='https://cdn.plyr.io/3.7.8/plyr.css')
 
 block content
   section.sect-mid-contentContainer
@@ -35,8 +36,25 @@ block content
             |
             | Views
         section.vdoPlayer-controls
-          video.sect-mid-vdoPlayer-video(controls)
-            source(src=`/video/sample-video.mp4`, type='video/mp4')
+          //- video.sect-mid-vdoPlayer-video(controls)
+          //-   source(src=`/video/sample-video.mp4`, type='video/mp4')
+          //- THE NEW VIDEO PLAYER
+          video.sect-mid-vdoPlayer-video(controls='', crossorigin='', playsinline='', poster='')
+              source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
+              | &#x9;&#x9;&#x9;
+              source(src=`/video/${video.video}`, type='video/mp4', size='720')
+              | &#x9;&#x9;&#x9;
+              source(src=`/video/${video.video}`, type='video/mp4', size='1080')
+              | &#x9;&#x9;&#x9;
+              source(src=`/video/${video.video}`, type='video/mp4', size='1440')
+              // Caption files
+              track(kind='captions', label='English', srclang='en', src=`/video/${video.video}`, default='')
+              | &#x9;&#x9;&#x9;
+              track(kind='captions', label='Français', srclang='fr', src=`/video/${video.video}`)
+              // Fallback for browsers that don't support the <video> element
+              a(href=`/video/${video.video}`, download='') Download
+
+          //- //////////////////////////
           .vdo-ctrlPanel
             .vdo-bufferLine-container
               .vdo-bufferLine
@@ -208,3 +226,8 @@ block content
                   h5.sectionHead-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/subscribe.js")
+  script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
+  script(src='path/to/plyr.js')
+  script(type='text/javascript').
+      const player = new Plyr('video', { captions: { active: true } });
+      window.player = player;

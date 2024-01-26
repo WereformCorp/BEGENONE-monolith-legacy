@@ -6,6 +6,10 @@ block append head
 
 block content
   section.sect-mid-contentContainer
+    if user
+      input(type="hidden" id="userId" value=`${user._id}`)
+    if userData && userData.channel
+      input(type="hidden" id="userChannelId" value=`${userData.channel._id}`)
     h1.channel-setting-h1 CHANNEL SETTINGS
     .logo_n_banner
       .ch-logo
@@ -30,7 +34,7 @@ block content
           textarea.ch-about-textarea(placeholder='Enter Your Channels About Information Here.', cols='30', rows='6')
         .ch-id
           h3.ch-id-h3 USERNAME
-          input.ch-id-input(placeholder='i.e. areeshalam21', type='text')
+          input.ch-username-input(placeholder='i.e. areeshalam21', type='text')
         .ch-links
           h3.ch-links-h3 LINKS
           input.ch-links-input(placeholder='add link here', type='text')
@@ -93,8 +97,10 @@ block content
         .ch-dtls-about-owner
           h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
           textarea.ch-dtls-about-owner-textarea(cols='30', rows='10')
-        if user
-          if user.channel
-            button.ch-dtls-about-owner-save-btn Save
-          else if user.channel === undefined
-           button.ch-dtls-about-owner-save-btn Create Channel
+        if channel
+          button.ch-dtls-about-owner-save-btn Save
+        else
+          button.ch-dtls-about-owner-save-btn Create Channel
+  
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+  script(type="module" src="/js/ch-save-create.js")

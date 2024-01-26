@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: montserrat;
-  color: #fff;
+  /* color: #fff; */
 }
 
 html {
@@ -11,7 +11,8 @@ html {
 }
 
 body {
-  background-color: #202020;
+  /* background-color: #202020; */
+  position: relative;
 }
 
 /* //////////////////////////////// */
@@ -162,7 +163,7 @@ body {
 .ctnt-file,
 .ctnt-thumb {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  /* grid-template-columns: repeat(2, max-content); */
   grid-template-rows: repeat(2, max-content);
   column-gap: 1rem;
   row-gap: 0.5rem;
@@ -186,25 +187,13 @@ body {
   grid-column: 1/2;
 }
 
-.ctnt-file-btn {
-  display: flex;
-  grid-row: 2/3;
-  grid-column: 1/2;
+/* .uppy-Dashboard-dropFilesHereHint {
+  padding-top: 0 !important;
+  position: static !important;
+} */
 
-  height: 2rem;
-  width: 6rem;
-
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgb(60, 60, 60, 0.2);
-  border: 1px solid rgb(120, 120, 120, 0.3);
-  border-radius: 8px;
-
-  font-size: 0.8rem;
-  font-weight: 400;
-
-  cursor: pointer;
+[data-uppy-drag-drop-supported='true'] .uppy-Dashboard-AddFiles {
+  border: none !important;
 }
 
 .ctnt-file-input {
@@ -227,10 +216,13 @@ body {
 }
 
 .ctnt-thumb-btn {
+  display: flex;
   grid-column: 1/2;
   background-color: rgb(60, 60, 60, 0.2);
   border: 1px solid rgb(120, 120, 120, 0.3);
   border-radius: 8px;
+  justify-content: center;
+  align-items: center;
 
   font-weight: 800;
 
@@ -486,7 +478,7 @@ body {
   font-weight: 900;
 }
 
-.form-submit {
+#form-submit {
   height: 3rem;
   width: 10rem;
   background-color: transparent;
@@ -499,11 +491,28 @@ body {
   align-self: flex-end;
 }
 
-.form-submit:hover {
+#form-submit:hover {
   cursor: pointer;
   background-color: rgb(60, 60, 60, 0.3);
 }
 
-#videoFile {
+/* .uppy-StatusBar-actionBtn--upload {} */
+
+/* #videoFile, */
+/* #imageFile {
   display: none;
+} */
+
+/* ////////////////////////////// UPPY /////////////////////////// */
+a.uppy-Dashboard-poweredBy {
+  display: none !important;
+}
+
+.uppy-Root {
+  display: flex;
+  position: sticky;
+  text-align: center;
+  /* z-index: inherit; */
+  /* height: 20px;
+  background-color: #fff; */
 }

@@ -5,6 +5,9 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const cors = require('cors');
+
 // const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
@@ -31,6 +34,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// USING CORS
+app.use(cors());
 
 // SET SECURITY HTTP HEADERS
 app.use(helmet());

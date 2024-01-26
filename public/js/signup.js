@@ -30,6 +30,7 @@ const signup = async (
           email,
           password,
           passwordConfirm,
+          // passwordChangedAt,
         },
       },
     });

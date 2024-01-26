@@ -54,7 +54,7 @@ block content
           .chSltd-chDtls-Nm_N_subCnt
             h2.chSltd-chDtls-chName Areesh Alam
             h4.chSltd-chDtls-subCount
-              if channel
+              if channel && channel.subscribedChannels
                 - const subChLength = channel.subscribedChannels.length
                 span.chSltd-chDtls-subsNmbr= subChLength
               else

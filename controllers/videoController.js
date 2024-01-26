@@ -28,7 +28,62 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadThumbnail = upload.single('thumbnail');
+// exports.uploadThumbnail = upload.single('thumbnail');
+
+const multerStorageVid = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/video/');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `video-${req.user.channel._id}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilterVid = (req, file, cb) => {
+  if (file.mimetype.startsWith('video')) {
+    cb(null, true);
+  } else {
+    cb(new AppError(`Not an video! Please upload only video.`, 400), false);
+  }
+};
+
+const uploadVid = multer({
+  storage: multerStorageVid,
+  fileFilter: multerFilterVid,
+});
+
+// exports.uploadVideoFile = uploadVid.single('video');
+
+// Middleware for handling thumbnail upload
+exports.handleThumbnailUpload = (req, res, next) => {
+  upload.single('thumbnail')(req, res, (err) => {
+    if (req.file) {
+      if (err) {
+        // Handle error, e.g., return an error response
+        return res.status(400).json({ status: 'error', message: err.message });
+      }
+      console.log('Request Image:', req.file);
+      // If successful, store the thumbnail filename in req.body.thumbnail
+      req.body.thumbnail = req.file ? req.file.filename : null;
+    }
+  });
+  next();
+};
+
+// Middleware for handling video upload
+exports.handleVideoUpload = (req, res, next) => {
+  uploadVid.single('video')(req, res, (err) => {
+    if (err) {
+      // Handle error, e.g., return an error response
+      return res.status(400).json({ status: 'error', message: err.message });
+    }
+    console.log('Request Video:', req.file);
+    // If successful, store the video filename in req.body.video
+    req.body.video = req.file ? req.file.filename : null;
+    next();
+  });
+};
 
 exports.getVideo = factory.getOne(Video);
 exports.deleteVideo = factory.deleteOne(Video);
@@ -81,14 +136,15 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
-    console.log(`USER CHANNEL ID: ${req.user.channel._id}`);
-
     if (!req.file) console.log('REQ.FILE NOT FOUND!!');
+
+    // const uppyFileIDs = JSON.parse(req.body.uppyFileIDs || '[]');
 
     const videoData = {
       title: req.body.title,
       description: req.body.description,
-      thumbnail: req.file ? req.file.filename : req.body.thumbnail,
+      // thumbnail: req.file ? req.file.filename : req.body.thumbnail,
+      thumbnail: req.body.thumbnail,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,
@@ -96,6 +152,14 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       comments: req.body.comments,
       audio: req.body.audio,
       video: req.body.video,
+      // video:
+      //   uppyFileIDs
+      //     .filter((file) => file.field === 'video')
+      //     .map((file) => file.id)[0] || null,
+      // thumbnail:
+      //   uppyFileIDs
+      //     .filter((file) => file.field === 'thumbnail')
+      //     .map((file) => file.id)[0] || null,
       user: req.user.id,
       time: Date.now(),
     };

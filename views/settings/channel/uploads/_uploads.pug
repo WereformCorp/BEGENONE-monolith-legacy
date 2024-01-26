@@ -3,25 +3,28 @@ extends ../../../main/base
 block append head
   link(rel='stylesheet', href='/css/upload.css')
   link(rel='stylesheet', href='/css/uploadMediaQueries.css')
+  link(href='https://releases.transloadit.com/uppy/v3.21.0/uppy.min.css', rel='stylesheet')
 
 block content
-  form.sect-mid-contentContainer
+  form#videoUploadForm.sect-mid-contentContainer
     h1.upload-heading UPLOAD CONTENT
-    .progress-container
-      #progressBar.progress-bar
     .upload_n_promote
       .ctnt-upload
         .ctnt-upload-rows.ctnt-upload-row-1
           .ctnt-file
             h4.ctnt-file-h4 CONTENT
             //- button.ctnt-file-btn U
-            label.ctnt-file-btn(for='video') Upload
-            input#videoFile(type='file', name='video', accept='video/*')
-            input.ctnt-file-input(type='url')
+            //- label.ctnt-file-btn(for='filepond') Upload
+            //- input#filepond(type='file', name='video', accept='video/*')
+            div#ctnt-vid-file-btn
+            //- button#openUppyButton Open Uppy Dashboard
+            //- input.ctnt-file-input(type='url')
           .ctnt-thumb
             h4.ctnt-thumb-h4 THUMBNAIL
-            button.ctnt-thumb-btn UPLOAD
-            img(src='/imgs/thumbnails/thumbnail-659cf1fbb77c200efcc2abec-1704794899919.jpeg', alt='')
+            //- label.ctnt-thumb-btn(for='imageFile') Upload
+            div#ctnt-thumb-file-btn
+            //- input#imageFile(type='file', name='image', accept='image/*')
+            //- img(src='/imgs/thumbnails/thumbnail-659cf1fbb77c200efcc2abec-1704794899919.jpeg', alt='')
         .ctnt-upload-rows.ctnt-upload-row-2
           h3.upload-title TITLE (Heading)
           input#title.upload-title-input(placeholder="Type your content's heading here..", type='text')
@@ -81,7 +84,9 @@ block content
         .ctnt-sponsorship
           h4.ctnt-sponsorship-h4 SPONSORSHIP
           button.ctnt-sponsorship-btn View Page
-    button.form-submit Create Video
+      //- input#uppyFileIDs(type='hidden', name='uppyFileIDs')
+    button#form-submit Create Video
   
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
-  script(src="js/upload-video.js")
+  //- script(type="module" src="/js/upload-video.js")
+  script(type="module" src="/js/upload-video.js")

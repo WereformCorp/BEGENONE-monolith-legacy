@@ -103,6 +103,19 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.me = catchAsync(async (req, res, next) => {
+  const me = await User.findById(req.user._id);
+  if (!me)
+    return next(
+      new AppError(`ME is lost. Can't find. Create One and maybe you'll find.`),
+    );
+
+  return res.status(200).json({
+    status: 'Success',
+    data: me,
+  });
+});
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   // console.log(req.file);
 
@@ -121,10 +134,25 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
+  // const me = await User.findById(req.user._id);
+  const userData = { ...req.body };
+
   // 3) Update User document
-  let updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
+  let updatedUser = await User.findByIdAndUpdate(req.user._id, userData, {
     new: true,
   });
+
+  // updatedUser = await User.findByIdAndUpdate(
+  //   req.user._id,
+  //   {
+  //     password: me.password,
+  //     passwordConfirm: me.passwordConfirm,
+  //     passwordChangedAt: me.passwordChangedAt,
+  //     phoneNumber: me.phoneNumber,
+  //   },
+  //   { new: true },
+  // );
+
   // if (req.file) updatedUser.photo = req.file.filename;
 
   if (req.file) {

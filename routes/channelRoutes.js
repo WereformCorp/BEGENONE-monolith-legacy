@@ -18,6 +18,11 @@ router
 router
   .route('/:id')
   .get(channelController.getChannel)
+  .patch(
+    authController.protect,
+    channelController.uploadImages,
+    channelController.updateChannel,
+  )
   .delete(authController.protect, channelController.deleteChannel);
 
 router.post(

@@ -1,10 +1,10 @@
 body {
-  background-color: #202020;
+  /* background-color: #202020; */
 }
 
 body::-webkit-scrollbar {
   width: 7px;
-  background-color: #202020;
+  /* background-color: #202020; */
 }
 
 body::-webkit-scrollbar-track {

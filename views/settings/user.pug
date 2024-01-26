@@ -9,7 +9,7 @@ block content
     h1.user-heading-h1 USER SETTINGS
     .basic-details
       section.identification
-        if userData.photo === undefined
+        if userData.photo
           img.sect-mid-logo-img(src=`/imgs/users/${userId}/user-display-picture/${userData.photo}`)
         else
           img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
@@ -18,51 +18,58 @@ block content
             h2 First Name
             - let userFirstName;
             if user.name.firstName === undefined ? userFirstName = 'Enter Your First Name' : userFirstName = user.name.firstName
-            input(placeholder=`${userFirstName}`, type='text')
+            input.firstNameInput(placeholder=`${userFirstName}`, type='text')
           .secondname
             h2 Second Name
             - let userSecondName;
             if user.name.secondName === undefined ? userSecondName = 'Enter Your First Name' : userSecondName = user.name.secondName
-            input(placeholder=`${userSecondName}`, type='text')
+            input.secondNameInput(placeholder=`${userSecondName}`, type='text')
           .username
             h2 Username
             - let userName;
             if user.username === undefined ? userName = 'Enter Your First Name' : userName = user.username
-            input(placeholder=`${userName}`, type='text')
+            input.usernameInput(placeholder=`${userName}`, type='text')
       section.electronic-address
         h2.eAddress-heading-h1 ELECTRONIC ADDRESS
         .email_phNumber
           .email
             h2 Email
-            input(placeholder='Type your email here', type='text')
+            input.emailInput(placeholder='Type your email here', type='text')
           .phoneNumber
             h2 Phone Number
-            input(placeholder='Type your phone number here', type='text')
+            input.phoneNumberInput(placeholder='Type your phone number here', type='text')
         .changePassword
           .old_password
             h2 Old Password
-            input(placeholder='Type your old password here', type='text')
+            input.oldPasswordInput(placeholder='Type your old password here', type='text')
           .confirm_password
             h2 Confirm Password
-            input(placeholder='Type your old password here', type='text')
+            input.confirmPasswordInput(placeholder='Type your old password here', type='text')
           .new_password
             h2 New Password
-            input(placeholder='Type your old password here', type='text')
-          button.submit_password_info Submit
+            input.newPasswordInput(placeholder='Type your old password here', type='text')
     .other-userInfo
       .channel_info
         h3 CHANNEL ASSOCIATED
-        if channel
-          img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+        if userData.channel
+          a(href="/user-channel")
+            if user.channel.displayImage
+              img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
+            else 
+              img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
+          a(href="/user-channel")
+            .ch_details
+              if userData.channel
+                h4.ch_details_chUsername= `@${userData.channel.channelUserName}`
+                h4.ch_details_chname= channel.name
+              else
+                h4.ch_details_chUsername
+                h4.ch_details_chname No Channel Found
         else
-          img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
-        a(href=`/user-channel`) 
-          .ch_details
-            if channel
-              h4.ch_details_chUsername= `@${channel.channelUserName}`
-              h4.ch_details_chname= channel.name
-              button S
-            else
+          a(href="/channel-settings")
+            img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
+          a(href="/channel-settings")
+            .ch_details
               h4.ch_details_chUsername
               h4.ch_details_chname No Channel Found
               button S
@@ -87,7 +94,21 @@ block content
       .themes-details
         h2 THEMES
         button GOTO
-    button.logoutBtn Logout
+    div.buttons-submit_logout
+      button.submit_info SUBMIT DATA
+      button.logoutBtn Logout
+  .overlay-container-update
+    h3.updateConfirmText Are you sure, you want to update the user?
+    .update-Overlay-btns
+      button.submit-info-notNow Naah, Maybe Later
+      button.submit-info-confirm Yeah, Les Goo
+  .overlay-container-logout
+    h3.logoutConfirmText Are you sure, you want to logout?
+    .logout-Overlay-btns
+      button.logout-confirm Naah, Maybe Later
+      button.logout-notNow Yeah, Let's Goo
+
 
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/logout.js")
+  script(src="/js/user-update.js")

@@ -24,11 +24,19 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@img/sharp-win32-x64": "^0.33.1",
+    "@uppy/core": "^3.8.0",
+    "@uppy/dashboard": "^3.7.1",
+    "@uppy/image-editor": "^2.4.0",
+    "@uppy/informer": "^3.0.4",
+    "@uppy/status-bar": "^3.2.5",
+    "@uppy/thumbnail-generator": "^3.0.6",
     "axios": "^1.6.3",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "dropzone": "^6.0.0-beta.2",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^7.1.5",
@@ -51,6 +59,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "@parcel/transformer-pug": "^2.10.3",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

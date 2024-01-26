@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  background-color: #202020;
+  background-color: #101010;
 }
 
 .star {
@@ -62,7 +62,7 @@ body::-webkit-scrollbar-thumb {
 
 .signup-form {
   display: grid;
-  grid-template-rows: repeat(6, 7rem);
+  grid-template-rows: repeat(6, 6.5rem) max-content 6.5rem;
   flex-direction: column;
   row-gap: 1rem;
   padding: 3rem;
@@ -70,6 +70,14 @@ body::-webkit-scrollbar-thumb {
   border-radius: 1rem;
   border: 1px solid rgb(120, 120, 120, 0.3);
   background-color: rgb(60, 60, 60, 0.2);
+}
+
+.signup-anchor {
+  text-decoration: none;
+}
+
+.signup-text {
+  font-weight: 300;
 }
 
 .firstname,

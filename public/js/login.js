@@ -28,6 +28,29 @@ const login = async (email, password) => {
   }
 };
 
+// document.addEventListener('DOMContentLoaded', function () {
+//   const logoutOverlay = document.querySelector('.overlay-container-logout');
+//   const logoutButton = document.querySelector('.logoutBtn');
+//   const logoutOverlayConfirmButton = document.querySelector('.logout-confirm');
+//   const logoutOverlayNotNowButton = document.querySelector('.logout-notNow');
+
+//   // Event listeners for logout overlay buttons
+//   logoutOverlayConfirmButton.addEventListener('click', function () {
+//     // Handle logout confirmation logic
+//     logoutOverlay.style.display = 'none'; // Hide the overlay
+//   });
+
+//   logoutOverlayNotNowButton.addEventListener('click', function () {
+//     // Handle logout not now logic
+//     logoutOverlay.style.display = 'none'; // Hide the overlay
+//   });
+
+//   logoutButton.addEventListener('click', function () {
+//     // Show the logout overlay
+//     logoutOverlay.style.display = 'flex';
+//   });
+// });
+
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;

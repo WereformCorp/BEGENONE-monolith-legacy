@@ -7,21 +7,19 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router
-  .route('/')
-  .get(videoController.getAllVideos)
-  .post(
-    authController.protect,
-    videoController.uploadThumbnail,
-    videoController.createVideo,
-  );
+router.route('/').get(videoController.getAllVideos).post(
+  authController.protect,
+  // videoController.handleThumbnailUpload,
+  videoController.handleVideoUpload,
+  videoController.createVideo,
+);
 
 router
   .route('/:id')
   .get(videoController.getVideo)
   .patch(
     authController.protect,
-    videoController.uploadThumbnail,
+    videoController.handleThumbnailUpload,
     videoController.updateVideo,
   )
   .delete(authController.protect, videoController.deleteVideo);
