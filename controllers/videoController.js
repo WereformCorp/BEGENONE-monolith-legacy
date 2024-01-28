@@ -23,12 +23,14 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({
+const uploadThumb = multer({
   storage: multerStorageDP,
   fileFilter: multerFilter,
-});
+}).single('thumbnail');
 
-// exports.uploadThumbnail = upload.single('thumbnail');
+exports.uploadThumbnail = uploadThumb;
+// exports.uploadThumbnail = uploadThumb.single('thumbnail');
+// module.exports = uploadThumb;
 
 const multerStorageVid = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -51,39 +53,43 @@ const multerFilterVid = (req, file, cb) => {
 const uploadVid = multer({
   storage: multerStorageVid,
   fileFilter: multerFilterVid,
-});
+}).single('video');
 
+exports.uploadVidFile = uploadVid;
 // exports.uploadVideoFile = uploadVid.single('video');
+// module.exports = uploadVid;
 
 // Middleware for handling thumbnail upload
-exports.handleThumbnailUpload = (req, res, next) => {
-  upload.single('thumbnail')(req, res, (err) => {
-    if (req.file) {
-      if (err) {
-        // Handle error, e.g., return an error response
-        return res.status(400).json({ status: 'error', message: err.message });
-      }
-      console.log('Request Image:', req.file);
-      // If successful, store the thumbnail filename in req.body.thumbnail
-      req.body.thumbnail = req.file ? req.file.filename : null;
-    }
-  });
-  next();
-};
+// exports.handleThumbnailUpload = (req, res, next) => {
+//   upload.single('thumbnail')(req, res, (err) => {
+//     if (req.file) {
+//       if (err) {
+//         // Handle error, e.g., return an error response
+//         return res.status(400).json({ status: 'error', message: err.message });
+//       }
+//       console.log('Request Image:', req.file);
+//       // If successful, store the thumbnail filename in req.body.thumbnail
+//       req.body.thumbnail = req.file ? req.file.filename : null;
+//     }
+//   });
+//   next();
+// };
 
 // Middleware for handling video upload
-exports.handleVideoUpload = (req, res, next) => {
-  uploadVid.single('video')(req, res, (err) => {
-    if (err) {
-      // Handle error, e.g., return an error response
-      return res.status(400).json({ status: 'error', message: err.message });
-    }
-    console.log('Request Video:', req.file);
-    // If successful, store the video filename in req.body.video
-    req.body.video = req.file ? req.file.filename : null;
-    next();
-  });
-};
+// exports.handleVideoUpload = (req, res, next) => {
+//   uploadVid.single('video')(req, res, (err) => {
+//     if (err) {
+//       // Handle error, e.g., return an error response
+//       return res
+//         .status(400)
+//         .json({ status: 'error', message: `MESSAGE: ${err.message}` });
+//     }
+//     console.log('Request Video:', req.file);
+//     // If successful, store the video filename in req.body.video
+//     req.body.video = req.file ? req.file.filename : null;
+//     next();
+//   });
+// };
 
 exports.getVideo = factory.getOne(Video);
 exports.deleteVideo = factory.deleteOne(Video);
@@ -136,22 +142,23 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
-    if (!req.file) console.log('REQ.FILE NOT FOUND!!');
+    // if (!req.file) console.log('REQ.FILE NOT FOUND!!');
+    // console.log(req.file);
 
     // const uppyFileIDs = JSON.parse(req.body.uppyFileIDs || '[]');
 
     const videoData = {
       title: req.body.title,
       description: req.body.description,
-      // thumbnail: req.file ? req.file.filename : req.body.thumbnail,
-      thumbnail: req.body.thumbnail,
+      thumbnail: req.file ? req.file.filename : req.body.thumbnail,
+      // thumbnail: req.body.thumbnail,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,
       sponsors: req.body.sponsors,
       comments: req.body.comments,
       audio: req.body.audio,
-      video: req.body.video,
+      video: req.file.filename,
       // video:
       //   uppyFileIDs
       //     .filter((file) => file.field === 'video')
@@ -199,6 +206,95 @@ exports.createVideo = catchAsync(async (req, res, next) => {
         data: createdVideo,
       });
   } catch (err) {
-    console.log(err, err.message);
+    res.json({
+      status: 'fail',
+      message: err.message,
+      err,
+    });
   }
+});
+
+exports.updateLikesDislikes = catchAsync(async (req, res, next) => {
+  const { videoId } = req.params;
+  const userId = req.user._id;
+  const { action } = req.params; // 'like', 'dislike', or 'remove'
+
+  // Find the video by its ID
+  const video = await Video.findById(videoId);
+
+  if (!video) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Video not found',
+    });
+  }
+
+  // Check if the user already liked the video
+  const userLiked = video.likedBy.includes(userId);
+  const userDisliked = video.dislikedBy.includes(userId);
+
+  if (action === 'like') {
+    if (userLiked) {
+      // If the user already liked, remove the like
+      video.likes -= 1;
+      const index = video.likedBy.indexOf(userId);
+      video.likedBy.splice(index, 1);
+    } else {
+      // Increment the likes count
+      video.likes += 1;
+
+      // Add the user to the likedBy array
+      video.likedBy.push(userId);
+
+      // If the user already disliked, remove the dislike
+      if (userDisliked) {
+        video.dislikes -= 1;
+        const index = video.dislikedBy.indexOf(userId);
+        video.dislikedBy.splice(index, 1);
+      }
+    }
+  } else if (action === 'dislike') {
+    if (userDisliked) {
+      // If the user already disliked, remove the dislike
+      video.dislikes -= 1;
+      const index = video.dislikedBy.indexOf(userId);
+      video.dislikedBy.splice(index, 1);
+    } else {
+      // Increment the dislikes count
+      video.dislikes += 1;
+
+      // Add the user to the dislikedBy array
+      video.dislikedBy.push(userId);
+
+      // If the user already liked, remove the like
+      if (userLiked) {
+        video.likes -= 1;
+        const index = video.likedBy.indexOf(userId);
+        video.likedBy.splice(index, 1);
+      }
+    }
+  }
+  // else if (action === 'remove') {
+  //   // Handle removing the like or dislike
+  //   if (userLiked) {
+  //     video.likes -= 1;
+  //     const index = video.likedBy.indexOf(userId);
+  //     video.likedBy.splice(index, 1);
+  //   } else {
+  //     // Handle removing dislikes similarly
+  //     // ...
+  //   }
+  // }
+
+  // Save the updated video
+  await video.save();
+
+  // Respond with the updated likes and dislikes count
+  res.status(200).json({
+    status: 'success',
+    likes: video.likes,
+    dislikes: video.dislikes,
+    userLiked: video.likedBy.includes(userId),
+    userDisliked: video.dislikedBy.includes(userId),
+  });
 });

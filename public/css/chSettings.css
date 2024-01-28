@@ -24,18 +24,13 @@ body {
 } */
 
 /* //////////////////////////////// */
-
 .section-left,
 .section-bottom {
   display: grid;
   grid-template-rows: 60px 1fr;
   padding-top: 20px;
   padding-bottom: 20px;
-  /* justify-content: center; */
-  /* align-items: start; */
-  background-color: rgba(61, 61, 61, 0.3);
-  border-right: 1px solid #787878;
-
+  border-right: 1px solid rgb(120, 120, 120, 0.5);
   overflow-y: hidden;
   height: 100vh;
   top: 0;
@@ -89,13 +84,11 @@ body {
 .srd-link-texts {
   font-size: 16px;
   padding: 1rem;
-  font-weight: 900;
   border-radius: 8px;
-  transition: all 0.2s ease-in-out;
 }
 
 .srd-link-texts:hover {
-  background-color: rgb(60, 60, 60, 0.3);
+  background-color: #383838;
   cursor: pointer;
 }
 

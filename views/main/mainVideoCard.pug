@@ -4,7 +4,6 @@ block append head
   link(rel='stylesheet', href='/css/videoCard.css')
 
 block content
-  //- - var useCustomLeftNav = false
   section.sect-mid-contentContainer
     each video in videos 
       a(href=`/watch/${video._id}`).ctnt-ctnr-link
@@ -22,9 +21,10 @@ block content
                   h5.sectionHead-chSubCnt
                     span= video.channel.subscribers.length
                     |  Subscribers
-                //- img.sectionHead-tick(src='/imgs/Middle Nav/Video card/tick-square 8.png')
-            //- img.sectionHead-thumbNail(src=`/imgs/users/${userData._id}/thumbnails/${video.thumbnail}`)
-            img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+            if video && video.thumbnail
+              img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+            else 
+              img.sectionHead-thumbNail(src=`/imgs/thumbnails/default-thumbnail.jpeg`)
             section.section-details
               h4.section-details-title= video.title
               hr(width='50px')
@@ -32,10 +32,5 @@ block content
                 h5.sectionHead-views
                   span.views= video.views
                   |  Views
-                - const videoTime = new Date(video.time)
-                h5.sectionHead-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                  //- span= video.time.toLocaleString('en-uk', {day: 'numeric'})
-                  //-   | 
-                  //- span= video.time.toLocaleString('en-uk', )
-                  //-   |
-                  //- span= video.time.toLocaleString('en-uk', {})
+                h5.sectionHead-date= videoTimeAgo
+  script(src="https://cdn.skypack.dev/date-fns")

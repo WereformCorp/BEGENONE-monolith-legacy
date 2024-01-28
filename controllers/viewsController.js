@@ -1,9 +1,45 @@
 const axios = require('axios');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { formatDistanceToNow } = require('date-fns');
+
 const User = require('../models/userModel');
 const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+// //////////////////////
+
+function calculateTimeAgo(videoTime) {
+  const secondsAgo = Math.floor((new Date() - new Date(videoTime)) / 1000);
+
+  if (secondsAgo < 60) {
+    return `${secondsAgo} seconds ago`;
+  }
+  if (secondsAgo < 3600) {
+    const minutesAgo = Math.floor(secondsAgo / 60);
+    return `${minutesAgo} minutes ago`;
+  }
+  if (secondsAgo < 86400) {
+    const hoursAgo = Math.floor(secondsAgo / 3600);
+    return `${hoursAgo} hours ago`;
+  }
+  if (secondsAgo < 604800) {
+    const daysAgo = Math.floor(secondsAgo / 86400);
+    if (daysAgo === 1) {
+      return 'Yesterday';
+    }
+    if (daysAgo < 7) {
+      return `${daysAgo} days ago`;
+    }
+  }
+
+  // For cases where the time difference is larger than a week, use formatDistanceToNow
+  return formatDistanceToNow(new Date(videoTime), { addSuffix: true });
+}
+
+// //////////////////////
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   try {
@@ -17,11 +53,18 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         path: 'channel',
         select: '_id displayImage',
       });
+
+    let videoTimeAgo;
+    data.forEach((video) => {
+      videoTimeAgo = calculateTimeAgo(video.time);
+    });
+
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BeGenuine',
       videos: data,
       user: res.locals.user,
       userData,
+      videoTimeAgo,
     });
   } catch (err) {
     return res.json({
@@ -52,7 +95,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
   const comments = Array.isArray(videoData.comments)
     ? videoData.comments.map((obj) => obj)
     : [];
-
+  const videoTimeAgo = calculateTimeAgo(videoData.time);
   res.status(200).render('../views/main/contents/mainVideo', {
     title: `${videoData.title}`,
     video: videoData,
@@ -61,6 +104,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     channel,
     comments,
     userData,
+    videoTimeAgo,
   });
 });
 
@@ -69,7 +113,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     // If the user is logged in, redirect to the main page
     return res.redirect('/');
   }
-
   res.status(200).render('../views/main/signup', {
     title: `Sign Up | BeGenuine`,
   });
@@ -161,17 +204,22 @@ exports.upload = catchAsync(async (req, res, next) => {
 
 exports.userChannel = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
+  const videoData = await User.findById(res.locals.user._id).populate({
+    path: 'channel',
+    populate: {
+      path: 'videos',
+      options: { sort: { createdAt: -1 } },
+    },
+  });
   const { channel } = userData;
-  // let userId;
-  // if (channel) userId = channel.user._id;
-
-  // console.log(channel.bannerImage);
+  const latestVideo = videoData.channel.videos[0];
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     userData,
     channel,
+    videos: channel.videos,
     user: res.locals.user,
-    // userId,
+    latestVideo,
   });
 });
 
@@ -181,7 +229,6 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   );
   const extractedData = data.data.data;
   const channelData = await Channel.findById(extractedData._id);
-  console.log(`CHANNEL ID 🔥🔥: ${channelData._id}`);
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     channel: channelData,

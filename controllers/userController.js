@@ -104,7 +104,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.me = catchAsync(async (req, res, next) => {
-  const me = await User.findById(req.user._id);
+  const me = await User.findById(req.user._id).select(
+    '-eAddress.password -eAddress.phoneNumber',
+  );
   if (!me)
     return next(
       new AppError(`ME is lost. Can't find. Create One and maybe you'll find.`),
@@ -134,8 +136,12 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
-  // const me = await User.findById(req.user._id);
+  const me = await User.findById(req.user._id);
   const userData = { ...req.body };
+  // userData.password = me.eAddress.password;
+
+  // userData = me;
+  console.log(me);
 
   // 3) Update User document
   let updatedUser = await User.findByIdAndUpdate(req.user._id, userData, {

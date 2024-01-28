@@ -11,7 +11,7 @@ block content
       section.identification
         if userData.photo
           img.sect-mid-logo-img(src=`/imgs/users/${userId}/user-display-picture/${userData.photo}`)
-        else
+        else if userData.photo === undefined
           img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
         .full_user_name
           .firstname
@@ -48,6 +48,7 @@ block content
           .new_password
             h2 New Password
             input.newPasswordInput(placeholder='Type your old password here', type='text')
+          button.confirm-sensitive-info Authenticate Sensitive Data
     .other-userInfo
       .channel_info
         h3 CHANNEL ASSOCIATED
@@ -71,16 +72,17 @@ block content
           a(href="/channel-settings")
             .ch_details
               h4.ch_details_chUsername
-              h4.ch_details_chname No Channel Found
-              button S
+              h4.ch_details_chname No Channel Found!
+                br
+                span Create One?
       .token_info
-        h2 TOKENS
+        h2.token-h2 TOKENS
         a(href="/tokens") 
-          button GET TOKEN
+          button.token-btn GET TOKEN
       .lock_screen
-        h2 LOCK
+        h2.lock-h2 LOCK
         a(href="/lock")
-          button GOTO
+          button.lock-btn GOTO
     .platform-mode
       h2 PLATFORM MODE
       button.mode_simple Simple

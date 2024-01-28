@@ -2,41 +2,33 @@
 
 const submit_info = document.querySelector('.submit_info');
 
-const updateUser = async (
-  firstName,
-  secondName,
-  email,
-  username,
-  mode,
-  languages,
-) => {
+const updateUser = async (firstName, secondName, username, mode, languages) => {
   try {
     const me = await axios.get('http://127.0.0.1:3000/api/v1/users/me');
 
-    const updateData = { ...me.data.user }; // Create an empty object to store the fields to update
-
+    const updateData = { ...me.data.data }; // Create an empty object to store the fields to update
+    // console.log(updateData);
     // Update fields with new values
     if (firstName || secondName) {
       updateData.name = { ...(updateData.name || {}) };
-      if (firstName) updateData.name.firstName = firstName;
-      if (secondName) updateData.name.secondName = secondName;
+      if (firstName)
+        updateData.name.firstName = firstName || me.data.data.name.firstName;
+      if (secondName)
+        updateData.name.secondName = secondName || me.data.data.name.secondName;
     }
 
-    if (email) {
-      updateData.eAddress = { email };
-    }
+    // if (email) {
+    //   updateData.eAddress = { ...(updateData.eAddress || {}) };
+    //   updateData.eAddress.email = email || me.data.data.eAddress.email;
+    // }
+
+    // console.log(me.data.data.eAddress);
 
     if (username) {
-      updateData.username = username;
+      updateData.username = username || me.data.data.username;
     }
 
-    if (mode || languages) {
-      updateData.platformSettings = { ...(updateData.platformSettings || {}) };
-      if (mode) updateData.platformSettings.mode = mode;
-      if (languages) updateData.platformSettings.languages = languages;
-    }
-
-    if (!firstName && !secondName && !email && !username) {
+    if (!firstName && !secondName && !username) {
       alert(
         `At least put some data in the input fields in order to update. \n It's like spinning an empty washing machine. \n Making request to server that please add some dust in it.`,
       );
@@ -51,11 +43,11 @@ const updateUser = async (
 
     console.log('RESPONSE:', res);
 
-    if (res.data.status === 'success') {
-      setTimeout(function () {
-        location.reload(true); // Force a complete page reload
-      }, 1000);
-    }
+    // if (res.data.status === 'success') {
+    //   setTimeout(function () {
+    //     location.reload(true); // Force a complete page reload
+    //   }, 1000);
+    // }
   } catch (err) {
     console.log(`ERROR MESSAGE 🥲: ${err.message}`, `ERROR ITSELF 😭: ${err}`);
   }
@@ -106,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `Email: ${emailInput}`,
       `Username: ${usernameInput}`,
     );
-    updateUser(firstNameInput, secondNameInput, emailInput, usernameInput);
+    updateUser(firstNameInput, secondNameInput, usernameInput);
     updateOverlay.style.display = 'none';
   });
 });

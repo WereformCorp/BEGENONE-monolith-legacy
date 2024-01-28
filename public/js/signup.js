@@ -30,7 +30,7 @@ const signup = async (
           email,
           password,
           passwordConfirm,
-          // passwordChangedAt,
+          passwordChangedAt: Date.now(),
         },
       },
     });
@@ -65,6 +65,11 @@ signupForm.addEventListener('submit', (e) => {
       `PASSWORD: ${password}`,
       `USERNAME: ${username}`,
     );
+
+    if (password !== passwordConfirm) {
+      alert('Password and Confirm Password do not match.');
+      return; // Stop the function execution
+    }
 
     signup(firstName, secondName, email, password, passwordConfirm, username);
   } catch (err) {

@@ -335,7 +335,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.sect-mid-ch-about:hover,
 .sect-mid-ch-wire:hover {
   cursor: pointer;
   background-color: rgb(60, 60, 60, 0.2);
@@ -345,6 +344,10 @@
   display: none;
   font-size: 2rem;
   font-weight: 800;
+}
+
+.sect-mid-ch-about-h1 {
+  display: flex;
 }
 
 .sect-mid-ch-about-text,
@@ -368,6 +371,11 @@
   display: flex;
   flex-direction: column;
   row-gap: 0.4rem;
+}
+
+.ch-wire-header-img {
+  border-radius: 8px;
+  max-height: 2.5rem;
 }
 
 .wire-header-name {
@@ -405,6 +413,7 @@
   display: flex;
   flex-direction: column;
   max-width: 90%;
+  width: 100%;
   justify-self: center;
   /* margin-top: 2rem; */
   /* background-color: rgb(60, 60, 60, 0.1); */
@@ -432,6 +441,7 @@
   height: 100%;
   max-height: 15rem;
   border-radius: 0.8rem;
+  max-width: 25rem;
 }
 
 .featuredVideo-title {

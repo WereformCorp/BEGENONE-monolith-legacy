@@ -21,8 +21,26 @@ const videoSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    likes: Number,
-    dislikes: Number,
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    likedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assuming you have a User model
+      },
+    ],
+    dislikes: {
+      type: Number,
+      default: 0,
+    },
+    dislikedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assuming you have a User model
+      },
+    ],
     time: {
       type: Date,
       default: Date.now(),
