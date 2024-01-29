@@ -31,6 +31,7 @@ block content
           .sect-mid-accDtls-h4s
             h4.sect-mid-accDtls-chName= channel.name
             h4.sect-mid-accDtls-subsCount= channel.subscribersCount + ' ' + 'Subscribers'
+            input.userId-input(type="hidden", value=`${user._id}`)
           .sect-mid-accDtls-subsBtn
             //- a(href=`/channels/${channel._id}/subscribe`)
             button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Subscribe

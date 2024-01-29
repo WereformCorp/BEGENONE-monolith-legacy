@@ -87,8 +87,8 @@
   height: 100%;
   position: relative;
   /* animation: glowing 1.5s infinite; */
-
-  border: 1px solid #fff;
+  box-shadow: 0px 0px 100px #ffffff34;
+  /* border: 1px solid #fff; */
   /* border-radius: 10px; */
   /* z-index: ; */
 }
@@ -220,17 +220,33 @@
 .sect-mid-vdoP-subsBtn {
   width: 7.5rem;
   height: 2.5rem;
-  background-color: #f10000;
+  background-color: transparent;
+  border: 1px solid rgb(120, 120, 120, 0.3);
   color: #fff;
   font-weight: 800;
-  border: none;
   border-radius: 7px;
   outline: none;
   font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.sect-mid-vdoP-subsBtn-done {
+  width: 9rem;
+  height: 2.5rem;
+  background-color: rgba(194, 194, 194, 0.1);
+  border: 1px solid rgb(120, 120, 120, 0.3);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 7px;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
 }
 
 .sect-mid-vdoP-subsBtn:hover {
   cursor: pointer;
+  box-shadow: 0px 3px 7px #000;
+  background-color: #f10000;
 }
 
 .sect-mid-vdoP-notify:hover {
@@ -238,14 +254,34 @@
   /* background-color: rgb(60, 60, 60, 0.5); */
 }
 
+.chList-chnl-img {
+  height: 4rem;
+}
+
 .vdoP-name {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 800;
 }
 
 .vdoP-subsCount {
-  font-size: 0.75rem;
+  font-size: 0.825rem;
   font-weight: 500;
+}
+
+.vdoP-subsCount span {
+  font-weight: 800;
+}
+
+.sect-mid-vdoP-name_N_subCount {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.sect-mid-vdoP-name_N_subCount a {
+  display: flex;
+  flex-direction: column;
+  /* row-gap: 0.3rem; */
 }
 
 .sect-mid-vdoP-nav {
@@ -253,14 +289,14 @@
   flex-direction: column;
   row-gap: 5px;
   justify-content: end;
-  align-self: end;
+  align-self: center;
   align-items: center;
   border: 1px solid rgb(71, 71, 71, 0.3);
   border-radius: 10px;
   height: max-content;
   width: max-content;
   padding: 0.4rem;
-  margin-bottom: 5.625rem;
+  /* margin-bottom: 5.625rem; */
   transition: all 0.2s ease-in-out;
 }
 
@@ -312,7 +348,7 @@
   font-size: 2rem;
   /* font-family: lexend; */
   letter-spacing: 1.2px;
-  font-weight: 600;
+  font-weight: 400;
   justify-self: start !important;
 
   display: -webkit-box;

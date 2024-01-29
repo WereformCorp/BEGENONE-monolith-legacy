@@ -9,7 +9,9 @@ const createChannel = async (
 ) => {
   try {
     const user = document.getElementById('userId').value;
+    console.log(user);
     const resUser = await axios.get(`/api/v1/users/${user}`);
+    console.log(`This is User Response: ${resUser}`);
     const userChannel = resUser.data.user.channel;
     console.log(userChannel);
 

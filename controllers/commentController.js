@@ -20,10 +20,15 @@ exports.updateComment = factory.updateOne(Comment);
 exports.deleteComment = factory.deleteOne(Comment);
 exports.createComment = catchAsync(async (req, res, next) => {
   try {
+    const videoData = await Video.findById(req.params.videoId);
+    console.log(videoData);
+    const userChannel = req.user.channel ? req.user.channel._id : null;
+    const userId = req.user._id;
     const commentData = await Comment.create({
       comment: req.body.comment,
       video: req.params.videoId,
-      channel: req.user.channel._id,
+      channel: userChannel,
+      user: userId,
       time: Date.now(),
     });
 
@@ -34,27 +39,18 @@ exports.createComment = catchAsync(async (req, res, next) => {
       video.comments = [];
     }
 
-    // await Video.findByIdAndUpdate(
-    //   req.params.videoId,
-    //   { $push: { comments: commentData._id } },
-    //   { new: true },
-    // );
-
-    // if (!commentData)
-    //   Video.findByIdAndUpdate(req.params.videoId, { comments: [] });
-
     if (!commentData)
       return next(new AppError(`Comment creation failed!`, 500));
 
     // const video = await Video.findById(req.params.videoId);
     await Channel.findByIdAndUpdate(
-      req.user.channel._id,
+      videoData.channel._id,
       { comments: commentData._id },
       { new: true, select: '_id' },
     );
 
-    await Video.findByIdAndUpdate(
-      req.params.videoId,
+    const updatedVideo = await Video.findByIdAndUpdate(
+      videoData._id,
       { $push: { comments: commentData._id } },
       { new: true },
     );
@@ -64,6 +60,7 @@ exports.createComment = catchAsync(async (req, res, next) => {
     return res.status(201).json({
       status: 'Success',
       data: commentData,
+      updatedVideo,
     });
   } catch (err) {
     return res.status(404).json({

@@ -1,30 +1,56 @@
 const Channel = require('../models/channelModel');
 const User = require('../models/userModel');
+const Video = require('../models/videoModel');
 const catchAsync = require('../utils/catchAsync');
 
 exports.subscribe = catchAsync(async (req, res, next) => {
-  const userId = res.locals.user;
-  const requestedChannel = await Channel.findById(req.params.id);
-  if (!requestedChannel.subscribers.includes(userId._id)) {
-    // If not subscribed, update the channel's subscribers array
-    await Channel.findByIdAndUpdate(requestedChannel, {
-      $push: { subscribers: userId },
-    });
-    await User.findByIdAndUpdate(userId._id, {
-      $push: {
-        subscribedChannels: requestedChannel,
-        $inc: { subscribersCount: 1 },
-      },
+  try {
+    const loggedInUser = await User.findById(req.user._id);
+    // console.log(
+    //   `LOGGED IN USER FROM SUBSCRIBE CONTROLLER FILE: ${loggedInUser._id}`,
+    // );
+    const videoChannel = await Video.findById(req.params.id).populate({
+      path: 'channel',
+      select: '_id name',
     });
 
-    res.status(200).json({
-      status: 'success',
-      data: requestedChannel,
-    });
-  } else
-    res.status(200).json({
-      status: 'success',
-      message: 'THE CHANNEL ALREADY EXISTS',
-      data: requestedChannel,
-    });
+    console.log(
+      `Subscribe Controller, CHANNEL OF VIDEO: ${videoChannel.channel}`,
+    );
+
+    const requestedChannel = await Channel.findById(videoChannel.channel._id);
+
+    if (loggedInUser.channel)
+      if (loggedInUser.channel._id.equals(requestedChannel._id)) {
+        return res.status(403).json({
+          status: 'fail',
+          message: 'You cannot subscribe to your own channel.',
+        });
+      }
+
+    if (!loggedInUser.subscribedChannels.includes(videoChannel.channel._id))
+      await User.findByIdAndUpdate(loggedInUser._id, {
+        $push: {
+          subscribedChannels: videoChannel.channel._id,
+        },
+      });
+
+    if (!requestedChannel.subscribers.includes(loggedInUser._id)) {
+      // If not subscribed, update the channel's subscribers array
+      await Channel.findByIdAndUpdate(requestedChannel._id, {
+        $push: { subscribers: loggedInUser._id },
+      });
+
+      res.status(200).json({
+        status: 'success',
+        // data: requestedChannel,
+      });
+    } else
+      res.status(200).json({
+        status: 'fail',
+        message: 'THE CHANNEL ALREADY EXISTS',
+      });
+  } catch (err) {
+    console.log(err.message, err);
+  }
 });

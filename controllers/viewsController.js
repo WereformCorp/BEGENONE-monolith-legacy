@@ -76,36 +76,95 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 });
 
 exports.watchVideo = catchAsync(async (req, res, next) => {
-  const video = await axios.get(
-    `http://127.0.0.1:3000/api/v1/videos/${req.params.videoId}`,
-  );
-  const videoData = video.data.data;
-  const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
-  const { channel } = videoData;
-  const localUser = res.locals.user;
-  await Video.findByIdAndUpdate(videoData._id, { $inc: { views: 1 } });
-  let userData;
-  if (localUser)
-    userData = await User.findById(localUser._id).populate({
-      path: 'channel',
-      select: '_id displayImage',
+  try {
+    const video = await axios.get(
+      `http://127.0.0.1:3000/api/v1/videos/${req.params.videoId}`,
+    );
+    const videoData = video.data.data;
+    const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+    const { channel } = videoData;
+    const localUser = res.locals.user;
+    const videoUserData = await Video.findById(req.params.videoId)
+      .populate('user')
+      .populate('channel');
+    const userData = localUser
+      ? await User.findById(localUser._id).populate({
+          path: 'channel',
+          select: '_id displayImage',
+        })
+      : null;
+    if (!videos.data.data)
+      next(new AppError(`There are no videos to be found.`, 404));
+
+    const comments = Array.isArray(videoData.comments)
+      ? videoData.comments.map((obj) => obj)
+      : [];
+    if (
+      !videoUserData ||
+      !videoUserData.user ||
+      !Array.isArray(videoUserData.user.subscribedChannels)
+    ) {
+      throw new AppError(`Invalid user data for the video.`, 500);
+    }
+    await Video.findByIdAndUpdate(videoData._id, { $inc: { views: 1 } });
+    const { subscribers } = videoUserData.channel;
+    const videoUserId = videoData.user;
+    const isUserSubscribed = subscribers.includes(localUser._id);
+    console.log(`IS THE USER SUBSCRIBED? : ${isUserSubscribed}`);
+    console.log(`SUBSCRIBED CHANNELS : ${videoUserData}`);
+    console.log(`VIDEO USER ID : ${videoUserId}`);
+    console.log(`LOGGED IN USER DATA: ${localUser._id}`);
+
+    let btnText = 'Subscribe';
+    let btnClass = 'sect-mid-vdoP-subsBtn';
+
+    if (res.locals.user._id === videoUserData.user._id) {
+      btnText = 'Analytics';
+      btnClass = 'sect-mid-vdoP-subsBtn-done';
+    } else if (isUserSubscribed) {
+      btnText = 'Subscribed';
+      btnClass = 'sect-mid-vdoP-subsBtn-done';
+    }
+
+    console.log(`VIEWS CONTROLLER 🔥🔥: ${btnClass} ${btnText}`);
+
+    let firstName;
+    let secondName;
+    // eslint-disable-next-line array-callback-return
+    comments.map((comment) => {
+      // eslint-disable-next-line prefer-destructuring
+      firstName = comment.user.name.firstName;
+      // eslint-disable-next-line prefer-destructuring
+      secondName = comment.user.name.secondName;
     });
-  if (!videos.data.data)
-    next(new AppError(`There are no videos to be found.`, 404));
-  const comments = Array.isArray(videoData.comments)
-    ? videoData.comments.map((obj) => obj)
-    : [];
-  const videoTimeAgo = calculateTimeAgo(videoData.time);
-  res.status(200).render('../views/main/contents/mainVideo', {
-    title: `${videoData.title}`,
-    video: videoData,
-    manyVideos: videos.data.data,
-    user: res.locals.user,
-    channel,
-    comments,
-    userData,
-    videoTimeAgo,
-  });
+
+    const videoTimeAgo = calculateTimeAgo(videoData.time);
+    res.status(200).render('../views/main/contents/mainVideo', {
+      title: `${videoData.title}`,
+      video: videoData,
+      manyVideos: videos.data.data,
+      user: res.locals.user,
+      videoIdForComment: req.params.videoId,
+      videoUserDataId: videoUserData.user._id,
+      videoUserData,
+      // subscribedChannels,
+      isUserSubscribed,
+      channel,
+      comments,
+      firstName,
+      secondName,
+      userData,
+      videoTimeAgo,
+      btnClass,
+      btnText,
+    });
+  } catch (err) {
+    res.json({
+      status: 'Fail',
+      message: err.message,
+      err,
+    });
+  }
 });
 
 exports.signup = catchAsync(async (req, res, next) => {

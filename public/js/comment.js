@@ -12,12 +12,10 @@ const postComment = async (comment) => {
     }
 
     const videoId = document.querySelector('.videoId').value;
+    console.log(`This is the video ID: ${videoId}`);
     // const video = await axios.get(
     //   `http://127.0.0.1:3000/api/v1/videos/${videoId}`,
     // );
-    // console.log(videoId);
-
-    // console.log(commentText);
 
     const res = await axios({
       method: 'POST',
@@ -28,13 +26,6 @@ const postComment = async (comment) => {
     });
 
     console.log('RESPONSE:', res);
-
-    // if (res.data.status === 'success') {
-    //   // showAlert('success', 'Logged In Successfully!');
-    //   window.setTimeout(() => {
-    //     location.assign('/');
-    //   }, 1500);
-    // }
   } catch (err) {
     console.log(`ERROR MESSAGE: ${err.message}`, err);
   }

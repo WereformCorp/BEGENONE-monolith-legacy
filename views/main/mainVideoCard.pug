@@ -21,10 +21,10 @@ block content
                   h5.sectionHead-chSubCnt
                     span= video.channel.subscribers.length
                     |  Subscribers
-            if video && video.thumbnail
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
-            else 
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/default-thumbnail.jpeg`)
+            //- if video && video.thumbnail
+            //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+            //- else 
+            img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample-thumbnail.jpg`)
             section.section-details
               h4.section-details-title= video.title
               hr(width='50px')

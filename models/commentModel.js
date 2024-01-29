@@ -45,11 +45,10 @@ const commentSchema = new mongoose.Schema(
 );
 
 commentSchema.pre('find', function (next) {
-  // this.populate({
-  //   path: 'channel',
-  //   select: 'name', // Include fields you want to populate
-  // });
   this.populate({
+    path: 'user',
+    select: '_id name.firstName name.secondName', // Include fields you want to populate
+  }).populate({
     path: 'channel',
     select:
       '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -user -reviews',

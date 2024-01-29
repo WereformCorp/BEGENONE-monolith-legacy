@@ -22,23 +22,24 @@ block content
               h5.vdoP-subsCount
                 span= video.channel.subscribers.length
                 |  Subscribers
+            div.sect-mid-vdo-meta
+              h2.sect-mid-vdo-time= videoTimeAgo
+              h2.sect-mid-vdo-views= `| ${video.views} Views`
           .sect-mid-vdo_subscribe
-            button.sect-mid-vdoP-subsBtn(data-channel-id=channel._id) Subscribe
-            .sect-mid-vdoP-notify
+            button(class=`${btnClass}`)= btnText
+            - console.log(`${btnClass}`, `${btnText}`)
+            input.userId-input(type="hidden", value=`${user._id}`)
+            input.videoId-input(type="hidden", value=`${video._id}`)
+            //- .sect-mid-vdoP-notify
               svg.sect-mid-vdoP-notify-icon.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid
                 use(xlink:href='#icon-bell-solid')
                   symbol#icon-bell-solid(viewBox='0 0 28 32')
                     path(d='M14 0c-1.106 0-2 0.894-2 2v1.2c-4.563 0.925-8 4.963-8 9.8v1.175c0 2.938-1.081 5.775-3.031 7.975l-0.463 0.519c-0.525 0.587-0.65 1.431-0.331 2.15s1.038 1.181 1.825 1.181h24c0.788 0 1.5-0.462 1.825-1.181s0.194-1.563-0.331-2.15l-0.462-0.519c-1.95-2.2-3.031-5.031-3.031-7.975v-1.175c0-4.838-3.438-8.875-8-9.8v-1.2c0-1.106-0.894-2-2-2zM16.831 30.831c0.75-0.75 1.169-1.769 1.169-2.831h-8c0 1.063 0.419 2.081 1.169 2.831s1.769 1.169 2.831 1.169 2.081-0.419 2.831-1.169z')
-        div.sect-mid-vdo-meta
-          h2.sect-mid-vdo-time= videoTimeAgo
-          h2.sect-mid-vdo-views= '|' + ' ' + video.views
-            |
-            | Views
         section.vdoPlayer-controls
           //- video.sect-mid-vdoPlayer-video(controls)
           //-   source(src=`/video/sample-video.mp4`, type='video/mp4')
           //- THE NEW VIDEO PLAYER
-          input.videoId(type="hidden", value=`${video._id}`)
+          input.videoId(type="hidden", value=`${videoIdForComment}`)
           video.sect-mid-vdoPlayer-video(controls='', crossorigin='', playsinline='', poster='')
               source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
               | &#x9;&#x9;&#x9;
@@ -170,11 +171,15 @@ block content
             each comment in comments
               .ctnt-cmmnt-listItems.ctnt-cmmnt-listItem-1
                 if comment
-                  img.ctnt-cmmnt-logo(src=`/imgs/users/${comment.channel.displayImage}`, height='45px')
+                  if comment.channel && comment.channel.displayImage
+                    img.ctnt-cmmnt-logo(src=`/imgs/users/${comment.channel.displayImage}`, height='45px')
+                  else
+                    img.ctnt-cmmnt-logo(src="/imgs/default-user-photo.jpg", height='45px')
                   .ctnt-cmmnt-dtls
                     .ctnt-cmmnt-accDtls_N_opts
                       .ctnt-cmmnt-accDetails
-                        h4.cmmnt-accDtls= comment.channel.name
+                        - const userOrChannelName = comment.channel ? comment.channel.name : `${firstName + ' ' + secondName}`
+                        h4.cmmnt-accDtls= userOrChannelName
                         - const commentDate = new Date(comment.time)
                         h6.cmmnt-date= commentDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
                       .cmmnt-fltrs
@@ -207,8 +212,10 @@ block content
                   img.sectionHead-chLogo(src="/imgs/default-user-photo.jpg")
                 h3.sectionHead-chName= singleVideo.channel.name
                 //- img.sectionHead-tick(src='/imgs/Middle Nav/video card/tick-square 8.png')
-              if singleVideo && singleVideo.thumbnail
-                img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
+              //- if singleVideo && singleVideo.thumbnail
+              //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
+              //- else
+              img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample-thumbnail.jpg`)
               section.section-details
                 h4.section-details-title= singleVideo.title
                 hr(width='50px')

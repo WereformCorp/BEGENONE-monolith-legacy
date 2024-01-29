@@ -1,29 +1,34 @@
 /* eslint-disable */
-const subscribeBtnCh = document.querySelector('.sect-mid-accDtls-subscribe');
-const subscribeBtnVd = document.querySelector('.sect-mid-vdoP-subsBtn');
+const userIdInput = document.querySelector('.userId-input').value;
+const videoIdInput = document.querySelector('.videoId-input').value;
 const subscribeBtns = document.querySelectorAll(
   '.sect-mid-accDtls-subscribe, .sect-mid-vdoP-subsBtn',
 );
 
-const subscribe = async (req, res) => {
-  // const channelId = subscribeBtns.dataset.channelId;
-  try {
-    // console.log(channelId);
-    subscribeBtns.forEach(async (button) => {
-      const channelId = button.dataset.channelId;
-      console.log(channelId);
-      const response = await axios({
-        method: 'POST',
-        url: `http://127.0.0.1:3000/api/v1/channels/${channelId}/subscribe`,
-      });
+const subBtn1 = document.querySelector('.sect-mid-vdoP-subsBtn');
 
-      console.log(`RESPONSE 🔥🔥🔥: ${response}`);
+let isUserOwnChannel;
+
+const subscribe = async (button) => {
+  try {
+    const userId = userIdInput;
+    const videoId = videoIdInput;
+    console.log(userId);
+    const response = await axios({
+      method: 'POST',
+      url: `http://127.0.0.1:3000/api/v1/channels/${videoId}/subscribe`,
     });
-    // if (response.data.status === 'success') location.reload(true);
+    console.log(response);
+    if (response.data.status === 'success') {
+      button.textContent = 'Subscribed';
+      button.classList.remove('sect-mid-vdoP-subsBtn');
+      button.classList.add('sect-mid-vdoP-subsBtn-done');
+    }
   } catch (err) {
     console.log(`Error during subscription: ${err.message}`, err);
   }
 };
 
-// subscribeBtnCh.addEventListener('click', subscribe);
-subscribeBtns.forEach((button) => button.addEventListener('click', subscribe));
+subscribeBtns.forEach((button) =>
+  button.addEventListener('click', (e) => subscribe(button)),
+);
