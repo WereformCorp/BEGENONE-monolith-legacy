@@ -108,12 +108,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     }
     await Video.findByIdAndUpdate(videoData._id, { $inc: { views: 1 } });
     const { subscribers } = videoUserData.channel;
-    const videoUserId = videoData.user;
     const isUserSubscribed = subscribers.includes(localUser._id);
-    console.log(`IS THE USER SUBSCRIBED? : ${isUserSubscribed}`);
-    console.log(`SUBSCRIBED CHANNELS : ${videoUserData}`);
-    console.log(`VIDEO USER ID : ${videoUserId}`);
-    console.log(`LOGGED IN USER DATA: ${localUser._id}`);
 
     let btnText = 'Subscribe';
     let btnClass = 'sect-mid-vdoP-subsBtn';
@@ -126,8 +121,6 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       btnClass = 'sect-mid-vdoP-subsBtn-done';
     }
 
-    console.log(`VIEWS CONTROLLER 🔥🔥: ${btnClass} ${btnText}`);
-
     let firstName;
     let secondName;
     // eslint-disable-next-line array-callback-return
@@ -138,6 +131,15 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       secondName = comment.user.name.secondName;
     });
 
+    console.log(
+      `CHANNEL ID RETRIEVED FROM LOGGED IN USER 🔥🔥🔥🔥🔥🔥🔥: ${localUser.channel._id}`,
+      `VIDEO's CHANNEL ID 🔥🔥🔥🔥🔥🔥🔥: ${channel._id}`,
+    );
+
+    const areChannelSame =
+      channel._id.toString() === localUser.channel._id.toString();
+    console.log(`${localUser.channel._id} | ${channel._id} :`, areChannelSame);
+
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
       title: `${videoData.title}`,
@@ -147,9 +149,9 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       videoIdForComment: req.params.videoId,
       videoUserDataId: videoUserData.user._id,
       videoUserData,
-      // subscribedChannels,
       isUserSubscribed,
       channel,
+      areChannelSame,
       comments,
       firstName,
       secondName,

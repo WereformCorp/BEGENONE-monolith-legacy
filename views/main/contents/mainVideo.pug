@@ -26,10 +26,14 @@ block content
               h2.sect-mid-vdo-time= videoTimeAgo
               h2.sect-mid-vdo-views= `| ${video.views} Views`
           .sect-mid-vdo_subscribe
-            button(class=`${btnClass}`)= btnText
-            - console.log(`${btnClass}`, `${btnText}`)
-            input.userId-input(type="hidden", value=`${user._id}`)
-            input.videoId-input(type="hidden", value=`${video._id}`)
+            if areChannelSame
+              button(class=`sect-mid-vdoP-subsBtn--analytics`) Analytics
+            else
+              button(class=`${btnClass}`)= btnText
+              - console.log(`${btnClass}`, `${btnText}`)
+              input.userId-input(type="hidden", value=`${user._id}`)
+              input.videoId-input(type="hidden", value=`${video._id}`)
+              input.isUserSubscribed-input(type="hidden", value=`${isUserSubscribed}`)
             //- .sect-mid-vdoP-notify
               svg.sect-mid-vdoP-notify-icon.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid
                 use(xlink:href='#icon-bell-solid')

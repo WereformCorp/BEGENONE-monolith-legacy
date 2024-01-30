@@ -1,13 +1,21 @@
 /* eslint-disable */
 const userIdInput = document.querySelector('.userId-input').value;
 const videoIdInput = document.querySelector('.videoId-input').value;
-const subscribeBtns = document.querySelectorAll(
-  '.sect-mid-accDtls-subscribe, .sect-mid-vdoP-subsBtn',
+const isUserSubscribed = document.querySelector(
+  '.isUserSubscribed-input',
+).value;
+
+const subscribeBtn = document.querySelector('.sect-mid-vdoP-subsBtn');
+const subscribedBtn = document.querySelector('.sect-mid-vdoP-subsBtn-done');
+
+const allSubBtns = document.querySelectorAll(
+  '.sect-mid-vdoP-subsBtn, .sect-mid-vdoP-subsBtn-done',
 );
 
-const subBtn1 = document.querySelector('.sect-mid-vdoP-subsBtn');
+console.log(subscribeBtn);
+console.log(subscribedBtn);
 
-let isUserOwnChannel;
+let sub = true;
 
 const subscribe = async (button) => {
   try {
@@ -20,7 +28,8 @@ const subscribe = async (button) => {
     });
     console.log(response);
     if (response.data.status === 'success') {
-      button.textContent = 'Subscribed';
+      const { isSubscribed } = response.data;
+      button.textContent = isSubscribed ? 'Subscribed' : 'Subscribe';
       button.classList.remove('sect-mid-vdoP-subsBtn');
       button.classList.add('sect-mid-vdoP-subsBtn-done');
     }
@@ -29,6 +38,37 @@ const subscribe = async (button) => {
   }
 };
 
-subscribeBtns.forEach((button) =>
-  button.addEventListener('click', (e) => subscribe(button)),
-);
+const unsubscribe = async (button) => {
+  try {
+    const userId = userIdInput;
+    const videoId = videoIdInput;
+    console.log(userId);
+    const response = await axios({
+      method: 'POST',
+      url: `http://127.0.0.1:3000/api/v1/channels/${videoId}/unsubscribe`,
+    });
+    console.log(response);
+    if (response.data.status === 'success') {
+      const { isSubscribed } = response.data;
+      button.textContent = isSubscribed ? 'Subscribed' : 'Subscribe';
+      button.classList.remove('sect-mid-vdoP-subsBtn-done');
+      button.classList.add('sect-mid-vdoP-subsBtn');
+    }
+  } catch (err) {
+    console.log(`Error during subscription: ${err.message}`, err);
+  }
+};
+
+console.log(`CHECKING FOR USER SUBSCRIBED OR NOT: ${isUserSubscribed}`);
+
+if (isUserSubscribed === 'true') {
+  console.log('Attaching unsubscribe event listener');
+  subscribedBtn.addEventListener('click', (e) => {
+    unsubscribe(subscribedBtn);
+  });
+} else if (isUserSubscribed === 'false') {
+  console.log('Attaching subscribe event listener');
+  subscribeBtn.addEventListener('click', (e) => {
+    subscribe(subscribeBtn);
+  });
+}

@@ -30,6 +30,12 @@ router.post(
   authController.protect,
   subscribeController.subscribe,
 );
+
+router.post(
+  '/:id/unsubscribe',
+  authController.protect,
+  subscribeController.unsubscribe,
+);
 // router
 //   .route('/:channelId/deactivate')
 //   .delete(authController.protect, channelController.deactivateChannelAndVideos);

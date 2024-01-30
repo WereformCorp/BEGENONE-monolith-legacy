@@ -4,13 +4,12 @@ import {
   Dashboard,
   XHRUpload,
   Form,
+  DragDrop,
   ImageEditor,
   Informer,
   StatusBar,
   ThumbnailGenerator,
 } from 'https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs';
-
-const uppyBtn = document.querySelector('#openUppyButton');
 
 const uppy = new Uppy({
   autoUpload: false,
@@ -21,8 +20,16 @@ const uppy = new Uppy({
     target: '#ctnt-vid-file-btn',
     theme: 'dark',
     width: '20rem',
-    height: '12rem',
+    height: '100%',
+    hideUploadButton: true,
+    showLinkToFileUploadResult: true,
   })
+  // .use(DragDrop, {
+  //   target: '#ctnt-vid-file-btn',
+  //   theme: 'dark',
+  //   width: '20rem',
+  //   height: '100%',
+  // })
   .use(XHRUpload, {
     endpoint: 'api/v1/videos/',
     fieldName: 'video',
@@ -30,14 +37,20 @@ const uppy = new Uppy({
   })
   .use(Form, {
     target: '#videoUploadForm', // Replace with your form's ID
-    getMetaFromForm: true,
-    addResultToForm: true,
+    // getMetaFromForm: true,
+    // addResultToForm: true,
+    triggerUploadOnSubmit: true,
+    submitOnSuccess: true,
   })
   .setOptions({
     restrictions: {
       maxNumberOfFiles: 1,
     },
   });
+// .on('ready', () => {
+//   // Now uppy is fully initialized, you can use it
+//   console.log('Uppy is ready!');
+// });
 
 // const uppyThumb = new Uppy({
 //   autoUpload: false,
@@ -70,7 +83,8 @@ document
   .getElementById('videoUploadForm')
   .addEventListener('submit', async (e) => {
     e.preventDefault();
-
+    // uppy.upload();
+    await uppy.run();
     // Manually trigger the file upload
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
@@ -86,8 +100,6 @@ document
       return;
     }
 
-    uppy.upload();
-    await uppy.run();
     // document.getElementById('videoUploadForm').submit();
 
     try {
@@ -104,9 +116,9 @@ document
 
       if (res.data.status === 'Success') {
         showAlert('success', 'Logged In Successfully!');
-        // window.setTimeout(() => {
-        //   location.assign('/upload');
-        // }, 1500);
+        window.setTimeout(() => {
+          location.reload(true);
+        }, 1500);
       }
     } catch (error) {
       console.error('Error:', error);

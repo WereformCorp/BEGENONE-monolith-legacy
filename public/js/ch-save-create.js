@@ -12,7 +12,7 @@ const createChannel = async (
     console.log(user);
     const resUser = await axios.get(`/api/v1/users/${user}`);
     console.log(`This is User Response: ${resUser}`);
-    const userChannel = resUser.data.user.channel;
+    const userChannel = resUser.data.channel;
     console.log(userChannel);
 
     let url;
