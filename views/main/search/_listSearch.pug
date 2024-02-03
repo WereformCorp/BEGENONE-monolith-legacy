@@ -22,22 +22,27 @@ block content
       section.sectMid-resultContent
         each video in videos
           a(href=`/watch/${video._id}`) 
-            .resultContent-box
+            .resultContent-box.resultContent-box-1
               .thumb_N_date_views
-                img.thumbnail-img(src=`/imgs/thumbnails/${video.thumbnail}`)
+                if video && video.thumbnail === undefined
+                  img.thumbnail-img(src=`/imgs/thumbnails/${video.thumbnail}`)
+                else
+                  img.thumbnail-img(src=`/imgs/thumbnails/sample.jpg`)
                 .date_N_views
                   h4
                     span= video.views
                     |  Views
                   h4
-                    - const videoTime = new Date(video.time)
-                    span= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                    span= videoTimeAgo
               .title_N_description
                 h2.content-title= video.title
                 p.content-description= video.description
                 .channel_details
                   //- img.channel-logo(src=`/imgs/users/${video.channel.displayImage}`)
-                  img.channel-logo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+                  if user && user.channel && user.channel.displayImage
+                    img.channel-logo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+                  else
+                    img.channel-logo(src=`/imgs/default-user-photo.jpg`)
                   h4.channel-name= `@${video.channel.channelUserName}`
 
     //- section.sectMid-contentPreview

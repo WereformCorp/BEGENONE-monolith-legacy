@@ -17,6 +17,7 @@ router.route('/').get(videoController.getAllVideos).post(
   // uploadThumbnail,
   videoController.createVideo,
 );
+
 router
   .route('/interaction/:videoId/:action')
   .patch(authController.protect, videoController.updateLikesDislikes);

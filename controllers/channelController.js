@@ -150,6 +150,7 @@ exports.createChannel = catchAsync(async (req, res, next) => {
       displayImage: req.body.displayImage,
       bannerImage: req.body.bannerImage,
       about: req.body.about,
+      subscribers: req.body.subscribers,
       products: req.body.products,
       reviews: req.body.reviews,
       commentToggle: req.body.commentToggle,

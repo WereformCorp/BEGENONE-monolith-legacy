@@ -11,7 +11,7 @@ const catchAsync = require('../utils/catchAsync');
 
 // //////////////////////
 
-function calculateTimeAgo(videoTime) {
+const calculateTimeAgo = (videoTime) => {
   const secondsAgo = Math.floor((new Date() - new Date(videoTime)) / 1000);
 
   if (secondsAgo < 60) {
@@ -37,7 +37,7 @@ function calculateTimeAgo(videoTime) {
 
   // For cases where the time difference is larger than a week, use formatDistanceToNow
   return formatDistanceToNow(new Date(videoTime), { addSuffix: true });
-}
+};
 
 // //////////////////////
 
@@ -54,9 +54,9 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         select: '_id displayImage',
       });
 
-    let videoTimeAgo;
+    // let videoTimeAgo;
     data.forEach((video) => {
-      videoTimeAgo = calculateTimeAgo(video.time);
+      video.videoTimeAgo = calculateTimeAgo(video.time);
     });
 
     res.status(200).render('../views/main/mainVideoCard', {
@@ -64,7 +64,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       videos: data,
       user: res.locals.user,
       userData,
-      videoTimeAgo,
+      // videoTimeAgo,
     });
   } catch (err) {
     return res.json({
@@ -87,12 +87,14 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const videoUserData = await Video.findById(req.params.videoId)
       .populate('user')
       .populate('channel');
-    const userData = localUser
-      ? await User.findById(localUser._id).populate({
-          path: 'channel',
-          select: '_id displayImage',
-        })
-      : null;
+    let userData;
+    if (localUser)
+      userData = await User.findById(localUser._id).populate({
+        path: 'channel',
+        select: '_id displayImage',
+      });
+    else userData = null;
+
     if (!videos.data.data)
       next(new AppError(`There are no videos to be found.`, 404));
 
@@ -131,14 +133,11 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       secondName = comment.user.name.secondName;
     });
 
-    console.log(
-      `CHANNEL ID RETRIEVED FROM LOGGED IN USER 🔥🔥🔥🔥🔥🔥🔥: ${localUser.channel._id}`,
-      `VIDEO's CHANNEL ID 🔥🔥🔥🔥🔥🔥🔥: ${channel._id}`,
-    );
-
-    const areChannelSame =
-      channel._id.toString() === localUser.channel._id.toString();
-    console.log(`${localUser.channel._id} | ${channel._id} :`, areChannelSame);
+    let areChannelSame;
+    if (localUser && localUser.channel) {
+      areChannelSame =
+        channel._id.toString() === localUser.channel._id.toString();
+    }
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
@@ -164,6 +163,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     res.json({
       status: 'Fail',
       message: err.message,
+      file: 'Error Message Came From Views Controller',
       err,
     });
   }
@@ -219,13 +219,44 @@ exports.channelsList = catchAsync(async (req, res, next) => {
 });
 
 exports.search = catchAsync(async (req, res, next) => {
-  const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
-  const videosData = videos.data.data;
-  if (!videosData) next(new AppError(`There are no videos to be found.`, 404));
-  res.status(200).render('../views/main/search/_listSearch', {
-    title: `Search Videos`,
-    videos: videosData,
-  });
+  // const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+  const searchTerm = req.query.query;
+  // console.log(searchTerm);
+  try {
+    const response = await axios.get(
+      `http://127.0.0.1:3000/search/content?query=${searchTerm}`,
+    );
+    const data = response.data.results;
+    // console.log(`VIDEO'S DATA from Views Controller: ${data}`);
+
+    const videosData = data.map((video) => video.item);
+    // console.log(videosData);
+
+    let videoTimeAgo;
+    videosData.forEach((video) => {
+      videoTimeAgo = calculateTimeAgo(video.time);
+    });
+
+    if (!videosData) {
+      return next(new AppError(`There are no videos to be found.`, 404));
+    }
+    // console.log(`VIDEO DATA IS HERE: ${videosData}`);
+
+    if (!videosData)
+      return next(new AppError(`There are no videos to be found.`, 404));
+    res.status(200).render('../views/main/search/_listSearch', {
+      title: `Search Videos`,
+      user: res.locals.user,
+      videos: videosData,
+      videoTimeAgo,
+    });
+  } catch (err) {
+    res.json({
+      status: 'Fail',
+      message: err.message,
+      err,
+    });
+  }
 });
 
 exports.clipZ = catchAsync(async (req, res, next) => {

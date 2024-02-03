@@ -1,4 +1,6 @@
 const multer = require('multer');
+
+const Notification = require('../models/notificationModel');
 const Channel = require('../models/channelModel');
 const Video = require('../models/videoModel');
 const AppError = require('../utils/appError');
@@ -29,8 +31,6 @@ const uploadThumb = multer({
 }).single('thumbnail');
 
 exports.uploadThumbnail = uploadThumb;
-// exports.uploadThumbnail = uploadThumb.single('thumbnail');
-// module.exports = uploadThumb;
 
 const multerStorageVid = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -56,40 +56,6 @@ const uploadVid = multer({
 }).single('video');
 
 exports.uploadVidFile = uploadVid;
-// exports.uploadVideoFile = uploadVid.single('video');
-// module.exports = uploadVid;
-
-// Middleware for handling thumbnail upload
-// exports.handleThumbnailUpload = (req, res, next) => {
-//   upload.single('thumbnail')(req, res, (err) => {
-//     if (req.file) {
-//       if (err) {
-//         // Handle error, e.g., return an error response
-//         return res.status(400).json({ status: 'error', message: err.message });
-//       }
-//       console.log('Request Image:', req.file);
-//       // If successful, store the thumbnail filename in req.body.thumbnail
-//       req.body.thumbnail = req.file ? req.file.filename : null;
-//     }
-//   });
-//   next();
-// };
-
-// Middleware for handling video upload
-// exports.handleVideoUpload = (req, res, next) => {
-//   uploadVid.single('video')(req, res, (err) => {
-//     if (err) {
-//       // Handle error, e.g., return an error response
-//       return res
-//         .status(400)
-//         .json({ status: 'error', message: `MESSAGE: ${err.message}` });
-//     }
-//     console.log('Request Video:', req.file);
-//     // If successful, store the video filename in req.body.video
-//     req.body.video = req.file ? req.file.filename : null;
-//     next();
-//   });
-// };
 
 exports.getVideo = factory.getOne(Video);
 exports.deleteVideo = factory.deleteOne(Video);
@@ -142,16 +108,10 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
-    // if (!req.file) console.log('REQ.FILE NOT FOUND!!');
-    // console.log(req.file);
-
-    // const uppyFileIDs = JSON.parse(req.body.uppyFileIDs || '[]');
-
     const videoData = {
       title: req.body.title,
       description: req.body.description,
-      thumbnail: req.file ? req.file.filename : req.body.thumbnail,
-      // thumbnail: req.body.thumbnail,
+      // thumbnail: req.file ? req.file.filename : req.body.thumbnail,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,
@@ -159,17 +119,11 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       comments: req.body.comments,
       audio: req.body.audio,
       video: req.file.filename,
-      // video:
-      //   uppyFileIDs
-      //     .filter((file) => file.field === 'video')
-      //     .map((file) => file.id)[0] || null,
-      // thumbnail:
-      //   uppyFileIDs
-      //     .filter((file) => file.field === 'thumbnail')
-      //     .map((file) => file.id)[0] || null,
       user: req.user.id,
       time: Date.now(),
     };
+
+    // console.log(await Notification.create());
 
     const createdVideo = await Video.create(videoData);
 
@@ -177,10 +131,32 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     if (req.file) videoData.thumbnail = req.file.filename;
 
     // Gets the Id of the Video from the videoData and Updates the channel's Video Field "videoData._id".
-    await Channel.findByIdAndUpdate(
+    const updatedChannel = await Channel.findByIdAndUpdate(
       req.user.channel._id,
       { $push: { videos: createdVideo._id } },
-      { new: true, select: '_id' },
+      { new: true },
+    );
+
+    console.log(updatedChannel.subscribers);
+
+    // Get the subscribers of the channel
+    const subscribers = updatedChannel.subscribers || [];
+
+    // Create notifications for each subscriber
+    const mapNotification = subscribers.map((subscriberId) => ({
+      userId: subscriberId,
+      channelId: req.user.channel._id,
+      videoId: createdVideo._id,
+    }));
+
+    // Save the notifications to the database
+    const notifications = await Notification.create(mapNotification);
+    console.log(
+      `FULL NOTIFICATION:`,
+      notifications,
+      // `NOTIFICATIONS: ${notifications}`,
+      // `VIDEO ID: ${createdVideo._id}`,
+      // `CHANNEL ID: ${req.user.channel._id}`,
     );
 
     // console.log(req.user.channel.displayImage);

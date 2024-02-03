@@ -99,18 +99,21 @@
 
 .date_N_views {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  /* padding-right: 2rem;
+  padding-left: 2rem; */
 }
 
 .date_N_views h4 {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 0.75rem;
 }
 
 .title_N_description {
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
+  row-gap: 0.8rem;
+  padding-top: 1rem;
 }
 
 .content-title {
@@ -129,6 +132,14 @@
 
 .content-description {
   font-size: 0.875rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-height: 4.4rem;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
   color: #fff;
 }
 
@@ -139,14 +150,14 @@
 
 .channel-name {
   font-family: montserrat;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.825rem;
+  font-weight: 500;
   align-self: center;
 }
 
 .channel-logo {
-  height: 2rem;
-  border-radius: 8px;
+  height: 1.6rem;
+  border-radius: 6px;
 }
 
 .sectMid-contentPreview {

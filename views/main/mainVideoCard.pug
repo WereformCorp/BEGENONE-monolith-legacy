@@ -21,10 +21,10 @@ block content
                   h5.sectionHead-chSubCnt
                     span= video.channel.subscribers.length
                     |  Subscribers
-            //- if video && video.thumbnail
-            //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
-            //- else 
-            img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample-thumbnail.jpg`)
+            if video && video.thumbnail === undefined
+              img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+            else 
+              img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
             section.section-details
               h4.section-details-title= video.title
               hr(width='50px')
@@ -32,5 +32,5 @@ block content
                 h5.sectionHead-views
                   span.views= video.views
                   |  Views
-                h5.sectionHead-date= videoTimeAgo
+                h5.sectionHead-date= video.videoTimeAgo
   script(src="https://cdn.skypack.dev/date-fns")

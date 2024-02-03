@@ -25,6 +25,8 @@ const storyRouter = require('./routes/storyRoutes');
 const userRouter = require('./routes/userRoutes');
 const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
+const searchRouter = require('./routes/searchRoutes');
+const notificationRouter = require('./routes/notificationRoutes');
 
 // Start Express App
 const app = express();
@@ -109,6 +111,8 @@ app.use(attachUserToLocals);
 
 // 3) ROUTE
 app.use('/', viewsRouter);
+app.use('/search', searchRouter);
+app.use('/api/v1/notification', notificationRouter);
 app.use('/api/v1/channels', channelRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/wires', wireRouter);

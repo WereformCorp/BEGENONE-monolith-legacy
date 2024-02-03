@@ -39,4 +39,6 @@ router.get(
   viewsController.singleVideo,
 );
 
+// router.get('/search', viewsController.search);
+
 module.exports = router;

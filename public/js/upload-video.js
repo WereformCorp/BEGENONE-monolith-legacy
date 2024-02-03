@@ -24,12 +24,6 @@ const uppy = new Uppy({
     hideUploadButton: true,
     showLinkToFileUploadResult: true,
   })
-  // .use(DragDrop, {
-  //   target: '#ctnt-vid-file-btn',
-  //   theme: 'dark',
-  //   width: '20rem',
-  //   height: '100%',
-  // })
   .use(XHRUpload, {
     endpoint: 'api/v1/videos/',
     fieldName: 'video',
@@ -37,8 +31,6 @@ const uppy = new Uppy({
   })
   .use(Form, {
     target: '#videoUploadForm', // Replace with your form's ID
-    // getMetaFromForm: true,
-    // addResultToForm: true,
     triggerUploadOnSubmit: true,
     submitOnSuccess: true,
   })
@@ -47,10 +39,6 @@ const uppy = new Uppy({
       maxNumberOfFiles: 1,
     },
   });
-// .on('ready', () => {
-//   // Now uppy is fully initialized, you can use it
-//   console.log('Uppy is ready!');
-// });
 
 // const uppyThumb = new Uppy({
 //   autoUpload: false,
@@ -61,7 +49,9 @@ const uppy = new Uppy({
 //     target: '#ctnt-thumb-file-btn',
 //     theme: 'dark',
 //     width: '20rem',
-//     height: '12rem',
+//     height: '100%',
+//     hideUploadButton: true,
+//     showLinkToFileUploadResult: true,
 //   })
 //   .use(XHRUpload, {
 //     endpoint: 'api/v1/videos/',
@@ -70,8 +60,8 @@ const uppy = new Uppy({
 //   })
 //   .use(Form, {
 //     target: '#videoUploadForm', // Replace with your form's ID
-//     getMetaFromForm: true,
-//     addResultToForm: true,
+//     triggerUploadOnSubmit: true,
+//     submitOnSuccess: true,
 //   })
 //   .setOptions({
 //     restrictions: {
@@ -85,6 +75,7 @@ document
     e.preventDefault();
     // uppy.upload();
     await uppy.run();
+    // await uppyThumb.run();
     // Manually trigger the file upload
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
@@ -93,7 +84,6 @@ document
     // const thumbnail = uppyThumb.getState().files[0]; // Uncomment if you're using thumbnail
 
     console.log(video);
-    // console.log(thumbnail);
 
     if (!title) {
       alert('Title is required.');

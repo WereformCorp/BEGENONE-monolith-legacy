@@ -11,12 +11,7 @@
   top: 0;
   position: sticky;
 
-  /* border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px; */
-
   border-right: 1px solid #7878783c;
-  /* border-top: 1px solid #787878;
-  border-bottom: 1px solid #787878; */
   transition: all 0.2s ease-in-out;
 }
 

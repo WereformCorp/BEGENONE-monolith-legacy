@@ -40,7 +40,11 @@ exports.subscribe = catchAsync(async (req, res, next) => {
         message: 'THE CHANNEL ALREADY EXISTS',
       });
   } catch (err) {
-    console.log(err.message, err);
+    res.json({
+      status: 'Fail',
+      message: err.message,
+      err,
+    });
   }
 });
 
@@ -82,6 +86,10 @@ exports.unsubscribe = catchAsync(async (req, res, next) => {
         message: 'THE CHANNEL ALREADY EXISTS',
       });
   } catch (err) {
-    console.log(err.message, err);
+    res.json({
+      status: 'Fail',
+      message: err.message,
+      err,
+    });
   }
 });

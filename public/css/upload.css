@@ -267,7 +267,8 @@ body {
   border: 1px solid rgb(120, 120, 120, 0.2);
   border-radius: 10px;
   /* outline: none; */
-  font-weight: 600;
+  font-weight: 400;
+  line-height: 1.6;
   font-size: 1rem;
   padding: 0.825rem;
 }
