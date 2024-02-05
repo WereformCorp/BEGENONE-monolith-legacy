@@ -6,6 +6,7 @@ const { formatDistanceToNow } = require('date-fns');
 const User = require('../models/userModel');
 const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
+const Notification = require('../models/notificationModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -371,3 +372,25 @@ exports.tokens = catchAsync(async (req, res, next) => {
     useCustomLeftNav: true,
   });
 });
+
+// exports.notifications = catchAsync(async (req, res, next) => {
+//   try {
+//     console.log('API Response:');
+
+//     const userNotif = await axios.get(
+//       'http://127.0.0.1:3000/api/v1/notification/get-user-notification',
+//     );
+
+//     const { data } = userNotif;
+
+//     console.log('User Notification from Views Controller:', data);
+
+//     return res.status(200).render('../views/main/contents/mainVideo', {
+//       title: 'Notification',
+//       data,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching notifications:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });

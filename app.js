@@ -49,13 +49,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // LIMIT REQUEST FROM SAME API
-const limiter = rateLimit({
-  max: 1000,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, Please try again in an hour!',
-});
+// const limiter = rateLimit({
+//   max: 1000,
+//   windowMs: 60 * 60 * 100000,
+//   message: 'Too many requests from this IP, Please try again in an hour!',
+// });
 
-app.use('/api', limiter);
+// app.use('/api', limiter);
 
 app.use(express.json()); //{ limit: '10kb' }
 app.use(express.urlencoded({ extended: true })); // limit: '10kb'
@@ -112,7 +112,7 @@ app.use(attachUserToLocals);
 // 3) ROUTE
 app.use('/', viewsRouter);
 app.use('/search', searchRouter);
-app.use('/api/v1/notification', notificationRouter);
+// app.use('/api/v1/notification', notificationRouter);
 app.use('/api/v1/channels', channelRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/wires', wireRouter);

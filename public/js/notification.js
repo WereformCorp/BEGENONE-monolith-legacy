@@ -4,12 +4,13 @@ const notifPanel = document.querySelector('.sect-notification-panel');
 
 const getNotif = async () => {
   try {
-    const res = await axios({
-      method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/notification/get-notification',
-    });
-
-    console.log(res.data);
+    // const res = await axios({
+    //   method: 'GET',
+    //   url: 'http://127.0.0.1:3000/api/v1/notification/get-user-notification',
+    // });
+    // console.log(res.data);
+    // if (res.data.length === 0) console.log(`No Notification Found!`);
+    // console.log(res.data);
   } catch (err) {
     console.log(err.message, err);
   }
@@ -39,12 +40,12 @@ const checkNotif = async (req, res) => {
   } catch (err) {}
 };
 
-getNotif();
-
 notifBtn.addEventListener('click', (e) => {
   notifPanel.style.visibility =
     notifPanel.style.visibility === 'visible' ? 'hidden' : 'visible';
 
-  readNotif();
+  // readNotif();
+  getNotif();
+
   e.stopPropagation();
 });

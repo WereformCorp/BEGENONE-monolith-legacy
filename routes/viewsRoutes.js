@@ -3,9 +3,13 @@ const viewsController = require('../controllers/viewsController');
 const authController = require('../controllers/authController');
 
 const router = express.Router();
+// router.get(
+//   '/get-user-notification',
+//   authController.protect,
+//   viewsController.notifications,
+// );
 
 router.get('/tokens', viewsController.tokens);
-
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
