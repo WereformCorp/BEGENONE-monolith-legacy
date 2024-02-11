@@ -572,24 +572,27 @@
 
 .ctnt-cmmnt-listItems {
   display: flex;
+  flex-direction: column;
   column-gap: 20px;
   width: 100%;
+  row-gap: 1rem;
 }
 
 .ctnt-cmmnt-logo {
-  border-radius: 8px;
+  height: 2.5rem;
+  border-radius: 6px;
 }
 
-.ctnt-cmmnt-dtls {
+/* .ctnt-cmmnt-dtls {
   display: flex;
   flex-direction: column;
   row-gap: 15px;
   width: 100%;
-}
+} */
 
 .ctnt-cmmnt-accDtls_N_opts {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content max-content 1fr;
   column-gap: 20px;
 }
 
@@ -625,6 +628,10 @@
   font-size: 0.9rem;
   line-height: 1.5;
   font-weight: 400;
+  background-color: rgb(60, 60, 60, 0.2);
+  border-radius: 6px;
+  border: 1px solid rgb(120, 120, 120, 0.1);
+  padding: 0.7rem;
 }
 
 .ctnt-cmmnt-reply {

@@ -73,10 +73,11 @@
   padding: 1rem;
   font-weight: 900;
   border-radius: 8px;
+  transition: all 0.2s ease-in-out;
 }
 
 .srd-link-texts:hover {
-  background-color: #383838;
+  background-color: rgb(60, 60, 60, 0.3);
   cursor: pointer;
 }
 

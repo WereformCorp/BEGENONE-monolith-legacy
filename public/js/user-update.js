@@ -4,10 +4,14 @@ const submit_info = document.querySelector('.submit_info');
 
 const updateUser = async (firstName, secondName, username, mode, languages) => {
   try {
-    const me = await axios.get('http://127.0.0.1:3000/api/v1/users/me');
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
+    const me = await axios.get(`${urlPath}/api/v1/users/me`);
 
     const updateData = { ...me.data.data }; // Create an empty object to store the fields to update
-    // console.log(updateData);
     // Update fields with new values
     if (firstName || secondName) {
       updateData.name = { ...(updateData.name || {}) };
@@ -16,13 +20,6 @@ const updateUser = async (firstName, secondName, username, mode, languages) => {
       if (secondName)
         updateData.name.secondName = secondName || me.data.data.name.secondName;
     }
-
-    // if (email) {
-    //   updateData.eAddress = { ...(updateData.eAddress || {}) };
-    //   updateData.eAddress.email = email || me.data.data.eAddress.email;
-    // }
-
-    // console.log(me.data.data.eAddress);
 
     if (username) {
       updateData.username = username || me.data.data.username;
@@ -37,17 +34,11 @@ const updateUser = async (firstName, secondName, username, mode, languages) => {
 
     const res = await axios({
       method: 'PATCH',
-      url: 'http://127.0.0.1:3000/api/v1/users/updateMe',
+      url: `${urlPath}/api/v1/users/updateMe`,
       data: updateData,
     });
 
     console.log('RESPONSE:', res);
-
-    // if (res.data.status === 'success') {
-    //   setTimeout(function () {
-    //     location.reload(true); // Force a complete page reload
-    //   }, 1000);
-    // }
   } catch (err) {
     console.log(`ERROR MESSAGE 🥲: ${err.message}`, `ERROR ITSELF 😭: ${err}`);
   }

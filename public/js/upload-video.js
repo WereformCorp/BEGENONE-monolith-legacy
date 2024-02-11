@@ -40,35 +40,6 @@ const uppy = new Uppy({
     },
   });
 
-// const uppyThumb = new Uppy({
-//   autoUpload: false,
-//   debug: true,
-// })
-//   .use(Dashboard, {
-//     inline: true,
-//     target: '#ctnt-thumb-file-btn',
-//     theme: 'dark',
-//     width: '20rem',
-//     height: '100%',
-//     hideUploadButton: true,
-//     showLinkToFileUploadResult: true,
-//   })
-//   .use(XHRUpload, {
-//     endpoint: 'api/v1/videos/',
-//     fieldName: 'thumbnail',
-//     formData: true,
-//   })
-//   .use(Form, {
-//     target: '#videoUploadForm', // Replace with your form's ID
-//     triggerUploadOnSubmit: true,
-//     submitOnSuccess: true,
-//   })
-//   .setOptions({
-//     restrictions: {
-//       maxNumberOfFiles: 1,
-//     },
-//   });
-
 document
   .getElementById('videoUploadForm')
   .addEventListener('submit', async (e) => {
@@ -93,9 +64,14 @@ document
     // document.getElementById('videoUploadForm').submit();
 
     try {
+      const baseUrl = await axios({
+        method: 'GET',
+        url: `/url/get-env-url`,
+      });
+      const urlPath = baseUrl.data.url;
       const res = await axios({
         method: 'POST',
-        url: 'http://127.0.0.1:3000/api/v1/videos/',
+        url: `${urlPath}/api/v1/videos/`,
         data: {
           title,
           description,
@@ -104,10 +80,10 @@ document
         },
       });
 
-      if (res.data.status === 'Success') {
+      if (res.data.status.toLowerCase() === 'success') {
         showAlert('success', 'Logged In Successfully!');
         window.setTimeout(() => {
-          location.reload(true);
+          location.assign('true');
         }, 1500);
       }
     } catch (error) {

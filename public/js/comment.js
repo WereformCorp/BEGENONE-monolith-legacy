@@ -14,12 +14,17 @@ const postComment = async (comment) => {
     const videoId = document.querySelector('.videoId').value;
     console.log(`This is the video ID: ${videoId}`);
     // const video = await axios.get(
-    //   `http://127.0.0.1:3000/api/v1/videos/${videoId}`,
+    //   `${req.protocol}://${req.get('host')}/api/v1/videos/${videoId}`,
     // );
 
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const res = await axios({
       method: 'POST',
-      url: `http://127.0.0.1:3000/api/v1/videos/${videoId}/comments`,
+      url: `${urlPath}/api/v1/videos/${videoId}/comments`,
       data: {
         comment: commentText,
       },

@@ -10,6 +10,16 @@ const Notification = require('../models/notificationModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+let urlPath;
+if (process.env.NODE_ENV === 'production') {
+  // Use the production domain
+  urlPath = 'https://begenuine.wereform.com.au';
+  // eslint-disable-next-line no-else-return
+} else if (process.env.NODE_ENV === 'development') {
+  // Use the req object for development
+  urlPath = `http://127.0.0.1:3000`;
+}
+
 // //////////////////////
 
 const calculateTimeAgo = (videoTime) => {
@@ -44,7 +54,7 @@ const calculateTimeAgo = (videoTime) => {
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   try {
-    const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos`);
+    const videos = await axios.get(`${urlPath}/api/v1/videos`);
     if (!videos) next(new AppError(`There are no videos to be found.`, 404));
     const { data } = videos.data;
     const localUser = res.locals.user;
@@ -79,10 +89,10 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 exports.watchVideo = catchAsync(async (req, res, next) => {
   try {
     const video = await axios.get(
-      `http://127.0.0.1:3000/api/v1/videos/${req.params.videoId}`,
+      `${urlPath}/api/v1/videos/${req.params.videoId}`,
     );
     const videoData = video.data.data;
-    const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+    const videos = await axios.get(`${urlPath}/api/v1/videos/`);
     const { channel } = videoData;
     const localUser = res.locals.user;
     const videoUserData = await Video.findById(req.params.videoId)
@@ -204,9 +214,9 @@ exports.channelsList = catchAsync(async (req, res, next) => {
   let channel;
   if (userData.channel)
     channel = await axios.get(
-      `http://127.0.0.1:3000/api/v1/channels/${userData.channel._id}`,
+      `${urlPath}/api/v1/channels/${userData.channel._id}`,
     );
-  const videoData = await axios.get(`http://127.0.0.1:3000/api/v1/videos`);
+  const videoData = await axios.get(`${urlPath}/api/v1/videos`);
   // const channel = channels.data.data.map((obj) => obj);
   const videos = videoData.data.data;
   res.status(200).render('../views/main/channels/channelsList', {
@@ -220,12 +230,12 @@ exports.channelsList = catchAsync(async (req, res, next) => {
 });
 
 exports.search = catchAsync(async (req, res, next) => {
-  // const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+  // const videos = await axios.get(`${urlPath}/api/v1/videos/`);
   const searchTerm = req.query.query;
   // console.log(searchTerm);
   try {
     const response = await axios.get(
-      `http://127.0.0.1:3000/search/content?query=${searchTerm}`,
+      `${urlPath}/search/content?query=${searchTerm}`,
     );
     const data = response.data.results;
     // console.log(`VIDEO'S DATA from Views Controller: ${data}`);
@@ -261,7 +271,7 @@ exports.search = catchAsync(async (req, res, next) => {
 });
 
 exports.clipZ = catchAsync(async (req, res, next) => {
-  const videos = await axios.get(`http://127.0.0.1:3000/api/v1/videos/`);
+  const videos = await axios.get(`${urlPath}/api/v1/videos/`);
   const videosData = videos.data.data;
   res.status(200).render('../views/main/contents/clipZ', {
     title: `Search Videos`,
@@ -296,16 +306,23 @@ exports.upload = catchAsync(async (req, res, next) => {
 });
 
 exports.userChannel = catchAsync(async (req, res, next) => {
-  const userData = await User.findById(res.locals.user._id).populate('channel');
-  const videoData = await User.findById(res.locals.user._id).populate({
+  // const userData = await User.findById(res.locals.user._id).populate('channel');
+  const userData = await User.findById(res.locals.user._id).populate({
     path: 'channel',
     populate: {
       path: 'videos',
       options: { sort: { createdAt: -1 } },
     },
   });
+  const wiresData = userData.channel.wires;
+  // console.log(wiresData);
   const { channel } = userData;
-  const latestVideo = videoData.channel.videos[0];
+  // console.log(channel);
+  const latestVideo = userData.channel.videos[0];
+  let wireTime;
+  wiresData.forEach((video) => {
+    wireTime = calculateTimeAgo(video.time);
+  });
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     userData,
@@ -313,18 +330,25 @@ exports.userChannel = catchAsync(async (req, res, next) => {
     videos: channel.videos,
     user: res.locals.user,
     latestVideo,
+    wiresData,
+    wireTime,
   });
 });
 
 exports.singleChannel = catchAsync(async (req, res, next) => {
-  const data = await axios.get(
-    `http://127.0.0.1:3000/api/v1/channels/${req.params.id}`,
-  );
+  const data = await axios.get(`${urlPath}/api/v1/channels/${req.params.id}`);
+
   const extractedData = data.data.data;
+  const latestVideo = extractedData.videos[0];
+  const wiresData = extractedData.wires.map((wire) => wire);
+  console.log(wiresData);
+
   const channelData = await Channel.findById(extractedData._id);
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
     channel: channelData,
+    latestVideo,
+    wiresData,
   });
 });
 
@@ -378,7 +402,7 @@ exports.tokens = catchAsync(async (req, res, next) => {
 //     console.log('API Response:');
 
 //     const userNotif = await axios.get(
-//       'http://127.0.0.1:3000/api/v1/notification/get-user-notification',
+//       '${urlPath}/api/v1/notification/get-user-notification',
 //     );
 
 //     const { data } = userNotif;

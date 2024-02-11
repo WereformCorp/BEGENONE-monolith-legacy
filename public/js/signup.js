@@ -17,9 +17,14 @@ const signup = async (
   username,
 ) => {
   try {
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/signup',
+      url: `${urlPath}/api/v1/users/signup`,
       data: {
         name: {
           firstName,

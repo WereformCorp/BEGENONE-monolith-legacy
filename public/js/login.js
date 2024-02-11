@@ -1,12 +1,21 @@
 /* eslint-disable */
 // DOM ELEMENTS
+// import baseUrl from './controllers/baseUrlController.js';
 const loginForm = document.querySelector('.login-form');
 
 const login = async (email, password) => {
   try {
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
+    console.log(baseUrl);
+    console.log(urlPath);
+
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: `${urlPath}/api/v1/users/login`,
       data: {
         eAddress: {
           email,

@@ -6,7 +6,7 @@ const getNotif = async () => {
   try {
     // const res = await axios({
     //   method: 'GET',
-    //   url: 'http://127.0.0.1:3000/api/v1/notification/get-user-notification',
+    //   url: '${req.protocol}://${req.get('host')}/api/v1/notification/get-user-notification',
     // });
     // console.log(res.data);
     // if (res.data.length === 0) console.log(`No Notification Found!`);
@@ -18,9 +18,14 @@ const getNotif = async () => {
 
 const readNotif = async () => {
   try {
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/notification/read-notification',
+      url: `${urlPath}/api/v1/notification/read-notification`,
     });
 
     if (!res.data) {
@@ -33,11 +38,18 @@ const readNotif = async () => {
 
 const checkNotif = async (req, res) => {
   try {
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/notification/get-all-notification',
+      url: `${urlPath}/api/v1/notification/get-all-notification`,
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(`Message: ${err.message}`, `Error: ${err}`);
+  }
 };
 
 notifBtn.addEventListener('click', (e) => {

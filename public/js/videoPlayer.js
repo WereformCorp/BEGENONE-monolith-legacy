@@ -4,28 +4,16 @@ const video = document.querySelector('.sect-mid-vdoPlayer-video');
 const backward = document.querySelector('.vdo-ctrls-item-1');
 const forward = document.querySelector('.vdo-ctrls-item-2');
 const playNpause = document.querySelector('.vdo-ctrls-item-3');
-// const volume = document.querySelector('.vdo-ctrls-item-4');
 const videoCtrlPanel = document.querySelector('.vdo-ctrlPanel');
 const videoPlayerControls = document.querySelector('.vdoPlayer-controls');
 const fullscreen = document.querySelector('.vdo-ctrls-item-10');
-
 const bufferLineContainer = document.querySelector('.vdo-bufferLine-container');
 const bufferLine = document.querySelector('.vdo-bufferLine');
-
-// const vdoBackwardBtn = document.querySelector('.vdo-item-backward');
-// const vdoForwardBtn = document.querySelector('.vdo-item-forward');
 const play = document.querySelector('.vdo-item-play');
 const pause = document.querySelector('.vdo-item-pause');
 const changeVolumeIcon = document.querySelector('.vdo-item-volume');
-// const cinemaMode = document.querySelector('.vdo-item-cinemaMode');
-// const picInpic = document.querySelector('.vdo-item-picInpic');
-// const setting = document.querySelector('.vdo-item-setting');
-// const caption = document.querySelector('.vdo-item-caption');
-// const fullScreen = document.querySelector('.vdo-item-fullScreen');
 
 video.controls = true;
-
-// Get the video element
 
 // Add an event listener to the play/pause button
 playNpause.addEventListener('click', (event) => {
@@ -68,16 +56,6 @@ function toggleControlsVisibility() {
 document.addEventListener('fullscreenchange', toggleControlsVisibility);
 document.addEventListener('webkitfullscreenchange', toggleControlsVisibility);
 document.addEventListener('mozfullscreenchange', toggleControlsVisibility);
-
-// function toggleFullscreen() {
-//   if (video.requestFullscreen) {
-//     video.requestFullscreen();
-//   } else if (video.webkitRequestFullscreen) {
-//     video.webkitRequestFullscreen();
-//   } else if (video.mozRequestFullScreen) {
-//     video.mozRequestFullScreen();
-//   }
-// }
 
 video.addEventListener('dblclick', () => {
   if (video.webkitIsFullScreen) {

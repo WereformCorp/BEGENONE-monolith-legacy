@@ -18,13 +18,18 @@ const createChannel = async (
     let url;
     let method;
 
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     if (userChannel && userChannel._id) {
       // Update an existing channel
-      url = `http://127.0.0.1:3000/api/v1/channels/${userChannel._id}`;
+      url = `${urlPath}/api/v1/channels/${userChannel._id}`;
       method = 'PATCH';
     } else {
       // Create a new channel
-      url = 'http://127.0.0.1:3000/api/v1/channels';
+      url = `${urlPath}/api/v1/channels`;
       method = 'POST';
     }
 

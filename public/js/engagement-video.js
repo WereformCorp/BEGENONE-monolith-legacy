@@ -4,8 +4,13 @@ const dislikeButton = document.querySelector('.sect-mid-vdoP-navDislike');
 
 const updateLikesDislikesCount = async (videoId, action) => {
   try {
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const response = await axios.patch(
-      `http://127.0.0.1:3000/api/v1/videos/interaction/${videoId}/${action}`,
+      `${urlPath}/api/v1/videos/interaction/${videoId}/${action}`,
     );
 
     const likesCountElement = document.querySelector('.likesCount');

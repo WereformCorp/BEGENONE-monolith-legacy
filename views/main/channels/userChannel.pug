@@ -138,21 +138,20 @@ block content
             | possimus fugit.
         section.sect-mid-ch-wire
           h1.ch-wire-h1 Wire
-          .ch-wire-header
-            img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
-            .ch-wire-header-meta
-              h3.wire-header-name Areesh Alam
-              h3.wire-header-subs 500,000 Subscribers
-            .ch-wire-header-date_views
-              h3.wire-header-date 19 Jan 2024
-              h3.wire-header-views 50,423 Views
-          h4.sect-mid-ch-wire-text
-            | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam
-            | provident, temporibus, ipsa nobis corporis cupiditate eum
-            | reiciendis quos eveniet repellat, harum quae. Hic illo
-            | doloribus, tenetur minus, quos perspiciatis obcaecati dolorum
-            | voluptas reprehenderit recusandae aperiam aliquam neque delectus
-            | possimus fugit.
+            if wiresdata
+              h1.ctnt-home-wire-h1 Wire
+              section.sect-mid-ctntRecom-wire
+                each wire in wiresData
+                  section.ctnt-home-wire
+                    .ctnt-home-wire-header
+                      img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
+                      .ctnt-home-wire-header-meta
+                        h3.ctnt-home-wire-header-name= channel.name
+                        h3.ctnt-home-wire-header-subs= `${channel.subscribers.length} Subscribers`
+                      .ctnt-home-wire-header-date_views
+                        h3.wire-header-date= wireTime
+                        //- h3.wire-header-views 50,423 Views
+                    h4.ctnt-home-wire-text= wire.wireText
         section.sect-mid-ctnt-home
           h1.sect-mid-ctnt-home-h1 HOME
           if latestVideo
@@ -160,12 +159,12 @@ block content
               .featuredVideo
                 //- video.featuredVideo-video(width='640', height='360', controls='', poster='/imgs/thumbnails/thumbnail-65a6f249e887d2567074b7e9-1705439848542.png')
                 //-   source(src='/video/sample-video.mp4', type='video/mp4')
-                img.featuredVideo-video(src="/imgs/thumbnails/thumbnail-65a6f249e887d2567074b7e9-1705439848542.png", alt="")
+                img.featuredVideo-video(src="/imgs/thumbnails/sample.jpg", alt="")
                 h2.featuredVideo-title= latestVideo.title
           .most-popular
-            h2.most-popular-h2 MOST POPULAR
-            section.sect-mid-ctnt-popular-vdo
-              if videos
+            if videos
+              h2.most-popular-h2 MOST POPULAR
+              section.sect-mid-ctnt-popular-vdo
                 each video in videos
                   if video && video.thumbnail
                     .content-containers.content-container-1
@@ -185,25 +184,20 @@ block content
                   else
                     h1 There are no videos found.
           .ctnt-home-wires
-            h1.ctnt-home-wire-h1 Wire
-            section.sect-mid-ctntRecom-wire
-              section.ctnt-home-wire
-                .ctnt-home-wire-header
-                  img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
-                  .ctnt-home-wire-header-meta
-                    h3.ctnt-home-wire-header-name Areesh Alam
-                    h3.ctnt-home-wire-header-subs
-                      | 500,000 Subscribers
-                  .ctnt-home-wire-header-date_views
-                    h3.wire-header-date 19 Jan 2024
-                    h3.wire-header-views 50,423 Views
-                h4.ctnt-home-wire-text
-                  | Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  | Ullam provident, temporibus, ipsa nobis corporis
-                  | cupiditate eum reiciendis quos eveniet repellat, harum
-                  | quae. Hic illo doloribus, tenetur minus, quos perspiciatis
-                  | obcaecati dolorum voluptas reprehenderit recusandae
-                  | aperiam aliquam neque delectus possimus fugit.
+            if wiresdata
+              h1.ctnt-home-wire-h1 Wire
+              section.sect-mid-ctntRecom-wire
+                each wire in wiresData
+                  section.ctnt-home-wire
+                    .ctnt-home-wire-header
+                      img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
+                      .ctnt-home-wire-header-meta
+                        h3.ctnt-home-wire-header-name= channel.name
+                        h3.ctnt-home-wire-header-subs= `${channel.subscribers.length} Subscribers`
+                      .ctnt-home-wire-header-date_views
+                        h3.wire-header-date= wireTime
+                        //- h3.wire-header-views 50,423 Views
+                    h4.ctnt-home-wire-text= wire.wireText
 
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/subscribe.js")

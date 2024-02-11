@@ -27,6 +27,7 @@ const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
 const searchRouter = require('./routes/searchRoutes');
 const notificationRouter = require('./routes/notificationRoutes');
+const urlPathRoutes = require('./routes/urlPathRoutes');
 
 // Start Express App
 const app = express();
@@ -111,6 +112,7 @@ app.use(attachUserToLocals);
 
 // 3) ROUTE
 app.use('/', viewsRouter);
+app.use('/url', urlPathRoutes);
 app.use('/search', searchRouter);
 // app.use('/api/v1/notification', notificationRouter);
 app.use('/api/v1/channels', channelRouter);

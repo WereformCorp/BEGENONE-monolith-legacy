@@ -22,9 +22,15 @@ const subscribe = async (button) => {
     const userId = userIdInput;
     const videoId = videoIdInput;
     console.log(userId);
+
+    const baseUrl = await axios({
+      method: 'GET',
+      url: `/url/get-env-url`,
+    });
+    const urlPath = baseUrl.data.url;
     const response = await axios({
       method: 'POST',
-      url: `http://127.0.0.1:3000/api/v1/channels/${videoId}/subscribe`,
+      url: `${urlPath}/api/v1/channels/${videoId}/subscribe`,
     });
     console.log(response);
     if (response.data.status === 'success') {
@@ -45,7 +51,9 @@ const unsubscribe = async (button) => {
     console.log(userId);
     const response = await axios({
       method: 'POST',
-      url: `http://127.0.0.1:3000/api/v1/channels/${videoId}/unsubscribe`,
+      url: `${req.protocol}://${req.get(
+        'host',
+      )}/api/v1/channels/${videoId}/unsubscribe`,
     });
     console.log(response);
     if (response.data.status === 'success') {
