@@ -90,3 +90,18 @@
   align-items: center;
   row-gap: 10px;
 }
+
+.sect-rgt-icon-2-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.section-right:hover .sect-rgt-icon-2,
+.section-right:hover .sect-rgt-icon-3,
+.section-right:hover .sect-rgt-icon-4,
+.section-right:hover .sect-rgt-icon-7 {
+  cursor: no-drop;
+}

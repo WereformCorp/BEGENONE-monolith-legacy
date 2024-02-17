@@ -150,6 +150,10 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
         channel._id.toString() === localUser.channel._id.toString();
     }
 
+    const shareLink = `${urlPath}/watch/${videoData._id}`;
+    const copyLinkText = `Click on the link to Copy 👇`;
+    console.log(shareLink);
+
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
       title: `${videoData.title}`,
@@ -159,6 +163,8 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       videoIdForComment: req.params.videoId,
       videoUserDataId: videoUserData.user._id,
       videoUserData,
+      shareLink,
+      copyLinkText,
       isUserSubscribed,
       channel,
       areChannelSame,
@@ -315,9 +321,11 @@ exports.userChannel = catchAsync(async (req, res, next) => {
     },
   });
   const wiresData = userData.channel.wires;
-  // console.log(wiresData);
+  const isItMyChannel = req.path === '/user-channel';
+  console.log(`🔥🔥🔥🔥🔥🔥🔥${isItMyChannel === true ? 'Yes' : 'No'}`);
   const { channel } = userData;
-  // console.log(channel);
+  // console.log(wiresData);
+  // console.log(`This is User About 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥: ${channel.about}`);
   const latestVideo = userData.channel.videos[0];
   let wireTime;
   wiresData.forEach((video) => {
@@ -332,6 +340,7 @@ exports.userChannel = catchAsync(async (req, res, next) => {
     latestVideo,
     wiresData,
     wireTime,
+    isItMyChannel,
   });
 });
 

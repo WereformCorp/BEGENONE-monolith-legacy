@@ -113,6 +113,17 @@
   background-color: rgba(51, 51, 51, 0.5) !important;
 }
 
+.section-left:hover .sect-lft-dwn-link-3,
+.section-left:hover .sect-lft-dwn-link-5,
+.section-left:hover .sect-lft-dwn-link-6,
+.section-left:hover .sect-lft-dwn-link-7,
+.srd-link-servicesText:hover,
+.srd-link-gemsText:hover,
+.srd-link-storyText:hover,
+.srd-link-playlistText:hover {
+  cursor: no-drop !important;
+}
+
 .srd-link-Icons {
   font-size: 20px;
   /* filter: invert(); */
@@ -136,6 +147,10 @@
 .srd-link-texts-settings {
   font-weight: 800;
 }
+
+/*  */
+
+/*  */
 
 .bjenuine-text-header {
   font-size: 24px;

@@ -87,6 +87,7 @@ a {
   background: #fff;
   column-gap: 15px;
   align-items: center;
+  filter: opacity(30%);
 }
 
 .nav-slctvKit-select {
@@ -103,7 +104,7 @@ a {
 
 .category-select:hover,
 .nav-slctvKit-select:hover {
-  cursor: pointer;
+  cursor: no-drop;
 }
 
 .category-select-text,

@@ -191,6 +191,8 @@ body {
 .ch-links {
   grid-column: 2/-1;
   grid-row: 2/-1;
+  cursor: no-drop;
+  opacity: 30%;
 }
 
 .ch-name-h3,
@@ -216,6 +218,10 @@ body {
   background-color: rgb(60, 60, 60, 0.2);
 }
 
+.ch-links-input {
+  cursor: no-drop;
+}
+
 .ch-about-textarea {
   outline: none;
   background-color: rgb(60, 60, 60, 0.2);
@@ -237,6 +243,8 @@ body {
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+  opacity: 30%;
+  cursor: no-drop;
 }
 
 .ch-comments-h3,
@@ -262,6 +270,11 @@ body {
   font-weight: 800;
   background-color: rgb(60, 60, 60, 0.2);
   border: 1px solid rgb(120, 120, 120, 0.3);
+  opacity: 30%;
+}
+
+.ch-comments-btns button:hover {
+  cursor: no-drop;
 }
 
 .ch-comments-filter-input {
@@ -272,6 +285,8 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 10px;
+
+  cursor: no-drop;
 }
 
 .ch-details {
@@ -318,6 +333,7 @@ body {
   display: flex;
   flex-direction: column;
   max-height: 10rem;
+  row-gap: 1rem;
   overflow-y: scroll;
 }
 
@@ -363,7 +379,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 20rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
@@ -403,6 +419,7 @@ body {
 }
 
 .ch-dtls-subscribers {
+  display: none;
   row-gap: 2rem;
 }
 
@@ -471,6 +488,9 @@ body {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+
+  cursor: no-drop;
+  opacity: 30%;
 }
 
 .ch-dtls-story-h2 {
@@ -500,6 +520,8 @@ body {
   background-color: rgb(60, 60, 60, 0.3);
   border: 1px solid rgb(120, 120, 120, 0.3);
   outline: none;
+
+  cursor: no-drop;
 }
 
 .ch-dtls-col-2 {
@@ -514,6 +536,9 @@ body {
   flex-direction: column;
   row-gap: 1rem;
   column-gap: 3rem;
+
+  cursor: no-drop;
+  opacity: 30%;
 
   /* align-items: center; */
 }
@@ -553,4 +578,7 @@ body {
 
   font-weight: 600;
   padding: 1rem;
+
+  cursor: no-drop;
+  opacity: 30%;
 }

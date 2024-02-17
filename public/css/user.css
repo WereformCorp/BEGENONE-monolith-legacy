@@ -67,6 +67,23 @@
   cursor: pointer;
 }
 
+/*  */
+.srd-link-texts-apps,
+.srd-link-texts-lock,
+.srd-link-texts-themes,
+.srd-link-texts-language {
+  opacity: 30%;
+}
+
+.srd-link-texts-apps:hover,
+.srd-link-texts-lock:hover,
+.srd-link-texts-themes:hover,
+.srd-link-texts-language:hover {
+  cursor: no-drop;
+  opacity: 30%;
+}
+/*  */
+
 .bjenuine-text-header {
   font-size: 24px;
 }
@@ -394,11 +411,25 @@
   flex-wrap: wrap;
 }
 
+.mode_advance,
+.mode_professional,
+.mode_enterprise {
+  opacity: 30%;
+}
+
 .language-details,
 .themes-details {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+}
+
+.themes-details {
+  opacity: 30%;
+}
+
+.themes-details:hover {
+  cursor: no-drop;
 }
 
 .platform-mode h2,
@@ -445,6 +476,16 @@
 .logoutBtn:hover {
   cursor: pointer;
   transform: scale(102%);
+}
+
+.themes-details button:hover {
+  cursor: no-drop;
+}
+
+.mode_advance:hover,
+.mode_professional:hover,
+.mode_enterprise:hover {
+  cursor: no-drop !important;
 }
 
 .overlay-container-update,

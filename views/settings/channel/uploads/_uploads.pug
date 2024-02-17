@@ -6,7 +6,7 @@ block append head
   link(href='https://releases.transloadit.com/uppy/v3.21.0/uppy.min.css', rel='stylesheet')
 
 block content
-  form#videoUploadForm.sect-mid-contentContainer
+  form#videoUploadForm.sect-mid-contentContainer(enctype="multipart/form-data")
     h1.upload-heading UPLOAD CONTENT
     .upload_n_promote
       .ctnt-upload
@@ -85,7 +85,11 @@ block content
           h4.ctnt-sponsorship-h4 SPONSORSHIP
           button.ctnt-sponsorship-btn View Page
       //- input#uppyFileIDs(type='hidden', name='uppyFileIDs')
-    button#form-submit Create Video
+    div.submit-video-details-btn
+      h4.submit-video-heading Submit Video Details: 
+      button#form-submit Create Video
+    p.note-footer
+      i "More features are coming soon.. Stay Tuned."
   
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   //- script(type="module" src="/js/upload-video.js")

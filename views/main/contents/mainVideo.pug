@@ -12,12 +12,13 @@ block content
       section.sect-mid-vdoP-c1
         section.sect-mid-vdoP-dtls
           if user && user.channel && user.channel.displayImage
-            a(href=`/channels/${video.channel._id}`)
+            a(href=`/channels/${video.channel._id}` target="_blank")
               img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
           else
-            img.chList-chnl-img(src="/imgs/default-user-photo.jpg")
+            a(href=`/channels/${video.channel._id}` target="_blank")
+              img.chList-chnl-img(src="/imgs/default-user-photo.jpg")
           .sect-mid-vdoP-name_N_subCount
-            a(href=`/channels/${video.channel._id}`)
+            a(href=`/channels/${video.channel._id}` target="_blank")
               h4.vdoP-name= video.channel.name
               h5.vdoP-subsCount
                 span= video.channel.subscribers.length
@@ -206,7 +207,7 @@ block content
                 button.ctnt-cmmnt-reply Reply
       section.sect-mid-ctntRecom
         each singleVideo in manyVideos
-          a(href=`/watch/${singleVideo._id}`)
+          a(href=`/watch/${singleVideo._id}` target="_blank")
             .content-containers.content-container-1
               section.section-Header
                 if user && user.channel && user.channel.displayImage
@@ -231,6 +232,7 @@ block content
   script(src="/js/subscribe.js")
   script(src="/js/comment.js")
   script(src="/js/engagement-video.js") 
+  script(src="/js/shareVid.js") 
   script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
   script(src='path/to/plyr.js')
   script(src="https://cdn.skypack.dev/date-fns")

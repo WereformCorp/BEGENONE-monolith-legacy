@@ -61,6 +61,7 @@
 }
 
 .searchBar-voiceSearch {
+  display: none;
   align-self: center;
   /* padding-top: 5px; */
   height: 20px;

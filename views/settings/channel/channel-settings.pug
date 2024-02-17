@@ -37,7 +37,7 @@ block content
           input.ch-username-input(placeholder='i.e. areeshalam21', type='text')
         .ch-links
           h3.ch-links-h3 LINKS
-          input.ch-links-input(placeholder='add link here', type='text')
+          input.ch-links-input(placeholder='add link here', type='text' disabled)
       .ch-comments
         .ch-comments-permission
           h3.ch-comments-h3 COMMENTS
@@ -47,7 +47,7 @@ block content
         .ch-comments-filter
           h3.ch-comments-filter-h3 COMMENT FILTERS
           h6.ch-comments-filter-h6 Forbidden Words
-          input.ch-comments-filter-input(type='text')
+          input.ch-comments-filter-input(type='text', disabled)
     .ch-details
       .ch-details-col-1
         .ch-dtls-uploads
@@ -96,7 +96,7 @@ block content
       .ch-dtls-col-2
         .ch-dtls-about-owner
           h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
-          textarea.ch-dtls-about-owner-textarea(cols='30', rows='10')
+          textarea.ch-dtls-about-owner-textarea(cols='30', rows='10' disabled)
         if channel
           button.ch-dtls-about-owner-save-btn Save
         else

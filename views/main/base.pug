@@ -23,6 +23,10 @@ html(lang='en')
 
   
   body
+    section.sect-video-linkshare-overlay
+      h1.sect-video-linkshare-h1= copyLinkText
+      h2.sect-video-linkshare= shareLink
+      //- h4.copyLink-success-fail Link Copied
     main.container
       // LEFT NAVIGATION
       if locals.useCustomLeftNav
@@ -48,3 +52,4 @@ html(lang='en')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
     script(src='/js/index.js')
     script(src='/js/notification.js')
+    //- script(type="module" src="/js/upload-video.js")

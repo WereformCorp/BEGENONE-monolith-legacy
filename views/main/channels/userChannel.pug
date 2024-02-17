@@ -34,7 +34,10 @@ block content
             input.userId-input(type="hidden", value=`${user._id}`)
           .sect-mid-accDtls-subsBtn
             //- a(href=`/channels/${channel._id}/subscribe`)
-            button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Subscribe
+            if isItMyChannel
+              button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Analytics
+            else 
+              button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Subscribe
             button.sect-mid-accDtls-notification
               svg.sect-mid-accDtls-notify-icon.icon.icon-bell-solid
                 use(xlink:href='#icon-bell-solid')
@@ -129,29 +132,26 @@ block content
           section.sect-mid-rows.sect-mid-row-3
         section.sect-mid-ch-about
           h1.sect-mid-ch-about-h1 ABOUT
-          h4.sect-mid-ch-about-text
-            | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam
-            | provident, temporibus, ipsa nobis corporis cupiditate eum
-            | reiciendis quos eveniet repellat, harum quae. Hic illo
-            | doloribus, tenetur minus, quos perspiciatis obcaecati dolorum
-            | voluptas reprehenderit recusandae aperiam aliquam neque delectus
-            | possimus fugit.
-        section.sect-mid-ch-wire
-          h1.ch-wire-h1 Wire
-            if wiresdata
-              h1.ctnt-home-wire-h1 Wire
-              section.sect-mid-ctntRecom-wire
-                each wire in wiresData
-                  section.ctnt-home-wire
-                    .ctnt-home-wire-header
-                      img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
-                      .ctnt-home-wire-header-meta
-                        h3.ctnt-home-wire-header-name= channel.name
-                        h3.ctnt-home-wire-header-subs= `${channel.subscribers.length} Subscribers`
-                      .ctnt-home-wire-header-date_views
-                        h3.wire-header-date= wireTime
-                        //- h3.wire-header-views 50,423 Views
-                    h4.ctnt-home-wire-text= wire.wireText
+          if channel.about
+            h4.sect-mid-ch-about-text= channel.about
+          else
+            h4.sect-mid-ch-about-text
+             i "The Owner has not added any information regarding this channel."
+        if wiresData
+          section.sect-mid-ch-wire
+            h1.ctnt-home-wire-h1 Wire
+            section.sect-mid-ctntRecom-wire-separate
+              each wire in wiresData
+                section.ctnt-home-wire
+                  .ctnt-home-wire-header
+                    img.ch-wire-header-img(src='/imgs/default-user-photo.jpg')
+                    .ctnt-home-wire-header-meta
+                      h3.ctnt-home-wire-header-name= channel.name
+                      h3.ctnt-home-wire-header-subs= `${channel.subscribers.length} Subscribers`
+                    .ctnt-home-wire-header-date_views
+                      h3.wire-header-date= wireTime
+                      //- h3.wire-header-views 50,423 Views
+                  h4.ctnt-home-wire-text= wire.wireText
         section.sect-mid-ctnt-home
           h1.sect-mid-ctnt-home-h1 HOME
           if latestVideo
@@ -184,7 +184,7 @@ block content
                   else
                     h1 There are no videos found.
           .ctnt-home-wires
-            if wiresdata
+            if wiresData
               h1.ctnt-home-wire-h1 Wire
               section.sect-mid-ctntRecom-wire
                 each wire in wiresData
@@ -198,6 +198,8 @@ block content
                         h3.wire-header-date= wireTime
                         //- h3.wire-header-views 50,423 Views
                     h4.ctnt-home-wire-text= wire.wireText
-
+            else
+              h4.ctnt-home-wire-text
+                i "There are no wires related to this channel."
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/subscribe.js")

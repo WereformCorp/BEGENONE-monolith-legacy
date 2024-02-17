@@ -2,8 +2,8 @@
   display: flex;
   padding: 30px;
   justify-content: center;
-  column-gap: 2rem;
-  /* row-gap: 4rem; */
+  column-gap: 1.5rem;
+  row-gap: 2rem;
   flex-wrap: wrap;
 }
 
