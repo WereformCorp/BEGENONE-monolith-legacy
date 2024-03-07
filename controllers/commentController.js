@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const pug = require('pug');
+const fs = require('fs');
+
+const path = require('path');
+
 const Comment = require('../models/commentModel');
 const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
@@ -69,4 +74,26 @@ exports.createComment = catchAsync(async (req, res, next) => {
       err,
     });
   }
+});
+
+// ///////////////////////
+
+exports.templify = catchAsync(async (req, res, next) => {
+  // Read & compile the template
+  const templatePath = path.join(
+    __dirname,
+    `..views/main/contents/${req.params.template}`,
+  );
+
+  console.log(req.body);
+  const compileFunction = pug.compileFile(templatePath);
+  const compiledTemplate = compileFunction(req.body);
+
+  // Send the template
+  res.status(200).json({
+    status: 'success',
+    data: {
+      compiledTemplate,
+    },
+  });
 });

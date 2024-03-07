@@ -32,9 +32,12 @@ block content
             else
               button(class=`${btnClass}`)= btnText
               - console.log(`${btnClass}`, `${btnText}`)
-              input.userId-input(type="hidden", value=`${user._id}`)
-              input.videoId-input(type="hidden", value=`${video._id}`)
-              input.isUserSubscribed-input(type="hidden", value=`${isUserSubscribed}`)
+              if user && user._id
+                input.userId-input(type="hidden", value=`${user._id}`)
+              if video && video._id
+                input.videoId-input(type="hidden", value=`${video._id}`)
+              if isUserSubscribed
+                input.isUserSubscribed-input(type="hidden", value=`${isUserSubscribed}`)
             //- .sect-mid-vdoP-notify
               svg.sect-mid-vdoP-notify-icon.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid
                 use(xlink:href='#icon-bell-solid')

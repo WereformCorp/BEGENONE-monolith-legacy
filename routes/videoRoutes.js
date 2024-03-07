@@ -7,12 +7,21 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/').get(videoController.getAllVideos).post(
+router.post(
+  '/thumbnail',
   authController.protect,
-  videoController.uploadFiles,
-  // uploadThumbnail,
-  videoController.createVideo,
+  videoController.uploadThumbnail,
+  videoController.finalizeThumb,
 );
+
+router
+  .route('/')
+  .get(videoController.getAllVideos)
+  .post(
+    authController.protect,
+    videoController.uploadVidFile,
+    videoController.createVideo,
+  );
 
 router
   .route('/interaction/:videoId/:action')

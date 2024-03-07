@@ -15,7 +15,7 @@ router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
 router.get(
   '/watch/:videoId',
-  authController.isLoggedIn,
+  // authController.isLoggedIn,
   viewsController.watchVideo,
 );
 router.get('/channels', authController.protect, viewsController.channelsList);
@@ -38,7 +38,7 @@ router.get(
 );
 router.get('/all-uploads', authController.protect, viewsController.allVideos);
 router.get(
-  '/all-uploads/video',
+  '/all-uploads/:videoId',
   authController.protect,
   viewsController.singleVideo,
 );

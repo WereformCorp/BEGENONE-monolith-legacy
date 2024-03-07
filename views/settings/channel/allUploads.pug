@@ -27,6 +27,7 @@ block content
               .video-visibillity
                 h3.video-visibillity-h3 Visibility:
                 h4.video-visibillity-h4 Everyone
-            button.video-btn-insights INSIGHTS
+            a(href=`/all-uploads/${video._id}`) 
+              button.video-btn-insights(value=`${video._id}`) INSIGHTS
       else
         h1.no-videos-found No Videos Found On Your Channel 🥲

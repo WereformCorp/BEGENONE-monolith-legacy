@@ -339,10 +339,11 @@
   /* filter: invert(); */
 }
 
-/* .vdoP-shareIcon,
-.sect-mid-vdoP-navAudio {
-  filter: invert();
-} */
+/* .vdoP-shareIcon, */
+.sect-mid-vdoP-navAudio,
+.sect-mid-vdoP-navOpts {
+  display: none;
+}
 
 .sect-mid-vdoP-title {
   /* padding-right: 2rem;

@@ -6,7 +6,7 @@ block append head
   link(href='https://releases.transloadit.com/uppy/v3.21.0/uppy.min.css', rel='stylesheet')
 
 block content
-  form#videoUploadForm.sect-mid-contentContainer(enctype="multipart/form-data")
+  form#videoUploadForm.sect-mid-contentContainer
     h1.upload-heading UPLOAD CONTENT
     .upload_n_promote
       .ctnt-upload
@@ -16,7 +16,7 @@ block content
             //- button.ctnt-file-btn U
             //- label.ctnt-file-btn(for='filepond') Upload
             //- input#filepond(type='file', name='video', accept='video/*')
-            div#ctnt-vid-file-btn(name='video')
+            div#ctnt-vid-file-btn
             //- button#openUppyButton Open Uppy Dashboard
             //- input.ctnt-file-input(type='url')
           .ctnt-thumb

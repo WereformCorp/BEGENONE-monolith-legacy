@@ -72,14 +72,14 @@
 .srd-link-texts-lock,
 .srd-link-texts-themes,
 .srd-link-texts-language {
-  opacity: 30%;
+  opacity: 30% !important;
 }
 
 .srd-link-texts-apps:hover,
 .srd-link-texts-lock:hover,
 .srd-link-texts-themes:hover,
 .srd-link-texts-language:hover {
-  cursor: no-drop;
+  cursor: no-drop !important;
   opacity: 30%;
 }
 /*  */
@@ -200,7 +200,6 @@
 .email input,
 .phoneNumber input,
 .old_password input,
-.old_password input,
 .confirm_password input,
 .new_password input {
   padding-left: 0.75rem;
@@ -212,6 +211,22 @@
   outline: none;
   background-color: rgb(60, 60, 60, 0.3);
   font-weight: 600;
+}
+
+.email,
+.phoneNumber,
+.old_password,
+.confirm_password,
+.new_password {
+  opacity: 30%;
+}
+
+.email input,
+.phoneNumber input,
+.old_password input,
+.confirm_password input,
+.new_password input {
+  cursor: no-drop;
 }
 
 .submit_info {
@@ -567,10 +582,11 @@
   font-weight: 800;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
+  opacity: 30%;
 }
 
 .confirm-sensitive-info:hover {
-  cursor: pointer;
-  background-color: #ff0d0d;
-  color: #fff;
+  cursor: no-drop;
+  /* background-color: #ff0d0d; */
+  /* color: #fff; */
 }

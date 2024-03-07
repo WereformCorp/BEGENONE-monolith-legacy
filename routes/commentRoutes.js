@@ -9,6 +9,10 @@ router
   .get(commentController.getAllComments)
   .post(authController.protect, commentController.createComment);
 
+router.route('/:template').post(commentController.templify);
+
+module.exports = router;
+
 router
   .route('/:id')
   .get(commentController.getComment)

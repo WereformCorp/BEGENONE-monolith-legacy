@@ -55,7 +55,7 @@ const uppyThumb = new Uppy({
     showLinkToFileUploadResult: true,
   })
   .use(XHRUpload, {
-    endpoint: 'api/v1/videos/',
+    endpoint: 'api/v1/videos/thumbnail',
     fieldName: 'thumbnail',
     formData: true,
   })
@@ -75,12 +75,6 @@ document
   .getElementById('videoUploadForm')
   .addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    // Run both Uppy instances
-    // const [videoResult, thumbnailResult] = await Promise.all([
-    //   uppyVid.run(),
-    //   uppyThumb.run(),
-    // ]);
 
     const videoResult = await uppyVid.run();
     const thumbnailResult = await uppyThumb.run();
@@ -112,20 +106,20 @@ document
       return;
     }
 
-    // document.getElementById('videoUploadForm').submit();
-
-    // const videoFile = uppy.getState().files[0];
-    // const thumbnailFile = uppyThumb.getState().files[0];
-
-    // console.log(`This is Video File ⭐⭐: ${videoFile}`);
-    // console.log(`This is Thumbnail File 🔥🔥: ${thumbnailFile}`);
-
     try {
       const baseUrl = await axios({
         method: 'GET',
         url: `/url/get-env-url`,
       });
       const urlPath = baseUrl.data.url;
+
+      const thumb = await axios({
+        method: 'POST',
+        url: `${urlPath}/api/v1/videos/thumbnail/`,
+        data: { thumbnail: thumbnailData },
+      });
+
+      console.log(thumb.data.data.thumbnail);
 
       // const videoFile = videoResult;
       // const thumbnailFile = thumbnailResult;
@@ -137,12 +131,12 @@ document
           title,
           description,
           video: videoData,
-          thumbnail: thumbnailData,
+          thumbnail: thumb.data.data.thumbnail,
         },
       });
 
       if (res.data.status.toLowerCase() === 'success') {
-        showAlert('success', 'Video Uploaded Successfully');
+        location.reload(true);
         // window.setTimeout(() => {
         //   location.assign('true');
         // }, 1500);

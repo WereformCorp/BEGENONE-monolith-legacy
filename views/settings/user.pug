@@ -34,21 +34,21 @@ block content
         .email_phNumber
           .email
             h2 Email
-            input.emailInput(placeholder='Type your email here', type='text')
+            input.emailInput(placeholder='Type your email here', type='text' disabled)
           .phoneNumber
             h2 Phone Number
-            input.phoneNumberInput(placeholder='Type your phone number here', type='text')
+            input.phoneNumberInput(placeholder='Type your phone number here', type='text' disabled)
         .changePassword
           .old_password
             h2 Old Password
-            input.oldPasswordInput(placeholder='Type your old password here', type='text')
+            input.oldPasswordInput(placeholder='Type your old password here', type='text' disabled)
           .confirm_password
             h2 Confirm Password
-            input.confirmPasswordInput(placeholder='Type your old password here', type='text')
+            input.confirmPasswordInput(placeholder='Type your old password here', type='text' disabled)
           .new_password
             h2 New Password
-            input.newPasswordInput(placeholder='Type your old password here', type='text')
-          button.confirm-sensitive-info Authenticate Sensitive Data
+            input.newPasswordInput(placeholder='Type your old password here', type='text' disabled)
+          button.confirm-sensitive-info(disabled) Authenticate Sensitive Data
     .other-userInfo
       .channel_info
         h3 CHANNEL ASSOCIATED

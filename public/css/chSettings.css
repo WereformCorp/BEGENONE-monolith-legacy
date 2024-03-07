@@ -93,6 +93,21 @@ body {
   cursor: pointer;
 }
 
+.srd-link-texts-apps,
+.srd-link-texts-lock,
+.srd-link-texts-themes,
+.srd-link-texts-language {
+  opacity: 30% !important;
+}
+
+.srd-link-texts-apps:hover,
+.srd-link-texts-lock:hover,
+.srd-link-texts-themes:hover,
+.srd-link-texts-language:hover {
+  cursor: no-drop !important;
+  opacity: 30%;
+}
+
 .bjenuine-text-header {
   font-size: 24px;
 }

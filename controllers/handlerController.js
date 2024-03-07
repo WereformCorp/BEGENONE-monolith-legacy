@@ -78,7 +78,7 @@ exports.deleteOne = (Model) =>
       const data = await Model.findByIdAndDelete(req.params.id);
 
       return res.status(204).json({
-        status: 'Success',
+        status: 'success',
         data,
       });
     } catch (err) {

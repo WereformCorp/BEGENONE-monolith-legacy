@@ -1,0 +1,30 @@
+.ctnt-cmmnt-listItems.ctnt-cmmnt-listItem-1
+  .ctnt-cmmnt-accDtls_N_opts
+    if comment && comment.channel && comment.channel.displayImage
+      img.ctnt-cmmnt-logo(src=`/imgs/users/${comment.channel.displayImage}`)
+    else
+      img.ctnt-cmmnt-logo(src="/imgs/default-user-photo.jpg")
+    .ctnt-cmmnt-accDetails
+      - const userOrChannelName = comment.channel ? comment.channel.name : `${firstName + ' ' + secondName}`
+      h4.cmmnt-accDtls= userOrChannelName
+      - const commentDate = new Date(comment.time)
+      h6.cmmnt-date= commentDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+    .cmmnt-fltrs
+      svg.cmmnt-fltr-like.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
+        use(xlink:href='#icon-thumbs-up-solid')
+          symbol#icon-thumbs-up-solid(viewBox='0 0 32 32')
+            path(d='M19.587 2.056c1.625 0.325 2.681 1.906 2.356 3.531l-0.144 0.713c-0.331 1.669-0.944 3.256-1.8 4.7h9c1.656 0 3 1.344 3 3 0 1.156-0.656 2.163-1.619 2.663 0.681 0.55 1.119 1.394 1.119 2.337 0 1.462-1.050 2.681-2.431 2.944 0.275 0.456 0.431 0.988 0.431 1.556 0 1.331-0.869 2.462-2.069 2.85 0.044 0.206 0.069 0.425 0.069 0.65 0 1.656-1.344 3-3 3h-6.094c-1.188 0-2.344-0.35-3.331-1.006l-2.406-1.606c-1.669-1.113-2.669-2.988-2.669-4.994v-6.95c0-1.825 0.831-3.544 2.25-4.688l0.463-0.369c1.656-1.325 2.787-3.188 3.2-5.263l0.144-0.713c0.325-1.625 1.906-2.681 3.531-2.356zM2 12h4c1.106 0 2 0.894 2 2v14c0 1.106-0.894 2-2 2h-4c-1.106 0-2-0.894-2-2v-14c0-1.106 0.894-2 2-2z')
+      svg.cmmnt-fltr-dislike.vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
+        use(xlink:href='#icon-thumbs-down-solid')
+          symbol#icon-thumbs-down-solid(viewBox='0 0 32 32')
+            path(d='M19.587 29.944c1.625-0.325 2.681-1.906 2.356-3.531l-0.144-0.712c-0.331-1.669-0.944-3.256-1.8-4.7h9c1.656 0 3-1.344 3-3 0-1.156-0.656-2.162-1.619-2.662 0.681-0.55 1.119-1.394 1.119-2.338 0-1.463-1.050-2.681-2.431-2.944 0.275-0.456 0.431-0.988 0.431-1.556 0-1.331-0.869-2.463-2.069-2.85 0.044-0.206 0.069-0.425 0.069-0.65 0-1.656-1.344-3-3-3h-6.094c-1.188 0-2.344 0.35-3.331 1.006l-2.406 1.606c-1.669 1.112-2.669 2.987-2.669 4.994v6.95c0 1.825 0.831 3.544 2.25 4.688l0.463 0.369c1.656 1.325 2.787 3.188 3.2 5.262l0.144 0.712c0.325 1.625 1.906 2.681 3.531 2.356zM2 24h4c1.106 0 2-0.894 2-2v-14c0-1.106-0.894-2-2-2h-4c-1.106 0-2 0.894-2 2v14c0 1.106 0.894 2 2 2z')
+      svg.cmmnt-fltr-bkmark.vdoPlayer-icon-imgs.vdoP-bookmarkIcon.icon.icon-bookmark-regular
+        use(xlink:href='#icon-bookmark-regular')
+          symbol#icon-bookmark-regular(viewBox='0 0 24 32')
+            path(d='M0 3c0-1.656 1.344-3 3-3v27.587l8.131-5.806c0.519-0.375 1.225-0.375 1.744 0l8.125 5.806v-24.587h-18v-3h18c1.656 0 3 1.344 3 3v27.5c0 0.563-0.313 1.075-0.813 1.331s-1.1 0.213-1.556-0.113l-9.631-6.875-9.631 6.875c-0.456 0.325-1.056 0.369-1.556 0.113s-0.813-0.769-0.813-1.331v-27.5z')
+      svg.cmmnt-fltr-menu.vdoPlayer-icon-imgs.vdoP-optsIcon.icon.icon-menu.icon.icon-more-vertical
+        use(xlink:href='#icon-more-vertical')
+          symbol#icon-more-vertical(viewBox='0 0 24 24')
+            path(d='M14 12c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 5c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 19c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414z')
+  h4.ctnt-cmmnt-textCmmnt= comment.comment
+  button.ctnt-cmmnt-reply Reply

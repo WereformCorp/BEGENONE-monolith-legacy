@@ -98,13 +98,13 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const videoUserData = await Video.findById(req.params.videoId)
       .populate('user')
       .populate('channel');
-    let userData;
-    if (localUser)
-      userData = await User.findById(localUser._id).populate({
-        path: 'channel',
-        select: '_id displayImage',
-      });
-    else userData = null;
+    // let userData;
+    // if (localUser._id)
+    //   userData = await User.findById(localUser._id).populate({
+    //     path: 'channel',
+    //     select: '_id displayImage',
+    //   });
+    // else userData = null;
 
     if (!videos.data.data)
       next(new AppError(`There are no videos to be found.`, 404));
@@ -121,12 +121,16 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     }
     await Video.findByIdAndUpdate(videoData._id, { $inc: { views: 1 } });
     const { subscribers } = videoUserData.channel;
-    const isUserSubscribed = subscribers.includes(localUser._id);
+    let isUserSubscribed;
+    if (localUser) isUserSubscribed = subscribers.includes(localUser._id);
 
     let btnText = 'Subscribe';
     let btnClass = 'sect-mid-vdoP-subsBtn';
 
-    if (res.locals.user._id === videoUserData.user._id) {
+    if (
+      res.locals === undefined &&
+      res.locals.user._id === videoUserData.user._id
+    ) {
       btnText = 'Analytics';
       btnClass = 'sect-mid-vdoP-subsBtn-done';
     } else if (isUserSubscribed) {
@@ -152,7 +156,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
 
     const shareLink = `${urlPath}/watch/${videoData._id}`;
     const copyLinkText = `Click on the link to Copy 👇`;
-    console.log(shareLink);
+    // console.log(shareLink);
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
@@ -171,7 +175,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       comments,
       firstName,
       secondName,
-      userData,
+      // userData,
       videoTimeAgo,
       btnClass,
       btnText,
@@ -322,7 +326,7 @@ exports.userChannel = catchAsync(async (req, res, next) => {
   });
   const wiresData = userData.channel.wires;
   const isItMyChannel = req.path === '/user-channel';
-  console.log(`🔥🔥🔥🔥🔥🔥🔥${isItMyChannel === true ? 'Yes' : 'No'}`);
+  // console.log(`🔥🔥🔥🔥🔥🔥🔥${isItMyChannel === true ? 'Yes' : 'No'}`);
   const { channel } = userData;
   // console.log(wiresData);
   // console.log(`This is User About 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥: ${channel.about}`);
@@ -350,7 +354,7 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   const extractedData = data.data.data;
   const latestVideo = extractedData.videos[0];
   const wiresData = extractedData.wires.map((wire) => wire);
-  console.log(wiresData);
+  // console.log(wiresData);
 
   const channelData = await Channel.findById(extractedData._id);
   res.status(200).render(`../views/main/channels/userChannel`, {
@@ -390,8 +394,21 @@ exports.allVideos = catchAsync(async (req, res, next) => {
 });
 
 exports.singleVideo = catchAsync(async (req, res, next) => {
+  const video = await Video.findById(req.params.videoId);
+  const user = await User.findById(res.locals.user._id);
+  let comments;
+  // eslint-disable-next-line prefer-destructuring
+  if (video) comments = video.comments;
+  let channel;
+  if (res.locals.user.channel)
+    channel = await Channel.findById(res.locals.user.channel._id);
+  // console.log(comments);
   res.status(200).render(`../views/settings/channel/singleUpload`, {
     title: `Single Uploads`,
+    video,
+    user,
+    channel,
+    comments,
     useCustomLeftNav: true,
   });
 });
