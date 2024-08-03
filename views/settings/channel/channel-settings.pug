@@ -18,12 +18,12 @@ block content
             - console.log(userId)
             img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
         else
-          img(src=`/imgs/default-user-photo.jpg`)
+          img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
       .ch-banner
         if user && user.channel && user.channel.bannerImage
           img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`)
         else
-          img.ch-banner-img(src='/imgs/default-banner-image.jpg')
+          img.ch-banner-img(src='https://begenone-images.s3.amazonaws.com/default-banner-image.jpg')
     .ch-main-settings
       .ch-main-details
         .ch-name

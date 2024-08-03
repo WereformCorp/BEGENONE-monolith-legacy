@@ -11,14 +11,14 @@ block content
         if user && user.channel && user.channel.bannerImage
           img.sect-mid-banner-img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`, width='100%')
         else
-          img.sect-mid-banner-img(src=`/imgs/default-banner-image.jpg`, width='100%')
+          img.sect-mid-banner-img(src=`https://begenone-images.s3.amazonaws.com/default-banner-image.jpg`, width='100%')
       section.sect-mid-rows.sect-mid-row-2
         section.sect-mid-chDetails
           section.sect-mid-logo
             if user && user.channel && user.channel.displayImage
               img.sect-mid-logo-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
             else
-              img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
+              img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
           section.sect-mid-awards
             svg.sect-mid-awards-tick.icon.icon-checkmark2
               use(xlink:href='#icon-checkmark2')
@@ -39,44 +39,23 @@ block content
             else 
               button.sect-mid-accDtls-subscribe(data-channel-id=channel._id) Subscribe
             button.sect-mid-accDtls-notification
-              svg.sect-mid-accDtls-notify-icon.icon.icon-bell-solid
-                use(xlink:href='#icon-bell-solid')
-                  symbol#icon-bell-solid(viewBox='0 0 28 32')
-                    path(d='M14 0c-1.106 0-2 0.894-2 2v1.2c-4.563 0.925-8 4.963-8 9.8v1.175c0 2.938-1.081 5.775-3.031 7.975l-0.463 0.519c-0.525 0.587-0.65 1.431-0.331 2.15s1.038 1.181 1.825 1.181h24c0.788 0 1.5-0.462 1.825-1.181s0.194-1.563-0.331-2.15l-0.462-0.519c-1.95-2.2-3.031-5.031-3.031-7.975v-1.175c0-4.838-3.438-8.875-8-9.8v-1.2c0-1.106-0.894-2-2-2zM16.831 30.831c0.75-0.75 1.169-1.769 1.169-2.831h-8c0 1.063 0.419 2.081 1.169 2.831s1.769 1.169 2.831 1.169 2.081-0.419 2.831-1.169z')
+              img.sect-mid-accDtls-notify-icon.icon.icon-bell-solid(src="https://begenone-images.s3.amazonaws.com/bell-solid.svg", alt="")
         .sect-mid-sorting-list
           .sect-mid-sortings.sect-mid-sorting-1
-            svg.icon.icon-fire
-              use(xlink:href='#icon-fire')
-                symbol#icon-fire(viewBox='0 0 32 32')
-                  path(d='M10.031 32c-2.133-4.438-0.997-6.981 0.642-9.376 1.795-2.624 2.258-5.221 2.258-5.221s1.411 1.834 0.847 4.703c2.493-2.775 2.963-7.196 2.587-8.889 5.635 3.938 8.043 12.464 4.798 18.783 17.262-9.767 4.294-24.38 2.036-26.027 0.753 1.646 0.895 4.433-0.625 5.785-2.573-9.759-8.937-11.759-8.937-11.759 0.753 5.033-2.728 10.536-6.084 14.648-0.118-2.007-0.243-3.392-1.298-5.312-0.237 3.646-3.023 6.617-3.777 10.27-1.022 4.946 0.765 8.568 7.555 12.394z')
+            img.icon.icon-fire(src="https://begenone-images.s3.amazonaws.com/fire-solid.svg", alt="")
           .sect-mid-sortings.sect-mid-sorting-2
             h3.sect-mid-sort-old OLD
             h3.sect-mid-sort-new NEW
           .sect-mid-sortings.sect-mid-sorting-3
-            svg.icon.icon-stats-bars
-              use(xlink:href='#icon-stats-bars')
-                symbol#icon-stats-bars(viewBox='0 0 32 32')
-                  path(d='M0 26h32v4h-32zM4 18h4v6h-4zM10 10h4v14h-4zM16 16h4v8h-4zM22 4h4v20h-4z')
+            img.icon.icon-stats-bars(src="https://begenone-images.s3.amazonaws.com/chart-simple-solid.svg", alt="")
           .sect-mid-sortings.sect-mid-sorting-4
-            svg.icon.icon-ruler-combined-solid
-              use(xlink:href='#icon-ruler-combined-solid')
-                symbol#icon-ruler-combined-solid(viewBox='0 0 32 32')
-                  path(d='M0.013 29.306c0.156 1.512 1.431 2.694 2.987 2.694h26c1.656 0 3-1.344 3-3v-6c0-1.656-1.344-3-3-3h-3v5c0 0.55-0.45 1-1 1s-1-0.45-1-1v-5h-4v5c0 0.55-0.45 1-1 1s-1-0.45-1-1v-5h-4v5c0 0.55-0.45 1-1 1s-1-0.45-1-1v-5h-5c-0.55 0-1-0.45-1-1s0.45-1 1-1h5v-4h-5c-0.55 0-1-0.45-1-1s0.45-1 1-1h5v-4h-5c-0.55 0-1-0.45-1-1s0.45-1 1-1h5v-3c0-1.656-1.344-3-3-3h-6c-1.656 0-3 1.344-3 3v26c0 0.106 0.006 0.206 0.013 0.306z')
+            img.icon.icon-ruler-combined-solid(src="https://begenone-images.s3.amazonaws.com/ruler-combined-solid.svg", alt="")
           .sect-mid-sortings.sect-mid-sorting-5
-            svg.icon.icon-child-solid
-              use(xlink:href='#icon-child-solid')
-                symbol#icon-child-solid(viewBox='0 0 20 32')
-                  path(d='M6 4c0-2.209 1.791-4 4-4s4 1.791 4 4v0c0 2.209-1.791 4-4 4s-4-1.791-4-4v0zM9 24v6c0 1.106-0.894 2-2 2s-2-0.894-2-2v-12.012l-1.306 2.075c-0.587 0.938-1.825 1.212-2.756 0.625s-1.219-1.819-0.631-2.75l2.494-3.956c1.556-2.481 4.275-3.981 7.2-3.981s5.644 1.5 7.2 3.975l2.494 3.963c0.587 0.938 0.306 2.169-0.625 2.756s-2.169 0.306-2.756-0.625l-1.313-2.081v12.012c0 1.106-0.894 2-2 2s-2-0.894-2-2v-6h-2z')
+            img.icon.icon-child-solid(src="https://begenone-images.s3.amazonaws.com/child-solid.svg", alt="")
           .sect-mid-sortings.sect-mid-sorting-6
-            svg.icon.icon-calendar-solid
-              use(xlink:href='#icon-calendar-solid')
-                symbol#icon-calendar-solid(viewBox='0 0 28 32')
-                  path(d='M6 2v2h-3c-1.656 0-3 1.344-3 3v3h28v-3c0-1.656-1.344-3-3-3h-3v-2c0-1.106-0.894-2-2-2s-2 0.894-2 2v2h-8v-2c0-1.106-0.894-2-2-2s-2 0.894-2 2zM28 12h-28v17c0 1.656 1.344 3 3 3h22c1.656 0 3-1.344 3-3v-17z')
+            img.icon.icon-calendar-solid(src="https://begenone-images.s3.amazonaws.com/calendar-solid.svg", alt="")
           .sect-mid-sortings.sect-mid-sorting-search
-            svg.icon.icon-search
-              use(xlink:href='#icon-search')
-                symbol#icon-search(viewBox='0 0 32 32')
-                  path(d='M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z')
+            img.icon.icon-search(src="https://begenone-images.s3.amazonaws.com/magnifying-glass-solid.svg", alt="")
       section.sect-mid-rows.sect-mid-row-3
         section.sect-mid-ctnt-nav
           .ctnt-nav-items.ctnt-nav-item-1
@@ -166,23 +145,26 @@ block content
               h2.most-popular-h2 MOST POPULAR
               section.sect-mid-ctnt-popular-vdo
                 each video in videos
-                  if video && video.thumbnail
-                    .content-containers.content-container-1
-                      img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
-                      section.section-details
-                        h4.section-details-title= video.title
-                        hr(width='50px')
-                        .sectionHead-views_N_date
-                          h5.sectionHead-views
-                            span.views= video.views
-                            |  Views
-                          h5.sectionHead-date
-                            span
-                              | 19 
-                              span hours
-                            |  ago
-                  else
-                    h1 There are no videos found.
+                  a(href=`/watch/${video._id}`) 
+                    if video && video.thumbnail
+                      .content-containers.content-container-1
+                        img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+                        section.section-details
+                          h4.section-details-title= video.title
+                          hr(width='50px')
+                          .sectionHead-views_N_date
+                            h5.sectionHead-views
+                              span.views= video.views
+                              |  Views
+                            h5.sectionHead-date
+                              span
+                                | 19 
+                                span hours
+                              |  ago
+                    else
+                      h1 There are no videos found.
+            else if videos === null || undefined
+              h2.most-popular-h2
           .ctnt-home-wires
             if wiresData
               h1.ctnt-home-wire-h1 Wire
@@ -198,7 +180,7 @@ block content
                         h3.wire-header-date= wireTime
                         //- h3.wire-header-views 50,423 Views
                     h4.ctnt-home-wire-text= wire.wireText
-            else
+            else if wiresData === null || undefined 
               h4.ctnt-home-wire-text
                 i "There are no wires related to this channel."
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')

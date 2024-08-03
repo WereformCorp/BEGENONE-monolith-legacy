@@ -12,7 +12,7 @@ block content
         if userData.photo
           img.sect-mid-logo-img(src=`/imgs/users/${userId}/user-display-picture/${userData.photo}`)
         else if userData.photo === undefined
-          img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
+          img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
         .full_user_name
           .firstname
             h2 First Name
@@ -57,7 +57,7 @@ block content
             if user.channel.displayImage
               img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
             else 
-              img.sect-mid-logo-img(src=`/imgs/default-user-photo.jpg`)
+              img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
           a(href="/user-channel")
             .ch_details
               if userData.channel

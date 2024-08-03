@@ -12,20 +12,17 @@ block content
       section.sect-mid-vdoP-c1
         section.sect-mid-vdoP-dtls
           if user && user.channel && user.channel.displayImage
-            a(href=`/channels/${video.channel._id}` target="_blank")
+            a(href=`/channels/${video.channel._id}`)
               img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
           else
-            a(href=`/channels/${video.channel._id}` target="_blank")
-              img.chList-chnl-img(src="/imgs/default-user-photo.jpg")
+            a(href=`/channels/${video.channel._id}`)
+              img.chList-chnl-img(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
           .sect-mid-vdoP-name_N_subCount
-            a(href=`/channels/${video.channel._id}` target="_blank")
+            a(href=`/channels/${video.channel._id}`)
               h4.vdoP-name= video.channel.name
               h5.vdoP-subsCount
                 span= video.channel.subscribers.length
                 |  Subscribers
-            div.sect-mid-vdo-meta
-              h2.sect-mid-vdo-time= videoTimeAgo
-              h2.sect-mid-vdo-views= `| ${video.views} Views`
           .sect-mid-vdo_subscribe
             if areChannelSame
               button(class=`sect-mid-vdoP-subsBtn--analytics`) Analytics
@@ -43,6 +40,9 @@ block content
                 use(xlink:href='#icon-bell-solid')
                   symbol#icon-bell-solid(viewBox='0 0 28 32')
                     path(d='M14 0c-1.106 0-2 0.894-2 2v1.2c-4.563 0.925-8 4.963-8 9.8v1.175c0 2.938-1.081 5.775-3.031 7.975l-0.463 0.519c-0.525 0.587-0.65 1.431-0.331 2.15s1.038 1.181 1.825 1.181h24c0.788 0 1.5-0.462 1.825-1.181s0.194-1.563-0.331-2.15l-0.462-0.519c-1.95-2.2-3.031-5.031-3.031-7.975v-1.175c0-4.838-3.438-8.875-8-9.8v-1.2c0-1.106-0.894-2-2-2zM16.831 30.831c0.75-0.75 1.169-1.769 1.169-2.831h-8c0 1.063 0.419 2.081 1.169 2.831s1.769 1.169 2.831 1.169 2.081-0.419 2.831-1.169z')
+        div.sect-mid-vdo-meta
+              h2.sect-mid-vdo-time= videoTimeAgo
+              h2.sect-mid-vdo-views= `| ${video.views} Views`
         section.vdoPlayer-controls
           //- video.sect-mid-vdoPlayer-video(controls)
           //-   source(src=`/video/sample-video.mp4`, type='video/mp4')
@@ -173,7 +173,7 @@ block content
           section.ctnt-cmmnt-inputbox
             //- input.ctnt-cmmnt-inputField(type='text', placeholder='Enter Your Comment Here!')
             form#commentForm.ctnt-cmmnt-inputField
-              input#commentInput(type='text', placeholder='Type your comment...')
+              textarea#commentInput(type='text', placeholder='Type your comment...')
               button#commentBtn(type='submit') Send
           section.ctnt-cmmnt-list
             each comment in comments
@@ -183,7 +183,7 @@ block content
                     if comment.channel && comment.channel.displayImage
                       img.ctnt-cmmnt-logo(src=`/imgs/users/${comment.channel.displayImage}`)
                     else
-                      img.ctnt-cmmnt-logo(src="/imgs/default-user-photo.jpg")
+                      img.ctnt-cmmnt-logo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
                   .ctnt-cmmnt-accDetails
                     - const userOrChannelName = comment.channel ? comment.channel.name : `${firstName + ' ' + secondName}`
                     h4.cmmnt-accDtls= userOrChannelName
@@ -210,27 +210,28 @@ block content
                 button.ctnt-cmmnt-reply Reply
       section.sect-mid-ctntRecom
         each singleVideo in manyVideos
-          a(href=`/watch/${singleVideo._id}` target="_blank")
-            .content-containers.content-container-1
-              section.section-Header
-                if user && user.channel && user.channel.displayImage
-                  img.sectionHead-chLogo(src=`/imgs/users/${singleVideo.channel.user._id}/display-images/${singleVideo.channel.displayImage}`)
-                else
-                  img.sectionHead-chLogo(src="/imgs/default-user-photo.jpg")
-                h3.sectionHead-chName= singleVideo.channel.name
-                //- img.sectionHead-tick(src='/imgs/Middle Nav/video card/tick-square 8.png')
-              //- if singleVideo && singleVideo.thumbnail
-              //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
-              //- else
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample-thumbnail.jpg`)
-              section.section-details
-                h4.section-details-title= singleVideo.title
-                hr(width='50px')
-                .sectionHead-views_N_date
-                  h5.sectionHead-views
-                    span.views= singleVideo.views
-                    |  Views
-                  h5.sectionHead-date= videoTimeAgo
+          if singleVideo._id !== video._id
+            a(href=`/watch/${singleVideo._id}`)
+              .content-containers.content-container-1
+                section.section-Header
+                  if user && user.channel && user.channel.displayImage
+                    img.sectionHead-chLogo(src=`/imgs/users/${singleVideo.channel.user._id}/display-images/${singleVideo.channel.displayImage}`)
+                  else
+                    img.sectionHead-chLogo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
+                  h3.sectionHead-chName= singleVideo.channel.name
+                  //- img.sectionHead-tick(src='/imgs/Middle Nav/video card/tick-square 8.png')
+                //- if singleVideo && singleVideo.thumbnail
+                //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
+                //- else
+                img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
+                section.section-details
+                  h4.section-details-title= singleVideo.title
+                  hr(width='50px')
+                  .sectionHead-views_N_date
+                    h5.sectionHead-views
+                      span.views= singleVideo.views
+                      |  Views
+                    h5.sectionHead-date= videoTimeAgo
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/subscribe.js")
   script(src="/js/comment.js")

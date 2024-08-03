@@ -14,17 +14,18 @@ block content
                 - console.log(userId)
                   img.sectionHead-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
               else
-                img.sectionHead-chLogo(src="/imgs/default-user-photo.jpg")
+                img.sectionHead-chLogo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
               .sectionHead-dtls
                 .sectionHead-chName_N_sub
                   h3.sectionHead-chName= video.channel.name
                   h5.sectionHead-chSubCnt
                     span= video.channel.subscribers.length
                     |  Subscribers
-            if video.thumbnail
+            if video && video.thumbnail
               img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+              //- img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
             else 
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
+              img.sectionHead-thumbNail(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
             section.section-details
               h4.section-details-title= video.title
               hr(width='50px')

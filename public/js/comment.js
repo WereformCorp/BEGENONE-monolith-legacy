@@ -37,7 +37,7 @@ const postComment = async (comment) => {
 
     // Getting the comment data
     const commentData = res.data.data;
-    console.log(commentData);
+    // console.log(commentData);
 
     // Compiling the comment pug template
     const compiledCommentRes = await axios({
@@ -51,6 +51,8 @@ const postComment = async (comment) => {
       return alert(
         `Coudnt load the comment\n${res.data.message}\nplease reload to see the comment`,
       );
+
+    console.log(compiledCommentRes.data.data);
 
     // Inserting the comment html
     commentsContainer.insertAdjacentHTML(

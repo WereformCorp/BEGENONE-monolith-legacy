@@ -16,11 +16,9 @@ const channelSchema = new mongoose.Schema({
   },
   displayImage: {
     type: String,
-    default: 'default.jpeg',
   },
   bannerImage: {
     type: String,
-    default: 'Banner.png',
   },
   about: {
     type: String,

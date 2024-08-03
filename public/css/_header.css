@@ -13,9 +13,10 @@
 }
 
 .searchBar-search-Icon {
-  background-color: rgb(60, 60, 60, 0.2);
+  /* background-color: rgb(60, 60, 60, 0.2); */
   /* width: 1.4rem;
   height: 1.4rem; */
+  filter: invert();
   align-self: center;
   cursor: pointer;
   /* padding: 1rem; */
@@ -40,7 +41,7 @@
   height: 45px;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid rgba(120, 120, 120, 0.3);
+  border: 2px solid rgba(120, 120, 120, 0.3);
   background: transparent;
   outline: none;
   padding-left: 1rem;
@@ -61,8 +62,9 @@
 }
 
 .searchBar-voiceSearch {
-  display: none;
+  /* display: none; */
   align-self: center;
+  filter: invert();
   /* padding-top: 5px; */
   height: 20px;
   /* filter: invert(); */

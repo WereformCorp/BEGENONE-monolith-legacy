@@ -114,7 +114,7 @@
 .sect-mid-accDtls-notify-icon {
   width: 100%;
   height: 100%;
-  filter: invert();
+  /* filter: invert(); */
 }
 
 .sect-mid-awards {
@@ -159,9 +159,10 @@
   background-color: rgb(60, 60, 60, 0.3);
 }
 
-.sect-mid-sortings svg {
-  font-size: 1.5rem;
+.sect-mid-sortings img {
+  font-size: 1.2rem;
   align-self: center;
+  filter: invert();
 }
 
 .sect-mid-sort-old,
@@ -449,6 +450,7 @@
   column-gap: 2rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid rgb(120, 120, 120, 0.4);
+  height: 15rem;
 }
 
 .featuredVideo-video {

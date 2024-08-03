@@ -49,6 +49,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+console.log('Environment:', process.env.NODE_ENV || 'development');
+console.log('Node Version:', process.version);
+
 // LIMIT REQUEST FROM SAME API
 // const limiter = rateLimit({
 //   max: 1000,

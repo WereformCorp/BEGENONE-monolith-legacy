@@ -580,6 +580,7 @@
   flex-direction: column;
   padding: 30px;
   row-gap: 40px;
+  width: 100%;
 }
 
 .ctnt-cmmnt-listItems {
@@ -653,16 +654,16 @@
 }
 
 .delteVideo-Btn {
-  margin-top: 4rem;
-  height: 4rem;
-  width: 25rem;
-  justify-self: center;
+  /* margin-top: 4rem; */
+  height: 3rem;
+  width: 10rem;
+  justify-self: end;
   background-color: #ff0000;
   outline: none;
   border: 1px solid #fff;
   border-radius: 10px;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .delteVideo-Btn:hover {

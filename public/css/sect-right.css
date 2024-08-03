@@ -38,6 +38,7 @@
 
 .sect-rgt-icons-imgs {
   font-size: 20px;
+  filter: invert();
 }
 
 .sect-rgt-icon-img-1 {
@@ -50,6 +51,7 @@
   height: 2.8rem;
   width: 2.8rem;
   border-radius: 8px;
+  filter: none;
 }
 
 .section-right:hover .sect-rgt-icon-list-container {

@@ -99,7 +99,7 @@ block content
                       if user && user.channel && user.channel.displayImage
                         img.ctnt-cmmnt-logo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
                       else
-                        img.sectionHead-chLogo(src="/imgs/default-user-photo.jpg")
+                        img.sectionHead-chLogo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
                       .ctnt-cmmnt-dtls
                         .ctnt-cmmnt-accDetails
                           h4.cmmnt-accDtls= channel.name
@@ -110,12 +110,7 @@ block content
                             |  /
                             span.ctnt-cmmntDate-year 2022
                           button.delete-comment-Btn(value=`${comment._id}`) Delete
-                        h4.ctnt-cmmnt-textCmmnt
-                          | Lorem ipsum dolor, sit amet consectetur adipisicing
-                          | elit. Dolor eveniet debitis ratione quaerat incidunt
-                          | nemo commodi impedit repellendus, enim porro esse,
-                          | voluptates quo nihil minus adipisci unde similique,
-                          | nostrum ad.
+                        h4.ctnt-cmmnt-textCmmnt= comment.comment
                         //- button.ctnt-cmmnt-reply Reply
                 else
                   h2(style="font-weight: 300") 😂 Unfortunately No One wanted to comment. Make your content more attractive, Man!

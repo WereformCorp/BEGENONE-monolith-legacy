@@ -30,7 +30,7 @@ router
 router
   .route('/:id')
   .get(videoController.getVideo)
-  .patch(authController.protect)
+  .patch(authController.protect, videoController.updateVideo)
   .delete(authController.protect, videoController.deleteVideo);
 
 router.use('/:videoId/sponsors', sponsorRouter);

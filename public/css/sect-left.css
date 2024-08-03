@@ -81,7 +81,7 @@
   justify-self: start;
   align-self: center;
   padding-left: 20px;
-  font-weight: 900;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -126,7 +126,7 @@
 
 .srd-link-Icons {
   font-size: 20px;
-  /* filter: invert(); */
+  filter: invert();
 }
 
 .srd-link-lockIcon {
@@ -135,12 +135,13 @@
 
 .srd-link-texts {
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 700;
+  letter-spacing: 1.1px;
   transition: all 0.2s ease-in-out;
 }
 
 .srd-link-texts:hover {
-  background-color: rgb(60, 60, 60, 0.3);
+  /* background-color: rgb(60, 60, 60, 0.3); */
   cursor: pointer;
 }
 
@@ -153,7 +154,9 @@
 /*  */
 
 .bjenuine-text-header {
-  font-size: 24px;
+  max-width: 14rem;
+  padding: 10px;
+  height: 3rem;
 }
 
 .section-bottom {

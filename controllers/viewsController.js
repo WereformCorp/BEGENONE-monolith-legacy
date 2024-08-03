@@ -65,13 +65,15 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         select: '_id displayImage',
       });
 
+    // console.log(userData);
+
     // let videoTimeAgo;
     data.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
     });
 
     res.status(200).render('../views/main/mainVideoCard', {
-      title: 'BeGenuine',
+      title: 'BEGENONE',
       videos: data,
       user: res.locals.user,
       userData,
@@ -148,11 +150,16 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       secondName = comment.user.name.secondName;
     });
 
+    // console.log('THESE ARE COMMENT PART:', comments);
+
     let areChannelSame;
     if (localUser && localUser.channel) {
       areChannelSame =
         channel._id.toString() === localUser.channel._id.toString();
     }
+
+    // console.log('THIS IS THE CURRENT VIDEO DATA: ', videoData);
+    // console.log('THESE ARE MANYVIDEOS DATA:', videos.data.data);
 
     const shareLink = `${urlPath}/watch/${videoData._id}`;
     const copyLinkText = `Click on the link to Copy 👇`;
@@ -175,7 +182,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       comments,
       firstName,
       secondName,
-      // userData,
+      userData: videoUserData,
       videoTimeAgo,
       btnClass,
       btnText,

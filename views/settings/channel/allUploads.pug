@@ -14,7 +14,8 @@ block content
           .video-ctnt-cntnr.video-ctnt-cntnr-1
             img.video-ctnt-thumb(src=`/imgs/thumbnails/${video.thumbnail}`)
             .video-headers
-              h3.video-title= video.title
+              a(href=`/watch/${video._id}`) 
+                h3.video-title= video.title
               h4.video-description= video.description
             .video-details
               .video-date

@@ -2,56 +2,36 @@ section#sect-3.section-right
   .sect-rgt-icons
     section.sect-rgt-icon-list
       if userData
-        if userData.channel
-          - const userId = user._id
-          a(href="/user-channel")
-            .sect-rgt-icon-list-container.sect-rgt-icon-1
-              if user.channel && user.channel.displayImage
-                img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
-              else
-                img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/default-user-photo.jpg`)
-        else
-          a(href="/channel-settings") 
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="/imgs/default-user-photo.jpg")
+        a(href=`/channels/${userData.channel._id}`)
+          if userData.channel
+            - const userId = user._id
+            a(href=`/channels/${userData.channel._id}`)
+              .sect-rgt-icon-list-container.sect-rgt-icon-1
+                if user.channel && user.channel.displayImage
+                  img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
+                else
+                  img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+          else
+            a(href="/channel-settings") 
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
       else
         a(href="/login")
           .sect-rgt-icon-list-container.sect-rgt-icon-1
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="/imgs/default-user-photo.jpg")
+            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
       .sect-rgt-icon-list-container.sect-rgt-icon-2
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid
-          use(xlink:href='#icon-brain-solid')
-            symbol#icon-brain-solid(viewBox='0 0 32 32')
-              path(d='M11.5 0c1.931 0 3.5 1.569 3.5 3.5v25c0 1.931-1.569 3.5-3.5 3.5-1.806 0-3.294-1.369-3.481-3.131-0.325 0.087-0.669 0.131-1.019 0.131-2.206 0-4-1.794-4-4 0-0.462 0.081-0.913 0.225-1.325-1.887-0.712-3.225-2.538-3.225-4.675 0-1.994 1.169-3.719 2.862-4.519-0.544-0.681-0.862-1.544-0.862-2.481 0-1.919 1.35-3.519 3.15-3.912-0.1-0.344-0.15-0.713-0.15-1.088 0-1.869 1.287-3.444 3.019-3.881 0.188-1.75 1.675-3.119 3.481-3.119zM20.5 0c1.806 0 3.288 1.369 3.481 3.119 1.738 0.438 3.019 2.006 3.019 3.881 0 0.375-0.050 0.744-0.15 1.088 1.8 0.387 3.15 1.994 3.15 3.912 0 0.938-0.319 1.8-0.863 2.481 1.694 0.8 2.863 2.525 2.863 4.519 0 2.137-1.337 3.962-3.225 4.675 0.144 0.413 0.225 0.863 0.225 1.325 0 2.206-1.794 4-4 4-0.35 0-0.694-0.044-1.019-0.131-0.188 1.762-1.675 3.131-3.481 3.131-1.931 0-3.5-1.569-3.5-3.5v-25c0-1.931 1.569-3.5 3.5-3.5z')
+        img.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid(src="https://begenone-images.s3.amazonaws.com/brain-solid.svg", alt="")
     section.sect-rgt-icon-2-list
       .sect-rgt-icon-list-container.sect-rgt-icon-3
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-3.icon.icon-category
-          use(xlink:href='#icon-category')
-            symbol#icon-category(viewBox='0 0 32 32')
-              path(d='M2.984 0.548c-1.070 0.207-1.915 0.863-2.382 1.861l-0.288 0.602-0.027 4c-0.027 4.27-0.018 4.422 0.413 5.196 0.449 0.8 1.231 1.366 2.22 1.6 0.656 0.153 7.182 0.18 7.955 0.036 1.151-0.216 1.969-0.845 2.454-1.87l0.288-0.602 0.027-4c0.027-4.27 0.018-4.422-0.413-5.196-0.288-0.521-0.701-0.917-1.24-1.222-0.836-0.467-1.204-0.503-5.070-0.494-1.951 0.009-3.721 0.045-3.937 0.090z')
-              path(d='M20.962 0.548c-1.070 0.207-1.915 0.863-2.382 1.861l-0.288 0.602-0.027 4c-0.027 4.27-0.018 4.422 0.413 5.196 0.449 0.8 1.231 1.366 2.22 1.6 0.656 0.153 7.182 0.18 7.955 0.036 1.151-0.216 1.969-0.845 2.454-1.87l0.288-0.602 0.027-4c0.027-4.27 0.018-4.422-0.413-5.196-0.288-0.521-0.701-0.917-1.24-1.222-0.836-0.467-1.204-0.503-5.070-0.494-1.951 0.009-3.721 0.045-3.937 0.090z')
-              path(d='M2.984 18.526c-1.070 0.207-1.915 0.863-2.382 1.861l-0.288 0.602-0.027 4c-0.027 4.27-0.018 4.422 0.413 5.195 0.449 0.8 1.231 1.366 2.22 1.6 0.656 0.153 7.182 0.18 7.955 0.036 1.151-0.216 1.969-0.845 2.454-1.87l0.288-0.602 0.027-4c0.027-4.27 0.018-4.422-0.413-5.195-0.288-0.521-0.701-0.917-1.24-1.222-0.836-0.467-1.204-0.503-5.070-0.494-1.951 0.009-3.721 0.045-3.937 0.090z')
-              path(d='M20.962 18.526c-1.070 0.207-1.915 0.863-2.382 1.861l-0.288 0.602-0.027 4c-0.027 4.27-0.018 4.422 0.413 5.195 0.449 0.8 1.231 1.366 2.22 1.6 0.656 0.153 7.182 0.18 7.955 0.036 1.151-0.216 1.969-0.845 2.454-1.87l0.288-0.602 0.027-4c0.027-4.27 0.018-4.422-0.413-5.195-0.288-0.521-0.701-0.917-1.24-1.222-0.836-0.467-1.204-0.503-5.070-0.494-1.951 0.009-3.721 0.045-3.937 0.090z')
+        img.sect-rgt-icons-imgs.sect-rgt-icon-img-3.icon.icon-category(src="https://begenone-images.s3.amazonaws.com/th-large-solid.svg", alt="")
       .sect-rgt-icon-list-container.sect-rgt-icon-4
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-4.icon.icon-cart-shopping-solid
-          use(xlink:href='#icon-cart-shopping-solid')
-            symbol#icon-cart-shopping-solid(viewBox='0 0 36 32')
-              path(d='M0 1.5c0-0.831 0.669-1.5 1.5-1.5h2.844c1.375 0 2.594 0.8 3.162 2h25.688c1.644 0 2.844 1.563 2.413 3.15l-2.563 9.519c-0.531 1.963-2.313 3.331-4.344 3.331h-18.031l0.338 1.781c0.137 0.706 0.756 1.219 1.475 1.219h18.019c0.831 0 1.5 0.669 1.5 1.5s-0.669 1.5-1.5 1.5h-18.019c-2.162 0-4.019-1.538-4.419-3.656l-3.225-16.938c-0.044-0.237-0.25-0.406-0.494-0.406h-2.844c-0.831 0-1.5-0.669-1.5-1.5zM8 29c0-1.657 1.343-3 3-3s3 1.343 3 3v0c0 1.657-1.343 3-3 3s-3-1.343-3-3v0zM29 26c1.657 0 3 1.343 3 3s-1.343 3-3 3v0c-1.657 0-3-1.343-3-3s1.343-3 3-3v0z')
+        img.sect-rgt-icons-imgs.sect-rgt-icon-img-4.icon.icon-cart-shopping-solid(src="https://begenone-images.s3.amazonaws.com/cart-shopping-solid.svg", alt="")
       .sect-rgt-icon-list-container.sect-rgt-icon-5
-        svg.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid
-          use(xlink:href='#icon-bell-solid')
-            symbol#icon-bell-solid(viewBox='0 0 28 32')
-              path(d='M14 0c-1.106 0-2 0.894-2 2v1.2c-4.563 0.925-8 4.963-8 9.8v1.175c0 2.938-1.081 5.775-3.031 7.975l-0.463 0.519c-0.525 0.587-0.65 1.431-0.331 2.15s1.038 1.181 1.825 1.181h24c0.788 0 1.5-0.462 1.825-1.181s0.194-1.563-0.331-2.15l-0.462-0.519c-1.95-2.2-3.031-5.031-3.031-7.975v-1.175c0-4.838-3.438-8.875-8-9.8v-1.2c0-1.106-0.894-2-2-2zM16.831 30.831c0.75-0.75 1.169-1.769 1.169-2.831h-8c0 1.063 0.419 2.081 1.169 2.831s1.769 1.169 2.831 1.169 2.081-0.419 2.831-1.169z')
+        img.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid(src="https://begenone-images.s3.amazonaws.com/bell-solid.svg", alt="")
       a(href="/upload") 
         .sect-rgt-icon-list-container.sect-rgt-icon-6
-          svg.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid
-            use(xlink:href='#icon-video-solid')
-              symbol#icon-video-solid(viewBox='0 0 36 32')
-                path(d='M0 8c0-2.206 1.794-4 4-4h16c2.206 0 4 1.794 4 4v16c0 2.206-1.794 4-4 4h-16c-2.206 0-4-1.794-4-4v-16zM34.944 6.237c0.65 0.35 1.056 1.025 1.056 1.763v16c0 0.738-0.406 1.413-1.056 1.762s-1.438 0.313-2.056-0.1l-6.887-4.594v-10.137l0.887-0.594 6-4c0.612-0.406 1.4-0.45 2.056-0.1z')
+          img.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid(src="https://begenone-images.s3.amazonaws.com/video-solid.svg", alt="")
     .sect-rgt-icon-list-container.sect-rgt-icon-7
-      svg.sect-rgt-icons-imgs.sect-rgt-icon-img-7.icon.icon-bars-solid
-        use(xlink:href='#icon-bars-solid')
-          symbol#icon-bars-solid(viewBox='0 0 28 32')
-            path(d='M0 6c0-1.106 0.894-2 2-2h24c1.106 0 2 0.894 2 2s-0.894 2-2 2h-24c-1.106 0-2-0.894-2-2zM0 16c0-1.106 0.894-2 2-2h24c1.106 0 2 0.894 2 2s-0.894 2-2 2h-24c-1.106 0-2-0.894-2-2zM28 26c0 1.106-0.894 2-2 2h-24c-1.106 0-2-0.894-2-2s0.894-2 2-2h24c1.106 0 2 0.894 2 2z')
+      img.sect-rgt-icons-imgs.sect-rgt-icon-img-7.icon.icon-bars-solid(src="https://begenone-images.s3.amazonaws.com/bars-solid.svg", alt="")
   
 //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
 //- script(src='/js/notification.js')

@@ -10,19 +10,22 @@
 .content-containers {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  max-width: 260px;
   row-gap: 10px;
   padding: 0.825rem;
   border: 1px solid transparent;
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
+  border: 1px solid rgb(71, 71, 71, 0.4);
 }
 
 .content-containers:hover {
   /* background-color: rgba(26, 26, 26, 0.4); */
   background-color: rgba(39, 39, 39, 0.3);
-  border: 1px solid rgb(71, 71, 71, 0.4);
+  border: 1px solid rgba(71, 71, 71, 0);
+  transform: translateY(-0.1rem);
+  box-shadow: 5px 5px 30px rgba(9, 9, 9, 0.1);
 }
 
 .sectionHead-dtls {
@@ -39,8 +42,8 @@
 }
 
 .sectionHead-chName {
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 0.9rem;
+  font-weight: 700;
   font-family: lexend;
 }
 
