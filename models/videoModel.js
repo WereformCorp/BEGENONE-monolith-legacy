@@ -4,8 +4,6 @@ const videoSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, 'A Video Must Have A Title.'],
-      minLength: 1,
       maxLength: 200,
     },
     description: {
