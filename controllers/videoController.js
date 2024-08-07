@@ -165,12 +165,26 @@ exports.getAllVideos = catchAsync(async (req, res, next) => {
     });
   }
 });
+// console.log(req);
+const newDate = new Date().toISOString();
+console.log('NEW DATE HERE:', newDate);
+
+const formattedDate = new Date(newDate).toLocaleString('en-GB', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false, // 24-hour format
+});
+
+console.log('Formatted Date:', formattedDate);
 
 exports.createVideo = catchAsync(async (req, res, next) => {
   try {
-    console.log(req);
     const videoData = {
-      title: req.body.title,
+      title: req.body.title || `Uploaded At: ${formattedDate}`,
       description: req.body.description,
       thumbnail: req.body.thumbnail,
       section: req.body.section,
