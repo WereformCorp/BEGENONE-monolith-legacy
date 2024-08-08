@@ -48,9 +48,11 @@ block content
           //-   source(src=`/video/sample-video.mp4`, type='video/mp4')
           //- THE NEW VIDEO PLAYER
           input.videoId(type="hidden", value=`${videoIdForComment}`)
-          video.sect-mid-vdoPlayer-video(controls='', crossorigin='', playsinline='', poster='')
-              source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
+          video.sect-mid-vdoPlayer-video(controls='', crossorigin='anonymous', playsinline='', poster='')
+              source(src=`${videoUrl}`, type='video/mp4', size='576' width='100%')
               | &#x9;&#x9;&#x9;
+              //- source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
+              //- | &#x9;&#x9;&#x9;
               source(src=`/video/${video.video}`, type='video/mp4', size='720')
               | &#x9;&#x9;&#x9;
               source(src=`/video/${video.video}`, type='video/mp4', size='1080')

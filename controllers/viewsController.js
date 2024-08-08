@@ -65,7 +65,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         select: '_id displayImage',
       });
 
-    // console.log(userData);
+    console.log(videos.data.data);
 
     // let videoTimeAgo;
     data.forEach((video) => {
@@ -93,6 +93,16 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const video = await axios.get(
       `${urlPath}/api/v1/videos/${req.params.videoId}`,
     );
+    const streamedData = await axios.get(
+      `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
+    );
+
+    const thumbnailData = await axios.get(
+      `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
+    );
+
+    const videoUrl = streamedData.data.url;
+    console.log(`Video URL: `, videoUrl);
     const videoData = video.data.data;
     const videos = await axios.get(`${urlPath}/api/v1/videos/`);
     const { channel } = videoData;
@@ -165,10 +175,13 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const copyLinkText = `Click on the link to Copy 👇`;
     // console.log(shareLink);
 
+    console.log(videoData);
+
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
       title: `${videoData.title}`,
       video: videoData,
+      videoUrl,
       manyVideos: videos.data.data,
       user: res.locals.user,
       videoIdForComment: req.params.videoId,
@@ -315,6 +328,17 @@ exports.userProfile = catchAsync(async (req, res, next) => {
 
 exports.upload = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
+
+  // const streamedData = await axios.get(
+  //   `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
+  // );
+
+  // const videoUrl = streamedData.data.url;
+  // console.log(`Video URL: `, videoUrl);
+  // const thumbnailData = await axios.get(
+  //   `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
+  // );
+
   res.status(200).render(`../views/settings/channel/uploads/_uploads`, {
     title: 'USER PROFILE',
     useCustomLeftNav: true,

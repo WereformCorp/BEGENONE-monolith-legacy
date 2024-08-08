@@ -1,4 +1,9 @@
-const multer = require('multer');
+// const multer = require('multer');
+// // eslint-disable-next-line import/no-extraneous-dependencies
+// const AWS = require('aws-sdk');
+// // eslint-disable-next-line import/no-extraneous-dependencies
+// const multerS3 = require('multer-s3');
+const axios = require('axios');
 
 const Notification = require('../models/notificationModel');
 const Channel = require('../models/channelModel');
@@ -7,74 +12,102 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerController');
 
-const multerStorageDP = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/imgs/thumbnails');
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    cb(null, `thumbnail-${req.user.channel._id}-${Date.now()}.${ext}`);
-  },
-});
+/////////// _______________________________ S3 MULTER CONFIGURATION TEST __________________
 
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError(`Not an image! Please upload only images.`, 400), false);
-  }
-};
+// // Configure AWS SDK with your credentials and region
+// AWS.config.update({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//   region: process.env.AWS_REGION, // e.g., 'us-west-2'
+// });
 
-const uploadThumb = multer({
-  storage: multerStorageDP,
-  fileFilter: multerFilter,
-});
+// // Create an S3 instance
+// const s3 = new AWS.S3();
 
-exports.uploadThumbnail = uploadThumb.single('thumbnail');
+// // Configure Multer to use S3 for storage
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: process.env.S3_BUCKET_NAME, // your S3 bucket name
+//     metadata: function (req, file, cb) {
+//       cb(null, { fieldName: file.fieldname });
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, `${Date.now().toString()}-${file.originalname}`);
+//     },
+//   }),
+// });
 
-const multerStorageVid = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/video/');
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    cb(null, `video-${req.user.channel._id}-${Date.now()}.${ext}`);
-  },
-});
+// /////////////////////__________ ORIGINAL _____________________________
 
-const multerFilterVid = (req, file, cb) => {
-  if (file.mimetype.startsWith('video')) {
-    cb(null, true);
-  } else {
-    cb(new AppError(`Not an video! Please upload only video.`, 400), false);
-  }
-};
+// const multerStorageDP = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/imgs/thumbnails');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `thumbnail-${req.user.channel._id}-${Date.now()}.${ext}`);
+//   },
+// });
 
-const uploadVid = multer({
-  storage: multerStorageVid,
-  fileFilter: multerFilterVid,
-});
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith('image')) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError(`Not an image! Please upload only images.`, 400), false);
+//   }
+// };
 
-exports.uploadVidFile = uploadVid.single('video');
+// const uploadThumb = multer({
+//   storage: multerStorageDP,
+//   fileFilter: multerFilter,
+// });
 
-exports.finalizeThumb = catchAsync(async (req, res, next) => {
-  try {
-    console.log(req.file.filename);
+// exports.uploadThumbnail = uploadThumb.single('thumbnail');
 
-    const thumbFileName = req.file.filename;
+// const multerStorageVid = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/video/');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `video-${req.user.channel._id}-${Date.now()}.${ext}`);
+//   },
+// });
 
-    console.log(thumbFileName);
+// const multerFilterVid = (req, file, cb) => {
+//   if (file.mimetype.startsWith('video')) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError(`Not an video! Please upload only video.`, 400), false);
+//   }
+// };
 
-    return res.json({
-      thumbnail: thumbFileName,
-    });
-  } catch (err) {
-    res.json({
-      message: err.message,
-      error: err,
-    });
-  }
-});
+// const uploadVid = multer({
+//   storage: multerStorageVid,
+//   fileFilter: multerFilterVid,
+// });
+
+// exports.uploadVidFile = uploadVid.single('video');
+
+// exports.finalizeThumb = catchAsync(async (req, res, next) => {
+//   try {
+//     console.log(req.file.filename);
+
+//     const thumbFileName = req.file.filename;
+
+//     console.log(thumbFileName);
+
+//     return res.json({
+//       thumbnail: thumbFileName,
+//     });
+//   } catch (err) {
+//     res.json({
+//       message: err.message,
+//       error: err,
+//     });
+//   }
+// });
 
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -117,7 +150,70 @@ exports.finalizeThumb = catchAsync(async (req, res, next) => {
 
 // exports.uploadFiles = upload;
 
-exports.getVideo = factory.getOne(Video);
+// //////////////// TEMPORARY ________________________________________
+
+let urlPath;
+if (process.env.NODE_ENV === 'production') {
+  // Use the production domain
+  urlPath = 'https://begenuine.wereform.com.au';
+  // eslint-disable-next-line no-else-return
+} else if (process.env.NODE_ENV === 'development') {
+  // Use the req object for development
+  urlPath = `http://127.0.0.1:3000`;
+}
+
+// //////////////// TEMPORARY ________________________________________
+
+exports.getVideo = catchAsync(async (req, res, next) => {
+  try {
+    const data = await Video.findById(req.params.id);
+    if (!data)
+      return next(new AppError(`Data you are looking for, do not exist.`, 404));
+    // console.log(data);
+    // return data;
+    res.status(200).json({
+      status: 'Success',
+      data,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      status: 'fail',
+      message: err.message,
+      err,
+    });
+  }
+});
+
+// try {
+//   // Step 1: Retrieve video metadata from database
+//   const videoData = await Video.findById(req.params.id);
+//   if (!videoData) {
+//     return res.status(404).json({
+//       status: 'fail',
+//       message: 'Video not found',
+//     });
+//   }
+
+//   // Extract the S3 key from the retrieved data
+//   const videoKey = videoData.video; // Adjust based on your schema
+
+//   console.log(`WHOLE VIDEO NAMED AS VIDEOKEY: ${videoKey}`);
+//   console.log(`RESPONSE ON GET VIDEO: ${res}`);
+//   next(videoKey, res);
+//   return {
+//     vidKey: videoKey, // S3 URL
+//     response: res, // Filename used in S3
+//   };
+//   // Step 2: Stream video from S3 using the retrieved key
+//   // await streamVideoFromS3(videoKey, res);
+// } catch (error) {
+//   console.error('Error retrieving video or streaming:', error);
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'Error retrieving video or streaming',
+//   });
+// }
+// });
 exports.deleteVideo = factory.deleteOne(Video);
 exports.updateVideo = catchAsync(async (req, res, next) => {
   try {
@@ -182,7 +278,31 @@ const formattedDate = new Date(newDate).toLocaleString('en-GB', {
 console.log('Formatted Date:', formattedDate);
 
 exports.createVideo = catchAsync(async (req, res, next) => {
+  console.log(
+    `REQUESTION URL FROM CREATION OF VIDEO CONTROLLER: 🔥🔥🔥🔥🔥🔥🔥`,
+    req.results,
+  );
+
+  // const videoData = {
+  //   title: req.body.title || `Uploaded At: ${formattedDate}`,
+  //   description: req.body.description,
+  //   thumbnail: videoFileData.thumbnail.key || undefined,
+  //   section: req.body.section,
+  //   channel: req.user.channel._id,
+  //   bookmark: req.body.bookmark,
+  //   sponsors: req.body.sponsors,
+  //   comments: req.body.comments,
+  //   audio: req.body.audio,
+  //   // video: req.file.filename,
+  //   video: videoFileData.video.key,
+
+  //   user: req.user.id,
+  //   time: Date.now(),
+  // };
+
   try {
+    const videoFileData = req.file.s3Data.key;
+
     const videoData = {
       title: req.body.title || `Uploaded At: ${formattedDate}`,
       description: req.body.description,
@@ -193,14 +313,16 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       sponsors: req.body.sponsors,
       comments: req.body.comments,
       audio: req.body.audio,
-      video: req.file.filename,
+      // video: req.file.filename,
+      video: videoFileData,
+
       user: req.user.id,
       time: Date.now(),
     };
 
     console.log('Video data before creation:', videoData);
     // console.log(videoData.thumbnail);
-    console.log(req.file);
+    console.log(videoFileData.file);
 
     const createdVideo = await Video.create(videoData);
 
@@ -243,11 +365,14 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     if (!createdVideo.section) videoData.section = [];
 
     // If There is Video Data, Send a Response
-    if (videoData)
+    if (videoData) {
+      // eslint-disable-next-line no-undef
+
       return res.status(201).json({
         status: 'Success',
         data: createdVideo,
       });
+    }
   } catch (err) {
     res.json({
       status: 'fail',
@@ -345,4 +470,37 @@ exports.updateLikesDislikes = catchAsync(async (req, res, next) => {
     userLiked: video.likedBy.includes(userId),
     userDisliked: video.dislikedBy.includes(userId),
   });
+});
+
+// ///////////////////// STREAM VIDEO FROM S3
+// eslint-disable-next-line import/no-useless-path-segments
+const {
+  streamVideoFromS3,
+  generatePresignedUrl,
+  // eslint-disable-next-line import/no-useless-path-segments
+} = require('../controllers/aws_S3_controller');
+
+exports.streamVideo = catchAsync(async (req, res, next) => {
+  try {
+    const videoData = await axios.get(
+      `${urlPath}/api/v1/videos/${req.params.id}`,
+    );
+    // console.log('VIDEO DATA STREAMING:', videoData.data.data);
+    const videoKey = videoData.data.data.video;
+    console.log(`VIDEO KEY IS HERE: ${videoKey}`);
+
+    // Stream the video from S3
+    // await streamVideoFromS3(videoKey, res);
+
+    // const { id } = req.params;
+
+    try {
+      const url = await generatePresignedUrl(videoKey);
+      res.json({ url });
+    } catch (error) {
+      res.status(500).json({ message: 'Error generating URL' });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });

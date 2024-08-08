@@ -22,6 +22,8 @@ window.addEventListener('click', (event) => {
 });
 
 homeSectionBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
   videoSection.style.display = 'none';
   aboutSection.style.display = 'none';
   wiresSection.style.display = 'none';
