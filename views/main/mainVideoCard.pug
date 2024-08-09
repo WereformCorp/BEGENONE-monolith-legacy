@@ -22,7 +22,7 @@ block content
                     span= video.channel.subscribers.length
                     |  Subscribers
             if video && video.thumbnail
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+              img.sectionHead-thumbNail(src=`${video.thumbnailUrl}`)
               //- img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
             else 
               img.sectionHead-thumbNail(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)

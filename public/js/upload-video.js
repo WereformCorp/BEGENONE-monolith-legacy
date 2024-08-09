@@ -42,7 +42,7 @@ uppyVid
     height: '100%',
 
     hideUploadButton: true,
-    showLinkToFileUploadResult: true,
+    // showLinkToFileUploadResult: true,
   })
   .use(XHRUpload, {
     endpoint: 'api/v1/videos/',
@@ -79,7 +79,7 @@ uppyVid.on('file-added', (file) => {
   dashboardPlugin.setOptions({
     inline: true, // Change to inline mode
     target: '#ctnt-vid-file-btn', // Ensure this matches the target ID
-    showLinkToFileUploadResult: true,
+    // showLinkToFileUploadResult: true,
   });
   // document.getElementById('openUppyButton-video').style.display = 'none';
 });
@@ -101,17 +101,17 @@ uppyThumb
     height: '100%',
 
     hideUploadButton: true,
-    showLinkToFileUploadResult: true,
+    // showLinkToFileUploadResult: true,
   })
   .use(XHRUpload, {
-    endpoint: 'api/v1/videos/',
+    endpoint: 'api/v1/videos/thumbnail',
     fieldName: 'thumbnail',
     formData: true,
   })
   .use(Form, {
     target: '#videoUploadForm',
     triggerUploadOnSubmit: true,
-    submitOnSuccess: true,
+    // submitOnSuccess: true,
   })
   .setOptions({
     restrictions: {
@@ -138,7 +138,7 @@ uppyThumb.on('file-added', (file) => {
   dashboardPlugin.setOptions({
     inline: true, // Change to inline mode
     target: '#ctnt-thumb-file-btn', // Ensure this matches the target ID
-    showLinkToFileUploadResult: true,
+    // showLinkToFileUploadResult: true,
   });
   // document.getElementById('openUppyButton-video').style.display = 'none';
 });
@@ -202,16 +202,23 @@ document
       // const videoFile = videoResult;
       // const thumbnailFile = thumbnailResult;
 
-      const res = await axios({
-        method: 'POST',
-        url: `${urlPath}/api/v1/videos/`,
-        data: {
-          title,
-          description,
-          // video: videoUrl,
-          // thumbnail: thumb.data.data.thumbnail,
-        },
+      const response = await axios.post(`${urlPath}/api/v1/videos/`, {
+        title,
+        description,
+        // video: videoUrl,
+        // thumbnail: thumb.data.data.thumbnail,
       });
+
+      // const res = await axios({
+      //   method: 'POST',
+      //   url: `${urlPath}/api/v1/videos/`,
+      //   data: {
+      //     title,
+      //     description,
+      //     // video: videoUrl,
+      //     // thumbnail: thumb.data.data.thumbnail,
+      //   },
+      // });
 
       // if (result.successful.length > 0) {
       //   // Redirect after successful upload
@@ -220,7 +227,9 @@ document
       //   console.error('Upload failed:', result.failed);
       // }
 
-      if (res.data.status.toLowerCase() === 'success') {
+      console.log(`RESPONSE . DATA:`, response.data);
+
+      if (response.data.status.toLowerCase() === 'success') {
         window.assign('/');
         location.reload(false);
         // window.setTimeout(() => {

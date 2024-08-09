@@ -55,6 +55,9 @@ const calculateTimeAgo = (videoTime) => {
 exports.getOverview = catchAsync(async (req, res, next) => {
   try {
     const videos = await axios.get(`${urlPath}/api/v1/videos`);
+    const thumbnailsResponse = await axios.get(
+      `${urlPath}/api/v1/videos/thumbnail`,
+    );
     if (!videos) next(new AppError(`There are no videos to be found.`, 404));
     const { data } = videos.data;
     const localUser = res.locals.user;
@@ -67,14 +70,25 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 
     console.log(videos.data.data);
 
+    const thumbnails = thumbnailsResponse.data.urls;
+
+    // Map thumbnails to easily look up URLs by thumbnail name
+    const thumbnailMap = new Map(
+      thumbnails.map((item) => [item.thumbnail, item.url]),
+    );
+
     // let videoTimeAgo;
     data.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
+      video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
     });
+
+    console.log(`VIDEO THUMBNAIL URL:`, thumbnailMap);
 
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
       videos: data,
+      thumbnail: thumbnailsResponse.data.urls,
       user: res.locals.user,
       userData,
       // videoTimeAgo,

@@ -42,6 +42,34 @@ const authMiddleware = (req, res, next) => {
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+// 1) Create a api/v1/videos/thumbnail route and send the thumbnail in to this.
+// 2) Pass the "RESPONSE" of this thumbnail POST route as a middleware after authMiddleware.
+// 4) Use the thumbnail data from the RESPONSE in AWS S3 Controller.
+// 5) Pass the RESPONSE data from AWS S3 into videoController.createVideo -> Request/Response
+
+// // MUST CHANGE THE ROUTES IN UPLOAD-VIDEO.JS
+
+const getThumbnail = {};
+
+const uploadThumbnailFunction = (req, res) => {
+  console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
+
+  getThumbnail.thumb = req.file;
+  res.status(200).json({
+    status: 'success',
+    file: req.file,
+  });
+};
+
+router
+  .route('/thumbnail')
+  .get(videoController.getThumbnailData)
+  .post(
+    authController.protect,
+    upload.single('thumbnail'),
+    uploadThumbnailFunction,
+  );
+
 router
   .route('/')
   .get(videoController.getAllVideos)
@@ -74,40 +102,43 @@ router
     //   }
     //   console.log('FINALLY REACHED THE END OF THIS FUNCTION! 🥳🥳🥳🥳');
     // },
-    upload.fields([
-      { name: 'video', maxCount: 1 },
-      { name: 'thumbnail', maxCount: 1 },
-    ]),
+    // upload.fields([
+    //   { name: 'video', maxCount: 1 },
+    //   { name: 'thumbnail', maxCount: 1 },
+    // ]),
+    upload.single('video'),
     async (req, res) => {
-      if (!req.files.video) {
+      console.log(`REQUESTED FILE`, req.file);
+      console.log(
+        `GET THUMBNAIL FROM VIDEO CREATION ROUTER`,
+        getThumbnail.thumb,
+      );
+      if (!req.file) {
         return res.status(400).send('No files uploaded');
       }
 
       try {
         const channelId = req.user.channel; // Get channel ID from request
 
-        let videoResult;
         let thumbnailResult;
 
-        if (req.files.video) {
-          videoResult = await uploadThumbVideoToS3(
-            req.files.video[0],
-            channelId,
-            'video',
-          );
-          console.log('Video uploaded:', videoResult.result);
-        }
+        const videoResult = await uploadThumbVideoToS3(
+          req.file,
+          channelId,
+          'video',
+        );
+        console.log('Video uploaded:', videoResult.result);
 
-        if (req.files.thumbnail) {
+        if (getThumbnail) {
           thumbnailResult = await uploadThumbVideoToS3(
-            req.files.thumbnail[0],
+            getThumbnail.thumb,
             channelId,
             'thumbnail',
           );
           console.log('Thumbnail uploaded:', thumbnailResult.result);
         }
 
-        req.files.s3Data = {
+        req.s3Data = {
           video: videoResult || null,
           thumbnail: thumbnailResult || undefined,
         };

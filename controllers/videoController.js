@@ -301,7 +301,7 @@ exports.createVideo = catchAsync(async (req, res, next) => {
   // };
 
   try {
-    const videoFileData = req.files.s3Data;
+    const videoFileData = req.s3Data;
 
     console.log('Video File Data:', videoFileData.video);
 
@@ -489,7 +489,7 @@ exports.streamVideo = catchAsync(async (req, res, next) => {
     );
     // console.log('VIDEO DATA STREAMING:', videoData.data.data);
     const videoKey = videoData.data.data.video;
-    console.log(`VIDEO KEY IS HERE: ${videoKey}`);
+    // console.log(`VIDEO KEY IS HERE: ${videoKey}`);
 
     // Stream the video from S3
     // await streamVideoFromS3(videoKey, res);
@@ -502,6 +502,61 @@ exports.streamVideo = catchAsync(async (req, res, next) => {
     } catch (error) {
       res.status(500).json({ message: 'Error generating URL' });
     }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+exports.getThumbnailData = catchAsync(async (req, res, next) => {
+  try {
+    // const videoData = await axios.get(`${urlPath}/api/v1/videos/`);
+    const videoData = await Video.find();
+    // console.log('VIDEO DATA STREAMING:', videoData.data.data);
+    // const thumbKey = videoData.data;
+    // eslint-disable-next-line array-callback-return
+    const thumbnails = videoData.map((video) => video.thumbnail);
+
+    try {
+      // Generate pre-signed URLs for each thumbnail
+      const urls = await Promise.all(
+        thumbnails.map(async (thumbnail) => {
+          try {
+            const url = await generatePresignedUrl(thumbnail);
+            return { thumbnail, url }; // Return an object with thumbnail and its URL
+          } catch (error) {
+            console.error(`Error generating URL for ${thumbnail}:`, error);
+            return { thumbnail, url: null }; // Return null URL in case of error
+          }
+        }),
+      );
+
+      // Send URLs back in the response
+      res.json({ urls });
+    } catch (error) {
+      res.status(500).json({ message: 'Error generating URLs' });
+    }
+
+    // try {
+    //   let thumbnail;
+    //   thumbnails.forEach((item) => {
+    //     console.log('Thumbnail:', item.thumbnail);
+    //     // eslint-disable-next-line prefer-destructuring
+    //     thumbnail = item.thumbnail;
+    //     // You can perform other operations with each item here
+    //   });
+
+    //   console.log(`Thumbnail IS HERE:`, thumbnails);
+
+    //   // Stream the video from S3
+    //   // await streamVideoFromS3(videoKey, res);
+
+    //   // const { id } = req.params;
+
+    //   const url = await generatePresignedUrl(thumbnail);
+    //   res.json({ url });
+    // } catch (error) {
+    //   res.status(500).json({ message: 'Error generating URL' });
+    // }
   } catch (err) {
     console.log(err);
   }
