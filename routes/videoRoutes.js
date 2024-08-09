@@ -7,7 +7,9 @@ const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
 const authController = require('../controllers/authController');
 const {
+  uploadThumbVideoToS3,
   uploadVideoToS3,
+  uploadThumbToS3,
   streamVideoFromS3,
   generatePresignedUrl,
 } = require('../controllers/aws_S3_controller');
@@ -46,76 +48,76 @@ router
   .post(
     authController.protect,
     authMiddleware,
-    upload.single('video'),
-    async (req, res) => {
-      if (!req.file) {
-        return res.status(400).send('Video Routes: No file uploaded');
-      }
-
-      try {
-        const channelId = req.user.channel; // Get channel ID from request
-        const result = await uploadVideoToS3(req.file, channelId, 'video');
-        console.log(result.result);
-
-        req.file.s3Data = result;
-
-        return videoController.createVideo(req, res);
-
-        // res.send({
-        //   message: 'File uploaded successfully',
-        //   fileUrl: result.result, // This is the URL where the file is accessible in S3
-        //   // channelId,
-        // });
-      } catch (error) {
-        console.error('Upload Error:', error);
-        res.status(500).send('File upload failed');
-      }
-      console.log('FINALLY REACHED THE END OF THIS FUNCTION! 🥳🥳🥳🥳');
-    },
-    // upload.fields([
-    //   { name: 'video', maxCount: 1 },
-    //   { name: 'thumbnail', maxCount: 1 },
-    // ]),
+    // upload.single('video'),
     // async (req, res) => {
-    //   if (!req.files.video) {
-    //     return res.status(400).send('No files uploaded');
+    //   if (!req.file) {
+    //     return res.status(400).send('Video Routes: No file uploaded');
     //   }
 
     //   try {
     //     const channelId = req.user.channel; // Get channel ID from request
+    //     const result = await uploadVideoToS3(req.file, channelId, 'video');
+    //     console.log(result.result);
 
-    //     let videoResult;
-    //     let thumbnailResult;
-
-    //     if (req.files.video) {
-    //       videoResult = await uploadFileToS3(
-    //         req.files.video[0],
-    //         channelId,
-    //         'video',
-    //       );
-    //       console.log('Video uploaded:', videoResult.result);
-    //     }
-
-    //     if (req.files.thumbnail) {
-    //       thumbnailResult = await uploadFileToS3(
-    //         req.files.thumbnail[0],
-    //         channelId,
-    //         'thumbnail',
-    //       );
-    //       console.log('Thumbnail uploaded:', thumbnailResult.result);
-    //     }
-
-    //     req.files.s3Data = {
-    //       video: videoResult || null,
-    //       thumbnail: thumbnailResult || undefined,
-    //     };
+    //     req.file.s3Data = result;
 
     //     return videoController.createVideo(req, res);
+
+    //     // res.send({
+    //     //   message: 'File uploaded successfully',
+    //     //   fileUrl: result.result, // This is the URL where the file is accessible in S3
+    //     //   // channelId,
+    //     // });
     //   } catch (error) {
     //     console.error('Upload Error:', error);
     //     res.status(500).send('File upload failed');
     //   }
+    //   console.log('FINALLY REACHED THE END OF THIS FUNCTION! 🥳🥳🥳🥳');
     // },
+    upload.fields([
+      { name: 'video', maxCount: 1 },
+      { name: 'thumbnail', maxCount: 1 },
+    ]),
+    async (req, res) => {
+      if (!req.files.video) {
+        return res.status(400).send('No files uploaded');
+      }
+
+      try {
+        const channelId = req.user.channel; // Get channel ID from request
+
+        let videoResult;
+        let thumbnailResult;
+
+        if (req.files.video) {
+          videoResult = await uploadThumbVideoToS3(
+            req.files.video[0],
+            channelId,
+            'video',
+          );
+          console.log('Video uploaded:', videoResult.result);
+        }
+
+        if (req.files.thumbnail) {
+          thumbnailResult = await uploadThumbVideoToS3(
+            req.files.thumbnail[0],
+            channelId,
+            'thumbnail',
+          );
+          console.log('Thumbnail uploaded:', thumbnailResult.result);
+        }
+
+        req.files.s3Data = {
+          video: videoResult || null,
+          thumbnail: thumbnailResult || undefined,
+        };
+
+        return videoController.createVideo(req, res);
+      } catch (error) {
+        console.error('Upload Error:', error);
+        res.status(500).send('File upload failed');
+      }
+    },
   );
 
 // router

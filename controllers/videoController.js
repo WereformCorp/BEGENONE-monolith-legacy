@@ -301,12 +301,14 @@ exports.createVideo = catchAsync(async (req, res, next) => {
   // };
 
   try {
-    const videoFileData = req.file.s3Data.key;
+    const videoFileData = req.files.s3Data;
+
+    console.log('Video File Data:', videoFileData.video);
 
     const videoData = {
       title: req.body.title || `Uploaded At: ${formattedDate}`,
       description: req.body.description,
-      thumbnail: req.body.thumbnail,
+      thumbnail: videoFileData.thumbnail.key,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,
@@ -314,7 +316,7 @@ exports.createVideo = catchAsync(async (req, res, next) => {
       comments: req.body.comments,
       audio: req.body.audio,
       // video: req.file.filename,
-      video: videoFileData,
+      video: videoFileData.video.key,
 
       user: req.user.id,
       time: Date.now(),
@@ -322,7 +324,7 @@ exports.createVideo = catchAsync(async (req, res, next) => {
 
     console.log('Video data before creation:', videoData);
     // console.log(videoData.thumbnail);
-    console.log(videoFileData.file);
+    console.log(videoFileData.files);
 
     const createdVideo = await Video.create(videoData);
 

@@ -88,12 +88,12 @@ const uploadVideoToS3 = async (file, channelId) => {
   }
 };
 
-// const uploadFileToS3 = async (file, channelId, fileType) => {
+// const uploadThumbToS3 = async (file, channelId) => {
 //   const ext = file.mimetype.split('/')[1];
-//   const filename = `${fileType}-${channelId}-${Date.now().toString()}.${ext}`;
+//   const filename = `thumbnail-${channelId}-${Date.now().toString()}.${ext}`;
 
 //   // Determine ContentType based on fileType or mimetype
-//   const contentType = fileType === 'thumbnail' ? 'image/jpeg' : file.mimetype;
+//   const contentType = file.mimetype;
 
 //   const upload = new Upload({
 //     client: s3Client,
@@ -118,6 +118,37 @@ const uploadVideoToS3 = async (file, channelId) => {
 //     throw error;
 //   }
 // };
+
+const uploadThumbVideoToS3 = async (file, channelId, filetype) => {
+  const ext = file.mimetype.split('/')[1];
+  const filename = `${filetype}-${channelId}-${Date.now().toString()}.${ext}`;
+
+  // Determine ContentType based on fileType or mimetype
+  const contentType = file.mimetype;
+
+  const upload = new Upload({
+    client: s3Client,
+    params: {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: filename,
+      Body: file.buffer,
+      ContentType: contentType, // Set appropriate content type for each file
+    },
+  });
+
+  try {
+    const result = await upload.done();
+    console.log(`RESULTS FROM AWS_S3_CONTROLLER:`, result.Location);
+    // return result;
+    return {
+      result: result.Location, // S3 URL
+      key: filename, // Filename used in S3
+    };
+  } catch (error) {
+    console.error('Upload Error:', error);
+    throw error;
+  }
+};
 
 // const streamVideoFromS3 = async (videoKey, res) => {
 //   try {
@@ -157,7 +188,9 @@ const generatePresignedUrl = async (key) => {
 
 // Export the function
 module.exports = {
+  uploadThumbVideoToS3,
   uploadVideoToS3,
-  //  streamVideoFromS3,
   generatePresignedUrl,
+  // uploadThumbToS3,
+  //  streamVideoFromS3,
 };

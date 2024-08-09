@@ -35,7 +35,7 @@ const uppyVid = new Uppy({
 
 uppyVid
   .use(Dashboard, {
-    inline: true, // Start as modal
+    inline: false, // Start as modal
     target: '#ctnt-vid-file-btn',
     theme: 'dark',
     width: '100%',
@@ -61,74 +61,87 @@ uppyVid
     },
   });
 
-// document.getElementById('openUppyButton').addEventListener('click', (e) => {
-//   e.preventDefault();
-//   // Open the Dashboard modal
-//   uppyVid.getPlugin('Dashboard').openModal();
-//   document.getElementById('openUppyButton').style.display = 'none';
-// });
+document
+  .getElementById('openUppyButton-video')
+  .addEventListener('click', (e) => {
+    e.preventDefault();
+    // Open the Dashboard modal
+    uppyVid.getPlugin('Dashboard').openModal();
+    document.getElementById('openUppyButton-video').style.display = 'none';
+  });
 
 // Handle modal close event and cancel upload
 
-// uppyVid.on('complete', (result) => {
-//   if (result.successful.length > 0) {
-//     // Get the Dashboard plugin
-//     const dashboardPlugin = uppyVid.getPlugin('Dashboard');
+uppyVid.on('file-added', (file) => {
+  uppyVid.getPlugin('Dashboard').closeModal();
 
-//     console.log('UPPY VIDEO ___ GET FILES HERE:', uppyVid.getFiles());
-
-//     // Close the modal
-//     // dashboardPlugin.closeModal();
-
-//     // Switch Dashboard to inline mode
-//     // dashboardPlugin.setOptions({
-//     //   inline: true, // Change to inline mode
-//     //   target: '#ctnt-vid-file-btn', // Ensure this matches the target ID
-//     //   showLinkToFileUploadResult: true,
-//     // });
-
-//     console.log(`SUCCESSFULL RESULT`, result.successful[0]);
-//     // Show the button again if needed
-//     document.getElementById('openUppyButton').style.display = 'none';
-//   } else {
-//     console.error('Upload failed:', result.failed);
-
-//     // Show the button again if needed
-//     document.getElementById('openUppyButton').style.display = 'flex';
-//   }
-// });
+  const dashboardPlugin = uppyVid.getPlugin('Dashboard');
+  dashboardPlugin.setOptions({
+    inline: true, // Change to inline mode
+    target: '#ctnt-vid-file-btn', // Ensure this matches the target ID
+    showLinkToFileUploadResult: true,
+  });
+  // document.getElementById('openUppyButton-video').style.display = 'none';
+});
 
 // uppyVid.use(DragDrop, { target: '#ctnt-vid-file-btn' });
 
-// const uppyThumb = new Uppy({
-//   autoUpload: false,
-//   debug: true,
-// })
-//   .use(Dashboard, {
-//     inline: true,
-//     target: '#ctnt-thumb-file-btn',
-//     theme: 'dark',
-//     width: '20rem',
-//     height: '100%',
-//     hideUploadButton: true,
-//     showLinkToFileUploadResult: true,
-//   })
-//   .use(XHRUpload, {
-//     endpoint: 'api/v1/videos/',
-//     fieldName: 'thumbnail',
-//     formData: true,
-//   })
-//   .use(Form, {
-//     target: '#videoUploadForm', // Replace with your form's ID
-//     triggerUploadOnSubmit: true,
-//     submitOnSuccess: true,
-//   })
-//   .setOptions({
-//     restrictions: {
-//       maxNumberOfFiles: 1,
-//       allowedFileTypes: ['image/*'],
-//     },
-//   });
+const uppyThumb = new Uppy({
+  autoUpload: true,
+  debug: true,
+  // autoProceed: true,
+});
+
+uppyThumb
+  .use(Dashboard, {
+    inline: false, // Start as modal
+    target: '#ctnt-thumb-file-btn',
+    theme: 'dark',
+    width: '100%',
+    height: '100%',
+
+    hideUploadButton: true,
+    showLinkToFileUploadResult: true,
+  })
+  .use(XHRUpload, {
+    endpoint: 'api/v1/videos/',
+    fieldName: 'thumbnail',
+    formData: true,
+  })
+  .use(Form, {
+    target: '#videoUploadForm',
+    triggerUploadOnSubmit: true,
+    submitOnSuccess: true,
+  })
+  .setOptions({
+    restrictions: {
+      maxNumberOfFiles: 1,
+      allowedFileTypes: ['image/*'],
+    },
+  });
+
+document
+  .getElementById('openUppyButton-thumb')
+  .addEventListener('click', (e) => {
+    e.preventDefault();
+    // Open the Dashboard modal
+    uppyThumb.getPlugin('Dashboard').openModal();
+    document.getElementById('openUppyButton-thumb').style.display = 'none';
+  });
+
+// Handle modal close event and cancel upload
+
+uppyThumb.on('file-added', (file) => {
+  uppyThumb.getPlugin('Dashboard').closeModal();
+
+  const dashboardPlugin = uppyThumb.getPlugin('Dashboard');
+  dashboardPlugin.setOptions({
+    inline: true, // Change to inline mode
+    target: '#ctnt-thumb-file-btn', // Ensure this matches the target ID
+    showLinkToFileUploadResult: true,
+  });
+  // document.getElementById('openUppyButton-video').style.display = 'none';
+});
 
 document
   .getElementById('videoUploadForm')
