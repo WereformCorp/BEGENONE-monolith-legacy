@@ -53,12 +53,12 @@ block content
       .channel_info
         h3 CHANNEL ASSOCIATED
         if userData.channel
-          a(href="/user-channel")
+          a(href=`/channels/${userData.channel._id}`)
             if user.channel.displayImage
               img.sect-mid-logo-img(src=`/imgs/users/${userId}/display-images/${user.channel.displayImage}`)
             else 
               img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
-          a(href="/user-channel")
+          a(href=`/channels/${userData.channel._id}`)
             .ch_details
               if userData.channel
                 h4.ch_details_chUsername= `@${userData.channel.channelUserName}`

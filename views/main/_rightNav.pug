@@ -2,18 +2,18 @@ section#sect-3.section-right
   .sect-rgt-icons
     section.sect-rgt-icon-list
       if userData
-        a(href=`/channels/${userData.channel._id}`)
-          if userData.channel
-            - const userId = user._id
+        if userData && userData.channel
+          a(href=`/channels/${userData.channel._id}`)
+            //- - const userId = user._id
             a(href=`/channels/${userData.channel._id}`)
               .sect-rgt-icon-list-container.sect-rgt-icon-1
-                if user.channel && user.channel.displayImage
+                if userData.channel && userData.channel.displayImage
                   img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
                 else
                   img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
-          else
-            a(href="/channel-settings") 
-              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
+        else
+          a(href="/channel-settings") 
+            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
       else
         a(href="/login")
           .sect-rgt-icon-list-container.sect-rgt-icon-1

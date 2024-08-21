@@ -142,11 +142,11 @@ a {
 
 .video-ctnt-cntnr {
   display: grid;
-  grid-template-columns: repeat(4, max-content);
+  grid-template-columns: max-content 1fr repeat(2, max-content);
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  column-gap: 1rem;
+  column-gap: 2rem;
 }
 
 .video-ctnt-thumb {
@@ -159,6 +159,8 @@ a {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+  align-self: start;
+  padding-top: 0.75rem;
 }
 
 .video-title {
@@ -214,6 +216,12 @@ a {
 .video-visibillity-h4 {
   font-size: 0.9rem;
   font-weight: 700;
+}
+
+.videoBtns {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
 }
 
 .video-btn-insights {

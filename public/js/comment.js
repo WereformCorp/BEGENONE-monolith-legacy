@@ -3,6 +3,10 @@
 const commentForm = document.getElementById('commentForm');
 const commentsContainer = document.querySelector('.ctnt-cmmnt-list');
 const commentsAmount = document.querySelector('.ctnt-cmmnts-amount');
+const commentHtmlHead = document.querySelector('.ctnt-cmmnt-listItems');
+
+const channelId = document.querySelector('.hidden-channel-id');
+const channelName = document.querySelector('.hidden-channel-name');
 
 const postComment = async (comment) => {
   try {
@@ -32,19 +36,20 @@ const postComment = async (comment) => {
       },
     });
 
-    if (res.data.status.toLowerCase() !== 'success')
+    if (res.data.status.toLowerCase() !== 'success') {
       return alert(`Coudnt post the comment\n${res.data.message}`);
+    }
 
     // Getting the comment data
     const commentData = res.data.data;
-    // console.log(commentData);
 
-    // Compiling the comment pug template
     const compiledCommentRes = await axios({
-      url: `http://127.0.0.1:3000/api/v1/comments/comment.pug`,
+      url: `${urlPath}/api/v1/comments/comment.pug`,
       method: 'POST',
       data: commentData,
     });
+
+    console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
 
     // Checking the health
     if (compiledCommentRes.data.status !== 'success')
@@ -52,14 +57,12 @@ const postComment = async (comment) => {
         `Coudnt load the comment\n${res.data.message}\nplease reload to see the comment`,
       );
 
-    console.log(compiledCommentRes.data.data);
-
-    // Inserting the comment html
-    commentsContainer.insertAdjacentHTML(
-      'afterbegin',
-      compiledCommentRes.data.data.compiledTemplate,
-    );
-
+    if (res.data.status.toLowerCase() === 'success') {
+      commentsContainer.insertAdjacentHTML(
+        'afterbegin',
+        compiledCommentRes.data.compiledTemplate,
+      );
+    }
     // Adding the comments count 1
     commentsAmount.textContent = String(
       parseInt(commentsAmount.textContent) + 1,

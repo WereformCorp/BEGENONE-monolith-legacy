@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
@@ -26,7 +26,7 @@ const userRouter = require('./routes/userRoutes');
 const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
 const searchRouter = require('./routes/searchRoutes');
-const notificationRouter = require('./routes/notificationRoutes');
+// const notificationRouter = require('./routes/notificationRoutes');
 const urlPathRoutes = require('./routes/urlPathRoutes');
 
 // Start Express App
@@ -42,7 +42,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 // SET SECURITY HTTP HEADERS
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginOpenerPolicy: false,
+    originAgentCluster: false,
+  }),
+);
 
 // Development Logging
 if (process.env.NODE_ENV === 'development') {
@@ -133,6 +139,13 @@ app.use('/api/v1/videos', videoRouter);
 //     title: 'Begenuine',
 //   });
 // });
+
+app.use(
+  (req, res, next) =>
+    res.status(404).send(`Sorry, Page Not Found. Error ${res.statusCode}`),
+  // Alternatively, you can redirect to a custom 404 page:
+  // res.redirect('/404');
+);
 
 // eslint-disable-next-line arrow-body-style
 app.get('*', (req, res, next) => {

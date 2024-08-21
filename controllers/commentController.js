@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const pug = require('pug');
-const fs = require('fs');
+// const fs = require('fs');
 
 const path = require('path');
 
 const Comment = require('../models/commentModel');
 const Video = require('../models/videoModel');
 const Channel = require('../models/channelModel');
+const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerController');
@@ -82,18 +83,25 @@ exports.templify = catchAsync(async (req, res, next) => {
   // Read & compile the template
   const templatePath = path.join(
     __dirname,
-    `..views/main/contents/${req.params.template}`,
+    `../views/main/${req.params.template}`,
   );
 
-  console.log(req.body);
+  const channelData = await Channel.findById(req.body.channel);
+  const userData = await User.findById(req.body.user);
+
+  req.body.loggedInUser = res.user;
+
+  req.body.channel = channelData;
+  req.body.user = userData;
+  req.body.commentData = req.body.comment;
+  console.log(`COMMENT ITSELF:`, req.body.comment);
+
   const compileFunction = pug.compileFile(templatePath);
   const compiledTemplate = compileFunction(req.body);
-
+  console.log(`COMPILED TEMPLATE: ${compiledTemplate}`);
   // Send the template
   res.status(200).json({
     status: 'success',
-    data: {
-      compiledTemplate,
-    },
+    compiledTemplate,
   });
 });

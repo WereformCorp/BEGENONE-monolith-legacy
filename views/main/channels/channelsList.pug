@@ -47,10 +47,10 @@ block content
     ', width='100%')
     section.sect-mid-chSlctd
       .chSlctd-rows.chSlctd-row-1
-        img.chSlctd-row1-banner(src='/imgs/banners/Banner.png')
+        img.chSlctd-row1-banner(src='https://begenone-images.s3.amazonaws.com/default-banner-image.jpg')
       .chSlctd-rows.chSlctd-row-2
         .chSltd-row2-chDtls
-          img.chSlctd-row2-chImg(src='/imgs/users/default.jpeg')
+          img.chSlctd-row2-chImg(src='https://begenone-images.s3.amazonaws.com/default-user-photo.jpg')
           .chSltd-chDtls-Nm_N_subCnt
             h2.chSltd-chDtls-chName Areesh Alam
             h4.chSltd-chDtls-subCount
@@ -63,13 +63,14 @@ block content
             h4.chSltd-chDtls-unChkd-content
               span.chDtls-unchkdText Unchecked Posts: 
               span.chDtls-unchkdAmnt 12
-        button.chSltd-row2-chOpenBtn View Channel
+        a(href=`/channels/${channel._id}`)
+          button.chSltd-row2-chOpenBtn View Channel
       
       .chSlctd-rows.chSlctd-row-3
         each video in videos
           a(href=`/watch/${video._id}`) 
             .content-containers.content-container-1
-              img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+              img.sectionHead-thumbNail(src=`${thumbnailUrl}`)
               section.section-details
                 h4.section-details-title= video.title
                 hr(width='50px')

@@ -24,8 +24,8 @@ block content
           a(href=`/watch/${video._id}`) 
             .resultContent-box.resultContent-box-1
               .thumb_N_date_views
-                if video && video.thumbnail === undefined
-                  img.thumbnail-img(src=`/imgs/thumbnails/${video.thumbnail}`)
+                if video && video.thumbnailUrl
+                  img.thumbnail-img(src=`${thumbnailUrl}`)
                 else
                   img.thumbnail-img(src=`/imgs/thumbnails/sample.jpg`)
                 .date_N_views
@@ -36,13 +36,13 @@ block content
                     span= videoTimeAgo
               .title_N_description
                 h2.content-title= video.title
-                p.content-description= video.description
+                p.content-description= video.description || `There is no description available.`
                 .channel_details
                   //- img.channel-logo(src=`/imgs/users/${video.channel.displayImage}`)
                   if user && user.channel && user.channel.displayImage
                     img.channel-logo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
                   else
-                    img.channel-logo(src=`/imgs/default-user-photo.jpg`)
+                    img.channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
                   h4.channel-name= `@${video.channel.channelUserName}`
 
     //- section.sectMid-contentPreview

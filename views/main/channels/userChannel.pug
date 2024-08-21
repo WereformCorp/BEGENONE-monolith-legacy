@@ -138,7 +138,7 @@ block content
               .featuredVideo
                 //- video.featuredVideo-video(width='640', height='360', controls='', poster='/imgs/thumbnails/thumbnail-65a6f249e887d2567074b7e9-1705439848542.png')
                 //-   source(src='/video/sample-video.mp4', type='video/mp4')
-                img.featuredVideo-video(src="/imgs/thumbnails/sample.jpg", alt="")
+                img.featuredVideo-video(src=`${LatestVideoThumbnail}`, alt="")
                 h2.featuredVideo-title= latestVideo.title
           .most-popular
             if videos
@@ -148,7 +148,7 @@ block content
                   a(href=`/watch/${video._id}`) 
                     if video && video.thumbnail
                       .content-containers.content-container-1
-                        img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+                        img.sectionHead-thumbNail(src=`${video.thumbnailUrl}`)
                         section.section-details
                           h4.section-details-title= video.title
                           hr(width='50px')
@@ -165,7 +165,7 @@ block content
                       h1 There are no videos found.
             else if videos === null || undefined
               h2.most-popular-h2
-          .ctnt-home-wires
+          //- .ctnt-home-wires
             if wiresData
               h1.ctnt-home-wire-h1 Wire
               section.sect-mid-ctntRecom-wire

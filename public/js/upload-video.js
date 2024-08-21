@@ -143,6 +143,17 @@ uppyThumb.on('file-added', (file) => {
   // document.getElementById('openUppyButton-video').style.display = 'none';
 });
 
+uppyVid.on('complete', (result) => {
+  console.log('Upload complete!');
+
+  // Perform any actions you need after upload completes
+  // For example, you can log the uploaded files
+  console.log(result.successful);
+
+  // Redirect to the desired URL
+  window.location.href = '/'; // Replace with your actual redirect URL
+});
+
 document
   .getElementById('videoUploadForm')
   .addEventListener('submit', async (e) => {

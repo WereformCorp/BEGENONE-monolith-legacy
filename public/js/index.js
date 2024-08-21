@@ -11,42 +11,42 @@ const videoSection = document.querySelector('.sect-mid-ctnt-vdos');
 const aboutSection = document.querySelector('.sect-mid-ch-about');
 const wiresSection = document.querySelector('.sect-mid-ch-wire');
 
-window.addEventListener('click', (event) => {
-  // Check if the clicked element is outside the notifPanel
-  if (
-    !notifPanel.contains(event.target) &&
-    notifPanel.style.visibility === 'visible'
-  ) {
-    notifPanel.style.visibility = 'hidden';
-  }
-});
+// window.addEventListener('click', (event) => {
+//   // Check if the clicked element is outside the notifPanel
+//   if (
+//     !notifPanel.contains(event.target) &&
+//     notifPanel.style.visibility === 'visible'
+//   ) {
+//     notifPanel.style.visibility = 'hidden';
+//   }
+// });
 
-homeSectionBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+// homeSectionBtn.addEventListener('click', (e) => {
+//   e.preventDefault();
 
-  videoSection.style.display = 'none';
-  aboutSection.style.display = 'none';
-  wiresSection.style.display = 'none';
-  homeSection.style.display = 'flex';
-});
+//   videoSection.style.display = 'none';
+//   aboutSection.style.display = 'none';
+//   wiresSection.style.display = 'none';
+//   homeSection.style.display = 'flex';
+// });
 
-videosSectionBtn.addEventListener('click', (e) => {
-  homeSection.style.display = 'none';
-  aboutSection.style.display = 'none';
-  wiresSection.style.display = 'none';
-  videoSection.style.display = 'flex';
-});
+// videosSectionBtn.addEventListener('click', (e) => {
+//   homeSection.style.display = 'none';
+//   aboutSection.style.display = 'none';
+//   wiresSection.style.display = 'none';
+//   videoSection.style.display = 'flex';
+// });
 
-wiresSectionBtn.addEventListener('click', (e) => {
-  homeSection.style.display = 'none';
-  aboutSection.style.display = 'none';
-  videoSection.style.display = 'none';
-  wiresSection.style.display = 'flex';
-});
+// wiresSectionBtn.addEventListener('click', (e) => {
+//   homeSection.style.display = 'none';
+//   aboutSection.style.display = 'none';
+//   videoSection.style.display = 'none';
+//   wiresSection.style.display = 'flex';
+// });
 
-aboutSectionBtn.addEventListener('click', (e) => {
-  homeSection.style.display = 'none';
-  videoSection.style.display = 'none';
-  wiresSection.style.display = 'none';
-  aboutSection.style.display = 'flex';
-});
+// aboutSectionBtn.addEventListener('click', (e) => {
+//   homeSection.style.display = 'none';
+//   videoSection.style.display = 'none';
+//   wiresSection.style.display = 'none';
+//   aboutSection.style.display = 'flex';
+// });
