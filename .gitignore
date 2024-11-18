@@ -1,5 +1,4 @@
 node_modules/
-Migration/
 .parcel-cache/
 .git
 *.env
