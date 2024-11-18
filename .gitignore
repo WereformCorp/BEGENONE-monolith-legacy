@@ -1,4 +1,7 @@
 node_modules/
+Migration/
+.parcel-cache/
+.git
 *.env
 .cache/
 public/video
