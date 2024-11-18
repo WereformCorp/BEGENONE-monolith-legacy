@@ -25,7 +25,7 @@ block content
             .resultContent-box.resultContent-box-1
               .thumb_N_date_views
                 if video && video.thumbnailUrl
-                  img.thumbnail-img(src=`${thumbnailUrl}`)
+                  img.thumbnail-img(src=`${video.thumbnailUrl}`)
                 else
                   img.thumbnail-img(src=`/imgs/thumbnails/sample.jpg`)
                 .date_N_views

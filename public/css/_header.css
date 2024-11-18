@@ -39,13 +39,14 @@
 .searchBar-InputField {
   width: 60%;
   height: 45px;
+  font-weight: 600;
   flex-shrink: 0;
-  border-radius: 10px;
-  border: 2px solid rgba(120, 120, 120, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgb(120, 120, 120, 0.3);
   background: transparent;
   outline: none;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 
   transition: all 0.2s ease-in-out;
 }
@@ -58,6 +59,10 @@
 
 .searchBar-InputField[type='text'] {
   font-family: montserrat;
+  font-weight: 800;
+}
+
+.searchBar-InputField::placeholder {
   font-weight: 600;
 }
 

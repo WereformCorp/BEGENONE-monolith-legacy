@@ -218,7 +218,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       comments,
       firstName,
       secondName,
-      userData: videoUserData,
+      userData: res.locals.user,
       videoTimeAgo,
       btnClass,
       btnText,
@@ -350,8 +350,74 @@ exports.channelsList = catchAsync(async (req, res, next) => {
 //   }
 // });
 
+// exports.search = catchAsync(async (req, res, next) => {
+//   const searchTerm = req.query.query;
+//   try {
+//     // Fetch search results
+//     const response = await axios.get(
+//       `${urlPath}/search/content?query=${searchTerm}`,
+//     );
+//     const data = response.data.results;
+
+//     // Extract video data
+//     const videosData = data.map((video) => video.item);
+
+//     // Fetch all thumbnails
+//     const thumbnailsResponse = await axios.get(
+//       `${urlPath}/api/v1/videos/thumbnail`,
+//     );
+//     const thumbnails = thumbnailsResponse.data.urls;
+
+//     // Create a map of thumbnail filename to URL
+//     const thumbnailMap = new Map(
+//       thumbnails.map((item) => [item.thumbnail, item.url]),
+//     );
+
+//     // Map the thumbnail URLs to all videos
+//     const videosWithThumbnails = videosData.map((video) => ({
+//       // ...video,
+//       thumbnailUrl: thumbnailMap.get(video.thumbnail) || null,
+//       timeAgo: calculateTimeAgo(video.time), // Assuming you have a function to calculate time ago
+//     }));
+
+//     if (!videosWithThumbnails || videosWithThumbnails.length === 0) {
+//       return next(new AppError('There are no videos to be found.', 404));
+//     }
+
+//     // let thumbnailUrl;
+//     videosWithThumbnails.forEach((video) => {
+//       // eslint-disable-next-line prefer-destructuring
+//       video.thumbnailUrl = video.thumbnailUrl;
+//     });
+
+//     let videoTimeAgo;
+//     videosData.forEach((video) => {
+//       // videos = video;
+//       videoTimeAgo = calculateTimeAgo(video.time);
+//     });
+
+//     console.log(videosData.thumbnailUrl);
+
+//     // Render the search results
+//     res.status(200).render('../views/main/search/_listSearch', {
+//       title: 'Search Videos',
+//       user: res.locals.user,
+//       videos: videosData,
+//       thumbnailUrl: videosWithThumbnails,
+//       videoTimeAgo,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       status: 'Fail',
+//       message: err.message,
+//       err,
+//     });
+//   }
+// });
+
 exports.search = catchAsync(async (req, res, next) => {
   const searchTerm = req.query.query;
+
   try {
     // Fetch search results
     const response = await axios.get(
@@ -384,24 +450,11 @@ exports.search = catchAsync(async (req, res, next) => {
       return next(new AppError('There are no videos to be found.', 404));
     }
 
-    let thumbnailUrl;
-    videosWithThumbnails.forEach((video) => {
-      // eslint-disable-next-line prefer-destructuring
-      thumbnailUrl = video.thumbnailUrl;
-    });
-
-    let videoTimeAgo;
-    videosData.forEach((video) => {
-      videoTimeAgo = calculateTimeAgo(video.time);
-    });
-
-    // Render the search results
+    // Render the search results with the correct videosWithThumbnails
     res.status(200).render('../views/main/search/_listSearch', {
       title: 'Search Videos',
       user: res.locals.user,
       videos: videosWithThumbnails,
-      thumbnailUrl,
-      videoTimeAgo,
     });
   } catch (err) {
     res.status(500).json({
@@ -586,9 +639,10 @@ exports.allVideos = catchAsync(async (req, res, next) => {
 
   let thumbnail;
   // let videoTimeAgo;
-  videos.forEach((videoData) => {
-    thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
-  });
+  if (videos)
+    videos.forEach((videoData) => {
+      thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
+    });
 
   console.log(`Video Data:`, thumbnail);
 

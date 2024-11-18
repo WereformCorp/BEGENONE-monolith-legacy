@@ -33,6 +33,7 @@ const login = async (email, password) => {
       }, 1500);
     }
   } catch (err) {
+    alert(`Incorrect Email or Password`);
     console.log('error:', err);
   }
 };
