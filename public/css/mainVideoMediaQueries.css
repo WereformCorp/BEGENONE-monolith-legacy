@@ -62,18 +62,18 @@
     row-gap: 10px;
   }
 
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 1fr 1.5fr;
-  }
+  } */
 }
 
 @media (max-width: 1150px) {
   .hr-date_N_views {
     display: none;
   }
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 2fr 1fr;
-  }
+  } */
   .nav-sort {
     display: none;
   }
@@ -133,9 +133,9 @@
     grid-template-columns: 1fr;
   }
 
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 2fr 1fr;
-  }
+  } */
 
   .sect-mid-sorting-1,
   .sect-mid-sorting-2,
@@ -145,9 +145,6 @@
 
   .bjenuine-text-mediaQuery {
     display: flex;
-    font-size: 2rem;
-    align-self: center;
-    font-weight: 900;
   }
 
   .nav-cat_N_sort {

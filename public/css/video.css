@@ -136,6 +136,7 @@ a {
 .video-containers {
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 2rem;
   row-gap: 2rem;
 }

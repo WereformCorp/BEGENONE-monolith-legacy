@@ -87,11 +87,27 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
     });
 
+    // Define the videoId that should be featured at the top (example hardcoded)
+    const featuredVideoId = '673f74ba66154c6994b9460f'; // Replace this with your dynamic logic if needed
+
+    // Move the featured video to the top if it exists
+    const featuredVideo = filteredVideos.find(
+      (video) => video._id.toString() === featuredVideoId,
+    );
+    const otherVideos = filteredVideos.filter(
+      (video) => video._id.toString() !== featuredVideoId,
+    );
+
+    // Combine the featured video with the rest of the videos
+    const sortedVideos = featuredVideo
+      ? [featuredVideo, ...otherVideos]
+      : otherVideos;
+
     // console.log(`VIDEO THUMBNAIL URL:`, thumbnailMap);
 
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
-      videos: filteredVideos,
+      videos: sortedVideos,
       thumbnail: thumbnailsResponse.data.urls,
       user: res.locals.user,
       userData,
@@ -137,7 +153,6 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     );
 
     const videosData = videos.data.data;
-
     const filteredVideos = videosData.filter((videoD) => videoD.channel);
 
     // let videoTimeAgo;
@@ -662,7 +677,7 @@ exports.allVideos = catchAsync(async (req, res, next) => {
   // let videoTimeAgo;
   if (videos)
     videos.forEach((videoData) => {
-      thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
+      videoData.thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
     });
 
   // console.log(`Video Data:`, thumbnail);
@@ -670,7 +685,7 @@ exports.allVideos = catchAsync(async (req, res, next) => {
   res.status(200).render(`../views/settings/channel/allUploads`, {
     title: `All Uploads`,
     videos,
-    thumbnail,
+    // thumbnail,
     user: res.locals.user,
     useCustomLeftNav: true,
     userData,

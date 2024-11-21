@@ -12,7 +12,7 @@ block content
       if videos
         each video in videos
           .video-ctnt-cntnr.video-ctnt-cntnr-1
-            img.video-ctnt-thumb(src=`${thumbnail}`)
+            img.video-ctnt-thumb(src=`${video.thumbnail}`)
             .video-headers
               a(href=`/watch/${video._id}`) 
                 h3.video-title= video.title

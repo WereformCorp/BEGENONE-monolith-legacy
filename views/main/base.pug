@@ -5,6 +5,7 @@ html(lang='en')
       meta(charset='UTF-8')
       meta(name='viewport', content='width=device-width, initial-scale=1.0')
       link(rel='icon', type='image/x-icon', href='https://wereform-imgs.s3.amazonaws.com/begenone-white-transparent-logo+favicon.png')
+      script(async='', src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2214723335589279', crossorigin='anonymous')
 
       link(rel='stylesheet', href='/css/style.css')
       link(rel='stylesheet', href='/css/_header.css')
@@ -33,6 +34,44 @@ html(lang='en')
         h2.begenone-h2 BEGENONE!
         p Welcome to our platform. We are pleased to have you. Enjoy your experience
         button#close-btn Close
+    .right-nav-menu
+      button.right-nav-close-modal X
+      if userData
+        if userData && userData.channel
+          a(href=`/channels/${userData.channel._id}`).right-nav-menu-1
+            | MY CHANNEL
+        else
+          a(href=`/channel-settings`)
+            | MY CHANNEL
+      else
+        a(href="/login")
+          | MY CHANNEL
+      if userData
+        if userData && userData.channel
+          a(href="/upload").right-nav-menu-2 
+            | UPLOAD VIDEO
+        else
+          a(href="/channel-settings").right-nav-menu-2
+            | UPLOAD VIDEO
+      else 
+        a(href="/login").right-nav-menu-2
+          | UPLOAD VIDEO
+      if userData
+        a(href="/user").right-nav-menu-3 
+          | USER SETTINGS
+      else
+        a(href="/login").right-nav-menu-3 
+          | USER SETTINGS
+      if userData
+        if userData && userData.channel
+          a(href="/channel-settings").right-nav-menu-4 
+            | CHANNEL SETTINGS
+        else 
+          a(href="/login").right-nav-menu-4 
+            | CHANNEL SETTINGS
+      else 
+        a(href="/login").right-nav-menu-4 
+          | CHANNEL SETTINGS
 
     .notice-bar
       .span.important-notice-span= "🚨 Important Notice: "
@@ -68,6 +107,7 @@ html(lang='en')
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
     script(src='/js/index.js')
+    script(src='/js/responsive-nav-modal.js')
     script(src='/js/notification.js')
     script(src='/js/welcome.js')
     //- script(type="module" src="/js/upload-video.js")

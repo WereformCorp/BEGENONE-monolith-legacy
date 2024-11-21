@@ -1,7 +1,7 @@
 @media (max-width: 1280px) {
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 0.8fr 1fr;
-  }
+  } */
 
   .ch-main-settings {
     display: flex;
@@ -9,9 +9,9 @@
 }
 
 @media (max-width: 1050px) {
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 0.7fr 1fr;
-  }
+  } */
 }
 
 @media (max-width: 1000px) {
@@ -19,9 +19,9 @@
     display: none;
   }
 
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 1.1fr 1fr;
-  }
+  } */
 
   .ch-main-details {
     grid-template-columns: max-content;
@@ -108,9 +108,9 @@
     grid-template-columns: 1fr max-content;
   }
 
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 2fr 1fr;
-  }
+  } */
 
   .bjenuine-text-mediaQuery {
     display: flex;
@@ -139,8 +139,17 @@
 }
 
 @media (max-width: 740px) {
-  .sect-mid-nav {
+  /* .sect-mid-nav {
     grid-template-columns: 3fr 1fr;
+  } */
+
+  .create-delete-btnGroup {
+    flex-direction: column-reverse;
+    align-items: center;
+    row-gap: 2rem;
+  }
+
+  .ch-logo {
   }
 
   .searchBar-InputField {
@@ -155,7 +164,7 @@
 
 @media (max-width: 600px) {
   .section-botom {
-    display: flex;
+    /* display: flex; */
     height: max-content;
     align-self: flex-end;
     padding-top: 10px;

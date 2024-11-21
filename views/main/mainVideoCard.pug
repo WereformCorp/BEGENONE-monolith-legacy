@@ -4,8 +4,12 @@ block append head
   link(rel='stylesheet', href='/css/videoCard.css')
 
 block content
+  script(async='', src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2214723335589279', crossorigin='anonymous')
+  //- ins.adsbygoogle(style='display:block', data-ad-client='ca-pub-2214723335589279', data-ad-slot='5899100100', data-ad-format='auto', data-full-width-responsive='true')
+    script.
+      (adsbygoogle = window.adsbygoogle || []).push({});
   section.sect-mid-contentContainer
-    each video in videos 
+    each video, index in videos 
       a(href=`/watch/${video._id}`).ctnt-ctnr-link
         .content-containers.content-container-1
             section.section-Header
@@ -18,9 +22,9 @@ block content
               .sectionHead-dtls
                 .sectionHead-chName_N_sub
                   h3.sectionHead-chName= video.channel.name
-                  h5.sectionHead-chSubCnt
-                    span= video.channel.subscribers.length
-                    |  Subscribers
+                  //- h5.sectionHead-chSubCnt
+                  //-   span= video.channel.subscribers.length
+                  //-   |  Subscribers
             if video && video.thumbnail
               img.sectionHead-thumbNail(src=`${video.thumbnailUrl}`)
               //- img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
@@ -34,4 +38,16 @@ block content
                   span.views= video.views
                   |  Views
                 h5.sectionHead-date= video.videoTimeAgo
+      //- if (index + 1) % 4 === 0
+        script(async='', src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2214723335589279', crossorigin='anonymous')
+        ins.adsbygoogle(style='display:block', data-ad-client='ca-pub-2214723335589279', data-ad-slot='5469796638', data-ad-format='auto', data-full-width-responsive='true')
+        script.
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        //- .google-ad
+        //-   // Insert Google ad code here
+        //-   script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+        //-   // Customize the ad based on your Google AdSense settings
+        //-   ins.adsbygoogle(style="display:block", data-ad-client="ca-pub-XXXXXX", data-ad-slot="YYYYYY", data-ad-format="auto")
+        //-   script.
+        //-     (adsbygoogle = window.adsbygoogle || []).push({});
   script(src="https://cdn.skypack.dev/date-fns")

@@ -186,9 +186,19 @@
 }
 
 .bjenuine-text-header {
+  display: flex;
   max-width: 14rem;
   width: 80%;
   padding: 10px;
+  /* height: 100%; */
+}
+
+.bjenuine-text-header-1 {
+  display: none;
+  justify-self: center;
+  max-width: 14rem;
+  width: 80%;
+  /* padding: 10px; */
   /* height: 100%; */
 }
 

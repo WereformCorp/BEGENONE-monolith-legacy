@@ -12,7 +12,7 @@
   } */
 
   .sect-mid-nav {
-    grid-template-columns: 0.8fr 1fr;
+    grid-template-columns: 0.8fr 1fr max-content;
   }
 
   .vdoPlayer-controls {
@@ -22,7 +22,7 @@
 
 @media (max-width: 1050px) {
   .sect-mid-nav {
-    grid-template-columns: 0.7fr 1fr;
+    grid-template-columns: 0.7fr 1fr max-content;
   }
 
   .vdoPlayer-controls {
@@ -68,7 +68,7 @@
   }
 
   .sect-mid-nav {
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.1fr 1fr max-content;
   }
 
   .sect-mid-ctntTitle {
@@ -95,15 +95,15 @@
   }
 
   .sect-mid-nav {
-    grid-template-columns: 2fr 1fr;
-  }
-
-  .bjenuine-text-mediaQuery {
-    display: flex;
+    grid-template-columns: 0.8fr 2fr max-content;
   }
 
   .bjenuine-text-header {
     display: none;
+  }
+
+  .bjenuine-text-header-1 {
+    display: flex;
   }
 
   .sect-lft-dwn {
@@ -141,13 +141,9 @@
 }
 
 @media (max-width: 740px) {
-  .sect-mid-nav {
-    grid-template-columns: 3fr 1fr;
-  }
-
-  .searchBar-InputField {
+  /* .searchBar-InputField {
     width: 70%;
-  }
+  } */
 
   .bjenuine-text-mediaQuery {
     font-size: 20px;
@@ -156,11 +152,11 @@
 }
 
 @media (max-width: 600px) {
-  .container {
+  /* .container {
     grid-template-columns: 100vw;
     grid-template-rows: max-content 1fr;
-    /* width: 100%; */
-  }
+    width: 100%;
+  } */
 
   .sect-mid-videoPlayer {
     /* grid-template-rows: repeat(2, max-content); */
@@ -184,7 +180,7 @@
   }
 
   .section-bottom {
-    display: grid;
+    /* display: grid; */
     height: max-content;
     /* align-self: flex-end; */
     padding-top: 10px;
@@ -218,6 +214,10 @@
   .sect-lft-dwn-link-3,
   .sect-lft-dwn-link-6 {
     display: none;
+  }
+
+  .sect-head-icon-settings {
+    display: flex;
   }
 
   .section-right {
@@ -279,6 +279,10 @@
   .sect-notification-panel {
     grid-column: 1/2;
   }
+
+  .nav-search {
+    row-gap: 5px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -286,6 +290,10 @@
     font-size: 0.75rem;
     padding: 0.2rem;
   }
+
+  /* .searchBar-InputField {
+    width: 50%;
+  } */
 
   .searchBar-voiceSearch {
     display: none;
