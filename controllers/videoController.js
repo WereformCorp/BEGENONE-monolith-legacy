@@ -152,15 +152,15 @@ const factory = require('./handlerController');
 
 // //////////////// TEMPORARY ________________________________________
 
-let urlPath;
-if (process.env.NODE_ENV === 'production') {
-  // Use the production domain
-  urlPath = 'https://begenuine.wereform.com.au';
-  // eslint-disable-next-line no-else-return
-} else if (process.env.NODE_ENV === 'development') {
-  // Use the req object for development
-  urlPath = `http://127.0.0.1:3000`;
-}
+// let urlPath;
+// if (process.env.NODE_ENV === 'production') {
+//   // Use the production domain
+//   urlPath = 'https://begenone.com';
+//   // eslint-disable-next-line no-else-return
+// } else if (process.env.NODE_ENV === 'development') {
+//   // Use the req object for development
+//   urlPath = `http://localhost:80`;
+// }
 
 // //////////////// TEMPORARY ________________________________________
 
@@ -350,7 +350,7 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     }));
 
     // Save the notifications to the database
-    const notifications = await Notification.create(mapNotification);
+    // const notifications = await Notification.create(mapNotification);
 
     if (!createdVideo) {
       return next(new AppError(`Data Not Found!`, 404));
@@ -477,15 +477,15 @@ exports.updateLikesDislikes = catchAsync(async (req, res, next) => {
 // ///////////////////// STREAM VIDEO FROM S3
 // eslint-disable-next-line import/no-useless-path-segments
 const {
-  streamVideoFromS3,
+  // streamVideoFromS3,
   generatePresignedUrl,
   // eslint-disable-next-line import/no-useless-path-segments
-} = require('../controllers/aws_S3_controller');
+} = require('./aws_S3_controller');
 
 exports.streamVideo = catchAsync(async (req, res, next) => {
   try {
     const videoData = await axios.get(
-      `${urlPath}/api/v1/videos/${req.params.id}`,
+      `${req.protocol}://${req.get('host')}/api/v1/videos/${req.params.id}`,
     );
     // console.log('VIDEO DATA STREAMING:', videoData.data.data);
     const videoKey = videoData.data.data.video;

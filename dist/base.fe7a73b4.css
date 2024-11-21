@@ -1,0 +1,143 @@
+.sect-left-main {
+  height: 100vh;
+  display: flex;
+  position: sticky;
+  top: 0;
+  overflow-y: hidden;
+}
+
+.section-left-col-1 {
+  background-color: #20202033;
+  border-right: 1px solid #7878784d;
+  flex-direction: column;
+  align-items: center;
+  width: 4rem;
+  padding: 1.2rem .6rem .6rem;
+  display: flex;
+}
+
+.sect-left-col1-featured {
+  flex-direction: column;
+  row-gap: 1.2rem;
+  display: flex;
+}
+
+.sect-left-col1-featured img {
+  cursor: pointer;
+  border-radius: 6px;
+  width: 2rem;
+  height: 2rem;
+  transition: all .2s ease-in-out;
+}
+
+.sect-left-col1-featured img:hover {
+  transform: scale(1.15);
+}
+
+.section-left {
+  border-right: 1px solid #7878783c;
+  grid-template-rows: 60px 1fr;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  transition: all .2s ease-in-out;
+  display: grid;
+}
+
+.section-left:hover {
+  background: #3d3d3d33;
+}
+
+.section-bottom {
+  background-color: #3d3d3d4d;
+  border-right: 1px solid #787878;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: none;
+  position: sticky;
+  top: 0;
+  overflow-y: hidden;
+}
+
+.sect-lft-up {
+  cursor: pointer;
+  place-self: center start;
+  padding-left: 20px;
+  font-weight: 500;
+  display: flex;
+}
+
+.sect-lft-dwn {
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 10px;
+  display: flex;
+}
+
+.section-left:hover .sect-lft-dwn-links {
+  cursor: pointer;
+}
+
+.sect-lft-dwn-links {
+  border-radius: 5px;
+  place-items: center;
+  column-gap: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 15px;
+  transition: background-color .2s ease-in;
+  display: flex;
+}
+
+.sect-lft-dwn-links:hover {
+  background-color: #33333380 !important;
+}
+
+.section-left:hover .sect-lft-dwn-link-3, .section-left:hover .sect-lft-dwn-link-5, .section-left:hover .sect-lft-dwn-link-6, .section-left:hover .sect-lft-dwn-link-7, .srd-link-servicesText:hover, .srd-link-gemsText:hover, .srd-link-storyText:hover, .srd-link-playlistText:hover {
+  cursor: no-drop !important;
+}
+
+.srd-link-Icons {
+  filter: invert();
+  font-size: 20px;
+}
+
+.srd-link-lockIcon {
+  width: 18px;
+}
+
+.srd-link-texts {
+  letter-spacing: 1.1px;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all .2s ease-in-out;
+}
+
+.srd-link-texts:hover {
+  cursor: pointer;
+}
+
+.srd-link-texts-settings {
+  font-weight: 800;
+}
+
+.bjenuine-text-header {
+  max-width: 14rem;
+  height: 3rem;
+  padding: 10px;
+}
+
+.section-bottom {
+  background-color: #3d3d3d4d;
+  border-right: 1px solid #787878;
+  width: 100vw;
+  height: max-content;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: none;
+  position: sticky;
+  bottom: 0;
+  overflow-y: hidden;
+}
+/*# sourceMappingURL=base.fe7a73b4.css.map */

@@ -4,19 +4,20 @@ section#sect-1.section-left
   .sect-lft-dwn
     a(href="/user")
       h3.srd-link-texts.srd-link-texts-general General
-    a(href="/upload")
+    - const url = (userData && userData.channel) ? '/upload' : '/channel-settings';
+    a(href=`${url}`)
       h3.srd-link-texts.srd-link-texts-upload Upload Video
     a(href="/all-uploads")
       h3.srd-link-texts.srd-link-texts-allVideos All Videos
     a(href="/channel-settings")
       h3.srd-link-texts.srd-link-texts-chSettings Channel Settings
     //- a(href="/marketplace")
-    a(href="/tokens")
+    //- a(href="/tokens")
       h3.srd-link-texts.srd-link-texts-tokens Tokens
     //- a(href="/apps")
-    h3.srd-link-texts.srd-link-texts-apps Applications
-    //- a(href="/lock")
-    h3.srd-link-texts.srd-link-texts-lock Lock
-    //- a(href="/themes")
-    h3.srd-link-texts.srd-link-texts-themes Themes
-    h3.srd-link-texts.srd-link-texts-language Language
+    //- h3.srd-link-texts.srd-link-texts-apps Applications
+    //- //- a(href="/lock")
+    //- h3.srd-link-texts.srd-link-texts-lock Lock
+    //- //- a(href="/themes")
+    //- h3.srd-link-texts.srd-link-texts-themes Themes
+    //- h3.srd-link-texts.srd-link-texts-language Language

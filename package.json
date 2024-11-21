@@ -26,15 +26,7 @@
     "@aws-sdk/s3-request-presigner": "^3.624.0",
     "@babel/eslint-parser": "^7.12.1",
     "@babel/polyfill": "^7.12.1",
-    "@uppy/core": "^3.13.1",
-    "@uppy/dashboard": "^3.9.1",
-    "@uppy/drag-drop": "^4.0.1",
-    "@uppy/form": "^4.0.0",
-    "@uppy/image-editor": "^2.4.6",
-    "@uppy/informer": "^3.1.0",
-    "@uppy/status-bar": "^3.3.3",
-    "@uppy/thumbnail-generator": "^3.1.0",
-    "@uppy/xhr-upload": "^4.0.2",
+    "autoprefixer": "^10.4.20",
     "aws-sdk": "^2.1669.0",
     "axios": "^1.6.3",
     "bcryptjs": "^2.4.3",
@@ -83,6 +75,16 @@
     "eslint-plugin-react": "7.33",
     "parcel": "^2.10.3",
     "prettier": "^3.1.1"
+  },
+  "": {
+    "@uppy/core": "^4.2.3",
+    "@uppy/dashboard": "^4.0.0",
+    "@uppy/drag-drop": "^4.0.4",
+    "@uppy/form": "^4.0.0",
+    "@uppy/informer": "^3.1.0",
+    "@uppy/status-bar": "^3.3.3",
+    "@uppy/thumbnail-generator": "^3.1.0",
+    "@uppy/xhr-upload": "^4.0.2"
   },
   "engines": {
     "node": ">=12.0.0"

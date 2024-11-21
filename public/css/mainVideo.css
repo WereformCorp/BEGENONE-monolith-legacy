@@ -23,7 +23,7 @@
 
 .sect-mid-videoPlayer {
   display: grid;
-  grid-template-columns: 80% max-content;
+  grid-template-columns: 75% max-content;
   /* grid-template-columns: 1fr max-content; */
   width: 100%;
   justify-content: center;
@@ -354,17 +354,21 @@
 }
 
 .sect-mid-vdoP-title {
-  /* padding-right: 2rem;
-  padding-left: 2rem; */
-  margin-top: 1.5rem;
+  padding: 1rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
+  border-radius: 10px;
+  background-color: #181818;
+  box-shadow: 1px 2px 5px rgba(9, 9, 9, 0.1);
 }
 
 .sect-mid-ctntTitle {
-  font-size: 2rem;
+  font-size: 1.8rem;
   /* font-family: lexend; */
   letter-spacing: 1.2px;
-  font-weight: 700;
+  font-weight: 800;
 
   justify-self: start !important;
 
@@ -405,28 +409,31 @@
   grid-template-rows: repeat(2, max-content);
   /* flex-direction: column; */
   width: 100%;
-  /* background-color: rgb(60, 60, 60, 0.3); */
-  border: 1px solid rgb(120, 120, 120, 0.2);
+  background-color: #141414;
+  border: 1px solid rgba(120, 120, 120, 0.007);
+  box-shadow: 1px 5px 5px rgba(9, 9, 9, 0.1);
   border-radius: 10px;
-  padding: 20px;
-  row-gap: 20px;
+  padding: 24px;
+  /* padding-top: 15px; */
+  row-gap: 10px;
   transition: all 0.2s ease-in-out;
 }
-.ctnt-des_sects_spnsr:hover {
+/* .ctnt-des_sects_spnsr:hover {
   background-color: rgba(61, 61, 61, 0.2);
-}
+} */
 
 .ctnt-des-sect-spns-heading {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   /* padding: 20px; */
 }
 
 .ctnt-des-sect-spns-heading h4 {
   font-weight: 900;
   text-transform: uppercase;
-  padding: 20px;
+  padding: 15px;
   cursor: pointer;
+  justify-self: start;
 }
 
 .ctnt-desSectSpns-separator {
@@ -440,13 +447,13 @@
   width: 95%;
   height: 1px;
   justify-self: center;
-  background-color: rgb(120, 120, 120, 0.5);
-  border: rgb(120, 120, 120, 0.5);
+  background-color: rgba(120, 120, 120, 0.221);
+  border: rgba(120, 120, 120, 0.242);
 }
 
 .ctnt-description {
   padding: 20px;
-  padding-top: 0;
+  /* padding-top: 0; */
   line-height: 1.8;
 }
 

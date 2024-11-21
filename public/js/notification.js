@@ -1,63 +1,63 @@
-/* eslint-disable */
-const notifBtn = document.querySelector('.sect-rgt-icon-5');
-const notifPanel = document.querySelector('.sect-notification-panel');
+// /* eslint-disable */
+// const notifBtn = document.querySelector('.sect-rgt-icon-5');
+// const notifPanel = document.querySelector('.sect-notification-panel');
 
-const getNotif = async () => {
-  try {
-    // const res = await axios({
-    //   method: 'GET',
-    //   url: '${req.protocol}://${req.get('host')}/api/v1/notification/get-user-notification',
-    // });
-    // console.log(res.data);
-    // if (res.data.length === 0) console.log(`No Notification Found!`);
-    // console.log(res.data);
-  } catch (err) {
-    console.log(err.message, err);
-  }
-};
+// const getNotif = async () => {
+//   try {
+//     // const res = await axios({
+//     //   method: 'GET',
+//     //   url: '${req.protocol}://${req.get('host')}/api/v1/notification/get-user-notification',
+//     // });
+//     // console.log(res.data);
+//     // if (res.data.length === 0) console.log(`No Notification Found!`);
+//     // console.log(res.data);
+//   } catch (err) {
+//     console.log(err.message, err);
+//   }
+// };
 
-const readNotif = async () => {
-  try {
-    const baseUrl = await axios({
-      method: 'GET',
-      url: `/url/get-env-url`,
-    });
-    const urlPath = baseUrl.data.url;
-    const res = await axios({
-      method: 'POST',
-      url: `${urlPath}/api/v1/notification/read-notification`,
-    });
+// const readNotif = async () => {
+//   try {
+//     const baseUrl = await axios({
+//       method: 'GET',
+//       url: `/url/get-env-url`,
+//     });
+//     const urlPath = baseUrl.data.url;
+//     const res = await axios({
+//       method: 'POST',
+//       url: `${urlPath}/api/v1/notification/read-notification`,
+//     });
 
-    if (!res.data) {
-      return console.log(`NO DATA FOUND`);
-    } else console.log(res.data);
-  } catch (err) {
-    console.log(err.message, err);
-  }
-};
+//     if (!res.data) {
+//       return console.log(`NO DATA FOUND`);
+//     } else console.log(res.data);
+//   } catch (err) {
+//     console.log(err.message, err);
+//   }
+// };
 
-const checkNotif = async (req, res) => {
-  try {
-    const baseUrl = await axios({
-      method: 'GET',
-      url: `/url/get-env-url`,
-    });
-    const urlPath = baseUrl.data.url;
-    const res = await axios({
-      method: 'GET',
-      url: `${urlPath}/api/v1/notification/get-all-notification`,
-    });
-  } catch (err) {
-    console.log(`Message: ${err.message}`, `Error: ${err}`);
-  }
-};
+// const checkNotif = async (req, res) => {
+//   try {
+//     const baseUrl = await axios({
+//       method: 'GET',
+//       url: `/url/get-env-url`,
+//     });
+//     const urlPath = baseUrl.data.url;
+//     const res = await axios({
+//       method: 'GET',
+//       url: `${urlPath}/api/v1/notification/get-all-notification`,
+//     });
+//   } catch (err) {
+//     console.log(`Message: ${err.message}`, `Error: ${err}`);
+//   }
+// };
 
-notifBtn.addEventListener('click', (e) => {
-  notifPanel.style.visibility =
-    notifPanel.style.visibility === 'visible' ? 'hidden' : 'visible';
+// notifBtn.addEventListener('click', (e) => {
+//   notifPanel.style.visibility =
+//     notifPanel.style.visibility === 'visible' ? 'hidden' : 'visible';
 
-  // readNotif();
-  getNotif();
+//   // readNotif();
+//   getNotif();
 
-  e.stopPropagation();
-});
+//   e.stopPropagation();
+// });

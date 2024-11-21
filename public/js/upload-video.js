@@ -4,13 +4,8 @@ import {
   Dashboard,
   XHRUpload,
   Form,
-  DragDrop,
-  ImageEditor,
-  Informer,
-  StatusBar,
-  ThumbnailGenerator,
-  // } from 'https://releases.transloadit.com/uppy/v3.17.0/uppy.min.js';
-} from 'https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs';
+  // } from 'https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs';
+} from 'https://releases.transloadit.com/uppy/v4.7.0/uppy.min.mjs';
 
 // import Uppy from '@uppy/core';
 // import Dashboard from '@uppy/dashboard';
@@ -48,6 +43,18 @@ uppyVid
     endpoint: 'api/v1/videos/',
     fieldName: 'video',
     formData: true,
+    timeout: 600000,
+    onBeforeRequest: (req) => {
+      // Optionally log or modify the request
+    },
+    onSuccess: (response) => {
+      // Handle success response if needed
+      console.log('Upload succeeded:', response);
+    },
+    onError: (error) => {
+      // Handle upload failure response if needed
+      console.error('Upload failed:', error);
+    },
   })
   .use(Form, {
     target: '#videoUploadForm',
@@ -58,6 +65,7 @@ uppyVid
     restrictions: {
       maxNumberOfFiles: 1,
       allowedFileTypes: ['video/*'],
+      maxFileSize: 100 * 1024 * 1024,
     },
   });
 
@@ -67,13 +75,16 @@ document
     e.preventDefault();
     // Open the Dashboard modal
     uppyVid.getPlugin('Dashboard').openModal();
-    document.getElementById('openUppyButton-video').style.display = 'none';
+    // document.getElementById('openUppyButton-video').style.display = 'none';
   });
 
 // Handle modal close event and cancel upload
 
 uppyVid.on('file-added', (file) => {
   uppyVid.getPlugin('Dashboard').closeModal();
+  if (file)
+    document.getElementById('openUppyButton-video').style.display = 'none';
+  else document.getElementById('openUppyButton-video').style.display = 'flex';
 
   const dashboardPlugin = uppyVid.getPlugin('Dashboard');
   dashboardPlugin.setOptions({
@@ -107,16 +118,28 @@ uppyThumb
     endpoint: 'api/v1/videos/thumbnail',
     fieldName: 'thumbnail',
     formData: true,
+    timeout: 600000,
+    onBeforeRequest: (req) => {
+      // Optionally log or modify the request
+    },
+    onSuccess: (response) => {
+      // Handle success response if needed
+      console.log('Upload succeeded:', response);
+    },
+    onError: (error) => {
+      // Handle upload failure response if needed
+      console.error('Upload failed:', error);
+    },
   })
   .use(Form, {
     target: '#videoUploadForm',
     triggerUploadOnSubmit: true,
-    // submitOnSuccess: true,
   })
   .setOptions({
     restrictions: {
       maxNumberOfFiles: 1,
       allowedFileTypes: ['image/*'],
+      maxFileSize: 2 * 1024 * 1024,
     },
   });
 
@@ -126,13 +149,16 @@ document
     e.preventDefault();
     // Open the Dashboard modal
     uppyThumb.getPlugin('Dashboard').openModal();
-    document.getElementById('openUppyButton-thumb').style.display = 'none';
+    // document.getElementById('openUppyButton-thumb').style.display = 'none';
   });
 
 // Handle modal close event and cancel upload
-
 uppyThumb.on('file-added', (file) => {
   uppyThumb.getPlugin('Dashboard').closeModal();
+
+  if (file)
+    document.getElementById('openUppyButton-thumb').style.display = 'none';
+  else document.getElementById('openUppyButton-thumb').style.display = 'flex';
 
   const dashboardPlugin = uppyThumb.getPlugin('Dashboard');
   dashboardPlugin.setOptions({
@@ -140,7 +166,6 @@ uppyThumb.on('file-added', (file) => {
     target: '#ctnt-thumb-file-btn', // Ensure this matches the target ID
     // showLinkToFileUploadResult: true,
   });
-  // document.getElementById('openUppyButton-video').style.display = 'none';
 });
 
 uppyVid.on('complete', (result) => {
@@ -160,36 +185,9 @@ document
     e.preventDefault();
 
     try {
-      // const videoResult = await uppyVid.upload();
-
-      // const videoResult = await uppyVid.run();
-      // const thumbnailResult = await uppyThumb.run();
-
-      // // Combine the results
-      // const combinedResults = {
-      //   video: videoResult,
-      //   thumbnail: thumbnailResult,
-      // };
-
-      // console.log(combinedResults.video, combinedResults.thumbnail);
-
-      // Check if the video file was successfully uploaded
-      // const hasVideo = combinedResults.video.successful.length > 0;
-
-      // if (!hasVideo) {
-      //   alert('Please upload the video file.');
-      //   return;
-      // }
-
-      // if (videoResult.successful.length > 0) {
       // Manually trigger the file upload
       const title = document.getElementById('title').value;
       const description = document.getElementById('description').value;
-      // const videoData = videoResult.getState().files[0].filename;
-      // const videoUrl =
-      //   combinedResults.video.successful[0].response.body.fileUrl;
-      // const thumbnailData = thumbnailResult.getState().files[0].filename; // Uncomment if you're using thumbnail
-
       if (!title) {
         alert('Title is required.');
         return;
@@ -201,55 +199,16 @@ document
       });
       const urlPath = baseUrl.data.url;
       console.log(urlPath);
-
-      // const thumb = await axios({
-      //   method: 'POST',
-      //   url: `${urlPath}/api/v1/videos/thumbnail/`,
-      //   data: { thumbnail: thumbnailData },
-      // });
-
-      // console.log(thumb.data.data.thumbnail);
-
-      // const videoFile = videoResult;
-      // const thumbnailFile = thumbnailResult;
-
       const response = await axios.post(`${urlPath}/api/v1/videos/`, {
         title,
         description,
-        // video: videoUrl,
-        // thumbnail: thumb.data.data.thumbnail,
       });
-
-      // const res = await axios({
-      //   method: 'POST',
-      //   url: `${urlPath}/api/v1/videos/`,
-      //   data: {
-      //     title,
-      //     description,
-      //     // video: videoUrl,
-      //     // thumbnail: thumb.data.data.thumbnail,
-      //   },
-      // });
-
-      // if (result.successful.length > 0) {
-      //   // Redirect after successful upload
-      //   window.location.href = '/success-page'; // Replace with your redirect URL
-      // } else {
-      //   console.error('Upload failed:', result.failed);
-      // }
-
       console.log(`RESPONSE . DATA:`, response.data);
 
       if (response.data.status.toLowerCase() === 'success') {
         window.assign('/');
         location.reload(false);
-        // window.setTimeout(() => {
-        //   location.assign('true');
-        // }, 1500);
       }
-      // } else {
-      //   alert('Please upload the video file.');
-      // }
     } catch (error) {
       console.error('Error:', error);
     }

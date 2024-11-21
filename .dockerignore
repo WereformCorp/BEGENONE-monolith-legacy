@@ -1,0 +1,11 @@
+node_modules/
+Dockerfile
+*.log
+.git/
+.prettierrc
+.eslintrc.json
+.gitignore
+Information.md
+dist
+.parcel-cache
+.github/*

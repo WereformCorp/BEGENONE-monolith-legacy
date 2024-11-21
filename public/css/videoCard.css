@@ -3,7 +3,7 @@
   padding: 30px;
   justify-content: center;
   column-gap: 1.5rem;
-  row-gap: 2rem;
+  row-gap: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -20,7 +20,7 @@
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
-  border: 1px solid rgb(71, 71, 71, 0.4);
+  border: 1px solid rgb(71, 71, 71, 0.2);
 }
 
 .content-containers:hover {
@@ -28,7 +28,7 @@
   background-color: rgba(39, 39, 39, 0.3);
   border: 1px solid rgba(71, 71, 71, 0);
   transform: translateY(-0.1rem);
-  box-shadow: 5px 5px 30px rgba(9, 9, 9, 0.1);
+  box-shadow: 1px 1px 5px rgba(9, 9, 9, 0.07);
 }
 
 .sectionHead-dtls {

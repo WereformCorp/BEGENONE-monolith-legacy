@@ -13,7 +13,7 @@ const catchAsync = require('../utils/catchAsync');
 let urlPath;
 if (process.env.NODE_ENV === 'production') {
   // Use the production domain
-  urlPath = 'https://begenuine.wereform.com.au';
+  urlPath = `https://begenone.com`;
   // eslint-disable-next-line no-else-return
 } else if (process.env.NODE_ENV === 'development') {
   // Use the req object for development
@@ -68,7 +68,8 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         select: '_id displayImage',
       });
 
-    console.log(videos.data.data);
+    // console.log(videos.data.data);
+    console.log(`RESPONSE ----> USER:`, res.locals.user);
 
     const thumbnails = thumbnailsResponse.data.urls;
 
@@ -77,17 +78,20 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       thumbnails.map((item) => [item.thumbnail, item.url]),
     );
 
+    // Filter out videos without a valid channel
+    const filteredVideos = data.filter((video) => video.channel);
+
     // let videoTimeAgo;
-    data.forEach((video) => {
+    filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
       video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
     });
 
-    console.log(`VIDEO THUMBNAIL URL:`, thumbnailMap);
+    // console.log(`VIDEO THUMBNAIL URL:`, thumbnailMap);
 
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
-      videos: data,
+      videos: filteredVideos,
       thumbnail: thumbnailsResponse.data.urls,
       user: res.locals.user,
       userData,
@@ -116,7 +120,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     );
 
     const videoUrl = streamedData.data.url;
-    console.log(`Video URL: `, videoUrl);
+    // console.log(`Video URL: `, videoUrl);
     const videoData = video.data.data;
     const videos = await axios.get(`${urlPath}/api/v1/videos/`);
     const { channel } = videoData;
@@ -134,14 +138,17 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
 
     const videosData = videos.data.data;
 
+    const filteredVideos = videosData.filter((videoD) => videoD.channel);
+
     // let videoTimeAgo;
-    videosData.forEach((videoD) => {
+    filteredVideos.forEach((videoD) => {
       videoD.videoTimeAgo = calculateTimeAgo(videoD.time);
       videoD.thumbnailUrl = thumbnailMap.get(videoD.thumbnail) || null;
     });
 
-    if (!videos.data.data)
-      next(new AppError(`There are no videos to be found.`, 404));
+    if (!filteredVideos || filteredVideos.length === 0) {
+      return next(new AppError(`There are no videos to be found.`, 404));
+    }
 
     const comments = Array.isArray(videoData.comments)
       ? videoData.comments.map((obj) => obj)
@@ -197,14 +204,14 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const copyLinkText = `Click on the link to Copy 👇`;
     // console.log(shareLink);
 
-    console.log(videoData);
+    // console.log(videoData);
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
       title: `${videoData.title}`,
       video: videoData,
       videoUrl,
-      manyVideos: videos.data.data,
+      manyVideos: filteredVideos,
       // thumbnail: videosData.thumbnailUrl,
       user: res.locals.user,
       videoIdForComment: req.params.videoId,
@@ -272,7 +279,7 @@ exports.channelsList = catchAsync(async (req, res, next) => {
     );
 
   channel = channel.data.data;
-  console.log(`User Data Channel`, channel);
+  // console.log(`User Data Channel`, channel);
   const videoData = await axios.get(`${urlPath}/api/v1/videos`);
   // const channel = channels.data.data.map((obj) => obj);
   const videos = videoData.data.data;
@@ -440,11 +447,19 @@ exports.search = catchAsync(async (req, res, next) => {
     );
 
     // Map the thumbnail URLs to all videos
-    const videosWithThumbnails = videosData.map((video) => ({
-      ...video,
-      thumbnailUrl: thumbnailMap.get(video.thumbnail) || null,
-      timeAgo: calculateTimeAgo(video.time), // Assuming you have a function to calculate time ago
-    }));
+    const videosWithThumbnails = videosData
+      .filter((video) => video.channel)
+      .map((video) => ({
+        ...video,
+        thumbnailUrl: thumbnailMap.get(video.thumbnail) || null,
+        timeAgo: calculateTimeAgo(video.time), // Assuming you have a function to calculate time ago
+      }));
+
+    // console.log(`Video WITH THUMBNAILS:`, videosWithThumbnails);
+    // videosWithThumbnails.forEach((vid) => {
+    //   const username = vid.channel.channelUserName;
+    //   console.log(`USERNAME:`, username);
+    // });
 
     if (!videosWithThumbnails || videosWithThumbnails.length === 0) {
       return next(new AppError('There are no videos to be found.', 404));
@@ -480,6 +495,7 @@ exports.userProfile = catchAsync(async (req, res, next) => {
   const { channel } = userData;
   let channelUserId;
   if (channel) channelUserId = channel.user._id;
+  console.log(`RESPONSE ----> USER:`, res.locals.user);
   res.status(200).render(`../views/settings/user`, {
     title: 'USER PROFILE',
     userData,
@@ -560,11 +576,14 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   // console.log(channel);
 
   const extractedData = channelData.data.data;
-  console.log(`ExtractedData`, extractedData);
+  // console.log(`ExtractedData`, extractedData);
   const { videos } = extractedData;
-
+  console.log(`Extracted --------- Data:`, extractedData);
   // videos.forEach((video) => video);
-  const latestVideo = extractedData.videos[0];
+  const latestVideo =
+    extractedData.videos && extractedData.videos.length > 0
+      ? extractedData.videos[0]
+      : null;
   const wiresData = extractedData.wires.map((wire) => wire);
   // console.log(wiresData);
 
@@ -579,19 +598,21 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
     thumbnails.map((item) => [item.thumbnail, item.url]),
   );
 
-  const LatestVidThumbKey = latestVideo.thumbnail || null;
+  const LatestVidThumbKey = latestVideo ? latestVideo.thumbnail : null;
 
   videos.forEach((video) => {
     video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
   });
   // Debugging Logs
-  console.log('Thumbnail Key:', LatestVidThumbKey);
-  console.log('Thumbnail Map:', thumbnailMap);
+  // console.log('Thumbnail Key:', LatestVidThumbKey);
+  // console.log('Thumbnail Map:', thumbnailMap);
 
-  latestVideo.thumbnailUrl = thumbnailMap.get(LatestVidThumbKey) || null;
+  if (latestVideo) {
+    latestVideo.thumbnailUrl = thumbnailMap.get(LatestVidThumbKey) || null;
+  }
 
-  console.log(`VIDEO FROM SINGLE CHANNEL: `, latestVideo.thumbnailUrl);
-  console.log(`THUMBNAILS FROM SINGLE CHANNEL: `, thumbnails);
+  // console.log(`VIDEO FROM SINGLE CHANNEL: `, latestVideo.thumbnailUrl);
+  // console.log(`THUMBNAILS FROM SINGLE CHANNEL: `, thumbnails);
 
   // console.log(`RESPONSE -> LOCALS -> User:`, res.locals.user);
 
@@ -601,7 +622,7 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
     channel: extractedData,
     latestVideo,
     videos,
-    LatestVideoThumbnail: latestVideo.thumbnailUrl,
+    LatestVideoThumbnail: latestVideo ? latestVideo.thumbnailUrl : null,
     wiresData,
   });
 });
@@ -619,7 +640,7 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
 });
 
 exports.allVideos = catchAsync(async (req, res, next) => {
-  console.log(res.locals.user._id);
+  // console.log(res.locals.user._id);
   const userData = await User.findById(res.locals.user._id).populate('channel');
   let videos;
   if (userData.channel) {
@@ -644,7 +665,7 @@ exports.allVideos = catchAsync(async (req, res, next) => {
       thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
     });
 
-  console.log(`Video Data:`, thumbnail);
+  // console.log(`Video Data:`, thumbnail);
 
   res.status(200).render(`../views/settings/channel/allUploads`, {
     title: `All Uploads`,
@@ -681,13 +702,13 @@ exports.singleVideo = catchAsync(async (req, res, next) => {
   const thumbnailKey = video.thumbnail || null;
 
   // Debugging Logs
-  console.log('Thumbnail Key:', thumbnailKey);
-  console.log('Thumbnail Map:', thumbnailMap);
+  // console.log('Thumbnail Key:', thumbnailKey);
+  // console.log('Thumbnail Map:', thumbnailMap);
 
   video.thumbnailUrl = thumbnailMap.get(thumbnailKey) || null;
 
-  console.log(`VIDEO FROM SINGLE UPLOAD: `, video.thumbnailUrl);
-  console.log(`THUMBNAILS FROM SINGLE UPLOAD: `, thumbnails);
+  // console.log(`VIDEO FROM SINGLE UPLOAD: `, video.thumbnailUrl);
+  // console.log(`THUMBNAILS FROM SINGLE UPLOAD: `, thumbnails);
 
   res.status(200).render(`../views/settings/channel/singleUpload`, {
     title: `Single Uploads`,

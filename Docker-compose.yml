@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./
+    ports:
+      - '80:80' # Expose your app on port 80 (or adjust as needed)
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb+srv://areeshalam:areeshalam19761@cluster0.qe1galg.mongodb.net/BeGenuine?retryWrites=true&w=majority # MongoDB Atlas connection string

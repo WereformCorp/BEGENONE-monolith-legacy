@@ -11,16 +11,16 @@ block content
       .ctnt-upload
         .ctnt-upload-rows.ctnt-upload-row-1
           .ctnt-thumb
-            h4.ctnt-thumb-h4 THUMBNAIL
-            button.ctnt-thumb-btn UPLOAD
+            //- h4.ctnt-thumb-h4 THUMBNAIL
+            //- button.ctnt-thumb-btn UPLOAD
             if video && video.thumbnail
               img.ctnt-thumb-img(src=`${thumbnail}`, height='50px', grid-row='1/-1')
             else 
               img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`, height='50px', grid-row='1/-1')
-        .ctnt-upload-rows.ctnt-upload-row-2
+        //- .ctnt-upload-rows.ctnt-upload-row-2
           h3.upload-title TITLE
           input.upload-title-input(placeholder=`${video.title}`, type='text', name='', id='')
-        .ctnt-upload-rows.ctnt-upload-row-3
+        //- .ctnt-upload-rows.ctnt-upload-row-3
           h3.upload-description Description
           textarea.upload-description-textarea(placeholder=`${video.description}`  name='', id='', cols='30', rows='10')
         .ctnt-upload-rows.ctnt-upload-row-4
@@ -70,16 +70,16 @@ block content
               .analytics-contents.analytics-content-3
                 h2.analytics-likes-h2 TOTAL LIKES
                 h4.analytics-likes-h4= video.likes
-              .analytics-contents.analytics-content-4
-                h2.analytics-imps-h2 TOTAL IMPRESSIONS
-                h4.analytics-imps-h4 ---
-              .analytics-contents.analytics-content-5
-                h2.analytics-ctr-h2 CTR
-                h4.analytics-ctr-h4 ---
-              .analytics-contents.analytics-content-6
-                h2.analytics-engagement-h2 ENGAGMENT RATE
-                h4.analytics-engagement-h4 ---
-              .analytics-contents.analytics-content-7
+              //- .analytics-contents.analytics-content-4
+              //-   h2.analytics-imps-h2 TOTAL IMPRESSIONS
+              //-   h4.analytics-imps-h4 ---
+              //- .analytics-contents.analytics-content-5
+              //-   h2.analytics-ctr-h2 CTR
+              //-   h4.analytics-ctr-h4 ---
+              //- .analytics-contents.analytics-content-6
+              //-   h2.analytics-engagement-h2 ENGAGMENT RATE
+              //-   h4.analytics-engagement-h4 ---
+              //- .analytics-contents.analytics-content-7
                 h2.analytics-audience-h2 AUDIENCE INCREASED
                 h4.analytics-audience-h4 ---
           .comments
@@ -113,9 +113,9 @@ block content
                         h4.ctnt-cmmnt-textCmmnt= comment.comment
                         //- button.ctnt-cmmnt-reply Reply
                 else
-                  h2(style="font-weight: 300") 😂 Unfortunately No One wanted to comment. Make your content more attractive, Man!
+                  h2(style="font-weight: 300") No Comments Found.
               button.delteVideo-Btn(value=`${video._id}`) Delete Video 💀
-      .ctnt-promote
+      //- .ctnt-promote
         h3 MANAGE YOUR REACH
         .ctnt-imp-pts
           h4 Impression Points

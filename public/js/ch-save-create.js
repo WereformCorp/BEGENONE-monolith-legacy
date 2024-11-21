@@ -48,9 +48,9 @@ const createChannel = async (
     console.log('RESPONSE:', res);
 
     if (res.data.status === 'Success') {
-      // showAlert('success', 'Logged In Successfully!');
+      alert('Channel Created Successfully!');
       window.setTimeout(() => {
-        location.assign('/user-channel');
+        location.assign('/');
       }, 1500);
     }
   } catch (err) {

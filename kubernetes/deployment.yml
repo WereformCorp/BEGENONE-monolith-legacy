@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: begenone-service # Name of the service
+spec:
+  type: LoadBalancer # Exposes the service externally using a load balancer
+  selector:
+    app: begenone # Selects the pods with the app label
+  ports:
+    - protocol: TCP
+      port: 80 # Expose on port 443 (HTTPS)
+      targetPort: 80 # The container port the app is running on
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: begenone-deployment # Name of the deployment
+spec:
+  replicas: 1 # Number of replicas to run
+  selector:
+    matchLabels:
+      app: begenone
+  template:
+    metadata:
+      labels:
+        app: begenone
+    spec:
+      containers:
+        - name: begenone-app # Container name
+          image: areeshalam/prod-v1-begenone:1 # Docker image and tag
+          ports:
+            - containerPort: 80 # Internal port that your app listens on
+          env:
+            - name: NODE_ENV
+              value: 'production'
+            - name: PORT
+              value: '80'
+            - name: DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: DATABASE
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: DATABASE_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: JWT_SECRET
+            - name: JWT_EXPIRES_IN
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: JWT_EXPIRES_IN
+            - name: JWT_COOKIE_EXPIRES_IN
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: JWT_COOKIE_EXPIRES_IN
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_REGION
+              value: 'us-east-1' # Specify the AWS region directly or from a secret
+            - name: S3_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: S3_BUCKET_NAME
+          # resources:
+          #   limits:
+          #     memory: '256Mi' # Limit memory usage
+          #     cpu: '125m' # Limit CPU usage
+          #   requests:
+          #     memory: '128Mi' # Request minimal memory
+          #     cpu: '125m' # Request minimal CPU

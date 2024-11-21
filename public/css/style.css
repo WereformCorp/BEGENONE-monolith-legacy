@@ -7,12 +7,13 @@
 }
 
 body {
-  background-color: #101010;
+  /* background-color: #0d0d0d; */
+  background-color: rgb(17, 17, 17);
 }
 
 body::-webkit-scrollbar {
   width: 7px;
-  background-color: #101010;
+  background-color: #0d0d0d;
 }
 
 body::-webkit-scrollbar-track {
@@ -27,6 +28,192 @@ body::-webkit-scrollbar-thumb {
 
 a {
   text-decoration: none;
+}
+
+/* General Styling for the Slim Notice Bar */
+.notice-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+  width: 100%;
+  background: linear-gradient(135deg, #343331, #151312);
+  color: white;
+  font-family: 'Poppins', serif; /* Elegant font choice */
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #ffa71989;
+  /* border-radius: 5px; */
+  /* position: fixed;
+  top: 0; */
+  left: 0;
+  z-index: 10000000;
+  animation: fadeIn 0.6s ease-out;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+}
+
+.important-notice-span {
+  color: #f39c12;
+}
+
+.notice-message {
+  padding-right: 15px;
+}
+
+/* Gradient Color Grading for Text */
+.notice-bar span {
+  background: -webkit-linear-gradient(45deg, #ff7e5f, #feb47b, #ff6a00);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Hover effect for the button */
+.notice-bar .close-btn:hover {
+  background-color: #f39c12;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .notice-bar {
+    font-size: 14px;
+    padding: 6px 15px;
+  }
+
+  .notice-bar .close-btn {
+    font-size: 18px;
+  }
+}
+
+.learn-more-notice {
+  font-size: 12px;
+  background: #ff8b17;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* ////////////////////////////////////// LOADER */
+/* Full-screen container with background blur and gradient */
+.intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    145deg,
+    rgba(20, 20, 20, 0.8),
+    rgba(10, 10, 10, 0.9)
+  ); /* Rich gradient background */
+  backdrop-filter: blur(2px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  /* animation: fadeIn 0.8s ease-out; Smooth fade-in effect */
+}
+
+/* Introduction message box with elegant shadow and soft transparency */
+.intro-screen .message {
+  background: #181818; /* Soft white overlay */
+  padding: 40px 60px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3); /* Deep shadow for a 3D effect */
+  backdrop-filter: blur(25px); /* Elegant blurred background behind content */
+
+  color: #fff;
+  font-family: 'Poppins', sans-serif; /* Elegant and modern font */
+  border: 1px solid rgba(59, 59, 59, 0.2);
+  transform: scale(1.05); /* Slight scale for an elegant effect */
+}
+
+/* Heading: Bold with a radiant glow and text animation */
+.intro-screen h1 {
+  font-size: 1.6em;
+  font-weight: 700;
+  /* color: #ffcc00; Vibrant gold color */
+  /* text-transform: uppercase; */
+  letter-spacing: 5px;
+  /* margin-bottom: 25px; */
+  animation: glow 2s ease-in-out infinite alternate; /* Continuous glow effect */
+}
+
+.begenone-h2 {
+  font-family: poppins;
+  font-weight: 900;
+  color: #f39c12;
+  font-size: 3.8rem;
+  text-shadow: 2px 3px 15px #0000005c;
+}
+
+/* Smooth paragraph text with elegant color grading */
+.intro-screen p {
+  font-size: 1.3em;
+  color: #e0e0e0; /* Soft light grey */
+  margin-bottom: 40px;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* Button: Elegant with gradient and hover effects */
+.intro-screen button {
+  height: 3rem;
+  width: 10rem;
+  font-size: 1.2em;
+  background: linear-gradient(
+    45deg,
+    #ff5722,
+    #ff9800
+  ); /* Rich orange gradient */
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* Shadow to add depth */
+  outline: none;
+}
+
+.intro-screen button:hover {
+  transform: scale(1.1); /* Slight zoom-in on hover */
+  background: linear-gradient(
+    45deg,
+    #ff9800,
+    #ff5722
+  ); /* Reverse gradient on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Hover shadow for more depth */
+  filter: brightness(1.2); /* Slight brightness effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .intro-screen .message {
+    width: 95%;
+    padding: 25px 40px;
+  }
+
+  .intro-screen h1 {
+    font-size: 2.2em;
+  }
+
+  .intro-screen p {
+    font-size: 1.1em;
+  }
+
+  .intro-screen button {
+    font-size: 1.2em;
+    padding: 12px 35px;
+  }
 }
 
 /* //////////////////////////////// */

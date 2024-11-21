@@ -23,7 +23,7 @@ block content
               h5.vdoP-subsCount
                 span= video.channel.subscribers.length
                 |  Subscribers
-          .sect-mid-vdo_subscribe
+          //- .sect-mid-vdo_subscribe
             if areChannelSame
               a(href=`/all-uploads/${video._id}`)
                 button(class=`sect-mid-vdoP-subsBtn--analytics`) Analytics
@@ -130,10 +130,10 @@ block content
         section.ctnt-des_sects_spnsr
           section.ctnt-des-sect-spns-heading
             h4.ctnt-description-h4 Description
-            hr.ctnt-desSectSpns-separator
-            h4.ctnt-sections-h4 Sections
-            hr.ctnt-desSectSpns-separator
-            h4.ctnt-sponsors-h4 Sponsors
+            //- hr.ctnt-desSectSpns-separator
+            //- h4.ctnt-sections-h4 Sections
+            //- hr.ctnt-desSectSpns-separator
+            //- h4.ctnt-sponsors-h4 Sponsors
           hr.head_N_des-separator
           p.ctnt-description= video.description
         section.ctnt-comments

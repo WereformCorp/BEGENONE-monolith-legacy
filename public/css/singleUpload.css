@@ -124,6 +124,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+  max-width: 30rem;
 }
 
 /* .ctnt-upload-rows {
@@ -219,11 +220,13 @@
 }
 
 .ctnt-thumb-img {
-  aspect-ratio: 16/9;
-  grid-row: 1/-1;
-  grid-column: 2/-1;
-  height: 10rem;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9 !important;
+  grid-row: 2/-1;
+  grid-column: 1/-1;
   border-radius: 8px;
+  justify-self: center;
   /* height: 2rem; */
   /* height: max-content; */
 }
@@ -588,15 +591,16 @@
 .ctnt-cmmnt-list {
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding-bottom: 30px;
   row-gap: 40px;
   width: 100%;
 }
 
-/* .ctnt-cmmnt-listItems {
+.ctnt-cmmnt-listItems {
   display: flex;
   column-gap: 20px;
-} */
+  /* justify-content: space-evenly; */
+}
 
 .sectionHead-chLogo {
   border-radius: 5px;
@@ -615,7 +619,7 @@
   grid-template-columns: 1fr max-content;
   grid-template-rows: repeat(2, max-content);
   /* grid-template-columns: max-content; */
-  column-gap: 20px;
+  column-gap: 4rem;
 }
 
 .delete-comment-Btn {
@@ -648,7 +652,7 @@
 }
 
 .ctnt-cmmnt-textCmmnt {
-  font-size: 0.825rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 

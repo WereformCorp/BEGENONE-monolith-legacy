@@ -1,0 +1,264 @@
+@media (width <= 1350px) {
+  .vdoPlayer-controls {
+    grid-template-rows: 80% 20%;
+  }
+}
+
+@media (width <= 1280px) {
+  .sect-mid-nav {
+    grid-template-columns: .8fr 1fr;
+  }
+
+  .vdoPlayer-controls {
+    grid-template-rows: 75% 25%;
+  }
+}
+
+@media (width <= 1050px) {
+  .sect-mid-nav {
+    grid-template-columns: .7fr 1fr;
+  }
+
+  .vdoPlayer-controls {
+    grid-template-rows: 70% 30%;
+  }
+
+  .sect-mid-ctntTitle {
+    padding: 10px;
+    font-size: 1.5rem;
+  }
+
+  .sect-mid-ctntDtls_N_recom {
+    flex-direction: column;
+  }
+
+  .sect-mid-vdoP-nav {
+    flex-direction: row;
+    justify-self: center;
+    margin-bottom: 0;
+    display: flex;
+  }
+
+  .vdo-ctrls-item-5, .vdo-ctrls-item-6, .vdo-ctrls-item-8 {
+    display: none;
+  }
+
+  .sect-mid-videoPlayer {
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: 1fr;
+  }
+
+  .ctnt-des-sect-spns-heading h4 {
+    padding: .2rem;
+    font-size: .825rem;
+  }
+}
+
+@media (width <= 1000px) {
+  .nav-slctvKit-select {
+    display: none;
+  }
+
+  .sect-mid-nav {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .sect-mid-ctntTitle {
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+
+  .sect-mid-vdoP-notify {
+    display: none;
+  }
+}
+
+@media (width <= 950px) {
+  .nav-sort, .searchBar-keywordBox {
+    display: none;
+  }
+}
+
+@media (width <= 800px) {
+  .srd-link-texts, .nav-cat_N_sort {
+    display: none;
+  }
+
+  .sect-mid-nav {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .bjenuine-text-mediaQuery {
+    display: flex;
+  }
+
+  .bjenuine-text-header {
+    display: none;
+  }
+
+  .sect-lft-dwn {
+    align-content: center;
+  }
+
+  .srd-link-Icons {
+    width: 25px;
+  }
+
+  .ctnt-cmmnt-analytics {
+    flex-direction: column;
+    align-self: start;
+    display: flex;
+  }
+
+  .ctnt-cmmnt-count {
+    justify-items: start;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cmmnt-fltrs img {
+    font-size: 15px;
+  }
+
+  .ctnt-cmmnt-textCmmnt {
+    font-size: .75rem;
+  }
+}
+
+@media (width <= 740px) {
+  .sect-mid-nav {
+    grid-template-columns: 3fr 1fr;
+  }
+
+  .searchBar-InputField {
+    width: 70%;
+  }
+
+  .bjenuine-text-mediaQuery {
+    align-self: center;
+    font-size: 20px;
+  }
+}
+
+@media (width <= 600px) {
+  .container {
+    grid-template-rows: max-content 1fr;
+    grid-template-columns: 100vw;
+  }
+
+  .sect-mid-videoPlayer {
+    row-gap: 20px;
+  }
+
+  .vdoPlayer-controls {
+    grid-template-rows: 75% 25%;
+  }
+
+  .vdo-ctrlPanel {
+    padding: 1rem;
+  }
+
+  .section-left {
+    display: none;
+  }
+
+  .section-bottom {
+    height: max-content;
+    width: 1fr;
+    z-index: 2147483647;
+    background-color: #242424;
+    border-top: 1px solid #787878;
+    border-left: none;
+    border-right: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: grid;
+  }
+
+  .srd-link-texts {
+    display: none;
+  }
+
+  .sect-lft-dwn {
+    flex-direction: row;
+    width: 100%;
+    height: max-content;
+    display: flex;
+  }
+
+  .sect-lft-dwn-links {
+    column-gap: 10px;
+    padding: 10px;
+  }
+
+  .sect-lft-dwn-link-1, .sect-lft-dwn-link-3, .sect-lft-dwn-link-6, .section-right {
+    display: none;
+  }
+
+  .srd-link-Icons {
+    font-size: 15px;
+  }
+
+  .sect-mid-ctntDtls_N_recom {
+    flex-direction: column;
+    padding: 20px 0 0;
+  }
+
+  .ctnt-description {
+    padding: 10px;
+    font-size: .825rem;
+  }
+
+  .sect-mid-vdoP-nav {
+    flex-direction: row;
+    justify-self: center;
+    margin-bottom: 0;
+    display: flex;
+  }
+
+  .sect-mid-ctntTitle {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .vdoP-name {
+    font-size: 1rem;
+  }
+
+  .vdoP-subsCount {
+    font-size: .5rem;
+  }
+
+  .sect-mid-vdoP-dtls {
+    grid-template-columns: max-content max-content max-content;
+  }
+
+  .ctnt-cmmnt-count {
+    padding-left: 0;
+  }
+
+  .video-controls {
+    display: flex;
+  }
+
+  .sect-mid-ctntRecom {
+    padding-left: 0;
+  }
+
+  .sect-notification-panel {
+    grid-column: 1 / 2;
+  }
+}
+
+@media (width <= 450px) {
+  .ctnt-des-sect-spns-heading h4 {
+    padding: .2rem;
+    font-size: .75rem;
+  }
+
+  .searchBar-voiceSearch {
+    display: none;
+  }
+}
+/*# sourceMappingURL=base.1b82ad7e.css.map */

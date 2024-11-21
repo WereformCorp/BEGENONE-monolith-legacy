@@ -48,9 +48,17 @@ block content
           h3.ch-comments-filter-h3 COMMENT FILTERS
           h6.ch-comments-filter-h6 Forbidden Words
           input.ch-comments-filter-input(type='text', disabled)
-    .ch-details
+    if channel && channel._id
+      input(type="hidden", value=`${channel._id}`).ch-delete-input
+    .create-delete-btnGroup
+      if channel
+        button.ch-delete= "DELETE CHANNEL ⚠️"
+        button.ch-dtls-about-owner-save-btn Save
+      else
+        button.ch-dtls-about-owner-save-btn Create Channel
+    //- .ch-details
       .ch-details-col-1
-        .ch-dtls-uploads
+        //- .ch-dtls-uploads
           .ch-dtls-header
             h3.ch-dtls-h3-heading UPLOADS
             a(href="/all-uploads")
@@ -73,7 +81,7 @@ block content
                       | views
             else
               p There are no uploads to be found!
-        .ch-dtls-subscribers
+        //- .ch-dtls-subscribers
           .ch-dtls-subs-heading
             h3.ch-dtls-subs-h3 SUBSCRIPTION
             h4.ch-dtls-subs-h4 View All
@@ -86,21 +94,19 @@ block content
                 h3.ch-dtls-subs-date 12 Jan 2021
               else
                 p.no-sub-found You don't have any subscribers. How sad 🥲 I wish you have happy griefs. Take Care 😉
-        .ch-dtls-story
+        //- .ch-dtls-story
           h2.ch-dtls-story-h2 STORIES SETTINGS
           .story-settings.story-setting-1
             h4.story-settings-h4
               | Allow Users to comment your story
             button.story-settings-allow Allow
             button.story-settings-deny Deny
-      .ch-dtls-col-2
+      //- .ch-dtls-col-2
         .ch-dtls-about-owner
           h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
           textarea.ch-dtls-about-owner-textarea(cols='30', rows='10' disabled)
-        if channel
-          button.ch-dtls-about-owner-save-btn Save
-        else
-          button.ch-dtls-about-owner-save-btn Create Channel
+      
   
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(type="module" src="/js/ch-save-create.js")
+  script(type="module" src="/js/ch-delete.js")
