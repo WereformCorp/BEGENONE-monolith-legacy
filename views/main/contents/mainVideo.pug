@@ -42,6 +42,7 @@ block content
         section.vdoPlayer-controls
           //- THE NEW VIDEO PLAYER
           input.videoId(type="hidden", value=`${videoIdForComment}`)
+          input.userId(type="hidden", value=`${userId}`)
           video.sect-mid-vdoPlayer-video(controls='', crossorigin='anonymous', playsinline='', poster='')
               source(src=`${videoUrl}`, type='video/mp4', size='576' width='100%')
               | &#x9;&#x9;&#x9;

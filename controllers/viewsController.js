@@ -10,6 +10,8 @@ const Channel = require('../models/channelModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345.cloudfront.net"
+
 let urlPath;
 if (process.env.NODE_ENV === 'production') {
   // Use the production domain
@@ -69,22 +71,36 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       });
 
     // console.log(videos.data.data);
-    console.log(`RESPONSE ----> USER:`, res.locals.user);
+    // console.log(`RESPONSE ----> USER:`, res.locals.user);
 
     const thumbnails = thumbnailsResponse.data.urls;
 
     // Map thumbnails to easily look up URLs by thumbnail name
     const thumbnailMap = new Map(
-      thumbnails.map((item) => [item.thumbnail, item.url]),
+      thumbnails.map((item) => [
+        item.thumbnail,
+        `${cloudFrontDomain}/${item.thumbnail}`, // Combine CloudFront domain and the thumbnail name
+      ]),
     );
+
+    console.log(`THUMBNAIL MAP LINE 83 VIEWS CONTROLLER`, thumbnailMap);
 
     // Filter out videos without a valid channel
     const filteredVideos = data.filter((video) => video.channel);
 
     // let videoTimeAgo;
+    // filteredVideos.forEach((video) => {
+    //   video.videoTimeAgo = calculateTimeAgo(video.time);
+    //   video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
+    // });
+
     filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
-      video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
+
+      // Get the thumbnail URL from the map; if not found, set it to null
+      console.log(`THUMBNAIL PATH`, video);
+
+      video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
     });
 
     // Define the videoId that should be featured at the top (example hardcoded)
@@ -103,7 +119,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       ? [featuredVideo, ...otherVideos]
       : otherVideos;
 
-    // console.log(`VIDEO THUMBNAIL URL:`, thumbnailMap);
+    // console.log(`VIDEOS:`, sortedVideos);
 
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
@@ -134,9 +150,9 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const thumbnailsResponse = await axios.get(
       `${urlPath}/api/v1/videos/thumbnail`,
     );
+    console.log(`Video: `, video.data.data.video); // It shows video: 'video-673f3a40df3cd649cfdc8592-1732207453155.mp4',
 
     const videoUrl = streamedData.data.url;
-    // console.log(`Video URL: `, videoUrl);
     const videoData = video.data.data;
     const videos = await axios.get(`${urlPath}/api/v1/videos/`);
     const { channel } = videoData;
@@ -148,12 +164,25 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const thumbnails = thumbnailsResponse.data.urls;
 
     // Map thumbnails to easily look up URLs by thumbnail name
+    // const thumbnailMap = new Map(
+    //   thumbnails.map((item) => [item.thumbnail, item.url]),
+    // );
+
     const thumbnailMap = new Map(
-      thumbnails.map((item) => [item.thumbnail, item.url]),
+      thumbnails.map((item) => [
+        item.thumbnail,
+        `${cloudFrontDomain}/${item.thumbnail}`,
+      ]),
     );
 
+    const videoFileName = video.data.data.video;
     const videosData = videos.data.data;
     const filteredVideos = videosData.filter((videoD) => videoD.channel);
+
+    // Create the CloudFront URL by combining the CloudFront domain and the file name
+    const cloudFrontVideoUrl = videoFileName
+      ? `${cloudFrontDomain}/${videoFileName}`
+      : null;
 
     // let videoTimeAgo;
     filteredVideos.forEach((videoD) => {
@@ -219,13 +248,13 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const copyLinkText = `Click on the link to Copy 👇`;
     // console.log(shareLink);
 
-    // console.log(videoData);
+    console.log(`RESPONSE LOCALS USER ID:`, res.locals.user);
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {
       title: `${videoData.title}`,
       video: videoData,
-      videoUrl,
+      videoUrl: cloudFrontVideoUrl,
       manyVideos: filteredVideos,
       // thumbnail: videosData.thumbnailUrl,
       user: res.locals.user,
@@ -240,6 +269,7 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
       comments,
       firstName,
       secondName,
+      userId: res.locals.user ? res.locals.user._id : undefined,
       userData: res.locals.user,
       videoTimeAgo,
       btnClass,
@@ -668,12 +698,15 @@ exports.allVideos = catchAsync(async (req, res, next) => {
 
   const thumbnails = thumbnailsResponse.data.urls;
 
-  // Map thumbnails to easily look up URLs by thumbnail name
+  // Map thumbnails to easily look up CloudFront URLs by thumbnail name
   const thumbnailMap = new Map(
-    thumbnails.map((item) => [item.thumbnail, item.url]),
+    thumbnails.map((item) => [
+      item.thumbnail,
+      `${cloudFrontDomain}/${item.thumbnail}`, // Modify to use CloudFront URL
+    ]),
   );
 
-  let thumbnail;
+  // let thumbnail;
   // let videoTimeAgo;
   if (videos)
     videos.forEach((videoData) => {

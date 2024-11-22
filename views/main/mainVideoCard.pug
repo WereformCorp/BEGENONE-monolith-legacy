@@ -25,8 +25,8 @@ block content
                   //- h5.sectionHead-chSubCnt
                   //-   span= video.channel.subscribers.length
                   //-   |  Subscribers
-            if video && video.thumbnail
-              img.sectionHead-thumbNail(src=`${video.thumbnailUrl}`)
+            if video && video.thumbUrl
+              img.sectionHead-thumbNail(src=`${video.thumbUrl}`)
               //- img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
             else 
               img.sectionHead-thumbNail(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
