@@ -10,35 +10,6 @@ block content
   section.sect-mid-contentContainer
     section.sect-mid-videoPlayer
       section.sect-mid-vdoP-c1
-        section.sect-mid-vdoP-dtls
-          if user && user.channel && user.channel.displayImage
-              a(href=`/channels/${video.channel._id}`)
-                img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
-          else
-            a(href=`/channels/${video.channel._id}`)
-              img.chList-chnl-img(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
-          .sect-mid-vdoP-name_N_subCount
-            a(href=`/channels/${video.channel._id}`)
-              h4.vdoP-name= video.channel.name
-              h5.vdoP-subsCount
-                span= video.channel.subscribers.length
-                |  Subscribers
-          //- .sect-mid-vdo_subscribe
-            if areChannelSame
-              a(href=`/all-uploads/${video._id}`)
-                button(class=`sect-mid-vdoP-subsBtn--analytics`) Analytics
-            else
-              button(class=`${btnClass}`)= btnText
-              - console.log(`${btnClass}`, `${btnText}`)
-              if user && user._id
-                input.userId-input(type="hidden", value=`${user._id}`)
-              if video && video._id
-                input.videoId-input(type="hidden", value=`${video._id}`)
-              if isUserSubscribed
-                input.isUserSubscribed-input(type="hidden", value=`${isUserSubscribed}`)
-        div.sect-mid-vdo-meta
-          h2.sect-mid-vdo-time= videoTimeAgo
-          h2.sect-mid-vdo-views= `| ${video.views} Views`
         section.vdoPlayer-controls
           //- THE NEW VIDEO PLAYER
           input.videoId(type="hidden", value=`${videoIdForComment}`)
@@ -61,8 +32,38 @@ block content
               a(href=videoUrl, download='') Download
 
           //- //////////////////////////
+        
         section.sect-mid-vdoP-title
           h2.sect-mid-ctntTitle= video.title
+        section.sect-mid-vdoP-dtls
+          if user && user.channel && user.channel.displayImage
+              a(href=`/channels/${video.channel._id}`)
+                img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+          else
+            a(href=`/channels/${video.channel._id}`)
+              img.chList-chnl-img(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
+          .sect-mid-vdoP-name_N_subCount
+            a(href=`/channels/${video.channel._id}`)
+              h4.vdoP-name= video.channel.name
+              //- h5.vdoP-subsCount
+              //-   span= video.channel.subscribers.length
+              //-   |  Subscribers
+          //- .sect-mid-vdo_subscribe
+            if areChannelSame
+              a(href=`/all-uploads/${video._id}`)
+                button(class=`sect-mid-vdoP-subsBtn--analytics`) Analytics
+            else
+              button(class=`${btnClass}`)= btnText
+              - console.log(`${btnClass}`, `${btnText}`)
+              if user && user._id
+                input.userId-input(type="hidden", value=`${user._id}`)
+              if video && video._id
+                input.videoId-input(type="hidden", value=`${video._id}`)
+              if isUserSubscribed
+                input.isUserSubscribed-input(type="hidden", value=`${isUserSubscribed}`)
+          div.sect-mid-vdo-meta
+            h2.sect-mid-vdo-time= videoTimeAgo
+            h2.sect-mid-vdo-views= `| ${video.views} Views`
         // THIS IS FOR BACKUP PURPOSES
         //- section.sect-mid-vdoP-dtls
         //-   if user && user.channel && user.channel.displayImage
@@ -104,18 +105,19 @@ block content
             use(xlink:href='#icon-thumbs-up-solid')
               symbol#icon-thumbs-up-solid(viewBox='0 0 32 32')
                 path(d='M19.587 2.056c1.625 0.325 2.681 1.906 2.356 3.531l-0.144 0.713c-0.331 1.669-0.944 3.256-1.8 4.7h9c1.656 0 3 1.344 3 3 0 1.156-0.656 2.163-1.619 2.663 0.681 0.55 1.119 1.394 1.119 2.337 0 1.462-1.050 2.681-2.431 2.944 0.275 0.456 0.431 0.988 0.431 1.556 0 1.331-0.869 2.462-2.069 2.85 0.044 0.206 0.069 0.425 0.069 0.65 0 1.656-1.344 3-3 3h-6.094c-1.188 0-2.344-0.35-3.331-1.006l-2.406-1.606c-1.669-1.113-2.669-2.988-2.669-4.994v-6.95c0-1.825 0.831-3.544 2.25-4.688l0.463-0.369c1.656-1.325 2.787-3.188 3.2-5.263l0.144-0.713c0.325-1.625 1.906-2.681 3.531-2.356zM2 12h4c1.106 0 2 0.894 2 2v14c0 1.106-0.894 2-2 2h-4c-1.106 0-2-0.894-2-2v-14c0-1.106 0.894-2 2-2z')
-          h4.likesCount= video.likes || '0'
+          h4.likesCount= `Like - ${video.likes || '0'}`
         .sect-mid-vdoP-items.sect-mid-vdoP-navDislike
           svg.vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
             use(xlink:href='#icon-thumbs-down-solid')
               symbol#icon-thumbs-down-solid(viewBox='0 0 32 32')
                 path(d='M19.587 29.944c1.625-0.325 2.681-1.906 2.356-3.531l-0.144-0.712c-0.331-1.669-0.944-3.256-1.8-4.7h9c1.656 0 3-1.344 3-3 0-1.156-0.656-2.162-1.619-2.662 0.681-0.55 1.119-1.394 1.119-2.338 0-1.463-1.050-2.681-2.431-2.944 0.275-0.456 0.431-0.988 0.431-1.556 0-1.331-0.869-2.463-2.069-2.85 0.044-0.206 0.069-0.425 0.069-0.65 0-1.656-1.344-3-3-3h-6.094c-1.188 0-2.344 0.35-3.331 1.006l-2.406 1.606c-1.669 1.112-2.669 2.987-2.669 4.994v6.95c0 1.825 0.831 3.544 2.25 4.688l0.463 0.369c1.656 1.325 2.787 3.188 3.2 5.262l0.144 0.712c0.325 1.625 1.906 2.681 3.531 2.356zM2 24h4c1.106 0 2-0.894 2-2v-14c0-1.106-0.894-2-2-2h-4c-1.106 0-2 0.894-2 2v14c0 1.106 0.894 2 2 2z')
-          h4.dislikesCount= video.dislikes || '0'
+          h4.dislikesCount= `Dislike - ${video.dislikes || '0'}`
         .sect-mid-vdoP-items.sect-mid-vdoP-navShare
           svg.vdoPlayer-icon-imgs.vdoP-shareIcon.icon.icon-share-nodes-solid
             use(xlink:href='#icon-share-nodes-solid')
               symbol#icon-share-nodes-solid(viewBox='0 0 28 32')
                 path(d='M22 14c3.313 0 6-2.688 6-6s-2.688-6-6-6-6 2.688-6 6c0 0.25 0.012 0.5 0.044 0.744l-5.881 2.938c-1.075-1.044-2.544-1.681-4.162-1.681-3.313 0-6 2.688-6 6s2.688 6 6 6c1.619 0 3.088-0.637 4.162-1.681l5.881 2.938c-0.031 0.244-0.044 0.488-0.044 0.744 0 3.313 2.688 6 6 6s6-2.688 6-6-2.688-6-6-6c-1.619 0-3.087 0.637-4.163 1.681l-5.881-2.938c0.031-0.244 0.044-0.488 0.044-0.744s-0.012-0.5-0.044-0.744l5.881-2.938c1.075 1.044 2.544 1.681 4.163 1.681z')
+          h4.vidShareText= `Share`
         .sect-mid-vdoP-items.sect-mid-vdoP-navAudio
           svg.vdoPlayer-icon-imgs.vdoP-audioIcon.icon.icon-music-solid
             use(xlink:href='#icon-music-solid')

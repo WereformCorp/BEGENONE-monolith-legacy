@@ -16,8 +16,8 @@ const updateLikesDislikesCount = async (videoId, action) => {
     const likesCountElement = document.querySelector('.likesCount');
     const dislikesCountElement = document.querySelector('.dislikesCount');
 
-    likesCountElement.textContent = response.data.likes;
-    dislikesCountElement.textContent = response.data.dislikes;
+    likesCountElement.textContent = `Likes - ${response.data.likes}`;
+    dislikesCountElement.textContent = `Dislike - ${response.data.dislikes}`;
   } catch (error) {
     console.error(`Error while ${action} the video:`, error);
   }

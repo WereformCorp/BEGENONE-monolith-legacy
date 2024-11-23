@@ -604,7 +604,7 @@
 
 .sectionHead-chLogo {
   border-radius: 5px;
-  height: 3rem;
+  max-height: 3rem;
 }
 
 .ctnt-cmmnt-dtls {
