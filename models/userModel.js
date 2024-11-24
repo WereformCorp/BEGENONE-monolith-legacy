@@ -42,6 +42,8 @@ const userSchema = new mongoose.Schema({
       required: true,
       lowercase: true,
     },
+    signupAuthToken: String,
+    signupAuthTokenExpiresIn: Date,
     password: {
       type: String,
       required: [true, 'Please Provide Password'],
@@ -51,13 +53,13 @@ const userSchema = new mongoose.Schema({
     passwordConfirm: {
       type: String,
       required: [true, 'Please confirm your password'],
-      validate: {
-        // This only works on CREATE and SAVE!!!
-        validator: function (el) {
-          return el === this.eAddress.password;
-        },
-        message: 'Passwords are not the same!',
-      },
+      // validate: {
+      //   // This only works on CREATE and SAVE!!!
+      //   validator: function (el) {
+      //     return el === this.eAddress.password;
+      //   },
+      //   message: 'Passwords are not the same!',
+      // },
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -126,35 +128,34 @@ const userSchema = new mongoose.Schema({
   },
   active: {
     type: Boolean,
-    default: true,
-    select: false,
+    default: false,
   },
 });
 
-userSchema.pre('save', function (next) {
-  if (!this.isModified('eAddress.password') || this.isNew) return next();
+// userSchema.pre('save', function (next) {
+//   if (!this.isModified('eAddress.password') || this.isNew) return next();
 
-  this.eAddress.passwordChangedAt = Date.now() - 1000;
-  next();
-});
+//   this.eAddress.passwordChangedAt = Date.now() - 1000;
+//   next();
+// });
 
-userSchema.pre(/^find/, function (next) {
-  // This points to the current query
-  this.find({ active: { $ne: false } });
-  next();
-});
+// userSchema.pre(/^find/, function (next) {
+//   // This points to the current query
+//   this.find({ active: { $ne: false } });
+//   next();
+// });
 
-userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
-  if (!this.isModified('eAddress.password')) return next();
+// userSchema.pre('save', async function (next) {
+//   // Only run this function if password was actually modified
+//   if (!this.isModified('eAddress.password')) return next();
 
-  // Hash the password with cost of 12
-  this.eAddress.password = await bcrypt.hash(this.eAddress.password, 12);
+//   // Hash the password with cost of 12
+//   this.eAddress.password = await bcrypt.hash(this.eAddress.password, 12);
 
-  //   Delete passwordConfirm field
-  this.eAddress.passwordConfirm = undefined;
-  next();
-});
+//   //   Delete passwordConfirm field
+//   this.eAddress.passwordConfirm = undefined;
+//   next();
+// });
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,
@@ -174,6 +175,21 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   }
 
   return false;
+};
+
+userSchema.methods.createSignupAuthToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.eAddress.signupAuthToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  // console.log({ resetToken }, this.eAddress.passwordResetToken);
+
+  this.eAddress.signupAuthTokenExpiresIn = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 userSchema.methods.createPasswordResetToken = function () {

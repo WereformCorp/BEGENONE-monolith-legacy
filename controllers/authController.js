@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const sendEmail = require('../utils/email');
+const sendMail = require('../utils/email');
 
 // eslint-disable-next-line arrow-body-style
 const signToken = (id) => {
@@ -31,6 +31,7 @@ const createSendToken = (user, statusCode, res) => {
 
   // Remove Password in Output
   user.eAddress.password = undefined;
+  user.eAddress.passwordConfirm = undefined;
 
   res.status(statusCode).json({
     status: 'success',
@@ -45,10 +46,104 @@ exports.signup = catchAsync(async (req, res, next) => {
   try {
     const newUser = await User.create(req.body);
     if (!newUser) return next(new AppError(`Data Not Found!`, 404));
-    createSendToken(newUser, 201, res);
+    // createSendToken(newUser, 201, res);
+    req.newUser = newUser;
+    next();
   } catch (err) {
     console.log(err, err.message);
   }
+});
+
+exports.signupAuth = catchAsync(async (req, res, next) => {
+  // 1) Get User based on Posted EMAIL
+  const { newUser } = req;
+  console.log(`NEW USER:`, newUser);
+
+  if (!newUser) return next(new AppError(`Data Not Found!`, 404));
+
+  // 2) Generate random reset token
+  console.log(`IS THE CODE REACHING HERE?`);
+  const signupToken = await newUser.createSignupAuthToken();
+  await newUser.save({ validateBeforeSave: false });
+  console.log(`SIGN UP TOKEN:`, signupToken);
+
+  // 3) Send it to user's email
+  const authURL = `${req.protocol}://${req.get(
+    'host',
+  )}/api/v1/users/verify-email/${signupToken}`;
+
+  const message = `Please confirm your email here: ${authURL}`;
+
+  try {
+    await sendMail({
+      email: req.newUser.eAddress.email,
+      subject: `Your Sign Up Authentication Email (Valid for 10 minutes)`,
+      message,
+    });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Token send to email!',
+      // data: {
+      //   userFirstName: newUser.name.firstName,
+      //   userSecondName: newUser.name.secondName,
+      //   userEmail: newUser.eAddress.email,
+      //   userPassword: newUser.eAddress.password,
+      //   userPasswordConfirm: newUser.eAddress.passwordConfirm,
+      //   username: newUser.username,
+      // },
+    });
+  } catch (err) {
+    console.log(`ERROR Signup Auth: `, err);
+    return res.json({
+      message: `There is an error sending the email`,
+      error: err,
+    });
+    // newUser.eAddress.passwordResetToken = undefined;
+    // newUser.eAddress.passwordResetExpires = undefined;
+    // await newUser.save({ validateBeforeSave: false });
+
+    // return next(
+    //   new AppError(`There was an error sending the email. Try again later!`),
+    // );
+  }
+});
+
+exports.verifySignupToken = catchAsync(async (req, res, next) => {
+  // 1) Hash the token provided in URL to compare with the stored hashed token
+  console.log(`HAS THE CODE REACHED TILL HERE?`);
+
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  console.log(`HASHED TOKEN:`, hashedToken);
+
+  // 2) Find user with matching signup token and ensure token hasn’t expired
+  const user = await User.findOne({
+    'eAddress.signupAuthToken': hashedToken,
+    'eAddress.signupAuthTokenExpiresIn': { $gt: Date.now() },
+  });
+
+  if (!user) {
+    console.log('No matching user or token expired.');
+    return next(new AppError('Token is invalid or has expired', 400));
+  }
+
+  console.log('User found:', user);
+
+  // 3) Activate user’s account
+  user.active = true;
+  user.eAddress.signupAuthToken = undefined;
+  user.eAddress.signupAuthTokenExpiresIn = undefined;
+  await user.save();
+  console.log('User account activated and token cleared.');
+
+  // 4) Log the user in (or simply return success if that’s not desired)
+  createSendToken(user, 200, res);
+
+  // res.redirect('/');
 });
 
 exports.login = catchAsync(async (req, res, next) => {

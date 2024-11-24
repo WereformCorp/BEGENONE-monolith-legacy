@@ -17,6 +17,11 @@ const signup = async (
   username,
 ) => {
   try {
+    if (password !== passwordConfirm) {
+      alert('Passwords do not match!');
+      return;
+    }
+
     const baseUrl = await axios({
       method: 'GET',
       url: `/url/get-env-url`,
@@ -45,7 +50,7 @@ const signup = async (
     if (res.data.status === 'success') {
       // showAlert('success', 'Logged In Successfully!');
       window.setTimeout(() => {
-        location.assign('/');
+        location.assign('/email-confirmation');
       }, 1500);
     }
   } catch (err) {

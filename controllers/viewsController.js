@@ -52,6 +52,8 @@ const calculateTimeAgo = (videoTime) => {
   return formatDistanceToNow(new Date(videoTime), { addSuffix: true });
 };
 
+exports.emailSentPage = catchAsync(async (req, res, next) => {});
+
 // //////////////////////
 
 exports.getOverview = catchAsync(async (req, res, next) => {

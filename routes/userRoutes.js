@@ -5,7 +5,13 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router.post('/signup', userController.uploadUserPhoto, authController.signup);
+router.post(
+  '/signup',
+  // userController.uploadUserPhoto,
+  authController.signup,
+  authController.signupAuth,
+);
+router.patch('/verifyEmail/:token', authController.verifySignupToken);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 router.post('/forgotPassword', authController.forgotPassword);

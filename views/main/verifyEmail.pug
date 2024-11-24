@@ -1,0 +1,14 @@
+// signup.pug
+extends base
+
+block content
+  h1= title
+
+  //- If the signup was successful and email was sent
+  if success
+    .alert.alert-success
+      h3= message
+  else
+    .alert.alert-danger
+      h3= message
+  

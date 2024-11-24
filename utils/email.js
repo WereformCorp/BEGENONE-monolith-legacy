@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const nodemailer = require('nodemailer');
 
-const sendEmail = async (options) => {
+const sendMail = async (options) => {
   // 1) Create A Transporter
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -15,7 +15,7 @@ const sendEmail = async (options) => {
 
   // 2) Define the email options
   const mailOptions = {
-    from: 'Areesh Alam <areeshalam2@gmail.com>',
+    from: 'BEGENONE <areeshalam2@gmail.com>',
     to: options.email,
     subject: options.subject,
     text: options.message,
@@ -26,4 +26,4 @@ const sendEmail = async (options) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendEmail;
+module.exports = sendMail;
