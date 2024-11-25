@@ -5,6 +5,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='icon', type='image/x-icon', href='/imgs/Begenuine FavIcon.png')
     link(rel="stylesheet", href="/css/login.css")
+    link(rel="stylesheet", href="/css/userChannelMediaQueries.css")
     
     link(rel='preconnect', href='https://fonts.googleapis.com')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
@@ -13,28 +14,32 @@ html(lang='en')
 
 
   body
-    .login-container
-      .headings
-        a(href="/") 
-          img.login-heading(src="https://wereform-imgs.s3.amazonaws.com/begenone-white-transparent-logo.svg", height='40px')
-        //- h3.login-subHeading
-        //-   | Welcome To The Light
-        //-   br
-        //-   span.subheading-note (Don&apos;t look at the theme, you can change it later)
-      form.login-form
-        .email
-          h3.login-email
-            | Email
-            span.star *
-          input#email.login-email-input(type='email', placeholder='you@example.com', required)
-        .password
-          h3.login-password
-            | Password
-            span.star *
-          input#password.login-password-input(type='password', placeholder='••••••••', required, minlength='8')
-        a(href="/signup") 
-          h5.signup-text Sign Up
-        button.submit-form-btn SUBMIT
-    
+    .container
+      img.image-container
+      .login-container
+        //- img.image-container(src="https://begenone-images.s3.us-east-1.amazonaws.com/internet-7702492_1920.png", height='100vh')
+        .headings
+          a(href="/") 
+            img.login-heading(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", style='max-height: 7rem')
+          //- h3.login-subHeading
+          //-   | Welcome To The Light
+          //-   br
+          //-   span.subheading-note (Don&apos;t look at the theme, you can change it later)
+        .loginDtls-container
+          form.login-form
+            .email
+              h3.login-email
+                | Email
+                span.star *
+              input#email.login-email-input(type='email', required)
+            .password
+              h3.login-password
+                | Password
+                span.star *
+              input#password.login-password-input(type='password', placeholder='••••••••', required, minlength='8')
+            a(href="/signup").signuptext-href
+              h5.signup-text Sign Up
+            button.submit-form-btn SUBMIT
+      
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
     script(src='/js/login.js')

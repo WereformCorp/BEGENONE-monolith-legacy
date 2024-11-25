@@ -138,7 +138,23 @@ block content
             //- hr.ctnt-desSectSpns-separator
             //- h4.ctnt-sponsors-h4 Sponsors
           hr.head_N_des-separator
-          p.ctnt-description= video.description
+          .description-container
+            p.ctnt-description(id="description")= video.description
+            button.show-more-button(id="show-more", onclick="toggleDescription()") Show More
+          script.
+            function toggleDescription() {
+              const description = document.getElementById("description");
+              const showMoreButton = document.getElementById("show-more");
+
+              // Toggle between truncated and full description
+              if (description.style.maxHeight === "none") {
+                description.style.maxHeight = "100px";  // Set it back to the preview state
+                showMoreButton.innerHTML = "Show More"; // Change button text back
+              } else {
+                description.style.maxHeight = "none";  // Expand to show full description
+                showMoreButton.innerHTML = "Show Less"; // Change button text to "Show Less"
+              }
+            }
         section.ctnt-comments
           section.ctnt-cmmnt-analytics
             h4.ctnt-cmmnt-count

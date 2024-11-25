@@ -5,6 +5,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='icon', type='image/x-icon', href='/imgs/Begenuine FavIcon.png')
     link(rel="stylesheet", href="/css/signup.css")
+    link(rel="stylesheet", href="/css/userChannelMediaQueries.css")
     
     link(rel='preconnect', href='https://fonts.googleapis.com')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
@@ -14,45 +15,48 @@ html(lang='en')
 
   body
     .container
-      .headings
-        a(href="/")
-          img.signup-heading(src="https://wereform-imgs.s3.amazonaws.com/begenone-white-transparent-logo.svg", height='40px')
-        //- h3.signup-subHeading
-        //-   | Welcome To The Light
-      form.signup-form
-        .firstname
-          h3.signup-firstname
-            | First Name
-            span.star *
-          input#firstName.signup-firstname-input(type='text', placeholder='Enter your first name')
-        .lastname
-          h3.signup-lastname
-            | Second Name
-            span.star *
-          input#secondName.signup-lastname-input(type='text', placeholder='Enter your second name')
-        .email
-          h3.signup-email
-            | Email
-            span.star *
-          input#email.signup-email-input(type='text', placeholder='Enter your email')
-        .password
-          h3.signup-password
-            | Password
-            span.star *
-          input#password.signup-password-input(type='text', placeholder='Enter your password')
-        .password-confirm
-          h3.signup-password-confirm
-            | Password Confirm
-            span.star *
-          input#passwordConfirm.signup-password-confirm-input(type='text', placeholder='Enter your password confirm')
-        .username
-          h3.signup-username
-            | Username
-            span.star *
-          input#username.username-input(type='text', placeholder='Enter your password confirm')
-        a.signup-anchor(href="/login") 
-          h5.signup-text Login
-        button.submit-form-btn SUBMIT
+      img.image-container
+      //- img.image-container(src="https://begenone-images.s3.us-east-1.amazonaws.com/internet-7702492_1920.png", height='100vh')
+      .signupDtls-container
+        .headings
+          a(href="/")
+            img.signup-heading(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", style='max-height: 7rem')
+          //- h3.signup-subHeading
+          //-   | Welcome To The Light
+        form.signup-form
+          .firstname
+            h3.signup-firstname
+              | First Name
+              span.star *
+            input#firstName.signup-firstname-input(type='text', placeholder='Enter your first name')
+          .lastname
+            h3.signup-lastname
+              | Second Name
+              span.star *
+            input#secondName.signup-lastname-input(type='text', placeholder='Enter your second name')
+          .email
+            h3.signup-email
+              | Email
+              span.star *
+            input#email.signup-email-input(type='text', placeholder='Enter your email')
+          .password
+            h3.signup-password
+              | Password
+              span.star *
+            input#password.signup-password-input(type='text', placeholder='Enter your password')
+          .password-confirm
+            h3.signup-password-confirm
+              | Password Confirm
+              span.star *
+            input#passwordConfirm.signup-password-confirm-input(type='text', placeholder='Enter your password confirm')
+          .username
+            h3.signup-username
+              | Username
+              span.star *
+            input#username.username-input(type='text', placeholder='Enter your password confirm')
+          a.signup-anchor(href="/login") 
+            h5.signup-text Login
+          button.submit-form-btn SUBMIT
     
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
     script(src="/js/signup.js")

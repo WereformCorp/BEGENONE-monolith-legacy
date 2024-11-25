@@ -7,6 +7,7 @@
 
 // DOM ELEMENTS
 const signupForm = document.querySelector('.signup-form');
+const submitFormBtn = document.querySelector('.submit-form-btn');
 
 const signup = async (
   firstName,
@@ -17,6 +18,8 @@ const signup = async (
   username,
 ) => {
   try {
+    submitFormBtn.textContent = 'Signing Up...';
+
     if (password !== passwordConfirm) {
       alert('Passwords do not match!');
       return;
@@ -48,6 +51,7 @@ const signup = async (
     console.log('RESPONSE:', res);
 
     if (res.data.status === 'success') {
+      submitFormBtn.textContent = 'Signed Up Successfully!';
       // showAlert('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/email-confirmation');

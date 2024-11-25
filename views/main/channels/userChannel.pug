@@ -32,7 +32,8 @@ block content
             h4.sect-mid-accDtls-chName= channel.name
             //- h4.sect-mid-accDtls-subsCount= channel.subscribersCount + ' ' + 'Subscribers'
             h4.sect-mid-accDtls-subsCount WELCOME 🥳
-            input.userId-input(type="hidden", value=`${user._id}`)
+            if user
+              input.userId-input(type="hidden", value=`${user._id}`)
           //- .sect-mid-accDtls-subsBtn
             //- a(href=`/channels/${channel._id}/subscribe`)
             if isItMyChannel

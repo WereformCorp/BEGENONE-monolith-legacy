@@ -2,11 +2,12 @@ extends ../base
 
 block append head
   link(rel='stylesheet', href='/css/search.css')
+  link(rel='stylesheet', href='/css/mediaQueries.css')
 
 block content
   section.sect-mid-searchContentContainer
     section.sectMid-content
-      section.sectMid-resultSorts
+      //- section.sectMid-resultSorts
         .sortBtn-container
           h5.sortBtn-text Sortings
         .keywords-container
@@ -44,6 +45,12 @@ block content
                   else
                     img.channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
                   h4.channel-name= `@${video.channel.channelUserName}`
+              .date_N_views-2
+                  h4
+                    span= video.views
+                    |  Views
+                  h4
+                    span= videoTimeAgo
 
     //- section.sectMid-contentPreview
     //-   a(href=`/watch/${video._id}`)

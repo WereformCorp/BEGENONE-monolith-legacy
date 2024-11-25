@@ -143,7 +143,7 @@
   }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 750px) {
   /* .sect-mid-nav {
     grid-template-columns: 3fr 1fr;
   } */
@@ -152,12 +152,39 @@
     display: none;
   } */
 
-  .searchBar-InputField {
-    width: 70%;
+  .sect-mid-nav {
+    display: grid;
+    grid-template-rows: max-content max-content;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1.4rem;
+    padding-top: 0;
   }
 
   .bjenuine-text-mediaQuery {
-    font-size: 20px;
-    align-self: center;
+    display: flex;
+    grid-row: 1 / 2 !important;
+    grid-column: 1/-1 !important;
+    max-width: 10rem;
+  }
+
+  .searchBar-container {
+    /* width: 80%; */
+    grid-row: 2 / -1;
+    grid-column: 1 / 4;
+  }
+
+  .sect-head-icon-settings {
+    grid-row: 2/-1;
+    grid-column: 4/-1;
+    justify-self: center;
+  }
+
+  .sect-mid-contentContainer {
+    padding: 0.8rem;
+  }
+
+  .searchBar-InputField {
+    height: 2.8rem;
+    width: 80%;
   }
 }

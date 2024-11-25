@@ -70,28 +70,32 @@ exports.signupAuth = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   const authURL = `${req.protocol}://${req.get(
     'host',
-  )}/api/v1/users/verify-email/${signupToken}`;
+  )}/api/v1/users/verifyEmail/${signupToken}`;
 
   const message = `Please confirm your email here: ${authURL}`;
 
   try {
+    // if (authURL)
+
     await sendMail({
       email: req.newUser.eAddress.email,
       subject: `Your Sign Up Authentication Email (Valid for 10 minutes)`,
       message,
     });
 
+    // res.redirect('/email-confirmation');
+
     return res.status(200).json({
       status: 'success',
       message: 'Token send to email!',
-      // data: {
-      //   userFirstName: newUser.name.firstName,
-      //   userSecondName: newUser.name.secondName,
-      //   userEmail: newUser.eAddress.email,
-      //   userPassword: newUser.eAddress.password,
-      //   userPasswordConfirm: newUser.eAddress.passwordConfirm,
-      //   username: newUser.username,
-      // },
+      data: {
+        //   userFirstName: newUser.name.firstName,
+        //   userSecondName: newUser.name.secondName,
+        //   userEmail: newUser.eAddress.email,
+        //   userPassword: newUser.eAddress.password,
+        //   userPasswordConfirm: newUser.eAddress.passwordConfirm,
+        //   username: newUser.username,
+      },
     });
   } catch (err) {
     console.log(`ERROR Signup Auth: `, err);
@@ -255,7 +259,7 @@ exports.forgotPassword = async (req, res, next) => {
   const message = `Forgot your password? Send a PATCH request to: ${resetURL}`;
 
   try {
-    await sendEmail({
+    await sendMail({
       email: user.eAddress.email,
       subject: `Your Password Reset Token (Valid for 10 minutes)`,
       message,

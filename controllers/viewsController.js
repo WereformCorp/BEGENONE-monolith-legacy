@@ -52,7 +52,32 @@ const calculateTimeAgo = (videoTime) => {
   return formatDistanceToNow(new Date(videoTime), { addSuffix: true });
 };
 
-exports.emailSentPage = catchAsync(async (req, res, next) => {});
+exports.emailSentPage = catchAsync(async (req, res, next) => {
+  res.status(200).render('../views/main/emailSentPage.pug', {
+    status: 'success',
+    message:
+      'Verification Email has been sent to your email account, please verify to continue.',
+  });
+});
+exports.emailVerifyPage = catchAsync(async (req, res, next) => {
+  try {
+    const verifyEmail = await axios.patch(
+      `${urlPath}/api/v1/users/verifyEmail/${req.params.token}`,
+    );
+
+    console.log(`VERIFIED EMAIL DATA`, verifyEmail.data);
+    res.status(200).render('../views/main/verifyEmail.pug', {
+      status: 'success',
+      message: 'Congradulations! You are now verified',
+    });
+
+    // setTimeout(() => {
+    //   res.redirect('/'); // Redirect to home page after 5 seconds
+    // }, 5000); // Timeout set to 5 seconds
+  } catch (error) {
+    console.log(`ERROR`, error);
+  }
+});
 
 // //////////////////////
 
@@ -145,16 +170,16 @@ exports.watchVideo = catchAsync(async (req, res, next) => {
     const video = await axios.get(
       `${urlPath}/api/v1/videos/${req.params.videoId}`,
     );
-    const streamedData = await axios.get(
-      `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
-    );
+    // const streamedData = await axios.get(
+    //   `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
+    // );
 
     const thumbnailsResponse = await axios.get(
       `${urlPath}/api/v1/videos/thumbnail`,
     );
     console.log(`Video: `, video.data.data.video); // It shows video: 'video-673f3a40df3cd649cfdc8592-1732207453155.mp4',
 
-    const videoUrl = streamedData.data.url;
+    // const videoUrl = streamedData.data.url;
     const videoData = video.data.data;
     const videos = await axios.get(`${urlPath}/api/v1/videos/`);
     const { channel } = videoData;

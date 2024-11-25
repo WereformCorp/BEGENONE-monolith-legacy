@@ -11,7 +11,12 @@ html {
 }
 
 body {
-  background-color: #101010;
+  background-color: #0b0b0b;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
 }
 
 a {
@@ -24,27 +29,59 @@ a {
 
 .container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   row-gap: 2rem;
-  padding-top: 4rem;
+  width: 100%;
+  /* padding-top: 2rem; */
 }
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   width: 7px;
   background-color: rgb(60, 60, 60, 0.3);
-}
+} */
 
-body::-webkit-scrollbar-thumb {
+/* body::-webkit-scrollbar-thumb {
   width: 7px;
   background-color: #fff;
   border-radius: 10px;
+} */
+
+.image-container {
+  /* height: 100vh; */
+  width: 100%;
+  height: 100vh;
+  background-image: url('https://begenone-images.s3.us-east-1.amazonaws.com/pixlr-image-generator-7e079823-dee3-4f15-8d4b-fdd6f09e1e5f.jpg');
+  /* opacity: 0.2; */
+  mix-blend-mode: hard-light;
+  border: none;
+  outline: none;
+  transform: scale(101%);
+
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repeating the image */
+
+  overflow: hidden;
+}
+
+/* .image-container::-webkit-scrollbar {
+  display: none;
+} */
+
+.signupDtls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 3rem;
+  height: 100vh;
 }
 
 .headings {
   display: flex;
   flex-direction: column;
+  padding-top: 2rem;
 }
 
 .signup-heading {
@@ -69,11 +106,26 @@ body::-webkit-scrollbar-thumb {
   grid-template-rows: repeat(6, 6.5rem) max-content 6.5rem;
   flex-direction: column;
   row-gap: 1rem;
-  padding: 3rem;
+  padding: 5rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  justify-self: end;
   margin-bottom: 3rem;
-  border-radius: 1rem;
-  border: 1px solid rgb(120, 120, 120, 0.3);
-  background-color: rgb(60, 60, 60, 0.2);
+  /* border-radius: 1rem; */
+  border-left: 1px solid rgb(120, 120, 120, 0.3);
+  overflow-y: scroll;
+  /* background-color: rgb(60, 60, 60, 0.2); */
+}
+
+.signup-form::-webkit-scrollbar {
+  width: 7px;
+  background-color: rgb(60, 60, 60, 0.3);
+}
+
+.signup-form::-webkit-scrollbar-thumb {
+  width: 7px;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 .signup-anchor {
@@ -114,9 +166,9 @@ body::-webkit-scrollbar-thumb {
   max-width: 30rem;
   width: 20rem;
   height: 3rem;
-  background-color: rgb(60, 60, 60, 0.3);
+  background-color: rgb(60, 60, 60, 0.1);
   border: 1px solid rgb(120, 120, 120, 0.3);
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 2px;
@@ -125,13 +177,21 @@ body::-webkit-scrollbar-thumb {
 }
 
 .submit-form-btn {
-  background-color: rgb(60, 60, 60, 0.3);
+  background-color: rgb(60, 60, 60, 0.1);
   height: 2.5rem;
-  width: 6rem;
+  width: 100%;
   border: 1px solid rgb(120, 120, 120, 0.2);
   border-radius: 10px;
-  font-weight: 900;
+  font-weight: 800;
+  font-size: 0.85rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 2px;
+}
+
+.submit-form-btn:hover {
+  box-shadow: 1px 3px 15px #101010a6;
+  background-color: rgb(60, 60, 60, 0.3);
 }
 
 @media (max-width: 400px) {

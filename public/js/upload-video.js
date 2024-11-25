@@ -193,6 +193,9 @@ document
         return;
       }
 
+      const formattedDescription = description.replace(/\n/g, '<br>');
+      document.getElementById('description').innerHTML = formattedDescription;
+
       const baseUrl = await axios({
         method: 'GET',
         url: `/url/get-env-url`,
@@ -201,7 +204,7 @@ document
       console.log(urlPath);
       const response = await axios.post(`${urlPath}/api/v1/videos/`, {
         title,
-        description,
+        formattedDescription,
       });
       console.log(`RESPONSE . DATA:`, response.data);
 

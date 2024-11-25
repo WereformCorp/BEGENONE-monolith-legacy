@@ -5,7 +5,7 @@
 // const multerS3 = require('multer-s3');
 const axios = require('axios');
 
-const Notification = require('../models/notificationModel');
+// const Notification = require('../models/notificationModel');
 const Channel = require('../models/channelModel');
 const Video = require('../models/videoModel');
 const AppError = require('../utils/appError');
@@ -333,21 +333,21 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     console.log('Created video:', createdVideo);
 
     // Gets the Id of the Video from the videoData and Updates the channel's Video Field "videoData._id".
-    const updatedChannel = await Channel.findByIdAndUpdate(
-      req.user.channel._id,
-      { $push: { videos: createdVideo._id } },
-      { new: true },
-    );
+    // const updatedChannel = await Channel.findByIdAndUpdate(
+    //   req.user.channel._id,
+    //   { $push: { videos: createdVideo._id } },
+    //   { new: true },
+    // );
 
     // Get the subscribers of the channel
-    const subscribers = updatedChannel.subscribers || [];
+    // const subscribers = updatedChannel.subscribers || [];
 
     // Create notifications for each subscriber
-    const mapNotification = subscribers.map((subscriberId) => ({
-      userId: subscriberId,
-      channelId: req.user.channel._id,
-      videoId: createdVideo._id,
-    }));
+    // const mapNotification = subscribers.map((subscriberId) => ({
+    //   userId: subscriberId,
+    //   channelId: req.user.channel._id,
+    //   videoId: createdVideo._id,
+    // }));
 
     // Save the notifications to the database
     // const notifications = await Notification.create(mapNotification);

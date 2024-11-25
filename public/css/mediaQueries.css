@@ -9,7 +9,7 @@
     flex-direction: column;
     text-align: start;
     align-items: center;
-  } */
+    } */
 
   .sect-mid-nav {
     grid-template-columns: 0.8fr 1fr max-content;
@@ -17,6 +17,34 @@
 
   .vdoPlayer-controls {
     grid-template-rows: 75% 25%;
+  }
+
+  html .sect-mid-searchContentContainer {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .content-title {
+    font-size: 1.6rem;
+  }
+
+  .content-description {
+    font-size: 0.75rem;
+  }
+
+  .channel-name {
+    font-size: 0.85rem;
+  }
+
+  .channel-logo {
+    max-height: 2rem;
+  }
+
+  .date_N_views h4,
+  .date_N_views-2 h4 {
+    font-weight: 400;
+    font-size: 0.825rem;
   }
 }
 
@@ -59,6 +87,55 @@
   .ctnt-des-sect-spns-heading h4 {
     font-size: 0.825rem;
     padding: 0.2rem;
+  }
+
+  /* .sect-mid-searchContentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  } */
+
+  .sectMid-resultContent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    /* width: 100%; */
+  }
+
+  .content-title {
+    font-size: 1rem;
+  }
+
+  .title_N_description {
+    row-gap: 1.4rem;
+  }
+
+  .content-description {
+    display: none;
+  }
+
+  .resultContent-box {
+    display: flex;
+    flex-direction: column;
+    max-width: 230px;
+  }
+
+  .channel-logo {
+    max-height: 1.5rem;
+  }
+
+  .channel_details {
+    padding-bottom: 1.4rem;
+  }
+
+  .date_N_views {
+    display: none;
+  }
+
+  .date_N_views-2 {
+    display: flex;
+    padding-left: 0;
   }
 }
 
@@ -140,14 +217,45 @@
   }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 750px) {
   /* .searchBar-InputField {
     width: 70%;
   } */
 
+  .sect-mid-nav {
+    display: grid;
+    grid-template-rows: max-content max-content;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1.4rem;
+    padding-top: 0;
+  }
+
   .bjenuine-text-mediaQuery {
-    font-size: 20px;
-    align-self: center;
+    display: flex;
+    grid-row: 1 / 2 !important;
+    grid-column: 1/-1 !important;
+    max-width: 10rem;
+  }
+
+  .searchBar-container {
+    /* width: 80%; */
+    grid-row: 2 / -1;
+    grid-column: 1 / 4;
+  }
+
+  .sect-head-icon-settings {
+    grid-row: 2/-1;
+    grid-column: 4/-1;
+    justify-self: center;
+  }
+
+  .sect-mid-contentContainer {
+    padding: 0.8rem;
+  }
+
+  .searchBar-InputField {
+    height: 2.8rem;
+    width: 80%;
   }
 }
 

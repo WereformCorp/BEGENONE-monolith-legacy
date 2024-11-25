@@ -10,7 +10,8 @@ const router = express.Router();
 // );
 
 router.get('/tokens', viewsController.tokens);
-router.get('/verify-email');
+router.get('/api/v1/users/verifyEmail/:token', viewsController.emailVerifyPage);
+router.get('/email-confirmation', viewsController.emailSentPage);
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
