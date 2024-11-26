@@ -6,12 +6,14 @@ const videoController = require('../controllers/videoController');
 const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
 const authController = require('../controllers/authController');
+const checkActiveStatus = require('../utils/checkActiveStatus');
+
 const {
   uploadThumbVideoToS3,
-  uploadVideoToS3,
-  uploadThumbToS3,
-  streamVideoFromS3,
-  generatePresignedUrl,
+  // uploadVideoToS3,
+  // uploadThumbToS3,
+  // streamVideoFromS3,
+  // generatePresignedUrl,
 } = require('../controllers/aws_S3_controller');
 
 const router = express.Router({ mergeParams: true });
@@ -52,12 +54,32 @@ const upload = multer({ storage: storage });
 const getThumbnail = {};
 
 const uploadThumbnailFunction = (req, res) => {
-  console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
+  // if (req.file) {
+  //   // ADDED THIS LINE OF CODE (THE IF STATEMENT TO CHECK IF THE VIDEO COULD BE UPLODADED WITHOUT THUMBNAIL)
+  //   console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
+  //   getThumbnail.thumb = req.file;
+  //   res.status(200).json({
+  //     status: 'success',
+  //     file: req.file,
+  //   });
+  // }
+  if (req.file) {
+    console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
 
-  getThumbnail.thumb = req.file;
+    // Save the uploaded thumbnail file in the request object for use later
+    req.thumbnail = req.file;
+    return res.status(200).json({
+      status: 'success',
+      file: req.file,
+    });
+  }
+  // If no thumbnail uploaded, skip and move forward
+  console.log('No thumbnail uploaded.');
+  req.thumbnail = null; // Explicitly set to null
   res.status(200).json({
     status: 'success',
-    file: req.file,
+    message: 'No thumbnail uploaded, proceeding without it.',
+    file: undefined,
   });
 };
 
@@ -74,6 +96,7 @@ router
   .route('/')
   .get(videoController.getAllVideos)
   .post(
+    // checkActiveStatus,
     authController.protect,
     authMiddleware,
     // upload.single('video'),
@@ -109,17 +132,19 @@ router
     upload.single('video'),
     async (req, res) => {
       console.log(`REQUESTED FILE`, req.file);
-      console.log(
-        `GET THUMBNAIL FROM VIDEO CREATION ROUTER`,
-        getThumbnail.thumb,
-      );
+      if (getThumbnail && getThumbnail.thumb)
+        console.log(
+          `GET THUMBNAIL FROM VIDEO CREATION ROUTER`,
+          getThumbnail.thumb,
+        );
       if (!req.file) {
         return res.status(400).send('No files uploaded');
       }
 
       try {
-        const channelId = req.user.channel; // Get channel ID from request
-
+        // const channelId = req.user.channel; // Get channel ID from request
+        const channelId = res.locals.user.channel; // Get channel ID from request
+        console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
         let thumbnailResult;
 
         const videoResult = await uploadThumbVideoToS3(
@@ -129,7 +154,7 @@ router
         );
         console.log('Video uploaded:', videoResult.result);
 
-        if (getThumbnail) {
+        if (getThumbnail && getThumbnail.thumb) {
           thumbnailResult = await uploadThumbVideoToS3(
             getThumbnail.thumb,
             channelId,

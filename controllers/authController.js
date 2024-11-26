@@ -30,7 +30,7 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie('jwt', token, cookieOptions);
 
   // Remove Password in Output
-  user.eAddress.password = undefined;
+  // user.eAddress.password = undefined;
   user.eAddress.passwordConfirm = undefined;
 
   res.status(statusCode).json({
@@ -64,7 +64,7 @@ exports.signupAuth = catchAsync(async (req, res, next) => {
   // 2) Generate random reset token
   console.log(`IS THE CODE REACHING HERE?`);
   const signupToken = await newUser.createSignupAuthToken();
-  await newUser.save({ validateBeforeSave: false });
+  await newUser.save({ validateBeforeSave: true });
   console.log(`SIGN UP TOKEN:`, signupToken);
 
   // 3) Send it to user's email
@@ -124,10 +124,24 @@ exports.verifySignupToken = catchAsync(async (req, res, next) => {
 
   console.log(`HASHED TOKEN:`, hashedToken);
 
-  // 2) Find user with matching signup token and ensure token hasn’t expired
+  // // 2) Find user with matching signup token and ensure token hasn’t expired
+  // const user = await User.findOne({
+  //   'eAddress.signupAuthToken': hashedToken,
+  //   'eAddress.signupAuthTokenExpiresIn': { $gt: Date.now() },
+  // });
+
+  // Check for the signup token
   const user = await User.findOne({
-    'eAddress.signupAuthToken': hashedToken,
-    'eAddress.signupAuthTokenExpiresIn': { $gt: Date.now() },
+    $or: [
+      {
+        'eAddress.signupAuthToken': hashedToken,
+        'eAddress.signupAuthTokenExpiresIn': { $gt: Date.now() },
+      },
+      {
+        'eAddress.resendAuthToken': hashedToken,
+        'eAddress.resendAuthTokenExpiresIn': { $gt: Date.now() },
+      },
+    ],
   });
 
   if (!user) {
@@ -148,6 +162,87 @@ exports.verifySignupToken = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 
   // res.redirect('/');
+});
+
+exports.resendVerificationLink = catchAsync(async (req, res, next) => {
+  // Assuming req.user contains authenticated user data, fetched via a middleware
+  const { user } = res.locals;
+  console.log(`156 LINE USER:`, user);
+
+  // 1) Check if the user is already active
+  if (user.active) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'User is already verified.',
+    });
+  }
+
+  if (!user) return next(new AppError('User not found!', 404));
+
+  // 1) If cooldown has expired, reset attempts and cooldown
+  if (user.resendCooldownExpires && user.resendCooldownExpires <= Date.now()) {
+    user.resendAttempts = 0; // Reset attempts after cooldown expires
+    user.resendCooldownExpires = undefined; // Clear cooldown
+  }
+
+  // 2) If attempts have reached 3, block further resends and trigger cooldown
+  if (user.resendAttempts >= 3) {
+    if (!user.resendCooldownExpires) {
+      // Set cooldown for 1 hour
+      user.resendCooldownExpires = Date.now() + 60 * 60 * 1000; // 1-hour cooldown
+      await user.save();
+    }
+
+    const remainingTime = Math.ceil(
+      (user.resendCooldownExpires - Date.now()) / 1000 / 60,
+    );
+    return next(
+      new AppError(
+        `You have exceeded the resend limit. Please wait ${remainingTime} minutes before trying again.`,
+        429,
+      ),
+    );
+  }
+
+  // 2) Generate a new signup token and set expiration
+  const signupToken = user.createSignupAuthToken();
+  user.eAddress.resendAuthToken = signupToken;
+  user.eAddress.signupAuthTokenExpiresIn = Date.now() + 7 * 24 * 60 * 60 * 1000; // 10 minutes expiration
+  await user.save({ validateBeforeSave: true });
+
+  console.log(`SIGN UP TOKEN FROM RE-VERIFICATION:`, signupToken);
+  console.log(`USER FROM RE-VERIFICATION:`, user);
+
+  // 3) Construct verification URL
+  const authURL = `${req.protocol}://${req.get('host')}/api/v1/users/verifyEmail/${signupToken}`;
+
+  // 4) Send verification email
+  const message = `Please confirm your email here: ${authURL}`;
+
+  try {
+    await sendMail({
+      email: user.eAddress.email,
+      subject: 'Email Verification Required (Valid for 10 minutes)',
+      message,
+    });
+
+    user.resendAttempts += 1;
+    await user.save();
+
+    // Redirect or respond with success message
+    return res.status(200).json({
+      status: 'success',
+      message: 'Verification link resent to email!',
+    });
+  } catch (err) {
+    console.error(`Error in resending verification link: `, err);
+    return next(
+      new AppError(
+        'Error sending the verification email. Try again later!',
+        500,
+      ),
+    );
+  }
 });
 
 exports.login = catchAsync(async (req, res, next) => {

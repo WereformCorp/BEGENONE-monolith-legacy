@@ -308,7 +308,9 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     const videoData = {
       title: req.body.title || `Uploaded At: ${formattedDate}`,
       description: req.body.description,
-      thumbnail: videoFileData.thumbnail.key,
+      thumbnail: videoFileData.thumbnail
+        ? videoFileData.thumbnail.key
+        : undefined,
       section: req.body.section,
       channel: req.user.channel._id,
       bookmark: req.body.bookmark,

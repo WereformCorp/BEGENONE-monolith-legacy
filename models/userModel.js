@@ -52,14 +52,6 @@ const userSchema = new mongoose.Schema({
     },
     passwordConfirm: {
       type: String,
-      required: [true, 'Please confirm your password'],
-      // validate: {
-      //   // This only works on CREATE and SAVE!!!
-      //   validator: function (el) {
-      //     return el === this.eAddress.password;
-      //   },
-      //   message: 'Passwords are not the same!',
-      // },
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -126,6 +118,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  resendAttempts: {
+    type: Number,
+    default: 0,
+  },
+  resendCooldownExpires: Date,
   active: {
     type: Boolean,
     default: false,
@@ -157,6 +154,18 @@ const userSchema = new mongoose.Schema({
 //   next();
 // });
 
+userSchema.pre('save', async function (next) {
+  // Only run this function if the password is being set for the first time (signup)
+  if (this.isNew || this.isModified('eAddress.password')) {
+    // Hash the password with a cost of 12
+    this.eAddress.password = await bcrypt.hash(this.eAddress.password, 12);
+
+    // Remove the passwordConfirm field
+    this.eAddress.passwordConfirm = undefined;
+  }
+  next();
+});
+
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
@@ -187,7 +196,7 @@ userSchema.methods.createSignupAuthToken = function () {
 
   // console.log({ resetToken }, this.eAddress.passwordResetToken);
 
-  this.eAddress.signupAuthTokenExpiresIn = Date.now() + 10 * 60 * 1000;
+  this.eAddress.signupAuthTokenExpiresIn = Date.now() + 7 * 24 * 60 * 60 * 1000;
 
   return resetToken;
 };

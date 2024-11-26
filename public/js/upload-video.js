@@ -208,10 +208,10 @@ document
       });
       console.log(`RESPONSE . DATA:`, response.data);
 
-      if (response.data.status.toLowerCase() === 'success') {
-        window.assign('/');
-        location.reload(false);
-      }
+      // if (response.data.status.toLowerCase() === 'success') {
+      //   window.assign('/');
+      //   location.reload(false);
+      // }
     } catch (error) {
       console.error('Error:', error);
     }

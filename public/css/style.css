@@ -669,3 +669,68 @@ a {
   column-gap: 25px;
   justify-content: start;
 }
+
+/* ////////////// EMAIL SECTION  AND YOU ARE VERIFIED EMAIL TYPE ////////////// */
+.email-container-body,
+.email-verified-body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.email-container,
+.email-verified-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  text-align: center;
+  padding: 3rem;
+  border-radius: 10px;
+  max-width: 40rem;
+  width: 30rem;
+  background-color: rgba(18, 18, 18, 1);
+  border: 1px solid #ff9800;
+  box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.email-heading,
+.verified-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #e0a320, #ff5722);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}
+
+.email-message,
+.verified-message {
+  font-family: montserrat;
+  font-size: 1rem;
+  font-weight: 400 !important;
+  margin-bottom: 20px;
+}
+
+.go-home {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid #e0a320;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #e0a320, #ff5722);
+  transition: all 0.3s ease-in-out;
+}
+
+.go-home:hover {
+  scale: 105%;
+  /* color: rgba(18, 18, 18, 1); */
+  background: linear-gradient(45deg, #e0a320, #ff5722);
+}
+
+/* ////////////////////////////////////////////  */

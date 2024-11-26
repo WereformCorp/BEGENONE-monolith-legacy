@@ -136,7 +136,7 @@ app.use('/api/v1/videos', videoRouter);
 
 // app.get('/overview', (req, res) => {
 //   res.status(200).render('main/contents/mainVideo', {
-//     title: 'Begenuine',
+//     title: 'BEGENONE',
 //   });
 // });
 

@@ -78,6 +78,25 @@ exports.emailVerifyPage = catchAsync(async (req, res, next) => {
     console.log(`ERROR`, error);
   }
 });
+exports.reVerifyEmail = catchAsync(async (req, res, next) => {
+  try {
+    // const verifyEmail = await axios.patch(
+    //   `${urlPath}/api/v1/users/verifyEmail/${req.params.token}`,
+    // );
+
+    // console.log(`VERIFIED EMAIL DATA`, verifyEmail.data);
+    res.status(200).render('../views/main/reVerify.pug', {
+      status: 'success',
+      message: 'Congradulations! You are now verified',
+    });
+
+    // setTimeout(() => {
+    //   res.redirect('/'); // Redirect to home page after 5 seconds
+    // }, 5000); // Timeout set to 5 seconds
+  } catch (error) {
+    console.log(`ERROR`, error);
+  }
+});
 
 // //////////////////////
 
@@ -125,7 +144,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
 
       // Get the thumbnail URL from the map; if not found, set it to null
-      console.log(`THUMBNAIL PATH`, video);
+      // console.log(`THUMBNAIL PATH`, video);
 
       video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
     });
@@ -318,7 +337,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return res.redirect('/');
   }
   res.status(200).render('../views/main/signup', {
-    title: `Sign Up | BeGenuine`,
+    title: `Sign Up | BEGENONE`,
   });
 });
 
@@ -335,7 +354,7 @@ exports.login = catchAsync(async (req, res, next) => {
       "script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js 'unsafe-inline' 'unsafe-eval';",
     )
     .render('../views/main/login', {
-      title: `Log In | BeGenuine`,
+      title: `Log In | BEGENONE`,
     });
 });
 
@@ -713,7 +732,10 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
 
 exports.allVideos = catchAsync(async (req, res, next) => {
   // console.log(res.locals.user._id);
-  const userData = await User.findById(res.locals.user._id).populate('channel');
+  const userData = await User.findById(res.locals.user._id).populate(
+    'channel channel.videos',
+  );
+  console.log(`USER DATA:`, userData);
   let videos;
   if (userData.channel) {
     // eslint-disable-next-line prefer-destructuring
@@ -723,7 +745,11 @@ exports.allVideos = catchAsync(async (req, res, next) => {
     `${urlPath}/api/v1/videos/thumbnail`,
   );
 
-  const thumbnails = thumbnailsResponse.data.urls;
+  const thumbnails = thumbnailsResponse.data.urls || [];
+  if (!thumbnails.length) {
+    // Handle case where no thumbnails are returned
+    console.log('No thumbnails found.');
+  }
 
   // Map thumbnails to easily look up CloudFront URLs by thumbnail name
   const thumbnailMap = new Map(
@@ -737,8 +763,10 @@ exports.allVideos = catchAsync(async (req, res, next) => {
   // let videoTimeAgo;
   if (videos)
     videos.forEach((videoData) => {
-      videoData.thumbnail = thumbnailMap.get(videoData.thumbnail) || null;
+      videoData.thumbnail = thumbnailMap.get(videoData.thumbnail) || undefined;
     });
+
+  console.log(`VIDEOS`, videos);
 
   // console.log(`Video Data:`, thumbnail);
 

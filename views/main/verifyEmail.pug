@@ -1,17 +1,16 @@
-extends base
-
-block content
-  h1= title
-
-  //- If the signup was successful and email was sent
-  if status === 'success'
-    .alert.alert-success
-      h3= message
-    script.
-      setTimeout(function() {
-        window.location.href = '/';
-      }, 5000)
-  else
-    .alert.alert-danger
-      h3= message
-  
+doctype html
+html
+  head
+    title You Are Verified
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap")
+    link(rel="stylesheet" href="/css/style.css")
+  body
+    .email-verified-body
+      .headings
+        a(href="/") 
+          img.login-heading(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", style='max-height: 7rem')
+      .email-verified-container
+        h1.verified-heading You Are Verified!
+        p.verified-message Your email has been successfully verified. You can now access all the features on BEGENONE.
+        a(href="/").go-home-link
+          button.go-home(href="/") Go to Home

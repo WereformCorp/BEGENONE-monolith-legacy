@@ -5,6 +5,9 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
+// router.get('/verify-email', authController.verifyEmailPage);
+router.post('/resend-verification', authController.resendVerificationLink);
+
 router.post(
   '/signup',
   // userController.uploadUserPhoto,

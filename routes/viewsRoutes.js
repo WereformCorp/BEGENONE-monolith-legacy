@@ -1,6 +1,7 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
 const authController = require('../controllers/authController');
+const checkActiveStatus = require('../utils/checkActiveStatus');
 
 const router = express.Router();
 // router.get(
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.get('/tokens', viewsController.tokens);
 router.get('/api/v1/users/verifyEmail/:token', viewsController.emailVerifyPage);
+router.get('/re-verify/', viewsController.reVerifyEmail);
 router.get('/email-confirmation', viewsController.emailSentPage);
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/signup', viewsController.signup);
@@ -35,6 +37,7 @@ router.get('/channels/:id', viewsController.singleChannel);
 
 router.get(
   '/channel-settings',
+  checkActiveStatus,
   authController.protect,
   viewsController.channelSettings,
 );

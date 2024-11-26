@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title You Are Verified
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap")
+    link(rel="stylesheet" href="/css/style.css")
+  body
+    .email-verified-body
+      .headings
+        a(href="/") 
+          img.login-heading(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", style='max-height: 7rem')
+      .email-verified-container
+        h1.verified-heading Resend a Verification Link!
+        p.verified-message= "To complete your account setup, click the button below to receive a new verification email. Please check your inbox (and spam folder) for the link to verify your email address."
+        button.go-home.btn-resend Resend Verification URL
+        button.go-home.btn-goHome(style="display: none;") Go Home.
+
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+  script(src="/js/reVerifyLink.js")
