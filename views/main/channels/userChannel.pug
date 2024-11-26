@@ -138,8 +138,11 @@ block content
           if latestVideo
             a(href=`/watch/${latestVideo._id}`) 
               .featuredVideo
-                //- video.featuredVideo-video(width='640', height='360', controls='', poster='/imgs/thumbnails/thumbnail-65a6f249e887d2567074b7e9-1705439848542.png')
-                //-   source(src='/video/sample-video.mp4', type='video/mp4')
+                img.featuredVideo-video(src=`${LatestVideoThumbnail}`, alt="")
+                h2.featuredVideo-title= latestVideo.title
+          else
+            a(href=`/watch/${latestVideo._id}`) 
+              .featuredVideo
                 img.featuredVideo-video(src=`${LatestVideoThumbnail}`, alt="")
                 h2.featuredVideo-title= latestVideo.title
           .most-popular

@@ -640,9 +640,9 @@ exports.userChannel = catchAsync(async (req, res, next) => {
   // console.log(`This is User About 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥: ${channel.about}`);
   const latestVideo = userData.channel.videos[0];
   let wireTime;
-  wiresData.forEach((video) => {
-    wireTime = calculateTimeAgo(video.time);
-  });
+  // wiresData.forEach((video) => {
+  //   wireTime = calculateTimeAgo(video.time);
+  // });
 
   res.status(200).render(`../views/main/channels/userChannel`, {
     title: 'USER PROFILE',
@@ -661,15 +661,6 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   const channelData = await axios.get(
     `${urlPath}/api/v1/channels/${req.params.id}`,
   );
-  // const userData = await axios.get(
-  //   `${urlPath}/api/v1/users/${res.locals.user._id}`,
-  // );
-
-  // const { user } = userData.data;
-
-  // const channel = channelData.data;
-
-  // console.log(channel);
 
   const extractedData = channelData.data.data;
   // console.log(`ExtractedData`, extractedData);
@@ -696,15 +687,34 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
 
   const LatestVidThumbKey = latestVideo ? latestVideo.thumbnail : null;
 
+  // videos.forEach((video) => {
+  //   video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
+  // });
+
   videos.forEach((video) => {
-    video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
+    // Check if the thumbnail name contains "default-thumbnail.jpeg"
+    if (video.thumbnail && video.thumbnail.includes('default-thumbnail.jpeg')) {
+      // If it contains "default-thumbnail.jpeg", use the S3 URL
+      video.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Replace with your actual S3 URL
+    } else {
+      // Otherwise, use the CloudFront URL
+      video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
+    }
   });
+
   // Debugging Logs
   // console.log('Thumbnail Key:', LatestVidThumbKey);
   // console.log('Thumbnail Map:', thumbnailMap);
 
   if (latestVideo) {
-    latestVideo.thumbnailUrl = thumbnailMap.get(LatestVidThumbKey) || null;
+    if (
+      latestVideo.thumbnail &&
+      latestVideo.thumbnail.includes('default-thumbnail.jpeg')
+    ) {
+      latestVideo.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Replace with your actual S3 URL
+    } else {
+      latestVideo.thumbnailUrl = thumbnailMap.get(LatestVidThumbKey) || null;
+    }
   }
 
   // console.log(`VIDEO FROM SINGLE CHANNEL: `, latestVideo.thumbnailUrl);
