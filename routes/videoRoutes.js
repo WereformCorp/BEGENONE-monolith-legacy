@@ -131,12 +131,6 @@ router
     // ]),
     upload.single('video'),
     async (req, res) => {
-      console.log(`REQUESTED FILE`, req.file);
-      if (getThumbnail && getThumbnail.thumb)
-        console.log(
-          `GET THUMBNAIL FROM VIDEO CREATION ROUTER`,
-          getThumbnail.thumb,
-        );
       if (!req.file) {
         return res.status(400).send('No files uploaded');
       }
@@ -163,9 +157,14 @@ router
           console.log('Thumbnail uploaded:', thumbnailResult.result);
         }
 
+        if (thumbnailResult) {
+          req.s3Data = {
+            thumbnail: thumbnailResult || undefined,
+          };
+        }
+
         req.s3Data = {
           video: videoResult || null,
-          thumbnail: thumbnailResult || undefined,
         };
 
         return videoController.createVideo(req, res);

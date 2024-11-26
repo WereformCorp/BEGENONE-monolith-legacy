@@ -27,9 +27,9 @@ block content
                   //-   |  Subscribers
             if video && video.thumbUrl
               img.sectionHead-thumbNail(src=`${video.thumbUrl}`)
-              //- img.sectionHead-thumbNail(src=`/imgs/thumbnails/sample.jpg`)
-            else 
-              img.sectionHead-thumbNail(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+            else
+              img.sectionHead-thumbNail(src=`${video.thumbUrl}`)
+
             section.section-details
               h4.section-details-title= video.title
               hr(width='50px')

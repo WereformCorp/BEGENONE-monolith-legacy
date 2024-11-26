@@ -335,11 +335,14 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     console.log('Created video:', createdVideo);
 
     // Gets the Id of the Video from the videoData and Updates the channel's Video Field "videoData._id".
-    // const updatedChannel = await Channel.findByIdAndUpdate(
-    //   req.user.channel._id,
-    //   { $push: { videos: createdVideo._id } },
-    //   { new: true },
-    // );
+    // const updatedChannel =
+
+    // THIS PUSHES THE VIDEOS INTO THE CHANNEL
+    await Channel.findByIdAndUpdate(
+      req.user.channel._id,
+      { $push: { videos: createdVideo._id } },
+      { new: true },
+    );
 
     // Get the subscribers of the channel
     // const subscribers = updatedChannel.subscribers || [];
@@ -359,8 +362,8 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     }
 
     // If No Video Data - Then Videos Array Should Be Empty
-    if (!videoData)
-      await Channel.findByIdAndUpdate(req.user.channel._id, { video: [] });
+    // if (!videoData)
+    //   await Channel.findByIdAndUpdate(req.user.channel._id, { video: [] });
 
     // If No Video Data - Then Return Error Message: Data Not Found
     if (!createdVideo) return next(new AppError(`Data Not Found!`, 404));

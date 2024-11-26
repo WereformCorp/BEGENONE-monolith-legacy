@@ -116,9 +116,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         select: '_id displayImage',
       });
 
-    // console.log(videos.data.data);
-    // console.log(`RESPONSE ----> USER:`, res.locals.user);
-
     const thumbnails = thumbnailsResponse.data.urls;
 
     // Map thumbnails to easily look up URLs by thumbnail name
@@ -129,7 +126,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       ]),
     );
 
-    console.log(`THUMBNAIL MAP LINE 83 VIEWS CONTROLLER`, thumbnailMap);
+    // console.log(`THUMBNAIL MAP LINE 83 VIEWS CONTROLLER`, thumbnailMap);
 
     // Filter out videos without a valid channel
     const filteredVideos = data.filter((video) => video.channel);
@@ -140,13 +137,30 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     //   video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
     // });
 
+    // filteredVideos.forEach((video) => {
+    //   video.videoTimeAgo = calculateTimeAgo(video.time);
+
+    //   // Get the thumbnail URL from the map; if not found, set it to null
+    //   // console.log(`THUMBNAIL PATH`, video);
+
+    //   video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
+    // });
+
+    // let defaultThumb;
     filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
 
-      // Get the thumbnail URL from the map; if not found, set it to null
-      // console.log(`THUMBNAIL PATH`, video);
-
-      video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
+      // Check if the thumbnail has 'default-thumbnail.jpeg' in its name
+      if (
+        video.thumbnail &&
+        video.thumbnail.includes('default-thumbnail.jpeg')
+      ) {
+        // If the thumbnail contains 'default-thumbnail.jpeg', use the S3 URL
+        video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Use the S3 URL
+      } else {
+        // Otherwise, use the CloudFront URL from the map
+        video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
+      }
     });
 
     // Define the videoId that should be featured at the top (example hardcoded)
@@ -165,12 +179,13 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       ? [featuredVideo, ...otherVideos]
       : otherVideos;
 
-    // console.log(`VIDEOS:`, sortedVideos);
+    // console.log(`DEFAULT THUMB:`, filteredVideos);
 
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
       videos: sortedVideos,
       thumbnail: thumbnailsResponse.data.urls,
+      // defaultThumb,
       user: res.locals.user,
       userData,
       // videoTimeAgo,
@@ -601,16 +616,6 @@ exports.userProfile = catchAsync(async (req, res, next) => {
 exports.upload = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
 
-  // const streamedData = await axios.get(
-  //   `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
-  // );
-
-  // const videoUrl = streamedData.data.url;
-  // console.log(`Video URL: `, videoUrl);
-  // const thumbnailData = await axios.get(
-  //   `${urlPath}/api/v1/videos/stream/${req.params.videoId}`,
-  // );
-
   res.status(200).render(`../views/settings/channel/uploads/_uploads`, {
     title: 'USER PROFILE',
     useCustomLeftNav: true,
@@ -732,20 +737,27 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
 
 exports.allVideos = catchAsync(async (req, res, next) => {
   // console.log(res.locals.user._id);
-  const userData = await User.findById(res.locals.user._id).populate(
-    'channel channel.videos',
-  );
+  // const userData = await axios.get();
+  const userData = await User.findById(res.locals.user._id).populate('channel');
   console.log(`USER DATA:`, userData);
   let videos;
   if (userData.channel) {
     // eslint-disable-next-line prefer-destructuring
     videos = userData.channel.videos;
   }
-  const thumbnailsResponse = await axios.get(
-    `${urlPath}/api/v1/videos/thumbnail`,
-  );
 
-  const thumbnails = thumbnailsResponse.data.urls || [];
+  let thumbnails = [];
+  try {
+    const thumbnailsResponse = await axios.get(
+      `${urlPath}/api/v1/videos/thumbnail`,
+      { timeout: 5000 }, // Optional: set a timeout for the request
+    );
+    thumbnails = thumbnailsResponse.data.urls || [];
+  } catch (error) {
+    console.error('Error fetching thumbnails:', error.message);
+    return res.status(500).send('Failed to fetch thumbnails'); // Optional: send response for failed request
+  }
+
   if (!thumbnails.length) {
     // Handle case where no thumbnails are returned
     console.log('No thumbnails found.');
