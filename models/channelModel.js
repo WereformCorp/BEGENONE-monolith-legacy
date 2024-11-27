@@ -14,7 +14,7 @@ const channelSchema = new mongoose.Schema({
     minLength: 1,
     maxLength: 50,
   },
-  displayImage: {
+  channelLogo: {
     type: String,
   },
   bannerImage: {

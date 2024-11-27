@@ -13,17 +13,25 @@ block content
     h1.channel-setting-h1 CHANNEL SETTINGS
     .logo_n_banner
       .ch-logo
-        if user && user.channel && user.channel.displayImage
-            - const userId = user._id
-            - console.log(userId)
-            img(src=`/imgs/users/${userId}/display-images/${channel.displayImage}`)
+        if userData && userData.channel && channelLogo
+            img.ch-channel-logo(src=`${channelLogo}`)
         else
-          img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+          img.ch-channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
       .ch-banner
-        if user && user.channel && user.channel.bannerImage
-          img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`)
+        if userData && userData.channel && bannerImage
+          img.ch-banner-img(src=`${bannerImage}`)
         else
           img.ch-banner-img(src='https://begenone-images.s3.amazonaws.com/default-banner-image.jpg')
+    form#videoUploadForm.ch-upload-img-container
+      .ch-upload-pfp
+        //- h4.ctnt-profilepic-h4 PROFILE PICTURE
+        div#ch-upload-pfp-file-btn(action="#")
+        button#openUppyButton-profilepic Upload Profile Pic
+      .ch-upload-pfp
+        //- h4.ctnt-banner-h4 BANNER
+        div#ch-upload-banner-file-btn
+        button#openUppyButton-banner Upload Banner
+      
     .ch-main-settings
       .ch-main-details
         .ch-name
@@ -109,4 +117,5 @@ block content
   
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(type="module" src="/js/ch-save-create.js")
+  script(type="module" src="/js/updateUserImage.js")
   script(type="module" src="/js/ch-delete.js")

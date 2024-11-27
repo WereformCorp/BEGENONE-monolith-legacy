@@ -117,7 +117,7 @@ videoSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'channel',
     select:
-      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -bannerImage -about -reviews',
+      '-__v -products -videos -sponsors -commentToggle -comments -commentFilters -wires -story -tagsList -about -reviews',
   })
     .populate({
       path: 'comments',

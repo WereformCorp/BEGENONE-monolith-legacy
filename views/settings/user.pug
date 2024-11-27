@@ -7,11 +7,12 @@ block append head
 block content
   section.sect-mid-contentContainer
     h1.user-heading-h1 USER SETTINGS
+    //- h2.eAddress-heading-h1 ELECTRONIC ADDRESS
     .basic-details
       section.identification
-        if userData.photo
-          img.sect-mid-logo-img(src=`/imgs/users/${userId}/user-display-picture/${userData.photo}`)
-        else if userData.photo === undefined
+        //- if userData.photo
+        //-   img.sect-mid-logo-img(src=`/imgs/users/${userId}/user-display-picture/${userData.photo}`)
+        //- else if userData.photo === undefined
           img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
         .full_user_name
           .firstname
@@ -30,7 +31,6 @@ block content
             if user.username === undefined ? userName = 'Enter Your First Name' : userName = user.username
             input.usernameInput(placeholder=`${userName}`, type='text')
       section.electronic-address
-        h2.eAddress-heading-h1 ELECTRONIC ADDRESS
         .email_phNumber
           .email
             h2 Email
@@ -99,6 +99,8 @@ block content
     div.buttons-submit_logout
       button.submit_info SUBMIT DATA
       button.logoutBtn Logout
+      input.userId(type="hidden" value=`${userId}`)
+      button.deleteBtn DELETE USER 💀
   .overlay-container-update
     h3.updateConfirmText Are you sure, you want to update the user?
     .update-Overlay-btns

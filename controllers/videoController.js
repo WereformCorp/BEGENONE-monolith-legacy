@@ -283,23 +283,6 @@ exports.createVideo = catchAsync(async (req, res, next) => {
     req.results,
   );
 
-  // const videoData = {
-  //   title: req.body.title || `Uploaded At: ${formattedDate}`,
-  //   description: req.body.description,
-  //   thumbnail: videoFileData.thumbnail.key || undefined,
-  //   section: req.body.section,
-  //   channel: req.user.channel._id,
-  //   bookmark: req.body.bookmark,
-  //   sponsors: req.body.sponsors,
-  //   comments: req.body.comments,
-  //   audio: req.body.audio,
-  //   // video: req.file.filename,
-  //   video: videoFileData.video.key,
-
-  //   user: req.user.id,
-  //   time: Date.now(),
-  // };
-
   try {
     const videoFileData = req.s3Data;
 

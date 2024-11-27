@@ -736,9 +736,22 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
 exports.channelSettings = catchAsync(async (req, res, next) => {
   const userData = await User.findById(res.locals.user._id).populate('channel');
   const { channel } = userData;
+
+  // Map channelLogo and bannerImage fields to CloudFront URLs
+  if (channel.channelLogo) {
+    channel.channelLogo = `${cloudFrontDomain}/${channel.channelLogo}`; // Save CloudFront URL in profilePicUrl
+  }
+  if (channel.bannerImage) {
+    channel.bannerImage = `${cloudFrontDomain}/${channel.bannerImage}`; // Save CloudFront URL in bannerImageUrl
+  }
+
+  console.log(`USERDATA FROM VIEWS CONTROLLER:`, userData);
+
   res.status(200).render(`../views/settings/channel/channel-settings`, {
     title: `Channel Settings`,
     channel,
+    channelLogo: channel.channelLogo,
+    bannerImage: channel.bannerImage,
     user: res.locals.user,
     useCustomLeftNav: true,
     userData,

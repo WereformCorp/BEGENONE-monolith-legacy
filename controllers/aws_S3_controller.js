@@ -119,7 +119,7 @@ const uploadVideoToS3 = async (file, channelId) => {
 //   }
 // };
 
-const uploadThumbVideoToS3 = async (file, channelId, filetype) => {
+const uploadContentToS3 = async (file, channelId, filetype) => {
   const ext = file.mimetype.split('/')[1];
   const filename = `${filetype}-${channelId}-${Date.now().toString()}.${ext}`;
 
@@ -188,7 +188,7 @@ const generatePresignedUrl = async (key) => {
 
 // Export the function
 module.exports = {
-  uploadThumbVideoToS3,
+  uploadContentToS3,
   uploadVideoToS3,
   generatePresignedUrl,
   // uploadThumbToS3,

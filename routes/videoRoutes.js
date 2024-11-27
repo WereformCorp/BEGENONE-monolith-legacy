@@ -6,10 +6,10 @@ const videoController = require('../controllers/videoController');
 const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
 const authController = require('../controllers/authController');
-const checkActiveStatus = require('../utils/checkActiveStatus');
+// const checkActiveStatus = require('../utils/checkActiveStatus');
 
 const {
-  uploadThumbVideoToS3,
+  uploadContentToS3,
   // uploadVideoToS3,
   // uploadThumbToS3,
   // streamVideoFromS3,
@@ -141,7 +141,7 @@ router
         console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
         let thumbnailResult;
 
-        const videoResult = await uploadThumbVideoToS3(
+        const videoResult = await uploadContentToS3(
           req.file,
           channelId,
           'video',
@@ -149,7 +149,7 @@ router
         console.log('Video uploaded:', videoResult.result);
 
         if (getThumbnail && getThumbnail.thumb) {
-          thumbnailResult = await uploadThumbVideoToS3(
+          thumbnailResult = await uploadContentToS3(
             getThumbnail.thumb,
             channelId,
             'thumbnail',

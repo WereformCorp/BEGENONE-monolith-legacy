@@ -458,7 +458,8 @@
 .platform-mode button,
 .language-details button,
 .themes-details button,
-.logoutBtn {
+.logoutBtn,
+.deleteBtn {
   height: 3rem;
   width: 12rem;
   border-radius: 8px;
@@ -475,20 +476,23 @@
   justify-content: space-between;
 }
 
-.logoutBtn {
+.logoutBtn,
+.deleteBtn {
   margin-top: 5rem;
   background-color: rgba(255, 13, 13, 0.737);
   border: transparent;
 }
 
-.logoutBtn:hover {
+.logoutBtn:hover,
+.deleteBtn:hover {
   border: 0.5px solid rgba(255, 255, 255);
 }
 
 .platform-mode button:hover,
 .language-details button:hover,
 .themes-details button:hover,
-.logoutBtn:hover {
+.logoutBtn:hover,
+.deleteBtn:hover {
   cursor: pointer;
   transform: scale(102%);
 }
