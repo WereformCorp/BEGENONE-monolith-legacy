@@ -50,22 +50,19 @@ exports.signup = catchAsync(async (req, res, next) => {
     req.newUser = newUser;
     next();
   } catch (err) {
-    console.log(err, err.message);
+    return next(new AppError(`There is an Error: ERROR (${err})`, 400));
   }
 });
 
 exports.signupAuth = catchAsync(async (req, res, next) => {
   // 1) Get User based on Posted EMAIL
   const { newUser } = req;
-  console.log(`NEW USER:`, newUser);
 
   if (!newUser) return next(new AppError(`Data Not Found!`, 404));
 
   // 2) Generate random reset token
-  console.log(`IS THE CODE REACHING HERE?`);
   const signupToken = await newUser.createSignupAuthToken();
   await newUser.save({ validateBeforeSave: true });
-  console.log(`SIGN UP TOKEN:`, signupToken);
 
   // 3) Send it to user's email
   const authURL = `${req.protocol}://${req.get(
@@ -75,60 +72,30 @@ exports.signupAuth = catchAsync(async (req, res, next) => {
   const message = `Please confirm your email here: ${authURL}`;
 
   try {
-    // if (authURL)
-
     await sendMail({
       email: req.newUser.eAddress.email,
       subject: `Your Sign Up Authentication Email (Valid for 10 minutes)`,
       message,
     });
 
-    // res.redirect('/email-confirmation');
-
     return res.status(200).json({
       status: 'success',
       message: 'Token send to email!',
-      data: {
-        //   userFirstName: newUser.name.firstName,
-        //   userSecondName: newUser.name.secondName,
-        //   userEmail: newUser.eAddress.email,
-        //   userPassword: newUser.eAddress.password,
-        //   userPasswordConfirm: newUser.eAddress.passwordConfirm,
-        //   username: newUser.username,
-      },
     });
   } catch (err) {
-    console.log(`ERROR Signup Auth: `, err);
     return res.json({
       message: `There is an error sending the email`,
       error: err,
     });
-    // newUser.eAddress.passwordResetToken = undefined;
-    // newUser.eAddress.passwordResetExpires = undefined;
-    // await newUser.save({ validateBeforeSave: false });
-
-    // return next(
-    //   new AppError(`There was an error sending the email. Try again later!`),
-    // );
   }
 });
 
 exports.verifySignupToken = catchAsync(async (req, res, next) => {
   // 1) Hash the token provided in URL to compare with the stored hashed token
-  console.log(`HAS THE CODE REACHED TILL HERE?`);
-
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
     .digest('hex');
-
-  console.log(`HASHED TOKEN:`, hashedToken);
-
-  // // 2) Find user with matching signup token and ensure token hasn’t expired
-  // const user = await User.findOne({
-  //   'eAddress.signupAuthToken': hashedToken,
-  //   'eAddress.signupAuthTokenExpiresIn': { $gt: Date.now() },
-  // });
 
   // Check for the signup token
   const user = await User.findOne({
@@ -145,18 +112,14 @@ exports.verifySignupToken = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    console.log('No matching user or token expired.');
     return next(new AppError('Token is invalid or has expired', 400));
   }
-
-  console.log('User found:', user);
 
   // 3) Activate user’s account
   user.active = true;
   user.eAddress.signupAuthToken = undefined;
   user.eAddress.signupAuthTokenExpiresIn = undefined;
   await user.save();
-  console.log('User account activated and token cleared.');
 
   // 4) Log the user in (or simply return success if that’s not desired)
   createSendToken(user, 200, res);
@@ -167,7 +130,6 @@ exports.verifySignupToken = catchAsync(async (req, res, next) => {
 exports.resendVerificationLink = catchAsync(async (req, res, next) => {
   // Assuming req.user contains authenticated user data, fetched via a middleware
   const { user } = res.locals;
-  console.log(`156 LINE USER:`, user);
 
   // 1) Check if the user is already active
   if (user.active) {
@@ -209,9 +171,6 @@ exports.resendVerificationLink = catchAsync(async (req, res, next) => {
   user.eAddress.resendAuthToken = signupToken;
   user.eAddress.signupAuthTokenExpiresIn = Date.now() + 7 * 24 * 60 * 60 * 1000; // 10 minutes expiration
   await user.save({ validateBeforeSave: true });
-
-  console.log(`SIGN UP TOKEN FROM RE-VERIFICATION:`, signupToken);
-  console.log(`USER FROM RE-VERIFICATION:`, user);
 
   // 3) Construct verification URL
   const authURL = `${req.protocol}://${req.get('host')}/api/v1/users/verifyEmail/${signupToken}`;

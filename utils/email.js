@@ -3,12 +3,6 @@ const nodemailer = require('nodemailer');
 
 const sendMail = async (options) => {
   // 1) Create A Transporter
-  let isProduction;
-  if (process.env.NODE_ENV === 'production') {
-    isProduction = true;
-  } else if (process.env.NODE_ENV === 'development') {
-    isProduction = false;
-  }
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -17,8 +11,12 @@ const sendMail = async (options) => {
       pass: process.env.EMAIL_PASSWORD,
     },
     tls: {
-      rejectUnauthorized: isProduction, // Ignore self-signed certificate issues
+      rejectUnauthorized: process.env.NODE_ENV === 'production', // Ignore self-signed certificate issues
     },
+    secure: process.env.NODE_ENV === 'production',
+    pool: true, // Enable connection pooling
+    connectionTimeout: 150000, // 2.5 minutes
+    dnsTimeout: 150000, // 2.5 minutes
     // Activate in gmail "less secure app" option in case I'm using GMAIL
   });
 
