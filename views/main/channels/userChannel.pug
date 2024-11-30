@@ -8,15 +8,15 @@ block content
   if channel
     section.sect-mid-contentContainer
       section.sect-mid-rows.sect-mid-row-1
-        if user && user.channel && user.channel.bannerImage
-          img.sect-mid-banner-img(src=`/imgs/users/${channel.user._id}/banner-images/${channel.bannerImage}`)
+        if channel && channel.bannerImage
+          img.sect-mid-banner-img(src=`${bannerImage}`)
         else
           img.sect-mid-banner-img(src=`https://begenone-images.s3.amazonaws.com/default-banner-image.jpg`)
       section.sect-mid-rows.sect-mid-row-2
         section.sect-mid-chDetails
           section.sect-mid-logo
-            if user && user.channel && user.channel.displayImage
-              img.sect-mid-logo-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
+            if channel && channelLogo
+              img.sect-mid-logo-img(src=`${channelLogo}`)
             else
               img.sect-mid-logo-img(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
           //- section.sect-mid-awards
@@ -140,8 +140,10 @@ block content
               .featuredVideo
                 img.featuredVideo-video(src=`${LatestVideoThumbnail}`, alt="")
                 h2.featuredVideo-title= latestVideo.title
-          else
-            a(href=`/watch/${latestVideo._id}`) 
+          else if latestVideo === undefined || null
+            h2.featuredVideo-title= `NO VIDEOS FOUND`
+
+            //- a(href=`/watch/${latestVideo._id}`) 
               .featuredVideo
                 img.featuredVideo-video(src=`${LatestVideoThumbnail}`, alt="")
                 h2.featuredVideo-title= latestVideo.title

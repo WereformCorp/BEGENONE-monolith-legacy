@@ -10,10 +10,6 @@ const createChannel = async (
   try {
     const user = document.getElementById('userId').value;
     console.log(user);
-    const resUser = await axios.get(`/api/v1/users/${user}`);
-    console.log(`This is User Response: ${resUser}`);
-    const userChannel = resUser.data.channel;
-    console.log(userChannel);
 
     let url;
     let method;
@@ -23,6 +19,12 @@ const createChannel = async (
       url: `/url/get-env-url`,
     });
     const urlPath = baseUrl.data.url;
+
+    const resUser = await axios.get(`${urlPath}/api/v1/users/${user}`);
+    console.log(`This is User Response: ${JSON.stringify(resUser, null, 2)}`);
+    const userChannel = resUser.data.user.channel;
+    console.log(userChannel);
+
     if (userChannel && userChannel._id) {
       // Update an existing channel
       url = `${urlPath}/api/v1/channels/${userChannel._id}`;

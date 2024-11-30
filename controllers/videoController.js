@@ -286,7 +286,8 @@ exports.createVideo = catchAsync(async (req, res, next) => {
   try {
     const videoFileData = req.s3Data;
 
-    console.log('Video File Data:', videoFileData.video);
+    console.log('Video File Data VIDEO 🔥🔥🔥:', videoFileData.video);
+    console.log('Video File Data THUMBNAIL 🔥🔥🔥:', videoFileData.thumbnail);
 
     const videoData = {
       title: req.body.title || `Uploaded At: ${formattedDate}`,

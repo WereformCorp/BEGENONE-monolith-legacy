@@ -31,6 +31,24 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+/* .section-middle-image-editor-container {
+  display: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgb(24, 24, 24, 0.3);
+} */
+
+.section-middle-image-editor {
+  position: fixed;
+  width: 80%;
+  height: auto;
+  justify-self: center;
+  align-self: center;
+  top: 10rem;
+  z-index: 10000000000;
+}
+
 a {
   text-decoration: none;
 }

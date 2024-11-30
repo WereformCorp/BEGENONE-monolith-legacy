@@ -61,6 +61,16 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
   },
+  subscriptions: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Reference to Subscription model
+      ref: 'Subscription',
+    },
+  ],
+  subscriptionStartDate: {
+    type: Date,
+    default: Date.now(), // Set a default value or leave it undefined for old users
+  },
   subscribedChannels: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -26,6 +26,7 @@ const userRouter = require('./routes/userRoutes');
 const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
 const searchRouter = require('./routes/searchRoutes');
+const subscriptionRouter = require('./routes/subscriptionRoutes');
 // const notificationRouter = require('./routes/notificationRoutes');
 const urlPathRoutes = require('./routes/urlPathRoutes');
 
@@ -133,6 +134,7 @@ app.use('/api/v1/sponsors', sponsorRouter);
 app.use('/api/v1/stories', storyRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/videos', videoRouter);
+app.use('/api/v1/subscriptions', subscriptionRouter);
 
 // app.get('/overview', (req, res) => {
 //   res.status(200).render('main/contents/mainVideo', {

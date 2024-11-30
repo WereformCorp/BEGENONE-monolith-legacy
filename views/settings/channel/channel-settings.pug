@@ -5,9 +5,10 @@ block append head
   link(rel="stylesheet", href="/css/chMediaQueries.css")
 
 block content
+  //- .image-editor(style='z-index: 1000000000; position: absolute; width: 80%; max-width: 82%; top: 8rem; height: 80%; max-height=82%; justify-self:center; align-self:center;')
   section.sect-mid-contentContainer
-    if user
-      input(type="hidden" id="userId" value=`${user._id}`)
+    if userData
+      input(type="hidden" id="userId" value=`${userDataId}`)
     if userData && userData.channel
       input(type="hidden" id="userChannelId" value=`${userData.channel._id}`)
     h1.channel-setting-h1 CHANNEL SETTINGS

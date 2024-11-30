@@ -103,6 +103,7 @@ exports.reVerifyEmail = catchAsync(async (req, res, next) => {
 exports.getOverview = catchAsync(async (req, res, next) => {
   try {
     const videos = await axios.get(`${urlPath}/api/v1/videos`);
+    const channelResponse = await axios.get(`${urlPath}/api/v1/channels`);
     const thumbnailsResponse = await axios.get(
       `${urlPath}/api/v1/videos/thumbnail`,
     );
@@ -115,80 +116,95 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         path: 'channel',
         select: '_id displayImage',
       });
-
+    const channels = channelResponse.data.data;
     const thumbnails = thumbnailsResponse.data.urls;
-
-    // Map thumbnails to easily look up URLs by thumbnail name
     const thumbnailMap = new Map(
       thumbnails.map((item) => [
         item.thumbnail,
-        `${cloudFrontDomain}/${item.thumbnail}`, // Combine CloudFront domain and the thumbnail name
+        `${cloudFrontDomain}/${item.thumbnail}`,
       ]),
     );
 
-    // console.log(`THUMBNAIL MAP LINE 83 VIEWS CONTROLLER`, thumbnailMap);
+    console.log('Thumbnail Map:', thumbnailMap);
 
-    // Filter out videos without a valid channel
+    const channelLogoMap = new Map(
+      channels.map((channel) => [
+        channel._id,
+        channel.channelLogo
+          ? `${cloudFrontDomain}/${channel.channelLogo}`
+          : null,
+      ]),
+    );
     const filteredVideos = data.filter((video) => video.channel);
-
-    // let videoTimeAgo;
-    // filteredVideos.forEach((video) => {
-    //   video.videoTimeAgo = calculateTimeAgo(video.time);
-    //   video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
-    // });
-
-    // filteredVideos.forEach((video) => {
-    //   video.videoTimeAgo = calculateTimeAgo(video.time);
-
-    //   // Get the thumbnail URL from the map; if not found, set it to null
-    //   // console.log(`THUMBNAIL PATH`, video);
-
-    //   video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
-    // });
-
-    // let defaultThumb;
+    const channelLogoArray = [];
     filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
-
-      // Check if the thumbnail has 'default-thumbnail.jpeg' in its name
       if (
-        video.thumbnail &&
-        video.thumbnail.includes('default-thumbnail.jpeg')
+        // video.thumbnail &&
+        // video.thumbnail.includes('default-thumbnail.jpeg')
+        !video.thumbnail ||
+        video.thumbnail === 'default-thumbnail.jpeg'
       ) {
-        // If the thumbnail contains 'default-thumbnail.jpeg', use the S3 URL
-        video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Use the S3 URL
+        video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
       } else {
-        // Otherwise, use the CloudFront URL from the map
         video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
       }
+
+      console.log(`Looking for thumbnail: ${video.thumbnail}`);
+      console.log(`Mapped URL: ${thumbnailMap.get(video.thumbnail)}`);
+      // Handle channel logo
+      if (video && video.channel) {
+        const channelId = video.channel._id || video.channel;
+        video.channel.channelLogo = channelLogoMap.get(channelId) || null;
+        video.channelLogo = channelLogoMap.get(channelId) || null;
+      }
+      channelLogoArray.push({
+        channelLogo: video.channelLogo,
+      });
     });
 
-    // Define the videoId that should be featured at the top (example hardcoded)
-    const featuredVideoId = '673f74ba66154c6994b9460f'; // Replace this with your dynamic logic if needed
+    // filteredVideos.forEach((video) => {
+    //   console.log(`Video ID: ${video._id}, Thumbnail: ${video.thumbnail}`);
+    // });
 
-    // Move the featured video to the top if it exists
+    const extractedChannelLogo = JSON.stringify(channelLogoArray);
+    // console.log(`FEATURE VIDEO's CHANNEL:`, extractedChannelLogo);
+
+    //////////////////////////////////////////////////////////////////////////
+
+    // Shuffle the filteredVideos array randomly
+    const shuffleArray = (array) => {
+      // eslint-disable-next-line no-plusplus
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+      }
+    };
+
+    shuffleArray(filteredVideos); // Shuffle the videos
+
+    /////////////////////////////////////////////////////////////////////////
+
+    const featuredVideoId = '673f74ba66154c6994b9460f';
     const featuredVideo = filteredVideos.find(
       (video) => video._id.toString() === featuredVideoId,
     );
     const otherVideos = filteredVideos.filter(
       (video) => video._id.toString() !== featuredVideoId,
     );
-
-    // Combine the featured video with the rest of the videos
     const sortedVideos = featuredVideo
       ? [featuredVideo, ...otherVideos]
       : otherVideos;
 
-    // console.log(`DEFAULT THUMB:`, filteredVideos);
-
+    // console.log(`Sorted Videos 🔥🔥🔥🔥🔥🔥🔥`, sortedVideos);
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
       videos: sortedVideos,
       thumbnail: thumbnailsResponse.data.urls,
-      // defaultThumb,
+      channelLogo: extractedChannelLogo.channelLogo,
       user: res.locals.user,
       userData,
-      // videoTimeAgo,
+      extractedChannelLogo,
     });
   } catch (err) {
     return res.json({
@@ -559,23 +575,31 @@ exports.search = catchAsync(async (req, res, next) => {
         ...video,
         thumbnailUrl: thumbnailMap.get(video.thumbnail) || null,
         timeAgo: calculateTimeAgo(video.time), // Assuming you have a function to calculate time ago
+        channelLogo: video.channel.channelLogo || null,
       }));
 
-    // console.log(`Video WITH THUMBNAILS:`, videosWithThumbnails);
-    // videosWithThumbnails.forEach((vid) => {
-    //   const username = vid.channel.channelUserName;
-    //   console.log(`USERNAME:`, username);
-    // });
+    videosWithThumbnails.forEach((video) => {
+      video.channelLogo = `${cloudFrontDomain}/${video.channelLogo}`;
+    });
 
-    if (!videosWithThumbnails || videosWithThumbnails.length === 0) {
-      return next(new AppError('There are no videos to be found.', 404));
-    }
+    // if (videosWithThumbnails.channelLogo) {
+    //   videosWithThumbnails.channelLogo = `${cloudFrontDomain}/${videosWithThumbnails.channelLogo}`; // Save CloudFront URL in profilePicUrl
+    // }
+
+    console.log(`CHANNEL LOGO:`, videosWithThumbnails);
+
+    // if (!videosWithThumbnails || videosWithThumbnails.length === 0) {
+    //   return next(new AppError('There are no videos to be found.', 404));
+    // }
+
+    // console.log(`VIDEOS WITH THUMBNAILS`, videosWithThumbnails);
 
     // Render the search results with the correct videosWithThumbnails
     res.status(200).render('../views/main/search/_listSearch', {
       title: 'Search Videos',
       user: res.locals.user,
       videos: videosWithThumbnails,
+      // channelLogo: videosWithThumbnails.channel.channelLogo,
     });
   } catch (err) {
     res.status(500).json({
@@ -663,39 +687,36 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
   );
 
   const extractedData = channelData.data.data;
+
+  // Map channelLogo and bannerImage fields to CloudFront URLs
+  if (extractedData.channelLogo) {
+    extractedData.channelLogo = `${cloudFrontDomain}/${extractedData.channelLogo}`; // Save CloudFront URL in profilePicUrl
+  }
+  if (extractedData.bannerImage) {
+    extractedData.bannerImage = `${cloudFrontDomain}/${extractedData.bannerImage}`; // Save CloudFront URL in bannerImageUrl
+  }
   // console.log(`ExtractedData`, extractedData);
   const { videos } = extractedData;
   console.log(`Extracted --------- Data:`, extractedData);
-  // videos.forEach((video) => video);
   const latestVideo =
     extractedData.videos && extractedData.videos.length > 0
       ? extractedData.videos[0]
       : null;
   const wiresData = extractedData.wires.map((wire) => wire);
-  // console.log(wiresData);
 
   const thumbnailsResponse = await axios.get(
     `${urlPath}/api/v1/videos/thumbnail`,
   );
 
   const thumbnails = thumbnailsResponse.data.urls;
-
-  // Map thumbnails to easily look up URLs by thumbnail name
   const thumbnailMap = new Map(
     thumbnails.map((item) => [item.thumbnail, item.url]),
   );
 
   const LatestVidThumbKey = latestVideo ? latestVideo.thumbnail : null;
-
-  // videos.forEach((video) => {
-  //   video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
-  // });
-
   videos.forEach((video) => {
-    // Check if the thumbnail name contains "default-thumbnail.jpeg"
     if (video.thumbnail && video.thumbnail.includes('default-thumbnail.jpeg')) {
-      // If it contains "default-thumbnail.jpeg", use the S3 URL
-      video.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Replace with your actual S3 URL
+      video.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
     } else {
       // Otherwise, use the CloudFront URL
       video.thumbnailUrl = thumbnailMap.get(video.thumbnail) || null;
@@ -711,7 +732,7 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
       latestVideo.thumbnail &&
       latestVideo.thumbnail.includes('default-thumbnail.jpeg')
     ) {
-      latestVideo.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`; // Replace with your actual S3 URL
+      latestVideo.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
     } else {
       latestVideo.thumbnailUrl = thumbnailMap.get(LatestVidThumbKey) || null;
     }
@@ -719,7 +740,6 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
 
   // console.log(`VIDEO FROM SINGLE CHANNEL: `, latestVideo.thumbnailUrl);
   // console.log(`THUMBNAILS FROM SINGLE CHANNEL: `, thumbnails);
-
   // console.log(`RESPONSE -> LOCALS -> User:`, res.locals.user);
 
   // const channelData = await Channel.findById(extractedData._id);
@@ -727,6 +747,8 @@ exports.singleChannel = catchAsync(async (req, res, next) => {
     title: 'USER PROFILE',
     channel: extractedData,
     latestVideo,
+    channelLogo: extractedData.channelLogo,
+    bannerImage: extractedData.bannerImage,
     videos,
     LatestVideoThumbnail: latestVideo ? latestVideo.thumbnailUrl : null,
     wiresData,
@@ -738,23 +760,25 @@ exports.channelSettings = catchAsync(async (req, res, next) => {
   const { channel } = userData;
 
   // Map channelLogo and bannerImage fields to CloudFront URLs
-  if (channel.channelLogo) {
+  if (channel && channel.channelLogo) {
     channel.channelLogo = `${cloudFrontDomain}/${channel.channelLogo}`; // Save CloudFront URL in profilePicUrl
   }
-  if (channel.bannerImage) {
+  if (channel && channel.bannerImage) {
     channel.bannerImage = `${cloudFrontDomain}/${channel.bannerImage}`; // Save CloudFront URL in bannerImageUrl
   }
 
-  console.log(`USERDATA FROM VIEWS CONTROLLER:`, userData);
+  console.log(`USER FROM VIEWS CONTROLLER:`, res.locals.user);
+  console.log(`USERDATA FROM VIEWS CONTROLLER:`, userData._id);
 
   res.status(200).render(`../views/settings/channel/channel-settings`, {
     title: `Channel Settings`,
     channel,
-    channelLogo: channel.channelLogo,
-    bannerImage: channel.bannerImage,
+    channelLogo: channel ? channel.channelLogo : null,
+    bannerImage: channel ? channel.bannerImage : null,
     user: res.locals.user,
     useCustomLeftNav: true,
     userData,
+    userDataId: userData._id,
   });
 });
 

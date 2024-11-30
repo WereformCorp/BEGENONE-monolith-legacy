@@ -13,11 +13,9 @@ block content
       a(href=`/watch/${video._id}`).ctnt-ctnr-link
         .content-containers.content-container-1
             section.section-Header
-              if user && user.channel && user.channel.displayImage
-                - const userId = user._id
-                - console.log(userId)
-                  img.sectionHead-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
-              else
+              if video.channelLogo
+                  img.sectionHead-chLogo(src=`${video.channelLogo}`)
+              else 
                 img.sectionHead-chLogo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
               .sectionHead-dtls
                 .sectionHead-chName_N_sub

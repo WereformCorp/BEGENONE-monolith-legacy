@@ -3,6 +3,7 @@ import {
   Uppy,
   Dashboard,
   XHRUpload,
+  ImageEditor,
   Form,
   // } from 'https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs';
 } from 'https://releases.transloadit.com/uppy/v4.7.0/uppy.min.mjs';
@@ -75,7 +76,7 @@ const uppyBanner = new Uppy({
 uppyBanner
   .use(Dashboard, {
     inline: false,
-    target: '#ch-upload-banner-file-btn',
+    target: '.section-middle-image-editor',
     theme: 'dark',
     width: '100%',
     height: '100%',
@@ -93,6 +94,12 @@ uppyBanner
     onError: (error) => {
       alert('Upload failed. Please try again.');
       console.error('Upload error:', error);
+    },
+  })
+  .use(ImageEditor, {
+    target: Dashboard,
+    cropperOptions: {
+      aspectRatio: 5 / 1, // Set the aspect ratio to 5:1
     },
   })
   .use(Form, {
@@ -116,14 +123,17 @@ document
 
 // Handle modal close event and cancel upload
 uppyBanner.on('file-added', (file) => {
-  uppyBanner.getPlugin('Dashboard').closeModal();
-  if (file)
+  // uppyBanner.getPlugin('Dashboard').closeModal();
+  document.getElementById('container').style.backgroundColor =
+    'rgba(24,24,24,0.3)';
+  if (file) {
     document.getElementById('openUppyButton-banner').style.display = 'none';
-  else document.getElementById('openUppyButton-banner').style.display = 'flex';
+  } else
+    document.getElementById('openUppyButton-banner').style.display = 'flex';
   const dashboardPlugin = uppyBanner.getPlugin('Dashboard');
   dashboardPlugin.setOptions({
     inline: true, // Change to inline mode
-    target: '#ch-upload-banner-file-btn', // Ensure this matches the target ID
+    target: '.section-middle-image-editor', // Ensure this matches the target ID
   });
 });
 

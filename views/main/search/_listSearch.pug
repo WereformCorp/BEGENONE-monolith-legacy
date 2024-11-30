@@ -29,22 +29,22 @@ block content
                   img.thumbnail-img(src=`${video.thumbnailUrl}`)
                 else
                   img.thumbnail-img(src=`/imgs/thumbnails/sample.jpg`)
+              .title_N_description
+                h2.content-title= video.title
+                p.content-description= video.description || `There is no description available.`
+                .channel_details
+                  //- img.channel-logo(src=`/imgs/users/${video.channel.displayImage}`)
+                  if video && video.channelLogo
+                    img.channel-logo(src=`${video.channelLogo}`)
+                  else
+                    img.channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+                  h4.channel-name= `@${video.channel.channelUserName}`
                 .date_N_views
                   h4
                     span= video.views
                     |  Views
                   h4
                     span= videoTimeAgo
-              .title_N_description
-                h2.content-title= video.title
-                p.content-description= video.description || `There is no description available.`
-                .channel_details
-                  //- img.channel-logo(src=`/imgs/users/${video.channel.displayImage}`)
-                  if user && user.channel && user.channel.displayImage
-                    img.channel-logo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
-                  else
-                    img.channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
-                  h4.channel-name= `@${video.channel.channelUserName}`
               .date_N_views-2
                   h4
                     span= video.views

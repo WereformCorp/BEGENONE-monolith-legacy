@@ -51,7 +51,7 @@ const upload = multer({ storage: storage });
 
 // // MUST CHANGE THE ROUTES IN UPLOAD-VIDEO.JS
 
-const getThumbnail = {};
+let getThumbnail = {};
 
 const uploadThumbnailFunction = (req, res) => {
   // if (req.file) {
@@ -67,7 +67,10 @@ const uploadThumbnailFunction = (req, res) => {
     console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
 
     // Save the uploaded thumbnail file in the request object for use later
-    req.thumbnail = req.file;
+    // req.thumb = req.file;
+    getThumbnail.thumb = req.file;
+
+    console.log(`getTHUMBNAIL . THUMB FUNCTION:`, getThumbnail.thumb);
     return res.status(200).json({
       status: 'success',
       file: req.file,
@@ -154,18 +157,30 @@ router
             channelId,
             'thumbnail',
           );
-          console.log('Thumbnail uploaded:', thumbnailResult.result);
+          console.log('Thumbnail Upload Result:', thumbnailResult);
         }
 
-        if (thumbnailResult) {
-          req.s3Data = {
-            thumbnail: thumbnailResult || undefined,
-          };
-        }
+        console.log(
+          `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 🔥🔥🔥🔥:`,
+          getThumbnail,
+        );
+        console.log(
+          `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 2 🔥🔥:`,
+          getThumbnail.thumb,
+        );
+
+        // if (thumbnailResult) {
+        //   req.s3Data = {
+        //     thumbnail: thumbnailResult || undefined,
+        //   };
+        // }
 
         req.s3Data = {
           video: videoResult || null,
+          thumbnail: thumbnailResult || null,
         };
+
+        console.log(`REQUEST S3-DATA:`, req.s3Data);
 
         return videoController.createVideo(req, res);
       } catch (error) {

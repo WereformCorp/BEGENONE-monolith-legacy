@@ -13,10 +13,10 @@ const sendMail = async (options) => {
     tls: {
       rejectUnauthorized: process.env.NODE_ENV === 'production', // Ignore self-signed certificate issues
     },
-    secure: process.env.NODE_ENV === 'production',
-    pool: true, // Enable connection pooling
-    connectionTimeout: 150000, // 2.5 minutes
-    dnsTimeout: 150000, // 2.5 minutes
+    // secure: process.env.NODE_ENV === 'production',
+    // pool: true, // Enable connection pooling
+    // connectionTimeout: 150000, // 2.5 minutes
+    // dnsTimeout: 150000, // 2.5 minutes
     // Activate in gmail "less secure app" option in case I'm using GMAIL
   });
 
