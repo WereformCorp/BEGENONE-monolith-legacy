@@ -1,0 +1,141 @@
+extends ../base
+
+block append head
+  link(rel='stylesheet', href='/css/pricing.css')
+  link(rel='stylesheet', href='/css/pricingMediaQueries.css')
+  script(src='https://js.stripe.com/v3/')
+
+block content
+  section.sect-mid-contentContainer
+    img.pricing-heading-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", alt="")
+    h1.pricing-heading-h1 PRICING BUILT FOR INDIVIDUALS and BUSINESSES OF ALL SIZES
+    .pricing-container
+      //- .pricing-cntnrs.pricing-cntnr-crown
+      //-   img.pricing-crown-img(src='/imgs/crown-pricing.png')
+      //-   h2.pricing-crown-h2 CROWN
+      //-   .pricing-features
+      //-     h3.pricing-features-lists.pricing-features-list-1
+      //-       | 1. FEATURE ONE
+      //-     h3.pricing-features-lists.pricing-features-list-2
+      //-       | 2. FEATURE TWO
+      //-     h3.pricing-features-lists.pricing-features-list-3
+      //-       | 3. FEATURE THREE
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 4. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 5. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 6. FEATURE FOUR
+      //- .pricing-cntnrs.pricing-cntnr-diamond
+      //-   img.pricing-diamond-img(src='/imgs/diamond-pricing.png')
+      //-   h2.pricing-diamond-h2 DIAMOND
+      //-   .pricing-features.pricing-feature-diamond
+      //-     h3.pricing-features-lists.pricing-features-list-1
+      //-       | 1. FEATURE ONE
+      //-     h3.pricing-features-lists.pricing-features-list-2
+      //-       | 2. FEATURE TWO
+      //-     h3.pricing-features-lists.pricing-features-list-3
+      //-       | 3. FEATURE THREE
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 4. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 5. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 6. FEATURE FOUR
+      //- .pricing-cntnrs.pricing-cntnr-platinum
+      //-   img.pricing-platinum-img(src='imgs/platinum-pricing.png')
+      //-   h2.pricing-platinum-h2 PLATINUM
+      //-   .pricing-features.pricing-feature-platinum
+      //-     h3.pricing-features-lists.pricing-features-list-1
+      //-       | 1. FEATURE ONE
+      //-     h3.pricing-features-lists.pricing-features-list-2
+      //-       | 2. FEATURE TWO
+      //-     h3.pricing-features-lists.pricing-features-list-3
+      //-       | 3. FEATURE THREE
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 4. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 5. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 6. FEATURE FOUR
+      //- .pricing-cntnrs.pricing-cntnr-gold
+      //-   h2.pricing-gold-h2 GOLD
+      //-   .pricing-features.pricing-feature-gold
+      //-     h3.pricing-features-lists.pricing-features-list-1
+      //-       | 1. FEATURE ONE
+      //-     h3.pricing-features-lists.pricing-features-list-2
+      //-       | 2. FEATURE TWO
+      //-     h3.pricing-features-lists.pricing-features-list-3
+      //-       | 3. FEATURE THREE
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 4. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 5. FEATURE FOUR
+      //-     h3.pricing-features-lists.pricing-features-list-4
+      //-       | 6. FEATURE FOUR
+      //- .pricing-cntnrs.pricing-cntnr-silver
+        h2.pricing-silver-h2 SILVER
+        .pricing-features.pricing-feature-silver
+          h3.pricing-features-lists.pricing-features-list-1
+            | 1. FEATURE ONE
+          h3.pricing-features-lists.pricing-features-list-2
+            | 2. FEATURE TWO
+          h3.pricing-features-lists.pricing-features-list-3
+            | 3. FEATURE THREE
+          h3.pricing-features-lists.pricing-features-list-4
+            | 4. FEATURE FOUR
+          h3.pricing-features-lists.pricing-features-list-4
+            | 5. FEATURE FOUR
+          h3.pricing-features-lists.pricing-features-list-4
+            | 6. FEATURE FOUR
+      .pricing-cntnrs.pricing-cntnr-ea
+        h2.pricing-ea-h2
+          | EARLY ACCESS
+          br
+          span.pricing-ea-h2-span ( Charged Monthly )
+        h2.pricing-price= `$9.99 / Month`
+        .pricing-features.pricing-feature-ea
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-1
+              | Channel Creation
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-2
+              | Video Upload
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-3
+              | Ads Removed
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-4
+              | Premium Stickers
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-4
+              | High Content Boost
+        if userData
+          button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
+            | Start Now!
+            i.fa-solid.fa-credit-card
+        else 
+          a(href="/login").pricing-checkout-button 
+            | Start Now!
+            i.fa-solid.fa-credit-card
+          //- h3.pricing-features-lists.pricing-features-list-4
+          //-   | 6. FEATURE FOUR
+      .pricing-in_depth-details
+        h2.pricing-ea-details-h2 LEARN ABOUT EARLY ACCESS
+        .pricing-features-details
+          h2.pfd-h2 Exclusive Early Access Membership
+          span.pfd-spans
+            span The Early Access Membership for <b> BEGENONE </b> is a limited-time opportunity that provides exclusive features to its holders. During the Early Access period, which may last between <b> 6 to 12 months</b>, only members will have the ability to <b>CREATE CHANNEL</b>, <b>UPLOAD VIDEOS</b>, enjoy an <b>AD-FREE EXPERIENCE</b>, <b>ACCESS PREMIUM STICKERS</b>, and benefit from the <b>HIGH CONTENT BOOST</b>. These advantages will not be available to non-members until the Early Access period ends.
+            br
+            br
+            span As more users join the platform, Early Access members will have a distinct advantage. With fewer content creators and a rapidly growing audience, your content will receive higher visibility and engagement, giving you a significant edge in building your audience. Additionally, the High Content Boost ensures that your videos are prioritized throughout Early Access and continue to receive prominent placement for a month after it concludes.
+            br
+            br
+            span <b>Please note:</b> The price for Early Access may fluctuate and is likely to increase as the platform expands. Securing your membership now locks in your benefits at the current rate, ensuring you don't miss out on this exclusive opportunity. Act fast—sign up today and take full advantage of the benefits while the offer lasts.
+  script(src="/js/stripe.js")
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')

@@ -30,6 +30,10 @@ const wireSchema = new mongoose.Schema({
     minLength: 1,
     maxLength: 2500,
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 wireSchema.pre(/^find/, function (next) {

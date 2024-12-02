@@ -1,6 +1,7 @@
 .sect-mid-nav {
   display: grid;
   grid-template-columns: 1fr 0.8fr;
+  grid-template-rows: max-content;
   align-items: center;
   column-gap: 0.5rem;
   padding-top: 20px;
@@ -127,8 +128,8 @@
   height: 100%;
   max-width: 3rem;
   max-height: 3rem;
-  padding: 0.35rem;
-  border-radius: 15px;
+  /* padding: 0.35rem; */
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
   background: rgba(60, 60, 60, 0.2);

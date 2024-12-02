@@ -1,7 +1,8 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
-const authController = require('../controllers/authController');
 const checkActiveStatus = require('../utils/checkActiveStatus');
+const authController = require('../controllers/authController');
+const pricingController = require('../controllers/pricingController');
 
 const router = express.Router();
 // router.get(
@@ -9,12 +10,17 @@ const router = express.Router();
 //   authController.protect,
 //   viewsController.notifications,
 // );
+router.get(
+  '/',
+  pricingController.createPricingCheckout,
+  authController.isLoggedIn,
+  viewsController.getOverview,
+);
 
-router.get('/tokens', viewsController.tokens);
+router.get('/pricings', viewsController.pricings);
 router.get('/api/v1/users/verifyEmail/:token', viewsController.emailVerifyPage);
 router.get('/re-verify/', viewsController.reVerifyEmail);
 router.get('/email-confirmation', viewsController.emailSentPage);
-router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
 router.get(

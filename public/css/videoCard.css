@@ -7,6 +7,20 @@
   flex-wrap: wrap;
 }
 
+/* .sect-mid-contentContainer {
+  display: flex;
+  background: rgb(28, 28, 28, 0.5);
+  width: 100%;
+  padding: 1.8rem;
+  justify-content: space-evenly;
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  flex-wrap: wrap;
+  border-radius: 1rem;
+  align-items: center;
+  transform: scale(95%);
+} */
+
 .content-containers {
   display: flex;
   flex-direction: column;

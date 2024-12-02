@@ -1,0 +1,15 @@
+@media (max-width: 1200px) {
+  .pricing-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  .nav-slctKit_pricing-text {
+    font-size: 0.6rem;
+  }
+}
+
+/* @media (max-width: 800px) {
+} */

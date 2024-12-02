@@ -23,6 +23,10 @@ const storySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Channel',
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // THIS IS HOW THE VIDEO WILL GET REMOVED AFTER 24 HOURS

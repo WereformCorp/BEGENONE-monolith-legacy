@@ -27,6 +27,10 @@ const notificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

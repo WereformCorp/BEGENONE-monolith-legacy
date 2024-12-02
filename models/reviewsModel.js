@@ -31,6 +31,10 @@ const reviewSchema = new mongoose.Schema({
     ref: 'Product',
     select: '_id',
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Review = mongoose.model('Review', reviewSchema);

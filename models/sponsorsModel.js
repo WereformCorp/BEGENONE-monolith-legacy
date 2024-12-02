@@ -67,6 +67,10 @@ const sponsorSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // sponsorSchema.pre(/^find/, function (next) {

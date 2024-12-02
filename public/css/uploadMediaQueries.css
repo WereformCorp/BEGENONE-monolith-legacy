@@ -25,9 +25,9 @@
     grid-template-columns: 1.1fr 1fr;
   } */
 
-  .sect-mid-contentContainer {
+  /* .sect-mid-contentContainer {
     padding: 2rem;
-  }
+  } */
 
   .ctnt-upload-row-5,
   .ctnt-upload-row-6 {
@@ -129,9 +129,9 @@
     justify-self: center;
   }
 
-  .sect-mid-contentContainer {
+  /* .sect-mid-contentContainer {
     padding: 0.8rem;
-  }
+  } */
 
   .searchBar-InputField {
     height: 2.8rem;
@@ -141,6 +141,11 @@
 @media (max-width: 500px) {
   .section-right {
     display: none;
+  }
+
+  .submit-video-details-btn {
+    flex-direction: column;
+    row-gap: 1rem;
   }
 }
 

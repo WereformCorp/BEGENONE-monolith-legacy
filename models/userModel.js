@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema({
   subscriptions: [
     {
       type: mongoose.Schema.Types.ObjectId, // Reference to Subscription model
-      ref: 'Subscription',
+      ref: 'Pricing',
     },
   ],
   subscriptionStartDate: {

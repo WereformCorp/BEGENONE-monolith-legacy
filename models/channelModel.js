@@ -92,7 +92,7 @@ const channelSchema = new mongoose.Schema({
   ],
   active: {
     type: Boolean,
-    default: true,
+    default: false,
     select: false,
   },
 });
