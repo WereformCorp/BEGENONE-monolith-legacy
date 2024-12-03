@@ -6,6 +6,10 @@ const subscriptionSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Subscription must belong to a user!'],
   },
+  pricingName: {
+    type: String,
+    default: null,
+  },
   pricings: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Pricing',

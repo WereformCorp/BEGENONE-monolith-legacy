@@ -93,28 +93,53 @@ block content
           | EARLY ACCESS
           br
           span.pricing-ea-h2-span ( Charged Monthly )
-        h2.pricing-price= `$9.99 / Month`
+        h2.pricing-price(style="display:flex; flex-direction: column; align-items: center;")
+          | $9.99 / Month <p style="font-size:.825rem;">[Prices May Increase]</p> 
         .pricing-features.pricing-feature-ea
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-1
-              | Channel Creation
+              | Channel Creation <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-2
-              | Video Upload
+              | Video Upload <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-3
-              | Ads Removed
+              | All Ads Removed <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-4
-              | Premium Stickers
+              | Premium Stickers <b class="coming_soon-pricing">(coming soon)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
-            h3.pricing-features-lists.pricing-features-list-4
-              | High Content Boost
+            h3.pricing-features-lists.pricing-features-list-5
+              | Content Boost <b class="available-pricing">(Avaliable)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-6
+              | Promotion <b class="coming_soon-pricing">(coming soon)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-7
+              | Community Post <b class="almost_here-pricing">(Almost Here)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-8
+              | Wires <b class="almost_here-pricing">(Almost Here)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-9
+              | Event Notifications <b class="available-pricing">(Avaliable)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-10
+              | Impression System <b class="coming_soon-pricing">(coming soon)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-10
+              | Sponsorship Tabs <b class="coming_soon-pricing">(coming soon)</b>
         if userData
           button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
             | Start Now!

@@ -117,6 +117,15 @@ const attachUserToLocals = (req, res, next) => {
   next();
 };
 
+const pricingTest = {
+  price: 9.99,
+};
+
+console.log(
+  `CONSOLE LOG FOR MATH EQUATION:`,
+  Math.round(Number(pricingTest.price) * 100),
+);
+
 // Apply the middleware to all routes
 app.use(attachUserToLocals);
 

@@ -20,7 +20,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 2) Create a Checkout Session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    success_url: `${req.protocol}://${req.get('host')}/?pricings=${req.params.pricingID}&user=${req.user.id}&price=${pricing.price}`,
+    success_url: `${req.protocol}://${req.get('host')}/?pricings=${req.params.pricingID}&user=${req.user.id}&price=${pricing.price}&pricingName=${pricing.name}`,
     cancel_url: `${req.protocol}://${req.get('host')}/`,
     customer_email: req.user.eAddress.email,
     client_reference_id: req.params.pricingID,
@@ -36,7 +36,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
               `https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png`,
             ],
           },
-          unit_amount: pricing.price * 100, // price in cents
+          // unit_amount: pricing.price * 100, // price in cents
+          unit_amount: Math.round(Number(pricing.price) * 100), // price in cents
           recurring: {
             interval: 'month', // Frequency of the subscription (can be 'month', 'year', etc.)
           },
@@ -54,7 +55,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
 exports.createPricingCheckout = catchAsync(async (req, res, next) => {
   // This is only temporary, because it's UNSECURE: everyone could make subscriptions without paying.
-  const { pricings, user, price } = req.query;
+  const { pricingName, pricings, user, price } = req.query;
 
   if (!pricings && !user && !price) return next();
 
@@ -62,6 +63,7 @@ exports.createPricingCheckout = catchAsync(async (req, res, next) => {
     pricings,
     user,
     price,
+    pricingName,
     status: 'active',
     autoRenew: true,
   });

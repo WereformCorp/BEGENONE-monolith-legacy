@@ -1,8 +1,10 @@
 const pug = require('pug');
-const catchAsync = require('../utils/catchAsync.js');
+// eslint-disable-next-line import/order
+const catchAsync = require('../utils/catchAsync');
+
 const fs = require('fs');
 const path = require('path');
-const AppError = require('../utils/appError.js');
+// const AppError = require('../utils/appError.js');
 
 exports.templify = catchAsync(async (req, res, next) => {
   // Read & compile the template
