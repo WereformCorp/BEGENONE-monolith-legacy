@@ -115,7 +115,7 @@ uppyThumb
     // showLinkToFileUploadResult: true,
   })
   .use(XHRUpload, {
-    endpoint: 'api/v1/videos/thumbnail',
+    endpoint: 'api/v1/videos/thumbnail/',
     fieldName: 'thumbnail',
     formData: true,
     timeout: 600000,

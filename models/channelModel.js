@@ -34,18 +34,18 @@ const channelSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  products: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Product',
-    },
-  ],
-  reviews: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Review',
-    },
-  ],
+  // products: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Product',
+  //   },
+  // ],
+  // reviews: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Review',
+  //   },
+  // ],
   commentToggle: {
     type: Boolean,
     default: false,
@@ -73,18 +73,18 @@ const channelSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  sponsors: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Sponsor',
-    },
-  ],
-  story: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Story',
-    },
-  ],
+  // sponsors: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Sponsor',
+  //   },
+  // ],
+  // story: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Story',
+  //   },
+  // ],
   tagsList: [
     {
       type: String,

@@ -100,7 +100,7 @@ block content
             each video in channel.videos
               a(href=`/watch/${video._id}`)
                 .content-containers.content-container-1
-                  img.sectionHead-thumbNail(src=`/imgs/thumbnails/${video.thumbnail}`)
+                  img.sectionHead-thumbNail(src=`${video.thumbnail}`)
                   section.section-details
                     h4.section-details-title= video.title
                     hr(width='50px')
@@ -118,7 +118,7 @@ block content
           else
             h4.sect-mid-ch-about-text
              i "The Owner has not added any information regarding this channel."
-        if wiresData
+        //- if wiresData
           section.sect-mid-ch-wire
             h1.ctnt-home-wire-h1 Wire
             section.sect-mid-ctntRecom-wire-separate

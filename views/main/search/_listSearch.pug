@@ -28,7 +28,7 @@ block content
                 if video && video.thumbnailUrl
                   img.thumbnail-img(src=`${video.thumbnailUrl}`)
                 else
-                  img.thumbnail-img(src=`/imgs/thumbnails/sample.jpg`)
+                  img.thumbnail-img(src=`${video.thumbnailUrl}`)
               .title_N_description
                 h2.content-title= video.title
                 p.content-description= video.description || `There is no description available.`

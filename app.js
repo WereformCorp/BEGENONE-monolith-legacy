@@ -12,16 +12,16 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
-const authController = require('./controllers/authController');
+// const authController = require('./controllers/authController');
 
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const wireRouter = require('./routes/wireRoutes');
-const productRouter = require('./routes/productRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
-const sponsorRouter = require('./routes/sponsorRoutes');
-const storyRouter = require('./routes/storyRoutes');
+// const productRouter = require('./routes/productRoutes');
+// const reviewRouter = require('./routes/reviewRoutes');
+// const sponsorRouter = require('./routes/sponsorRoutes');
+// const storyRouter = require('./routes/storyRoutes');
 const userRouter = require('./routes/userRoutes');
 const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
@@ -90,7 +90,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(authController.isLoggedIn);
+// app.use(authController.isLoggedIn);
 
 // Middleware to redirect to the main page if the user is already logged in
 // const redirectIfLoggedIn = function (req, res, next) {
@@ -117,15 +117,6 @@ const attachUserToLocals = (req, res, next) => {
   next();
 };
 
-const pricingTest = {
-  price: 9.99,
-};
-
-console.log(
-  `CONSOLE LOG FOR MATH EQUATION:`,
-  Math.round(Number(pricingTest.price) * 100),
-);
-
 // Apply the middleware to all routes
 app.use(attachUserToLocals);
 
@@ -137,25 +128,16 @@ app.use('/search', searchRouter);
 app.use('/api/v1/channels', channelRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/wires', wireRouter);
-app.use('/api/v1/products', productRouter);
-app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/sponsors', sponsorRouter);
-app.use('/api/v1/stories', storyRouter);
+// app.use('/api/v1/products', productRouter);
+// app.use('/api/v1/reviews', reviewRouter);
+// app.use('/api/v1/sponsors', sponsorRouter);
+// app.use('/api/v1/stories', storyRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/videos', videoRouter);
 app.use('/api/v1/pricings', pricingRouter);
 
-// app.get('/overview', (req, res) => {
-//   res.status(200).render('main/contents/mainVideo', {
-//     title: 'BEGENONE',
-//   });
-// });
-
-app.use(
-  (req, res, next) =>
-    res.status(404).send(`Sorry, Page Not Found. Error ${res.statusCode}`),
-  // Alternatively, you can redirect to a custom 404 page:
-  // res.redirect('/404');
+app.use((req, res, next) =>
+  res.status(404).send(`Sorry, Page Not Found. Error ${res.statusCode}`),
 );
 
 // eslint-disable-next-line arrow-body-style

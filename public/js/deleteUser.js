@@ -16,17 +16,21 @@ const deleteFunction = async (req, res) => {
     const res = await axios({
       method: 'GET',
       url: `${urlPath}/api/v1/users/`,
-    });
-
-    if (res.data.status === 'success') {
-      // showAlert('success', 'Logged In Successfully!');
+    }).then((data) => {
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
-    }
+    });
+
+    // if (res.data.status === 'success') {
+    //   // showAlert('success', 'Logged In Successfully!');
+    //   window.setTimeout(() => {
+    //     location.assign('/');
+    //   }, 1500);
+    // }
   } catch (err) {
     console.log(err.response);
   }
 };
 
-if (deleteBtn) deleteBtn.addEventListener('click', deleteFunction);
+deleteBtn.addEventListener('click', deleteFunction);

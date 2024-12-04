@@ -1,0 +1,21 @@
+const Channel = require('../../models/channelModel');
+const AppError = require('../../utils/appError');
+const catchAsync = require('../../utils/catchAsync');
+
+const getChannel = catchAsync(async (req, res, next) => {
+  try {
+    const data = await Channel.findById(req.params.id);
+    if (!data)
+      return next(new AppError(`Data you are looking for, do not exist.`, 404));
+
+    return res.status(200).json({
+      status: 'Success',
+      data,
+    });
+  } catch (err) {
+    console.log(`GET CHANNEL | CHANNELS CONTROLLER | ERROR ⭕⭕⭕`, err);
+    throw err;
+  }
+});
+
+module.exports = getChannel;

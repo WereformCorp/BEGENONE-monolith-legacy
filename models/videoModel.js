@@ -58,12 +58,12 @@ const videoSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    sponsors: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Sponsor',
-      },
-    ],
+    // sponsors: [
+    //   {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Sponsor',
+    //   },
+    // ],
 
     comments: [
       {

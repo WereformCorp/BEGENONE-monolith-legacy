@@ -5,7 +5,9 @@
   height: 100vh;
   top: 0;
   position: sticky;
-  background-color: #080808;
+  margin-right: -2rem;
+  background-color: #090909;
+  z-index: 10000;
   /* background-color: rgb(20, 20, 20); */
 }
 
@@ -161,8 +163,10 @@
 }
 
 .srd-link-texts {
-  font-size: 16px;
+  font-family: poppins;
+  font-size: 0.975rem;
   font-weight: 700;
+  letter-spacing: 3px;
   letter-spacing: 1.1px;
   transition: all 0.2s ease-in-out;
 }

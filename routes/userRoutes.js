@@ -1,50 +1,48 @@
 const express = require('express');
-const userController = require('../controllers/userController');
-const authController = require('../controllers/authController');
+// const userController = require('../controllers/userController');
+// const authController = require('../controllers/authController');
+const {
+  signup,
+  signupAuth,
+} = require('../controllers/auth-controllers/signup');
+const {
+  verifySignupToken,
+  resendVerificationLink,
+} = require('../controllers/auth-controllers/verificationToken');
+const login = require('../controllers/auth-controllers/login');
+const logout = require('../controllers/auth-controllers/logout');
+const forgotPassword = require('../controllers/auth-controllers/forgotPassword');
+const resetPassword = require('../controllers/auth-controllers/resetPassword');
+const protect = require('../controllers/auth-controllers/protect');
+const me = require('../controllers/user-controllers/getMe');
+const updatePassword = require('../controllers/auth-controllers/updatePassword');
+const updateMe = require('../controllers/user-controllers/updateMe');
+const deleteMe = require('../controllers/user-controllers/deleteMe');
+const getAllUsers = require('../controllers/user-controllers/getAllUsers');
+const getUser = require('../controllers/user-controllers/getUser');
+const updateUser = require('../controllers/user-controllers/updateUser');
+const deleteUser = require('../controllers/user-controllers/deleteUser');
 // const viewsController = require('../controllers/viewsController');
 
 const router = express.Router({ mergeParams: true });
 
-// router.get('/verify-email', authController.verifyEmailPage);
-router.post('/resend-verification', authController.resendVerificationLink);
+router.post('/resend-verification', resendVerificationLink);
+router.post('/signup', signup, signupAuth);
+router.patch('/verifyEmail/:token', verifySignupToken);
+router.post('/login', login);
+router.get('/logout', logout);
+router.post('/forgotPassword', forgotPassword);
+router.patch('/resetPassword/:token', resetPassword);
+router.get('/me', protect, me);
 
-router.post(
-  '/signup',
-  // userController.uploadUserPhoto,
-  authController.signup,
-  authController.signupAuth,
-);
-router.patch('/verifyEmail/:token', authController.verifySignupToken);
-router.post('/login', authController.login);
-router.get('/logout', authController.logout);
-router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
-router.get('/me', authController.protect, userController.me);
+router.patch('/updateMyPassword', protect, updatePassword);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword,
-);
+router.patch('/updateMe', protect, updateMe);
 
-router.patch(
-  '/updateMe',
-  authController.protect,
-  userController.uploadUserPhoto,
-  userController.updateMe,
-);
+router.delete('/deleteMe', deleteMe);
 
-router.delete('/deleteMe', userController.deleteMe);
+router.route('/').get(getAllUsers);
 
-router
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
-
-router
-  .route('/:id')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 module.exports = router;

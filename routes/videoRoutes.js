@@ -1,48 +1,72 @@
 const express = require('express');
-
 const multer = require('multer');
 
-const videoController = require('../controllers/videoController');
-const sponsorRouter = require('./sponsorRoutes');
+// const videoController = require('../controllers/videoController');
+// const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
-const authController = require('../controllers/authController');
+// const authController = require('../controllers/authController');
 // const checkActiveStatus = require('../utils/checkActiveStatus');
 
-const {
-  uploadContentToS3,
-  // uploadVideoToS3,
-  // uploadThumbToS3,
-  // streamVideoFromS3,
-  // generatePresignedUrl,
-} = require('../controllers/aws_S3_controller');
+// const { uploadContentToS3 } = require('../controllers/aws_S3_controller');
+const protect = require('../controllers/auth-controllers/protect');
+const uploadThumbnailFunction = require('../controllers/util-controllers/uploadThumbnailFunction');
+const authMiddleware = require('../controllers/util-controllers/authMiddleware');
+const s3UploadVideo = require('../controllers/video-controllers/s3UploadVideo');
+const updateLikesDislikes = require('../controllers/video-controllers/updateLikesDislikes');
+const getVideo = require('../controllers/video-controllers/getVideo');
+const updateVideo = require('../controllers/video-controllers/updateVideo');
+const deleteVideo = require('../controllers/video-controllers/deleteVideo');
+const getAllVideos = require('../controllers/video-controllers/getAllVideos');
+const getThumbnailData = require('../controllers/video-controllers/getThumbnailData');
 
 const router = express.Router({ mergeParams: true });
 
-const authMiddleware = (req, res, next) => {
-  // Simulate user and channel ID in req.user
-  const userChannel = req.user.channel;
-  // req.user = { channel: { _id: '1234567890' } };
-  console.log(`GETTING THE USER CHANNEL:`, userChannel);
-  next();
-};
-
-// router.post(
-//   '/thumbnail',
-//   authController.protect,
-//   authMiddleware,
-//   videoController.finalizeThumb,
-// );
-
-// router.route('/').get(videoController.getAllVideos);
-// .post(
-//   authController.protect,
-//   videoController.uploadVidFile,
-//   videoController.createVideo,
-// );
+let thumbnailImage = {};
 
 // Configure Multer for memory storage
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+router
+  .route('/thumbnail')
+  .get(getThumbnailData)
+  .post(
+    protect,
+    upload.single('thumbnail'),
+    uploadThumbnailFunction,
+    async (req, res) => {
+      thumbnailImage = req.thumbnail;
+    },
+  );
+
+router
+  .route('/')
+  .get(getAllVideos)
+  .post(
+    protect,
+    authMiddleware,
+    upload.single('video'),
+    async (req, res, next) => {
+      req.thumbnailImage = thumbnailImage || null;
+      next();
+    },
+    s3UploadVideo,
+  );
+
+router
+  .route('/interaction/:videoId/:action')
+  .patch(protect, updateLikesDislikes);
+
+router
+  .route('/:id')
+  .get(getVideo)
+  .patch(protect, updateVideo)
+  .delete(protect, deleteVideo);
+
+// router.use('/:videoId/sponsors', sponsorRouter);
+router.use('/:videoId/comments', commentRouter);
+
+module.exports = router;
 
 // 1) Create a api/v1/videos/thumbnail route and send the thumbnail in to this.
 // 2) Pass the "RESPONSE" of this thumbnail POST route as a middleware after authMiddleware.
@@ -51,144 +75,64 @@ const upload = multer({ storage: storage });
 
 // // MUST CHANGE THE ROUTES IN UPLOAD-VIDEO.JS
 
-let getThumbnail = {};
+// let getThumbnail = {};
 
-const uploadThumbnailFunction = (req, res) => {
-  // if (req.file) {
-  //   // ADDED THIS LINE OF CODE (THE IF STATEMENT TO CHECK IF THE VIDEO COULD BE UPLODADED WITHOUT THUMBNAIL)
-  //   console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
-  //   getThumbnail.thumb = req.file;
-  //   res.status(200).json({
-  //     status: 'success',
-  //     file: req.file,
-  //   });
-  // }
-  if (req.file) {
-    console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
+// const uploadThumbnailFunction = (req, res) => {
+//   if (req.file) {
+//     console.log(`THUMBNAIL FILES FROM ROUTE: /THUMBNAIL =`, req.file);
 
-    // Save the uploaded thumbnail file in the request object for use later
-    // req.thumb = req.file;
-    getThumbnail.thumb = req.file;
+//     // Save the uploaded thumbnail file in the request object for use later
+//     getThumbnail.thumb = req.file;
 
-    console.log(`getTHUMBNAIL . THUMB FUNCTION:`, getThumbnail.thumb);
-    return res.status(200).json({
-      status: 'success',
-      file: req.file,
-    });
-  }
-  // If no thumbnail uploaded, skip and move forward
-  console.log('No thumbnail uploaded.');
-  req.thumbnail = null; // Explicitly set to null
-  res.status(200).json({
-    status: 'success',
-    message: 'No thumbnail uploaded, proceeding without it.',
-    file: undefined,
-  });
-};
+//     console.log(`getTHUMBNAIL . THUMB FUNCTION:`, getThumbnail.thumb);
+//     return res.status(200).json({
+//       status: 'success',
+//       file: req.file,
+//     });
+//   }
+//   // If no thumbnail uploaded, skip and move forward
+//   console.log('No thumbnail uploaded.');
+//   req.thumbnail = null; // Explicitly set to null
+//   res.status(200).json({
+//     status: 'success',
+//     message: 'No thumbnail uploaded, proceeding without it.',
+//     file: undefined,
+//   });
+// };
 
-router
-  .route('/thumbnail')
-  .get(videoController.getThumbnailData)
-  .post(
-    authController.protect,
-    upload.single('thumbnail'),
-    uploadThumbnailFunction,
-  );
+// VIDEO ROUTING _____________________ OLD
+// upload.single('video'),
+// async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('Video Routes: No file uploaded');
+//   }
 
-router
-  .route('/')
-  .get(videoController.getAllVideos)
-  .post(
-    // checkActiveStatus,
-    authController.protect,
-    authMiddleware,
-    // upload.single('video'),
-    // async (req, res) => {
-    //   if (!req.file) {
-    //     return res.status(400).send('Video Routes: No file uploaded');
-    //   }
+//   try {
+//     const channelId = req.user.channel; // Get channel ID from request
+//     const result = await uploadVideoToS3(req.file, channelId, 'video');
+//     console.log(result.result);
 
-    //   try {
-    //     const channelId = req.user.channel; // Get channel ID from request
-    //     const result = await uploadVideoToS3(req.file, channelId, 'video');
-    //     console.log(result.result);
+//     req.file.s3Data = result;
 
-    //     req.file.s3Data = result;
+//     return videoController.createVideo(req, res);
 
-    //     return videoController.createVideo(req, res);
+//     // res.send({
+//     //   message: 'File uploaded successfully',
+//     //   fileUrl: result.result, // This is the URL where the file is accessible in S3
+//     //   // channelId,
+//     // });
+//   } catch (error) {
+//     console.error('Upload Error:', error);
+//     res.status(500).send('File upload failed');
+//   }
+//   console.log('FINALLY REACHED THE END OF THIS FUNCTION! 🥳🥳🥳🥳');
+// },
+// upload.fields([
+//   { name: 'video', maxCount: 1 },
+//   { name: 'thumbnail', maxCount: 1 },
+// ]),
 
-    //     // res.send({
-    //     //   message: 'File uploaded successfully',
-    //     //   fileUrl: result.result, // This is the URL where the file is accessible in S3
-    //     //   // channelId,
-    //     // });
-    //   } catch (error) {
-    //     console.error('Upload Error:', error);
-    //     res.status(500).send('File upload failed');
-    //   }
-    //   console.log('FINALLY REACHED THE END OF THIS FUNCTION! 🥳🥳🥳🥳');
-    // },
-    // upload.fields([
-    //   { name: 'video', maxCount: 1 },
-    //   { name: 'thumbnail', maxCount: 1 },
-    // ]),
-    upload.single('video'),
-    async (req, res) => {
-      if (!req.file) {
-        return res.status(400).send('No files uploaded');
-      }
-
-      try {
-        // const channelId = req.user.channel; // Get channel ID from request
-        const channelId = res.locals.user.channel; // Get channel ID from request
-        console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
-        let thumbnailResult;
-
-        const videoResult = await uploadContentToS3(
-          req.file,
-          channelId,
-          'video',
-        );
-        console.log('Video uploaded:', videoResult.result);
-
-        if (getThumbnail && getThumbnail.thumb) {
-          thumbnailResult = await uploadContentToS3(
-            getThumbnail.thumb,
-            channelId,
-            'thumbnail',
-          );
-          console.log('Thumbnail Upload Result:', thumbnailResult);
-        }
-
-        console.log(
-          `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 🔥🔥🔥🔥:`,
-          getThumbnail,
-        );
-        console.log(
-          `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 2 🔥🔥:`,
-          getThumbnail.thumb,
-        );
-
-        // if (thumbnailResult) {
-        //   req.s3Data = {
-        //     thumbnail: thumbnailResult || undefined,
-        //   };
-        // }
-
-        req.s3Data = {
-          video: videoResult || null,
-          thumbnail: thumbnailResult || null,
-        };
-
-        console.log(`REQUEST S3-DATA:`, req.s3Data);
-
-        return videoController.createVideo(req, res);
-      } catch (error) {
-        console.error('Upload Error:', error);
-        res.status(500).send('File upload failed');
-      }
-    },
-  );
+//////////////////////////////////////////////////////////// ------------------ END OF VIDEO ROUTING
 
 // router
 //   .route('/thumbnail/')
@@ -212,37 +156,23 @@ router
 //     },
 //   );
 
-router
-  .route('/interaction/:videoId/:action')
-  .patch(authController.protect, videoController.updateLikesDislikes);
+// router.route('/stream/:id').get(
+//   videoController.streamVideo,
+// async (req, res) => {
+//   const { id } = req.params;
 
-router
-  .route('/:id')
-  .get(
-    videoController.getVideo,
-    // async (req, res) => {
-    // const { videoKey } = req;
-    // console.log(`VIDEO KEY FROM ROUTER: ${videoKey}`);
-    // await streamVideoFromS3(videoKey, res);
-    // }
-  )
-  .patch(authController.protect, videoController.updateVideo)
-  .delete(authController.protect, videoController.deleteVideo);
+//   try {
+//     const url = await generatePresignedUrl(id);
+//     res.json({ url });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error generating URL' });
+//   }
+// },
+// // videoController.streamVideo
+// );
 
-router.route('/stream/:id').get(
-  videoController.streamVideo,
-  // async (req, res) => {
-  //   const { id } = req.params;
+// ----------------------------------------
 
-  //   try {
-  //     const url = await generatePresignedUrl(id);
-  //     res.json({ url });
-  //   } catch (error) {
-  //     res.status(500).json({ message: 'Error generating URL' });
-  //   }
-  // },
-  // // videoController.streamVideo
-);
 // router.get('/video-url/:key', async (req, res) => {
 //   const { key } = req.params;
 
@@ -254,7 +184,58 @@ router.route('/stream/:id').get(
 //   }
 // });
 
-router.use('/:videoId/sponsors', sponsorRouter);
-router.use('/:videoId/comments', commentRouter);
+// async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('No files uploaded');
+//   }
 
-module.exports = router;
+//   try {
+//     // const channelId = req.user.channel; // Get channel ID from request
+//     const channelId = res.locals.user.channel; // Get channel ID from request
+//     console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
+//     let thumbnailResult;
+
+//     const videoResult = await uploadContentToS3(
+//       req.file,
+//       channelId,
+//       'video',
+//     );
+//     console.log('Video uploaded:', videoResult.result);
+
+//     if (getThumbnail && getThumbnail.thumb) {
+//       thumbnailResult = await uploadContentToS3(
+//         getThumbnail.thumb,
+//         channelId,
+//         'thumbnail',
+//       );
+//       console.log('Thumbnail Upload Result:', thumbnailResult);
+//     }
+
+//     console.log(
+//       `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 🔥🔥🔥🔥:`,
+//       getThumbnail,
+//     );
+//     console.log(
+//       `getTHUMBNAIL . THUMB FUNCTION --- VIDEO UPLOAD 2 🔥🔥:`,
+//       getThumbnail.thumb,
+//     );
+
+//     // if (thumbnailResult) {
+//     //   req.s3Data = {
+//     //     thumbnail: thumbnailResult || undefined,
+//     //   };
+//     // }
+
+//     req.s3Data = {
+//       video: videoResult || null,
+//       thumbnail: thumbnailResult || null,
+//     };
+
+//     console.log(`REQUEST S3-DATA:`, req.s3Data);
+
+//     return videoController.createVideo(req, res);
+//   } catch (error) {
+//     console.error('Upload Error:', error);
+//     res.status(500).send('File upload failed');
+//   }
+// },

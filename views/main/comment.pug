@@ -11,7 +11,9 @@ if comment
           img.ctnt-cmmnt-logo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
       .ctnt-cmmnt-accDetails
         //- - console.log(user)
-        - const usersName = user.name.firstName + ' ' + user.name.secondName
+        - const userFirstName = user.name ? user.name.firstName : 'New'
+        - const userSecondName = user.name ? user.name.secondName : "User"
+        - const usersName = userFirstName + ' ' + userSecondName
         - const userOrChannelName = comment.channel ? comment.channel.name : usersName
         h4.cmmnt-accDtls= userOrChannelName
         - const commentDate = new Date()
