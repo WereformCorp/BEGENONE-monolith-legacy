@@ -5,6 +5,8 @@ const catchAsync = require('../../utils/catchAsync');
 const getChannel = catchAsync(async (req, res, next) => {
   try {
     const data = await Channel.findById(req.params.id);
+
+    console.log(`⭕⭕⭕ GET CHANNEL FUNCTION`, data);
     if (!data)
       return next(new AppError(`Data you are looking for, do not exist.`, 404));
 

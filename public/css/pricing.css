@@ -111,15 +111,62 @@
 .sect-mid-contentContainer {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, rgb(35, 35, 35, 1), rgb(26, 26, 26, 0.5));
+  background: linear-gradient(
+    135deg,
+    rgb(35, 35, 35, 1),
+    rgb(15, 15, 15, 1),
+    rgb(35, 35, 35, 1)
+  );
+  /* background-image: url('https://img.freepik.com/premium-photo/minimalist-angel-blue-color-abstract-background-sleek-elegant-designs_851755-373921.jpg'); */
+
   width: 100%;
   padding: 20px;
   row-gap: 10px;
   padding: 2rem;
-  margin-top: 1rem;
+  margin-top: -2rem;
   margin-bottom: 1rem;
   border-radius: 1rem;
   transform: scale(95%);
+}
+
+.userActiveStatusCheckContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.userActiveStatus-h1 {
+  font-family: poppins;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  color: #ff1900;
+}
+
+.userReverifyLinkBtn {
+  font-family: poppins;
+  font-weight: 600;
+  letter-spacing: 2px;
+  height: 2.4rem;
+  width: max-content;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background-color: rgba(18, 18, 18, 0.5);
+  outline: none;
+  border: 1px solid #3939397c;
+  border-radius: 5px;
+
+  color: rgb(0, 255, 0);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.userReverifyLinkBtn:hover {
+  cursor: pointer;
+  background-color: rgba(30, 30, 30);
+  transform: scale(101%);
 }
 
 .pricing-heading-h1 {
@@ -205,6 +252,17 @@
   font-weight: 900;
 }
 
+.pricing-ea-details-h2-indepth {
+  font-size: 4rem;
+  /* background-image: url(); */
+  font-weight: 600;
+  letter-spacing: 5px;
+  padding-left: 2rem;
+  padding-bottom: 4rem;
+  padding-top: 4rem;
+  text-align: center;
+}
+
 .pricing-ea-h2-span {
   font-size: 0.9rem;
   font-weight: 500;
@@ -236,7 +294,8 @@
 }
 
 .pricing-features,
-.pricing-features-details {
+.pricing-features-details,
+.pricing-features-details-indepth {
   display: flex;
   flex-direction: column;
   justify-items: start;
@@ -249,7 +308,8 @@
   row-gap: 2rem;
 }
 
-.pricing-features-details {
+.pricing-features-details,
+.pricing-features-details-indepth {
   row-gap: 1.5rem;
 }
 
@@ -331,10 +391,82 @@
   letter-spacing: 3px;
 }
 
-.pfd-spans {
+.pfd-h2-indepth {
+  font-family: poppins;
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 3px;
+  padding-left: 2rem;
+  padding-top: 2rem;
+}
+
+.pricing-features-details-indepth {
+  background: linear-gradient(
+    135deg,
+    rgb(40, 40, 40, 1),
+    rgb(26, 26, 26, 0.5),
+    rgb(40, 40, 40, 1)
+  );
+}
+
+.pfd-spans,
+.pfd-indepth {
   font-size: 0.9rem;
   line-height: 1.5;
   letter-spacing: 2px;
+}
+
+.pfd-h1 {
+  /* background: #353535; */
+  font-family: poppins;
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  align-self: center;
+}
+
+.pfd-p {
+  font-family: poppins;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.pfd-p b {
+  color: #04ff00;
+}
+
+.pfd-indepth {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 2rem;
+}
+
+.pfd-p-span {
+  font-style: italic;
+}
+
+/* .indepth-div {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  column-gap: 1rem;
+ } */
+.indepth-div {
+  display: flex;
+  gap: 1rem;
+}
+
+.indepth-div > :first-child {
+  flex: 0 0 35%; /* 35% width for the first column */
+}
+
+.indepth-div > :nth-child(2) {
+  flex: 0 0 65%; /* 65% width for the second column */
+}
+
+.hr-pfd-indepth {
+  border: 1px solid rgb(120, 120, 120, 0.3);
 }
 
 /* .pricing-feature-diamond {

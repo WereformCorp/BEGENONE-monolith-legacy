@@ -9,7 +9,7 @@ const createChannel = async (
 ) => {
   try {
     const user = document.getElementById('userId').value;
-    console.log(user);
+    // console.log(user);
 
     let url;
     let method;
@@ -23,7 +23,7 @@ const createChannel = async (
     const resUser = await axios.get(`${urlPath}/api/v1/users/${user}`);
     console.log(`This is User Response: ${JSON.stringify(resUser, null, 2)}`);
     const userChannel = resUser.data.user.channel;
-    console.log(userChannel);
+    // console.log(userChannel);
 
     if (userChannel && userChannel._id) {
       // Update an existing channel

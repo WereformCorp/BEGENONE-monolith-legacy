@@ -38,6 +38,10 @@ const subscriptionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 subscriptionSchema.pre(/^find/, function (next) {

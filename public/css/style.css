@@ -40,6 +40,7 @@ body::-webkit-scrollbar-thumb {
 } */
 
 .section-middle-image-editor {
+  display: flex;
   position: fixed;
   width: 80%;
   height: auto;

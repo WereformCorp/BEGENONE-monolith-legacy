@@ -7,10 +7,13 @@ const upload = catchAsync(async (req, res, next) => {
       'channel',
     );
 
+    console.log(`USER DATA FROM THE UPLOAD FILES:`, userData.active);
+
     res.status(200).render(`../views/settings/channel/uploads/_uploads`, {
       title: 'USER PROFILE',
       useCustomLeftNav: true,
       userData,
+      userActiveStatus: userData.active,
     });
   } catch (err) {
     console.log(`UPLOAD | Views Controller | ERROR ⭕⭕⭕`, err);

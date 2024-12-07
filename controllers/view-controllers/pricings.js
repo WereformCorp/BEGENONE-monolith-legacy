@@ -9,7 +9,7 @@ const pricings = catchAsync(async (req, res, next) => {
     if (res.locals.user)
       userData = await User.findById(res.locals.user._id).populate('channel');
 
-    console.log(`USER DATA`, userData);
+    // console.log(`USER DATA`, userData);
     const priceData = await axios.get(`${urlPath}/api/v1/pricings/`);
     const pricingsData = priceData.data.pricings;
 
@@ -22,6 +22,7 @@ const pricings = catchAsync(async (req, res, next) => {
       'premium-plus',
       'gift',
       'limited',
+      'signup',
     ];
 
     // Initialize the idsByName object with empty arrays for each category
@@ -48,10 +49,12 @@ const pricings = catchAsync(async (req, res, next) => {
         standard: idsByName.standard,
         premium: idsByName.premium,
         premiumPlus: idsByName['premium-plus'],
-        gift: idsByName.gift,
-        limited: idsByName.limited,
+        // gift: idsByName.gift,
+        // limited: idsByName.limited,
+        signup: idsByName.signup,
       },
       useCustomLeftNav: false,
+      userActiveStatus: userData ? userData.active : null,
     });
   } catch (err) {
     console.log(

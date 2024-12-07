@@ -2,7 +2,7 @@
 const chDeleteBtn = document.querySelector('.ch-delete');
 const deleteChannel = async (channelId) => {
   try {
-    console.log(`DELETE CHANNEL FUNCTION -----> CHANNEL ID:`, channelId);
+    // console.log(`DELETE CHANNEL FUNCTION -----> CHANNEL ID:`, channelId);
     const baseUrl = await axios({
       method: 'GET',
       url: `/url/get-env-url`,
@@ -10,7 +10,7 @@ const deleteChannel = async (channelId) => {
     const urlPath = baseUrl.data.url;
     const res = await axios.delete(`${urlPath}/api/v1/channels/${channelId}`);
 
-    console.log('RESPONSE:', res);
+    // console.log('RESPONSE:', res);
 
     if (res.data.status === '204') {
       // showAlert('success', 'Logged In Successfully!');

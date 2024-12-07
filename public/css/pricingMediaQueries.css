@@ -1,4 +1,8 @@
 @media (max-width: 1200px) {
+  .sect-mid-contentContainer {
+    margin-top: -7rem;
+  }
+
   .pricing-container {
     flex-direction: column;
     align-items: center;
@@ -8,6 +12,20 @@
 @media (max-width: 1000px) {
   .nav-slctKit_pricing-text {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .indepth-div {
+    flex-wrap: wrap;
+  }
+
+  .indepth-div > :first-child {
+    flex: 0 0 100%; /* 35% width for the first column */
+  }
+
+  .indepth-div > :nth-child(2) {
+    flex: 0 0 100%; /* 65% width for the second column */
   }
 }
 

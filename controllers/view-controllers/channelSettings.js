@@ -18,8 +18,8 @@ const channelSettings = catchAsync(async (req, res, next) => {
       channel.bannerImage = `${cloudFrontDomain}/${channel.bannerImage}`; // Save CloudFront URL in bannerImageUrl
     }
 
-    console.log(`USER FROM VIEWS CONTROLLER:`, res.locals.user);
-    console.log(`USERDATA FROM VIEWS CONTROLLER:`, userData._id);
+    // console.log(`USER FROM VIEWS CONTROLLER:`, res.locals.user);
+    // console.log(`USERDATA FROM VIEWS CONTROLLER:`, userData._id);
 
     res.status(200).render(`../views/settings/channel/channel-settings`, {
       title: `Channel Settings`,
@@ -30,6 +30,7 @@ const channelSettings = catchAsync(async (req, res, next) => {
       useCustomLeftNav: true,
       userData,
       userDataId: userData._id,
+      userActiveStatus: userData.active,
     });
   } catch (err) {
     console.log(`CHANNEL SETTINGS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

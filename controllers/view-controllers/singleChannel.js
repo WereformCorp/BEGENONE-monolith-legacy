@@ -6,9 +6,14 @@ const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345
 
 const singleChannel = catchAsync(async (req, res, next) => {
   try {
+    console.log('User:', res.locals.user);
+    console.log('REQUESTED USER:', req.params.id);
+    console.log(`⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ URL PATH ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️`, urlPath);
     const channelData = await axios.get(
       `${urlPath}/api/v1/channels/${req.params.id}`,
     );
+
+    console.log(`Channel Data ⭕⭕⭕`, channelData.data);
 
     const extractedData = channelData.data.data;
 
@@ -21,7 +26,7 @@ const singleChannel = catchAsync(async (req, res, next) => {
     }
     // console.log(`ExtractedData`, extractedData);
     const { videos } = extractedData;
-    console.log(`Extracted --------- Data:`, extractedData);
+    // console.log(`Extracted --------- Data:`, extractedData);
     const latestVideo =
       extractedData.videos && extractedData.videos.length > 0
         ? extractedData.videos[0]
@@ -67,7 +72,7 @@ const singleChannel = catchAsync(async (req, res, next) => {
 
     // console.log(`VIDEO FROM SINGLE CHANNEL: `, latestVideo.thumbnailUrl);
     // console.log(`THUMBNAILS FROM SINGLE CHANNEL: `, thumbnails);
-    console.log(`RESPONSE -> LOCALS -> User:`, res.locals.user);
+    // console.log(`RESPONSE -> LOCALS -> User:`, res.locals.user);
 
     // const channelData = await Channel.findById(extractedData._id);
     res.status(200).render(`../views/main/channels/userChannel`, {
@@ -82,6 +87,10 @@ const singleChannel = catchAsync(async (req, res, next) => {
       wiresData,
     });
   } catch (err) {
+    res.json({
+      Message: err.message,
+      error: err,
+    });
     console.log(`SINGLE CHANNEL | Views Controller | ERROR ⭕⭕⭕`, err);
     throw err;
   }

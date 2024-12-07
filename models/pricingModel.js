@@ -13,8 +13,9 @@ const pricingSchema = new mongoose.Schema({
       'premium-plus',
       'gift',
       'limited',
+      'signup',
     ], // E.g., "Early Access"
-    default: 'basic',
+    default: 'signup',
   },
   description: {
     type: String,

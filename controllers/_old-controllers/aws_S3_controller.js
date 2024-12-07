@@ -76,7 +76,7 @@ const uploadVideoToS3 = async (file, channelId) => {
 
   try {
     const result = await upload.done();
-    console.log(`RESULTS FROM AWS_S3_CONTROLLER:`, result.Location);
+    // console.log(`RESULTS FROM AWS_S3_CONTROLLER:`, result.Location);
     // return result;
     return {
       result: result.Location, // S3 URL
@@ -138,7 +138,7 @@ const uploadContentToS3 = async (file, channelId, filetype) => {
 
   try {
     const result = await upload.done();
-    console.log(`RESULTS FROM AWS_S3_CONTROLLER:`, result.Location);
+    // console.log(`RESULTS FROM AWS_S3_CONTROLLER:`, result.Location);
     // return result;
     return {
       result: result.Location, // S3 URL

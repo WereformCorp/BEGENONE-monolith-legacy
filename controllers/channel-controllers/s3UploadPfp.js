@@ -9,14 +9,14 @@ const s3UploadPfp = catchAsync(async (req, res) => {
 
   try {
     const channelId = res.locals.user.channel; // Get channel ID from request
-    console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
+    // console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
 
     const imageResult = await uploadContentToS3(req.file, channelId, 'image');
     req.s3Data = {
       profilepic: imageResult || null,
     };
 
-    console.log(`s3Data FROM /PROFILEPIC`, req.s3Data);
+    // console.log(`s3Data FROM /PROFILEPIC`, req.s3Data);
     return uploadChannelPfp(req, res);
   } catch (err) {
     console.log(`S3 UPLOADED PFP | CHANNELS CONTROLLER | ERROR ⭕⭕⭕`, err);

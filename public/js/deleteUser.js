@@ -3,7 +3,7 @@
 const deleteBtn = document.querySelector('.deleteBtn');
 const userId = document.querySelector('.userId').value;
 
-console.log(`USERID SIRRR:`, userId);
+// console.log(`USERID SIRRR:`, userId);
 
 const deleteFunction = async (req, res) => {
   try {

@@ -18,7 +18,7 @@ const postComment = async (comment) => {
     }
 
     const videoId = document.querySelector('.videoId').value;
-    console.log(`This is the video ID: ${videoId}`);
+    // console.log(`This is the video ID: ${videoId}`);
     // const video = await axios.get(
     //   `${req.protocol}://${req.get('host')}/api/v1/videos/${videoId}`,
     // );
@@ -49,7 +49,7 @@ const postComment = async (comment) => {
       data: commentData,
     });
 
-    console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
+    // console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
 
     // Checking the health
     if (compiledCommentRes.data.status !== 'success')
@@ -67,7 +67,7 @@ const postComment = async (comment) => {
     commentsAmount.textContent = String(
       parseInt(commentsAmount.textContent) + 1,
     );
-    console.log('RESPONSE:', res);
+    // console.log('RESPONSE:', res);
 
     // console.log('RESPONSE:', res);
   } catch (err) {

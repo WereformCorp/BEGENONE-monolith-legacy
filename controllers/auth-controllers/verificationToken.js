@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const User = require('../../models/userModel');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
@@ -6,14 +8,14 @@ const sendMail = require('../../utils/email');
 
 const verifySignupToken = catchAsync(async (req, res, next) => {
   // 1) Hash the token provided in URL to compare with the stored hashed token
-  console.log(`HAS THE CODE REACHED TILL HERE?`);
+  // console.log(`HAS THE CODE REACHED TILL HERE?`);
 
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
     .digest('hex');
 
-  console.log(`HASHED TOKEN:`, hashedToken);
+  // console.log(`HASHED TOKEN:`, hashedToken);
 
   // Check for the signup token
   const user = await User.findOne({
@@ -34,14 +36,14 @@ const verifySignupToken = catchAsync(async (req, res, next) => {
     return next(new AppError('Token is invalid or has expired', 400));
   }
 
-  console.log('User found:', user);
+  // console.log('User found:', user);
 
   // 3) Activate user’s account
   user.active = true;
   user.eAddress.signupAuthToken = undefined;
   user.eAddress.signupAuthTokenExpiresIn = undefined;
   await user.save();
-  console.log('User account activated and token cleared.');
+  // console.log('User account activated and token cleared.');
 
   // 4) Log the user in (or simply return success if that’s not desired)
   createSendToken(user, 200, res);
@@ -52,7 +54,7 @@ const verifySignupToken = catchAsync(async (req, res, next) => {
 const resendVerificationLink = catchAsync(async (req, res, next) => {
   // Assuming req.user contains authenticated user data, fetched via a middleware
   const { user } = res.locals;
-  console.log(`156 LINE USER:`, user);
+  // console.log(`156 LINE USER:`, user);
 
   // 1) Check if the user is already active
   if (user.active) {

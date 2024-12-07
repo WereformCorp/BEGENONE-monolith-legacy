@@ -1,5 +1,6 @@
 const Channel = require('../../models/channelModel');
 const Video = require('../../models/videoModel');
+const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');
 
@@ -16,13 +17,23 @@ const formattedDate = new Date(newDate).toLocaleString('en-GB', {
   hour12: false, // 24-hour format
 });
 
-console.log('Formatted Date:', formattedDate);
+// console.log('Formatted Date:', formattedDate);
 
 const createVideo = catchAsync(async (req, res, next) => {
   console.log(
     `REQUESTION URL FROM CREATION OF VIDEO CONTROLLER: 🔥🔥🔥🔥🔥🔥🔥`,
     req.results,
   );
+
+  const user = await User.findById(res.locals.user._id);
+  console.log(`RES LOCAL USER ID:`, user);
+
+  if (user.active === false)
+    return new AppError(
+      `The User is not authorized (yet) to upload video.\n
+      Please Authenticate Your Account to Start Uploading Videos.`,
+      403,
+    );
 
   try {
     const videoFileData = req.s3Data;

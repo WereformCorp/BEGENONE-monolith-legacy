@@ -6,8 +6,8 @@ const { createSendToken } = require('./createSignToken');
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body.eAddress;
 
-  console.log(`EMAIL: `, email);
-  console.log(`PASSWORD: `, password);
+  // console.log(`EMAIL: `, email);
+  // console.log(`PASSWORD: `, password);
 
   // 1) Check if the email and password exist
   if (!email || !password) {
@@ -19,7 +19,7 @@ const login = catchAsync(async (req, res, next) => {
     '+eAddress.password eAddress.email',
   );
 
-  console.log(`USER FROM LOGIN`, user);
+  // console.log(`USER FROM LOGIN`, user);
 
   if (!user) {
     return next(new AppError(`Incorrect Email or Password.`, 401));
@@ -30,7 +30,7 @@ const login = catchAsync(async (req, res, next) => {
     user.eAddress.password,
   );
 
-  console.log(`IS PASSWORD CORRECT?`, isPasswordCorrect);
+  // console.log(`IS PASSWORD CORRECT?`, isPasswordCorrect);
 
   if (!isPasswordCorrect) {
     return next(new AppError('Incorrect Email or Password.', 401));

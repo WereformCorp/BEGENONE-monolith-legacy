@@ -38,7 +38,7 @@ const updateUser = async (firstName, secondName, username, mode, languages) => {
       data: updateData,
     });
 
-    console.log('RESPONSE:', res);
+    // console.log('RESPONSE:', res);
   } catch (err) {
     console.log(`ERROR MESSAGE 🥲: ${err.message}`, `ERROR ITSELF 😭: ${err}`);
   }

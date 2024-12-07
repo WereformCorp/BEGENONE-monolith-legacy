@@ -46,7 +46,7 @@ const search = catchAsync(async (req, res, next) => {
       video.channelLogo = `${cloudFrontDomain}/${video.channelLogo}`;
     });
 
-    console.log(`CHANNEL LOGO:`, videosWithThumbnails);
+    // console.log(`CHANNEL LOGO:`, videosWithThumbnails);
 
     // Render the search results with the correct videosWithThumbnails
     res.status(200).render('../views/main/search/_listSearch', {

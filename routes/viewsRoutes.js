@@ -2,7 +2,7 @@ const express = require('express');
 // const viewsController = require('../controllers/viewsController');
 const checkActiveStatus = require('../utils/checkActiveStatus');
 // const authController = require('../controllers/authController');
-const createPricingCheckout = require('../controllers/pricing-controllers/createPricingCheckout');
+// const createPricingCheckout = require('../controllers/pricing-controllers/createPricingCheckout');
 const isLoggedIn = require('../controllers/auth-controllers/isLoggedIn');
 const getOverview = require('../controllers/view-controllers/getOverview');
 const pricings = require('../controllers/view-controllers/pricings');
@@ -27,7 +27,7 @@ const singleVideo = require('../controllers/view-controllers/singleVideo');
 const router = express.Router();
 router.get(
   '/',
-  createPricingCheckout,
+  // createPricingCheckout,
   // authController.isLoggedIn,
   isLoggedIn,
   // viewsController.getOverview,
@@ -110,6 +110,7 @@ router.get(
 
 router.get(
   '/channels/:id',
+  isLoggedIn,
   // viewsController.singleChannel
   singleChannel,
 );

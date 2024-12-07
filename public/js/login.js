@@ -10,8 +10,8 @@ const login = async (email, password) => {
       url: `/url/get-env-url`,
     });
     const urlPath = baseUrl.data.url;
-    console.log(baseUrl);
-    console.log(urlPath);
+    // console.log(baseUrl);
+    // console.log(urlPath);
 
     const res = await axios({
       method: 'POST',
@@ -24,7 +24,7 @@ const login = async (email, password) => {
       },
     });
 
-    console.log('RESPONSE:', res);
+    // console.log('RESPONSE:', res);
 
     if (res.data.status === 'success') {
       // showAlert('success', 'Logged In Successfully!');

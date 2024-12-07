@@ -10,14 +10,14 @@ const uploadBanner = catchAsync(async (req, res) => {
 
     try {
       const channelId = res.locals.user.channel; // Get channel ID from request
-      console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
+      // console.log(`CHANNEL ID FROM VIDEO ROUTES:`, channelId);
 
       const imageResult = await uploadContentToS3(req.file, channelId, 'image');
       req.s3Data = {
         banner: imageResult || null,
       };
 
-      console.log(`s3Data FROM /PROFILEPIC`, req.s3Data);
+      // console.log(`s3Data FROM /PROFILEPIC`, req.s3Data);
       return uploadChannelBanner.uploadChannelBanner(req, res);
 
       // return videoController.createVideo(req, res);

@@ -141,13 +141,17 @@ block content
             h3.pricing-features-lists.pricing-features-list-10
               | Sponsorship Tabs <b class="coming_soon-pricing">(coming soon)</b>
         if userData
-          button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
-            | Start Now!
-            i.fa-solid.fa-credit-card
+          if userActiveStatus === false
+            | 
+          else
+            button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
+              | Start Now!
+              i.fa-solid.fa-credit-card
         else 
           a(href="/login").pricing-checkout-button 
             | Start Now!
             i.fa-solid.fa-credit-card
+        
           //- h3.pricing-features-lists.pricing-features-list-4
           //-   | 6. FEATURE FOUR
       .pricing-in_depth-details
@@ -162,5 +166,165 @@ block content
             br
             br
             span <b>Please note:</b> The price for Early Access may fluctuate and is likely to increase as the platform expands. Securing your membership now locks in your benefits at the current rate, ensuring you don't miss out on this exclusive opportunity. Act fast—sign up today and take full advantage of the benefits while the offer lasts.
+    if userActiveStatus === false
+      .userActiveStatusCheckContainer
+        h1.userActiveStatus-h1
+          | User is not Authorized. Please Activate your account to Activate any subscription. ❌
+        button.userReverifyLinkBtn
+          | Verify Here.
+    br
+    br
+    br
+    hr.hr-pfd-indepth
+
+    .pricing-in_depth-details
+      h2.pricing-ea-details-h2-indepth FEATURE'S OVERVIEW
+      .pricing-features-details.pricing-features-details-indepth
+        h2.pfd-h2-indepth Exclusive Early Access Membership
+        div.pfd-indepth
+          hr.hr-pfd-indepth  
+          br
+          div.pfd-div.pfd-div-1.indepth-div
+            h1.pfd-h1.pfd-h1-1.indepth 
+              | Channel Creation 
+              br
+              <b class="available-pricing">(Avaliable)</b>
+            p.pfd-p.pfd-p-1
+              | This feature allows members to create their own channel.
+              br
+              br
+              | <span class="pfd-p-span"> <b>Benefit:</b> During Early Access, content creators are limited in number, ensuring greater exposure and higher engagement with your audience. This exclusivity guarantees your content stands out.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-2.indepth-div
+            h1.pfd-h1.pfd-h1-2.indepth 
+              | Video Upload
+              br
+              <b class="available-pricing">(Avaliable)</b>
+            p.pfd-p.pfd-p-2
+              | Members can upload videos to the platform.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members enjoy a unique advantage with fewer competitors. Your videos will receive increased visibility and reach, amplifying your presence and boosting engagement during the growth phase.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-3.indepth-div
+            h1.pfd-h1.pfd-h1-3.indepth 
+              | All Ads Removed
+              br
+              <b class="available-pricing">(Avaliable)</b>
+            p.pfd-p.pfd-p-3
+              | Enjoy an ad-free experience while browsing and interacting with content.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature enhances the user experience by eliminating interruptions, ensuring that members have a smooth, premium experience. It also prioritizes content visibility without distractions. </span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-4.indepth-div
+            h1.pfd-h1.pfd-h1-4.indepth
+              | Premium Stickers
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-4
+              | Exclusive, customizable stickers for content.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Members will have access to distinctive features that allow for personal branding, enabling their content to stand out and further engage their audience in a creative way.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-5.indepth-div
+            h1.pfd-h1.pfd-h1-5.indepth
+              | Content Boost
+              br
+              <b class="available-pricing">(Avaliable)</b>
+            p.pfd-p.pfd-p-5
+              | Boost your content to ensure maximum visibility and engagement.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> During Early Access, your boosted content will receive prominent placement on the platform, ensuring higher engagement from the growing user base, giving you an edge in content discovery.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-6.indepth-div
+            h1.pfd-h1.pfd-h1-6.indepth
+              | Promotion
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-6
+              | Exclusive tools for content promotion.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will have the first opportunity to access promotional tools, amplifying their reach and ensuring their content is seen by a broader audience.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-7.indepth-div
+            h1.pfd-h1.pfd-h1-7.indepth
+              | Community Post
+              br
+              <b class="almost_here-pricing">(Almost Here)</b>
+            p.pfd-p.pfd-p-7
+              | Create and share posts with the community.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature fosters interaction within the community, allowing Early Access members to actively participate in shaping the platform's culture, while also benefiting from heightened visibility and engagement.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-8.indepth-div
+            h1.pfd-h1.pfd-h1-8.indepth
+              | Wires
+              br
+              <b class="almost_here-pricing">(Almost Here)</b>
+            p.pfd-p.pfd-p-8
+              | Directly communicate with your audience via private messaging.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members can connect more personally with their followers, enhancing their influence and establishing stronger relationships with their growing community.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-9.indepth-div
+            h1.pfd-h1.pfd-h1-9.indepth
+              | Event Notifications
+              br
+              <b class="available-pricing">(Avaliable)</b>
+            p.pfd-p.pfd-p-9
+              | Stay informed with event updates and notifications.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Members will be the first to know about platform events, keeping them engaged and ensuring they never miss an opportunity to participate in exclusive activities that drive visibility and growth.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-10.indepth-div
+            h1.pfd-h1.pfd-h1-10.indepth
+              | Impression System
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-10
+              | A system that tracks and boosts impressions on your content.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will receive exclusive insights and increased exposure, allowing them to optimize their content strategy for maximum impact and engagement.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-11.indepth-div
+            h1.pfd-h1.pfd-h1-11.indepth
+              | Sponsorship Tabs
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-11
+              | Access to sponsored content opportunities.
+              br
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will have priority access to sponsorships, creating opportunities for monetization and expanded exposure, ensuring they benefit from the platform's initial growth phase.</span>
+
+          
   script(src="/js/stripe.js")
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')

@@ -102,6 +102,46 @@
   transform: scale(95%);
 }
 
+.userActiveStatusCheckContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.userActiveStatus-h1 {
+  font-family: poppins;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  color: #ff1900;
+}
+
+.userReverifyLinkBtn {
+  font-family: poppins;
+  font-weight: 600;
+  letter-spacing: 2px;
+  height: 2.4rem;
+  width: max-content;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background-color: rgba(18, 18, 18, 0.5);
+  outline: none;
+  border: 1px solid #3939397c;
+  border-radius: 5px;
+
+  color: rgb(0, 255, 0);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.userReverifyLinkBtn:hover {
+  cursor: pointer;
+  background-color: rgba(30, 30, 30);
+  transform: scale(101%);
+}
+
 .user-heading-h1 {
   font-size: 4rem;
   font-weight: 900;

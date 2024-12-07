@@ -51,7 +51,7 @@ const protect = catchAsync(async (req, res, next) => {
       );
     } // "iat" here means Issued At or Issues At or whatever
 
-    console.log(`CURRENT USER:`, currentUser);
+    // console.log(`CURRENT USER:`, currentUser);
     // GRANT ACCESS TO PROTECTED ROUTE
     req.user = currentUser;
     res.locals.user = currentUser;

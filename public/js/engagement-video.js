@@ -25,7 +25,7 @@ const updateLikesDislikesCount = async (videoId, action) => {
 
 likeButton.addEventListener('click', async function () {
   const videoId = document.querySelector('.videoId').value;
-  console.log(`THIS IS VIDEO ID FROM ENGAGEMENT VIDEO JS FILE: ${videoId}`);
+  // console.log(`THIS IS VIDEO ID FROM ENGAGEMENT VIDEO JS FILE: ${videoId}`);
   await updateLikesDislikesCount(videoId, 'like');
 });
 

@@ -12,7 +12,15 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
+// const protect = require('./controllers/auth-controllers/protect');
+
 // const authController = require('./controllers/authController');
+const Pricing = require('./models/pricingModel');
+const User = require('./models/userModel');
+// const Channel = require('./models/channelModel');
+// const Wires = require('./models/wireModel');
+// const Video = require('./models/videoModel');
+const Subscription = require('./models/subscriptionModel');
 
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
@@ -27,6 +35,7 @@ const videoRouter = require('./routes/videoRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
 const searchRouter = require('./routes/searchRoutes');
 const pricingRouter = require('./routes/pricingRoutes');
+const webhookCheckout = require('./controllers/pricing-controllers/webhookCheckout');
 // const notificationRouter = require('./routes/notificationRoutes');
 const urlPathRoutes = require('./routes/urlPathRoutes');
 
@@ -67,6 +76,12 @@ console.log('Node Version:', process.version);
 // });
 
 // app.use('/api', limiter);
+
+app.post(
+  '/webhooks-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout,
+);
 
 app.use(express.json()); //{ limit: '10kb' }
 app.use(express.urlencoded({ extended: true })); // limit: '10kb'
@@ -109,6 +124,30 @@ app.use((req, res, next) => {
 
 // // Apply redirectIfLoggedIn middleware for the '/login' and '/signup' routes
 // app.use(['/login', '/signup'], redirectIfLoggedIn);
+
+// const updateMany = async (model) => {
+//   try {
+//     const subscription = await Subscription.findOne({
+//       pricingName: 'signup',
+//     });
+//     // Here we perform an "update" without any set field operation
+
+//     console.log(`SUBSCRIPTION DOCUMENT FROM APP.JS`, subscription);
+//     const result = await model.updateMany({}, { $set: { active: true } });
+//     console.log(
+//       `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents.`,
+//     );
+//     return result;
+//   } catch (err) {
+//     console.error('Error updating documents:', err);
+//     throw err;
+//   }
+// };
+
+// Example usage for the 'Pricing' model
+// FIXME: RISKY MOVE DO NOT DO IT.
+/////////////////////////////////// updateMany(User); ///////////////////////////////////
+// FIXME: RISKY MOVE DO NOT DO IT.
 
 const attachUserToLocals = (req, res, next) => {
   if (req.user) {

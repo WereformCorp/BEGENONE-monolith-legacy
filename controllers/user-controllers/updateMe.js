@@ -23,7 +23,7 @@ const updateMe = catchAsync(async (req, res, next) => {
     const userData = { ...req.body };
 
     // userData = me;
-    console.log(me);
+    // console.log(me);
 
     // 3) Update User document
     let updatedUser = await User.findByIdAndUpdate(req.user._id, userData, {
@@ -37,7 +37,7 @@ const updateMe = catchAsync(async (req, res, next) => {
         { new: true },
       );
     }
-    console.log(updatedUser.photo);
+    // console.log(updatedUser.photo);
 
     return res.status(200).json({
       status: 'success',

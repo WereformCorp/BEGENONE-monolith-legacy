@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const pricing = require('./pricingModel');
 // const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
@@ -64,9 +65,21 @@ const userSchema = new mongoose.Schema({
   subscriptions: [
     {
       type: mongoose.Schema.Types.ObjectId, // Reference to Subscription model
-      ref: 'Pricing',
+      ref: 'Subscription',
+      default: async () => {
+        const basicSubscription = await pricing.findOne({ name: 'signup' });
+        return basicSubscription ? basicSubscription._id : null; // Return the _id of the "basic" subscription
+      },
     },
   ],
+  currentActiveSubscription: {
+    type: mongoose.Schema.Types.ObjectId, // Direct reference to the active subscription
+    ref: 'Subscription',
+    default: async () => {
+      const basicSubscription = await pricing.findOne({ name: 'signup' });
+      return basicSubscription ? basicSubscription._id : null; // Return the _id of the "basic" subscription
+    },
+  },
   subscriptionStartDate: {
     type: Date,
     default: Date.now(), // Set a default value or leave it undefined for old users

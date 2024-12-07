@@ -22,6 +22,13 @@ import {
 // import '@uppy/dashboard/dist/style.css';
 // import '@uppy/status-bar/dist/style.css';
 
+const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
+userReverifyLinkBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  window.location.href = '/re-verify';
+});
+
 const uppyVid = new Uppy({
   autoUpload: true,
   debug: true,

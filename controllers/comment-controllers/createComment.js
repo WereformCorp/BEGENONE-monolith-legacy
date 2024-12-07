@@ -7,7 +7,7 @@ const Channel = require('../../models/channelModel');
 const createComment = catchAsync(async (req, res, next) => {
   try {
     const videoData = await Video.findById(req.params.videoId);
-    console.log(videoData);
+    // console.log(videoData);
     const userChannel = req.user.channel ? req.user.channel._id : null;
     const userId = req.user._id;
     const commentData = await Comment.create({

@@ -10,10 +10,10 @@ const userProfile = catchAsync(async (req, res, next) => {
     const { channel } = userData;
     let channelUserId;
     if (channel) channelUserId = channel.user._id;
-    console.log(
-      `RESPONSE LOCALS USER | User Profile | Views Controller:`,
-      res.locals.user,
-    );
+    // console.log(
+    //   `RESPONSE LOCALS USER | User Profile | Views Controller:`,
+    //   res.locals.user,
+    // );
     res.status(200).render(`../views/settings/user`, {
       title: 'USER PROFILE',
       userData,
@@ -22,6 +22,7 @@ const userProfile = catchAsync(async (req, res, next) => {
       userId,
       channelUserId,
       useCustomLeftNav: true,
+      userActiveStatus: userData.active,
     });
   } catch (err) {
     console.log(`USER PROFILE | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

@@ -6,6 +6,12 @@ block append head
 
 block content
   section.sect-mid-contentContainer
+    if userActiveStatus === false
+      .userActiveStatusCheckContainer
+        h1.userActiveStatus-h1
+          | User is not Authorized. Please Activate your account to start uploading. ❌
+        button.userReverifyLinkBtn
+          | Verify Here.
     h1.user-heading-h1 USER SETTINGS
     //- h2.eAddress-heading-h1 ELECTRONIC ADDRESS
     .basic-details

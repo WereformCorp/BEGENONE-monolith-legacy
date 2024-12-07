@@ -42,6 +42,12 @@ const uploadVideoToS3 = async (file, channelId) => {
 };
 
 const uploadContentToS3 = async (file, channelId, filetype) => {
+  if (!file || !file.mimetype) {
+    console.error('Invalid file object:', file);
+    throw new Error('Invalid file object: mimetype is missing');
+  }
+
+  console.log(`UPLOAD VIDEO TO S3 FILE:`, file);
   const ext = file.mimetype.split('/')[1];
   const filename = `${filetype}-${channelId}-${Date.now().toString()}.${ext}`;
 

@@ -5,7 +5,7 @@ const getPricings = require('../controllers/pricing-controllers/getPricing');
 const getCheckoutSession = require('../controllers/pricing-controllers/getCheckoutSession');
 const protect = require('../controllers/auth-controllers/protect');
 
-console.log(`PROTECT:`, protect);
+// console.log(`PROTECT:`, protect);
 
 const router = express.Router({ mergeParams: true });
 

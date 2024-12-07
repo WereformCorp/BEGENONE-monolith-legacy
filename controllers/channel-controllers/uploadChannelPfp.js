@@ -28,7 +28,7 @@ const uploadChannelPfp = catchAsync(async (req, res, next) => {
       return next(new AppError('Channel not found', 404));
     }
 
-    console.log(`Updated Channel:`, updatedChannel);
+    // console.log(`Updated Channel:`, updatedChannel);
 
     // Respond with success
     return res.status(200).json({

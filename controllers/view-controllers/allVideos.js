@@ -12,7 +12,7 @@ const allVideos = catchAsync(async (req, res, next) => {
     const userData = await User.findById(res.locals.user._id).populate(
       'channel',
     );
-    console.log(`USER DATA:`, userData);
+    // console.log(`USER DATA:`, userData);
     let videos;
     if (userData.channel) {
       // eslint-disable-next-line prefer-destructuring
@@ -64,6 +64,7 @@ const allVideos = catchAsync(async (req, res, next) => {
       useCustomLeftNav: true,
       userData,
       channel: userData.channel,
+      userActiveStatus: userData.active,
     });
   } catch (err) {
     console.log(`ALL VIDEOS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

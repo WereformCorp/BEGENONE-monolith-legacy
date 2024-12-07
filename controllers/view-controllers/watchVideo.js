@@ -19,7 +19,7 @@ const watchVideo = catchAsync(async (req, res, next) => {
     const thumbnailsResponse = await axios.get(
       `${urlPath}/api/v1/videos/thumbnail`,
     );
-    console.log(`Video: `, video.data.data.video); // It shows video: 'video-673f3a40df3cd649cfdc8592-1732207453155.mp4',
+    // console.log(`Video: `, video.data.data.video); // It shows video: 'video-673f3a40df3cd649cfdc8592-1732207453155.mp4',
 
     // const videoUrl = streamedData.data.url;
     const videoData = video.data.data;
@@ -106,7 +106,7 @@ const watchVideo = catchAsync(async (req, res, next) => {
     const shareLink = `${urlPath}/watch/${videoData._id}`;
     const copyLinkText = `Click on the link to Copy 👇`;
 
-    console.log(`RESPONSE LOCALS USER ID:`, res.locals.user);
+    // console.log(`RESPONSE LOCALS USER ID:`, res.locals.user);
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {

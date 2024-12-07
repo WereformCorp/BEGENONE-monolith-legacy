@@ -5,7 +5,7 @@ const multer = require('multer');
 // const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
 // const authController = require('../controllers/authController');
-// const checkActiveStatus = require('../utils/checkActiveStatus');
+const checkActiveStatus = require('../utils/checkActiveStatus');
 
 // const { uploadContentToS3 } = require('../controllers/aws_S3_controller');
 const protect = require('../controllers/auth-controllers/protect');
@@ -21,7 +21,7 @@ const getThumbnailData = require('../controllers/video-controllers/getThumbnailD
 
 const router = express.Router({ mergeParams: true });
 
-let thumbnailImage = {};
+let thumbnailImage;
 
 // Configure Multer for memory storage
 const storage = multer.memoryStorage();

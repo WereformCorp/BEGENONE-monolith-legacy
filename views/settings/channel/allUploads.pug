@@ -7,31 +7,38 @@ block append head
 
 block content
   section.sect-mid-contentContainer
-    h1.video-heading MANAGE VIDEOS
-    .video-containers
-      if videos
-        each video in videos
-          .video-ctnt-cntnr.video-ctnt-cntnr-1
-            img.video-ctnt-thumb(src=`${video.thumbnail}`)
-            .video-headers
-              a(href=`/watch/${video._id}`) 
-                h3.video-title= video.title
-              h4.video-description= video.description || `There is no description.`
-            .video-details
-              .video-date
-                h3.video-date-h3 Date:
-                - const videoTime = new Date(video.time)
-                h4.video-date-h4= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-              .video-views
-                h3.video-views-h3 Views:
-                h4.video-views-h4= video.views
-              .video-visibillity
-                h3.video-visibillity-h3 Visibility:
-                h4.video-visibillity-h4 Everyone
-            .videoBtns
-              a(href=`/watch/${video._id}` target="_blank")
-                button.video-btn-insights(value=`${video._id}`) VIEW
-              a(href=`/all-uploads/${video._id}`)
-                button.video-btn-insights(value=`${video._id}`) INSIGHTS
-      else
-        h1.no-videos-found No Videos Found On Your Channel 🥲
+    if userActiveStatus === false
+      .userActiveStatusCheckContainer
+        h1.userActiveStatus-h1
+          | User is not Authorized. Please Activate your account to start uploading. ❌
+        button.userReverifyLinkBtn
+          | Verify Here.
+    else
+      h1.video-heading MANAGE VIDEOS
+      .video-containers
+        if videos
+          each video in videos
+            .video-ctnt-cntnr.video-ctnt-cntnr-1
+              img.video-ctnt-thumb(src=`${video.thumbnail}`)
+              .video-headers
+                a(href=`/watch/${video._id}`) 
+                  h3.video-title= video.title
+                h4.video-description= video.description || `There is no description.`
+              .video-details
+                .video-date
+                  h3.video-date-h3 Date:
+                  - const videoTime = new Date(video.time)
+                  h4.video-date-h4= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                .video-views
+                  h3.video-views-h3 Views:
+                  h4.video-views-h4= video.views
+                .video-visibillity
+                  h3.video-visibillity-h3 Visibility:
+                  h4.video-visibillity-h4 Everyone
+              .videoBtns
+                a(href=`/watch/${video._id}` target="_blank")
+                  button.video-btn-insights(value=`${video._id}`) VIEW
+                a(href=`/all-uploads/${video._id}`)
+                  button.video-btn-insights(value=`${video._id}`) INSIGHTS
+        else
+          h1.no-videos-found No Videos Found On Your Channel 🥲

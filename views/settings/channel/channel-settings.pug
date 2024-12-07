@@ -7,113 +7,120 @@ block append head
 block content
   //- .image-editor(style='z-index: 1000000000; position: absolute; width: 80%; max-width: 82%; top: 8rem; height: 80%; max-height=82%; justify-self:center; align-self:center;')
   section.sect-mid-contentContainer
-    if userData
-      input(type="hidden" id="userId" value=`${userDataId}`)
-    if userData && userData.channel
-      input(type="hidden" id="userChannelId" value=`${userData.channel._id}`)
-    h1.channel-setting-h1 CHANNEL SETTINGS
-    .logo_n_banner
-      .ch-logo
-        if userData && userData.channel && channelLogo
-            img.ch-channel-logo(src=`${channelLogo}`)
+    if userActiveStatus === false
+      .userActiveStatusCheckContainer
+        h1.userActiveStatus-h1
+          | User is not Authorized. Please Activate your account to start uploading. ❌
+        button.userReverifyLinkBtn
+          | Verify Here.
+    else
+      if userData
+        input(type="hidden" id="userId" value=`${userDataId}`)
+      if userData && userData.channel
+        input(type="hidden" id="userChannelId" value=`${userData.channel._id}`)
+      h1.channel-setting-h1 CHANNEL SETTINGS
+      .logo_n_banner
+        .ch-logo
+          if userData && userData.channel && channelLogo
+              img.ch-channel-logo(src=`${channelLogo}`)
+          else
+            img.ch-channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+        .ch-banner
+          if userData && userData.channel && bannerImage
+            img.ch-banner-img(src=`${bannerImage}`)
+          else
+            img.ch-banner-img(src='https://begenone-images.s3.amazonaws.com/default-banner-image.jpg')
+      form#videoUploadForm.ch-upload-img-container
+        .ch-upload-pfp
+          //- h4.ctnt-profilepic-h4 PROFILE PICTURE
+          div#ch-upload-pfp-file-btn(action="#")
+          button#openUppyButton-profilepic Upload Profile Pic
+        .ch-upload-pfp
+          //- h4.ctnt-banner-h4 BANNER
+          div#ch-upload-banner-file-btn
+          button#openUppyButton-banner Upload Banner
+        
+      .ch-main-settings
+        .ch-main-details
+          .ch-name
+            h3.ch-name-h3 CHANNEL NAME
+            input.ch-name-input(placeholder='Type a Channel Name', type='text')
+          .ch-about
+            h3.ch-about-h3 ABOUT
+            textarea.ch-about-textarea(placeholder='Enter Your Channels About Information Here.', cols='30', rows='6')
+          .ch-id
+            h3.ch-id-h3 USERNAME
+            input.ch-username-input(placeholder='i.e. areeshalam21', type='text')
+          .ch-links
+            h3.ch-links-h3 LINKS
+            input.ch-links-input(placeholder='add link here', type='text' disabled)
+        .ch-comments
+          .ch-comments-permission
+            h3.ch-comments-h3 COMMENTS
+            .ch-comments-btns
+              button.ch-comments-btn-enable Enable
+              button.ch-comments-btn-disable Disable
+          .ch-comments-filter
+            h3.ch-comments-filter-h3 COMMENT FILTERS
+            h6.ch-comments-filter-h6 Forbidden Words
+            input.ch-comments-filter-input(type='text', disabled)
+      if channel && channel._id
+        input(type="hidden", value=`${channel._id}`).ch-delete-input
+      .create-delete-btnGroup
+        if channel
+          button.ch-delete= "DELETE CHANNEL ⚠️"
+          button.ch-dtls-about-owner-save-btn Save
         else
-          img.ch-channel-logo(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
-      .ch-banner
-        if userData && userData.channel && bannerImage
-          img.ch-banner-img(src=`${bannerImage}`)
-        else
-          img.ch-banner-img(src='https://begenone-images.s3.amazonaws.com/default-banner-image.jpg')
-    form#videoUploadForm.ch-upload-img-container
-      .ch-upload-pfp
-        //- h4.ctnt-profilepic-h4 PROFILE PICTURE
-        div#ch-upload-pfp-file-btn(action="#")
-        button#openUppyButton-profilepic Upload Profile Pic
-      .ch-upload-pfp
-        //- h4.ctnt-banner-h4 BANNER
-        div#ch-upload-banner-file-btn
-        button#openUppyButton-banner Upload Banner
-      
-    .ch-main-settings
-      .ch-main-details
-        .ch-name
-          h3.ch-name-h3 CHANNEL NAME
-          input.ch-name-input(placeholder='Type a Channel Name', type='text')
-        .ch-about
-          h3.ch-about-h3 ABOUT
-          textarea.ch-about-textarea(placeholder='Enter Your Channels About Information Here.', cols='30', rows='6')
-        .ch-id
-          h3.ch-id-h3 USERNAME
-          input.ch-username-input(placeholder='i.e. areeshalam21', type='text')
-        .ch-links
-          h3.ch-links-h3 LINKS
-          input.ch-links-input(placeholder='add link here', type='text' disabled)
-      .ch-comments
-        .ch-comments-permission
-          h3.ch-comments-h3 COMMENTS
-          .ch-comments-btns
-            button.ch-comments-btn-enable Enable
-            button.ch-comments-btn-disable Disable
-        .ch-comments-filter
-          h3.ch-comments-filter-h3 COMMENT FILTERS
-          h6.ch-comments-filter-h6 Forbidden Words
-          input.ch-comments-filter-input(type='text', disabled)
-    if channel && channel._id
-      input(type="hidden", value=`${channel._id}`).ch-delete-input
-    .create-delete-btnGroup
-      if channel
-        button.ch-delete= "DELETE CHANNEL ⚠️"
-        button.ch-dtls-about-owner-save-btn Save
-      else
-        button.ch-dtls-about-owner-save-btn Create Channel
-    //- .ch-details
-      .ch-details-col-1
-        //- .ch-dtls-uploads
-          .ch-dtls-header
-            h3.ch-dtls-h3-heading UPLOADS
-            a(href="/all-uploads")
-              h3.ch-dtls-h3-allUpload All Uploads
-          
-          .ch-dtls-vdo-card-container
-            if channel && channel.videos
-              each video in channel.videos
-                .ch-dtls-vdo-card
-                  if channel.displayImage
-                      img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
-                  else if channel.displayImage === undefined
-                      img.ch-dtls-vdo-thumb(src=`/imgs/default-user-photo.jpg`)
-                  .ch-dtls-vdo-meta
-                    h3.ch-dtls-vdo-title= video.title
+          button.ch-dtls-about-owner-save-btn Create Channel
+      //- .ch-details
+        .ch-details-col-1
+          //- .ch-dtls-uploads
+            .ch-dtls-header
+              h3.ch-dtls-h3-heading UPLOADS
+              a(href="/all-uploads")
+                h3.ch-dtls-h3-allUpload All Uploads
+            
+            .ch-dtls-vdo-card-container
+              if channel && channel.videos
+                each video in channel.videos
+                  .ch-dtls-vdo-card
+                    if channel.displayImage
+                        img.ch-dtls-vdo-thumb(src=`/imgs/thumbnails/${video.thumbnail}`, height='40px')
+                    else if channel.displayImage === undefined
+                        img.ch-dtls-vdo-thumb(src=`/imgs/default-user-photo.jpg`)
+                    .ch-dtls-vdo-meta
+                      h3.ch-dtls-vdo-title= video.title
 
-                    - const videoTime = new Date(video.time)
-                    h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                    h3.ch-dtls-vdo-views= video.views + " "
-                      | views
-            else
-              p There are no uploads to be found!
-        //- .ch-dtls-subscribers
-          .ch-dtls-subs-heading
-            h3.ch-dtls-subs-h3 SUBSCRIPTION
-            h4.ch-dtls-subs-h4 View All
-          .ch-dtls-subs-container
-            .ch-dtls-subs.ch-dtls-sub-1
-              if channel && channel.subscribedChannels
-                img.ch-dtls-subs-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
-                //- img.(src='/imgs/users/default.jpeg')
-                h3.ch-dtls-subs-name Areesh Alam
-                h3.ch-dtls-subs-date 12 Jan 2021
+                      - const videoTime = new Date(video.time)
+                      h3.ch-dtls-vdo-date= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                      h3.ch-dtls-vdo-views= video.views + " "
+                        | views
               else
-                p.no-sub-found You don't have any subscribers. How sad 🥲 I wish you have happy griefs. Take Care 😉
-        //- .ch-dtls-story
-          h2.ch-dtls-story-h2 STORIES SETTINGS
-          .story-settings.story-setting-1
-            h4.story-settings-h4
-              | Allow Users to comment your story
-            button.story-settings-allow Allow
-            button.story-settings-deny Deny
-      //- .ch-dtls-col-2
-        .ch-dtls-about-owner
-          h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
-          textarea.ch-dtls-about-owner-textarea(cols='30', rows='10' disabled)
+                p There are no uploads to be found!
+          //- .ch-dtls-subscribers
+            .ch-dtls-subs-heading
+              h3.ch-dtls-subs-h3 SUBSCRIPTION
+              h4.ch-dtls-subs-h4 View All
+            .ch-dtls-subs-container
+              .ch-dtls-subs.ch-dtls-sub-1
+                if channel && channel.subscribedChannels
+                  img.ch-dtls-subs-img(src=`/imgs/users/${channel.user._id}/display-images/${channel.displayImage}`)
+                  //- img.(src='/imgs/users/default.jpeg')
+                  h3.ch-dtls-subs-name Areesh Alam
+                  h3.ch-dtls-subs-date 12 Jan 2021
+                else
+                  p.no-sub-found You don't have any subscribers. How sad 🥲 I wish you have happy griefs. Take Care 😉
+          //- .ch-dtls-story
+            h2.ch-dtls-story-h2 STORIES SETTINGS
+            .story-settings.story-setting-1
+              h4.story-settings-h4
+                | Allow Users to comment your story
+              button.story-settings-allow Allow
+              button.story-settings-deny Deny
+        //- .ch-dtls-col-2
+          .ch-dtls-about-owner
+            h2.ch-dtls-about-owner-h2 ABOUT YOURSELF
+            textarea.ch-dtls-about-owner-textarea(cols='30', rows='10' disabled)
       
   
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
