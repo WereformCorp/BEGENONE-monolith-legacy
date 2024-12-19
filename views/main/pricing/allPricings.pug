@@ -6,10 +6,12 @@ block append head
   script(src='https://js.stripe.com/v3/')
 
 block content
+  a(href="#pricingsPanel").overview-banner-container
+    img.overview-banner-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/banner-main.png" alt="Banner Image")
   section.sect-mid-contentContainer
     img.pricing-heading-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", alt="")
     h1.pricing-heading-h1 PRICING BUILT FOR INDIVIDUALS and BUSINESSES OF ALL SIZES
-    .pricing-container
+    .pricing-container#pricingsPanel
       //- .pricing-cntnrs.pricing-cntnr-crown
       //-   img.pricing-crown-img(src='/imgs/crown-pricing.png')
       //-   h2.pricing-crown-h2 CROWN
@@ -92,61 +94,100 @@ block content
         h2.pricing-ea-h2
           | EARLY ACCESS
           br
-          span.pricing-ea-h2-span ( Charged Monthly )
-        h2.pricing-price(style="display:flex; flex-direction: column; align-items: center;")
-          | $9.99 / Month <p style="font-size:.825rem;">[Prices May Increase]</p> 
+          span.pricing-ea-h2-span
+            | ( Charged Monthly )
+            br
+            | [Prices May Increase in future, get your lucky offer now!]
+        h2.pricing-price(style="display: flex; flex-direction: column; align-items: center;")
+          sup.actual-pricing(style="font-size: .8rem;")
+            del ($29.99/monthly)
+          span.new-pricing
+            |  $19.99
+            span.new-pricing-time-span
+              | per month
+            
+          
+          //- p(style="font-size: .75rem;") per month
         .pricing-features.pricing-feature-ea
           .pricing-feature-item
             i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-beta-launch
+              span Become a <b>BETA TESTER</b>
+              <b class="available-pricing">(Avaliable)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-1
-              | Channel Creation <b class="available-pricing">(Avaliable)</b>
+              span Channel Creation
+              <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-2
-              | Video Upload <b class="available-pricing">(Avaliable)</b>
+              span Video Upload
+              <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-3
-              | All Ads Removed <b class="available-pricing">(Avaliable)</b>
+              span All Ads Removed
+              <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-4
-              | Premium Stickers <b class="coming_soon-pricing">(coming soon)</b>
+              span Content Boost
+              <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-5
-              | Content Boost <b class="available-pricing">(Avaliable)</b>
+              span Event Notifications
+              <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-6
-              | Promotion <b class="coming_soon-pricing">(coming soon)</b>
+              span Community Post
+              <b class="almost_here-pricing">(Almost Here)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-7
-              | Community Post <b class="almost_here-pricing">(Almost Here)</b>
+              span Wires
+              <b class="almost_here-pricing">(Almost Here)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-7
+              span AI Text Generator (Wires)
+              <b class="almost_here-pricing">(Almost Here)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-8
-              | Wires <b class="almost_here-pricing">(Almost Here)</b>
+              span Premium Stickers
+              <b class="almost_here-pricing">(Almost Here)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-9
-              | Event Notifications <b class="available-pricing">(Avaliable)</b>
+              span Promotion
+              <b class="coming_soon-pricing">(coming soon)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-10
-              | Impression System <b class="coming_soon-pricing">(coming soon)</b>
+              span Impression System
+              <b class="coming_soon-pricing">(coming soon)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
-            h3.pricing-features-lists.pricing-features-list-10
-              | Sponsorship Tabs <b class="coming_soon-pricing">(coming soon)</b>
+            h3.pricing-features-lists.pricing-features-list-11
+              span Sponsorship Tabs
+              <b class="coming_soon-pricing">(coming soon)</b>
         if userData
           if userActiveStatus === false
-            | 
+            |
           else
-            button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
-              | Start Now!
-              i.fa-solid.fa-credit-card
+            - const portal = `https://billing.stripe.com/p/login/test_cN2dT5dzY46r58s7ss`
+            if subscriptionStatus
+              a(href=`${portal}` style='width: 100%;')
+                button.pricing-checkout-button
+                  | GO TO YOUR PORTAL!
+                  //- i.fa-solid.fa-credit-card
+            else
+              button.pricing-checkout-button#checkout-pricing(data-pricing-id=`${pricings.earlyAccess}`)
+                | Start Now!
+                i.fa-solid.fa-credit-card
         else 
           a(href="/login").pricing-checkout-button 
             | Start Now!
@@ -190,10 +231,9 @@ block content
               br
               <b class="available-pricing">(Avaliable)</b>
             p.pfd-p.pfd-p-1
-              | This feature allows members to create their own channel.
+              | Create your own channel for sharing content.
               br
-              br
-              | <span class="pfd-p-span"> <b>Benefit:</b> During Early Access, content creators are limited in number, ensuring greater exposure and higher engagement with your audience. This exclusivity guarantees your content stands out.</span>
+              | <span class="pfd-p-span"> <b>Benefit:</b> This feature allows you to establish a dedicated space for your videos, wires, and posts. For example, if you're a fitness coach, you can create a channel to upload workout tutorials and attract a focused audience interested in fitness content.</span>
           br
           hr.hr-pfd-indepth
           br
@@ -203,10 +243,9 @@ block content
               br
               <b class="available-pricing">(Avaliable)</b>
             p.pfd-p.pfd-p-2
-              | Members can upload videos to the platform.
+              | Upload videos to the platform for others to view.
               br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members enjoy a unique advantage with fewer competitors. Your videos will receive increased visibility and reach, amplifying your presence and boosting engagement during the growth phase.</span>
+              | <span class="pfd-p-span"><b>Benefit:</b> You can share your videos directly with the community, giving you control over your content distribution. For example, a musician could upload their latest music video and engage directly with their fans without worrying about platform restrictions.</span>
           br
           hr.hr-pfd-indepth
           br
@@ -218,21 +257,7 @@ block content
             p.pfd-p.pfd-p-3
               | Enjoy an ad-free experience while browsing and interacting with content.
               br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> This feature enhances the user experience by eliminating interruptions, ensuring that members have a smooth, premium experience. It also prioritizes content visibility without distractions. </span>
-          br
-          hr.hr-pfd-indepth
-          br
-          div.pfd-div.pfd-div-4.indepth-div
-            h1.pfd-h1.pfd-h1-4.indepth
-              | Premium Stickers
-              br
-              <b class="coming_soon-pricing">(coming soon)</b>
-            p.pfd-p.pfd-p-4
-              | Exclusive, customizable stickers for content.
-              br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Members will have access to distinctive features that allow for personal branding, enabling their content to stand out and further engage their audience in a creative way.</span>
+              | <span class="pfd-p-span"><b>Benefit:</b> Enjoy a seamless viewing experience with no interruptions, making it easier for you to focus on your content. For instance, if you're watching any content, you won't be distracted by pop-up ads, resulting in a more positive and engaging experience</span>
           br
           hr.hr-pfd-indepth
           br
@@ -242,49 +267,9 @@ block content
               br
               <b class="available-pricing">(Avaliable)</b>
             p.pfd-p.pfd-p-5
-              | Boost your content to ensure maximum visibility and engagement.
+              | Enhance your content's reach with priority placement.
               br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> During Early Access, your boosted content will receive prominent placement on the platform, ensuring higher engagement from the growing user base, giving you an edge in content discovery.</span>
-          br
-          hr.hr-pfd-indepth
-          br
-          div.pfd-div.pfd-div-6.indepth-div
-            h1.pfd-h1.pfd-h1-6.indepth
-              | Promotion
-              br
-              <b class="coming_soon-pricing">(coming soon)</b>
-            p.pfd-p.pfd-p-6
-              | Exclusive tools for content promotion.
-              br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will have the first opportunity to access promotional tools, amplifying their reach and ensuring their content is seen by a broader audience.</span>
-          br
-          hr.hr-pfd-indepth
-          br
-          div.pfd-div.pfd-div-7.indepth-div
-            h1.pfd-h1.pfd-h1-7.indepth
-              | Community Post
-              br
-              <b class="almost_here-pricing">(Almost Here)</b>
-            p.pfd-p.pfd-p-7
-              | Create and share posts with the community.
-              br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> This feature fosters interaction within the community, allowing Early Access members to actively participate in shaping the platform's culture, while also benefiting from heightened visibility and engagement.</span>
-          br
-          hr.hr-pfd-indepth
-          br
-          div.pfd-div.pfd-div-8.indepth-div
-            h1.pfd-h1.pfd-h1-8.indepth
-              | Wires
-              br
-              <b class="almost_here-pricing">(Almost Here)</b>
-            p.pfd-p.pfd-p-8
-              | Directly communicate with your audience via private messaging.
-              br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members can connect more personally with their followers, enhancing their influence and establishing stronger relationships with their growing community.</span>
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature pushes your content to the top of the feed, increasing its chances of being seen. For example, if you're a new creator, your video on "How to Start a Blog" could be featured at the top, helping you reach a wider audience who might have missed it otherwise.</span>
           br
           hr.hr-pfd-indepth
           br
@@ -294,10 +279,69 @@ block content
               br
               <b class="available-pricing">(Avaliable)</b>
             p.pfd-p.pfd-p-9
-              | Stay informed with event updates and notifications.
+              | Get updates about events and opportunities via email.
               br
+              | <span class="pfd-p-span"><b>Benefit:</b> Stay up to date with platform events, such as live streams or opportunities, ensuring you don't miss key moments that could enhance your visibility. For example, if there's an upcoming event where you can showcase your content to wider audience, you'll get notified ahead of time to participate.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-7.indepth-div
+            h1.pfd-h1.pfd-h1-7.indepth
+              | Community Post
               br
-              | <span class="pfd-p-span"><b>Benefit:</b> Members will be the first to know about platform events, keeping them engaged and ensuring they never miss an opportunity to participate in exclusive activities that drive visibility and growth.</span>
+              <b class="almost_here-pricing">(Almost Here)</b>
+            p.pfd-p.pfd-p-7
+              | Share posts with the community to engage and interact.
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature allows you to post announcements, polls, or updates directly to your followers. For instance, if you're releasing a new product, you can use this feature to notify your followers first, creating anticipation and engagement with your community.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-8.indepth-div
+            h1.pfd-h1.pfd-h1-8.indepth
+              | Wires
+              br
+              <b class="almost_here-pricing">(Almost Here)</b>
+            p.pfd-p.pfd-p-8
+              | Post short updates to engage with followers.
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Share quick thoughts, ideas, or updates with your followers in real-time. For example, if you're a content creator, you could quickly share a behind-the-scenes look at your next project, keeping your audience connected and engaged.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-8.indepth-div
+            h1.pfd-h1.pfd-h1-8.indepth
+              | AI TEXT GENERATION (for WIRES)
+              br
+              <b class="almost_here-pricing">(Almost Here)</b>
+            p.pfd-p.pfd-p-8
+              | Automatically create Wires using AI assistance.
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature helps generate engaging text for your Wires, saving you time. For example, if you're a busy content creator, the AI could suggest a catchy post about your latest video, allowing you to spend less time writing and more time creating.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-4.indepth-div
+            h1.pfd-h1.pfd-h1-4.indepth
+              | Premium Stickers
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-4
+              | Access exclusive, fun stickers for customization.
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Use unique stickers to add flair to your posts, messages, or videos. For instance, if you're a gamer, you can use exclusive stickers when commenting on other people's posts, making your interactions more engaging.</span>
+          br
+          hr.hr-pfd-indepth
+          br
+          div.pfd-div.pfd-div-6.indepth-div
+            h1.pfd-h1.pfd-h1-6.indepth
+              | Promotion
+              br
+              <b class="coming_soon-pricing">(coming soon)</b>
+            p.pfd-p.pfd-p-6
+              | Advertise your posts to increase their reach.
+              br
+              | <span class="pfd-p-span"><b>Benefit:</b> Boost the visibility of your content to a targeted audience by paying for promotions. For example, if you're launching a new product, you can pay to boost your post and ensure it gets seen by potential customers, increasing the chance of conversions.</span>
           br
           hr.hr-pfd-indepth
           br
@@ -307,10 +351,9 @@ block content
               br
               <b class="coming_soon-pricing">(coming soon)</b>
             p.pfd-p.pfd-p-10
-              | A system that tracks and boosts impressions on your content.
+              | Use algorithm-generated points to promote your videos.
               br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will receive exclusive insights and increased exposure, allowing them to optimize their content strategy for maximum impact and engagement.</span>
+              | <span class="pfd-p-span"><b>Benefit:</b> Earn points based on your channel's activity that can be used to promote your content without spending money. For example, if your channel gains traction over time, you could use earned points to promote your next video, giving it more exposure without a cost.</span>
           br
           hr.hr-pfd-indepth
           br
@@ -320,11 +363,33 @@ block content
               br
               <b class="coming_soon-pricing">(coming soon)</b>
             p.pfd-p.pfd-p-11
-              | Access to sponsored content opportunities.
+              | Showcase promoted products alongside video descriptions.
               br
-              br
-              | <span class="pfd-p-span"><b>Benefit:</b> Early Access members will have priority access to sponsorships, creating opportunities for monetization and expanded exposure, ensuring they benefit from the platform's initial growth phase.</span>
+              | <span class="pfd-p-span"><b>Benefit:</b> This feature lets you highlight sponsored products in a dedicated tab. For instance, if you're a beauty influencer, you can feature sponsored skincare products alongside your video tutorial, providing viewers with direct access to purchase the items you're promoting.</span>
+  //- footer.footer
+  //-   p(style="margin: 0;")
+  //-     | &copy; 2024 World Ecosystem Reform. All Rights Reserved.
+  //-   p(style="margin: 0; margin-top: 0.5rem;")
+  //-     | Contact us: 
+  //-     a.mailto(href="mailto:info@begenone.com") info@begenone.com
+  footer.footer
+    p(style="margin: 0;")
+      | &copy; 2024 World Ecosystem Reform. All Rights Reserved.
+    p(style="margin: 0; margin-top: 0.5rem;")
+      | Contact us: 
+      a.mailto(href="mailto:info@begenone.com") info@begenone.com
+    p(style="margin: 0; margin-top: 0.5rem;").footer-social-links
+      | Follow us:
+      a.social-link.social-link-twitter(href="https://twitter.com/begenone" target="_blank") Twitter
+      a.social-link.social-link-instagram(href="https://instagram.com/begenone" target="_blank") Instagram
+      a.social-link.social-link-linkedIn(href="https://www.linkedin.com/company/world-ecosystem-reform/" target="_blank") LinkedIn
 
-          
   script(src="/js/stripe.js")
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
+  script.
+    const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
+    userReverifyLinkBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      window.location.href = '/re-verify';
+    });

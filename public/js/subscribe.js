@@ -1,9 +1,13 @@
 /* eslint-disable */
-const userIdInput = document.querySelector('.userId-input').value;
-const videoIdInput = document.querySelector('.videoId-input').value;
-const isUserSubscribed = document.querySelector(
-  '.isUserSubscribed-input',
-).value;
+const userIdInput = document.querySelector('.userId-input');
+const userIdInputValue = userIdInput ? userIdInput.value : null;
+const videoIdInput = document.querySelector('.videoId-input')
+  ? document.querySelector('.videoId-input').value
+  : null;
+const videoIdInputValue = videoIdInput ? videoIdInput.value : null;
+const isUserSubscribed = document.querySelector('.isUserSubscribed-input')
+  ? document.querySelector('.isUserSubscribed-input').value
+  : null;
 
 const subscribeBtn = document.querySelector('.sect-mid-vdoP-subsBtn');
 const subscribedBtn = document.querySelector('.sect-mid-vdoP-subsBtn-done');

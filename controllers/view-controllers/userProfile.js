@@ -14,6 +14,10 @@ const userProfile = catchAsync(async (req, res, next) => {
     //   `RESPONSE LOCALS USER | User Profile | Views Controller:`,
     //   res.locals.user,
     // );
+
+    const subscriptionStatus = res.locals.subscriptionValid;
+    console.log(`SUBSCRIPTION STATUS:`, subscriptionStatus);
+
     res.status(200).render(`../views/settings/user`, {
       title: 'USER PROFILE',
       userData,
@@ -23,6 +27,7 @@ const userProfile = catchAsync(async (req, res, next) => {
       channelUserId,
       useCustomLeftNav: true,
       userActiveStatus: userData.active,
+      subscriptionStatus,
     });
   } catch (err) {
     console.log(`USER PROFILE | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

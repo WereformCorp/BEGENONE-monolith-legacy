@@ -1,4 +1,22 @@
 /* eslint-disable */
+// const notyf = new Notyf({
+//   duration: 10000, // Notification display time in ms
+//   position: {
+//     x: 'right',
+//     y: 'top',
+//   },
+//   types: [
+//     {
+//       type: 'info',
+//       background: 'blue',
+//       icon: {
+//         className: 'material-icons',
+//         tagName: 'i',
+//         text: 'info',
+//       },
+//     },
+//   ],
+// });
 
 const commentForm = document.getElementById('commentForm');
 const commentsContainer = document.querySelector('.ctnt-cmmnt-list');
@@ -43,13 +61,15 @@ const postComment = async (comment) => {
     // Getting the comment data
     const commentData = res.data.data;
 
+    console.log(`comment data:`, commentData);
+
     const compiledCommentRes = await axios({
       url: `${urlPath}/api/v1/comments/comment.pug`,
       method: 'POST',
       data: commentData,
     });
 
-    // console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
+    console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
 
     // Checking the health
     if (compiledCommentRes.data.status !== 'success')
@@ -60,7 +80,7 @@ const postComment = async (comment) => {
     if (res.data.status.toLowerCase() === 'success') {
       commentsContainer.insertAdjacentHTML(
         'afterbegin',
-        compiledCommentRes.data.compiledTemplate,
+        compiledCommentRes.data.data.compiledTemplate,
       );
     }
     // Adding the comments count 1

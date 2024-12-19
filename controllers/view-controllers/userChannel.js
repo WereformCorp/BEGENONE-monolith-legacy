@@ -23,6 +23,8 @@ const userChannel = catchAsync(async (req, res, next) => {
     //   wireTime = calculateTimeAgo(video.time);
     // });
 
+    console.log(`USER DATA:`, userData);
+
     res.status(200).render(`../views/main/channels/userChannel`, {
       title: 'USER PROFILE',
       userData,

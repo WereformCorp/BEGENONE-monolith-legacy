@@ -15,6 +15,7 @@ const subscriptionSchema = new mongoose.Schema({
     ref: 'Pricing',
     required: [true, 'Subscription must be linked to a pricing plan!'],
   },
+  stripeId: String,
   startDate: {
     type: Date,
     default: Date.now,
@@ -31,7 +32,7 @@ const subscriptionSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['inactive', 'active', 'cancelled', 'expired', 'pending'],
+    enum: ['inactive', 'active', 'canceled', 'expired', 'pending'],
     default: 'inactive',
   },
   autoRenew: {

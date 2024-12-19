@@ -1,4 +1,4 @@
-@media (max-width: 1450px) {
+/* @media (max-width: 1450px) {
   html {
     font-size: 14px;
   }
@@ -8,7 +8,7 @@
   html {
     font-size: 12px;
   }
-}
+} */
 
 @media (max-width: 1300px) {
   .keyword-4 {
@@ -72,10 +72,6 @@
 }
 
 @media (max-width: 1050px) {
-  html {
-    font-size: 10px;
-  }
-
   .hr-date_N_views {
     display: none;
   }
@@ -91,10 +87,6 @@
 }
 
 @media (max-width: 1000px) {
-  html {
-    font-size: 12px;
-  }
-
   .section-left {
     grid-template-rows: 1fr;
     width: 80px;
@@ -187,8 +179,29 @@
     display: none;
   }
 
-  .container {
+  /* .container {
     display: flex;
+  } */
+
+  .sect-mid-chDetails {
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .sect-mid-logo {
+    display: flex;
+    align-self: center;
+  }
+
+  .sect-mid-logo-img {
+    max-width: 4rem;
+    height: auto;
+    align-self: center;
+  }
+
+  .sect-mid-accDtls-chName {
+    font-size: 1.8rem;
   }
 
   .signup-form {

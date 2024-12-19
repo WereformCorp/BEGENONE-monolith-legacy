@@ -1,37 +1,91 @@
 const User = require('../../models/userModel');
 const Pricing = require('../../models/pricingModel');
+const Subscription = require('../../models/subscriptionModel');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
 const sendMail = require('../../utils/email');
 
 const signup = catchAsync(async (req, res, next) => {
   try {
-    const basicPricing = await Pricing.findOne({
-      name: 'basic',
+    // const newUserPricing = await Pricing.findOne({
+    //   name: 'signup',
+    //   active: true,
+    // });
+
+    // console.log(`BASIC pricing:`, newUserPricing);
+
+    // if (!newUserPricing)
+    //   return next(new AppError('Default PRICING not found', 404));
+
+    // // 1. Create a new Subscription based on the pricing found
+    // const newSubscription = await Subscription.create({
+    //   user: req.body.user._id, // Assuming newUser is created after this step
+    //   pricingName: 'signup', // Link the pricing name
+    //   pricings: newUserPricing._id, // Link the pricing object
+    //   status: 'active', // Set subscription status to 'active'
+    // });
+
+    // console.log(`NEW SUBSCRIPTION CREATED:`, newSubscription);
+
+    // // 2. Add the new subscription's ID to the user's subscriptions array
+    // const userData = {
+    //   ...req.body,
+    //   subscriptions: [newSubscription._id], // Add the new subscription's _id
+    //   currentActiveSubscription: newSubscription._id, // Set it as the active subscription
+    // };
+
+    // console.log(`USER DATA FROM SIGN UP:`, userData);
+
+    // const newUser = await User.create(userData);
+
+    // console.log(`NEW USER FROM SIGNUP:`, newUser);
+
+    // await newUser.save();
+
+    // if (!newUser) return next(new AppError(`Data Not Found!`, 404));
+    // // createSendToken(newUser, 201, res);
+    // req.newUser = newUser;
+    // next();
+
+    // Step 1: Create the new user first, without the subscription
+    const newUser = await User.create(req.body);
+
+    if (!newUser) return next(new AppError('User creation failed', 404));
+
+    console.log(`NEW USER CREATED:`, newUser);
+
+    // Step 2: Now, fetch the pricing information
+    const newUserPricing = await Pricing.findOne({
+      name: 'signup',
       active: true,
     });
 
-    console.log(`BASIC pricing:`, basicPricing);
-
-    if (!basicPricing)
+    if (!newUserPricing)
       return next(new AppError('Default PRICING not found', 404));
 
-    // Add the basic subscription to the user data
-    const userData = {
-      ...req.body,
-      subscriptions: basicPricing, // Embed the queried subscription in the User document
-    };
+    console.log(`SIGNUP pricing:`, newUserPricing);
 
-    console.log(`USER DATA FROM SIGN UP:`, userData);
+    // Step 3: Create the subscription using the newly created user's ID
+    const newSubscription = await Subscription.create({
+      user: newUser._id, // Now we have the user ID
+      pricingName: 'signup',
+      pricings: newUserPricing._id, // Link the pricing object
+      status: 'active',
+      autoRenew: true,
+      price: 0,
+    });
 
-    const newUser = await User.create(userData);
+    console.log(`NEW SUBSCRIPTION CREATED:`, newSubscription);
 
-    console.log(`NEW USER FROM SIGNUP:`, newUser);
+    // Step 4: Update the user with the new subscription IDs
+    newUser.subscriptions.push(newSubscription._id); // Add subscription to subscriptions array
+    newUser.currentActiveSubscription = newSubscription._id; // Set current active subscription
 
-    await newUser.save();
+    await newUser.save(); // Save the updated user with the new subscription
 
-    if (!newUser) return next(new AppError(`Data Not Found!`, 404));
-    // createSendToken(newUser, 201, res);
+    console.log(`NEW USER AFTER ALL THE CHANGES`, newUser);
+
+    // Step 5: Proceed with the rest of your flow
     req.newUser = newUser;
     next();
   } catch (err) {
@@ -40,6 +94,8 @@ const signup = catchAsync(async (req, res, next) => {
 });
 
 const signupAuth = catchAsync(async (req, res, next) => {
+  console.log(`SIGN UP AUTHENTICATION BEGINS HERE`);
+
   // 1) Get User based on Posted EMAIL
   const { newUser } = req;
   // console.log(`NEW USER:`, newUser);

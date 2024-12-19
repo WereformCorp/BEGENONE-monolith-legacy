@@ -1,4 +1,23 @@
 /* eslint-disable */
+const notyf = new Notyf({
+  duration: 10000, // Notification display time in ms
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'info',
+      },
+    },
+  ],
+});
+
 const chDeleteBtn = document.querySelector('.ch-delete');
 const deleteChannel = async (channelId) => {
   try {
@@ -13,7 +32,7 @@ const deleteChannel = async (channelId) => {
     // console.log('RESPONSE:', res);
 
     if (res.data.status === '204') {
-      // showAlert('success', 'Logged In Successfully!');
+      // shownotyf.error('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);

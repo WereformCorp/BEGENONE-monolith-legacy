@@ -4,7 +4,10 @@ const catchAsync = require('../../utils/catchAsync');
 
 const getChannel = catchAsync(async (req, res, next) => {
   try {
+    console.log(`❌❌❌ REQUESTED ID FROM PARAMS:`, req.params.id);
     const data = await Channel.findById(req.params.id);
+
+    console.log(`DATA FROM GET CHANNEL:`, data);
 
     console.log(`⭕⭕⭕ GET CHANNEL FUNCTION`, data);
     if (!data)

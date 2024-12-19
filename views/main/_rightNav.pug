@@ -1,40 +1,41 @@
-section#sect-3.section-right
-  .sect-rgt-icons
-    section.sect-rgt-icon-list
-      if userData
-        if userData && userData.channel
-          a(href=`/channels/${userData.channel._id}`)
-            .sect-rgt-icon-list-container.sect-rgt-icon-1
-              if userData.channel && userData.channel.displayImage
-                img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`/imgs/users/${userId}/display-images/${userData.channel.displayImage}`)
-              else
-                img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+if !isPricingPage
+  section#sect-3.section-right
+    .sect-rgt-icons
+      section.sect-rgt-icon-list
+        if userData
+          if userData && userData.channel
+            a(href=`/channels/${userData.channel._id}`)
+              .sect-rgt-icon-list-container.sect-rgt-icon-1
+                if userData.channel && userData.channel.channelLogo
+                  img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`${userData.channel.channelLogo}`)
+                else
+                  img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src=`https://begenone-images.s3.amazonaws.com/default-user-photo.jpg`)
+          else
+            a(href="/channel-settings") 
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
         else
-          a(href="/channel-settings") 
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
-      else
-        a(href="/login")
-          .sect-rgt-icon-list-container.sect-rgt-icon-1
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
-      .sect-rgt-icon-list-container.sect-rgt-icon-2
-        img.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid(src="https://begenone-images.s3.amazonaws.com/brain-solid.svg", alt="")
-    section.sect-rgt-icon-2-list
-      .sect-rgt-icon-list-container.sect-rgt-icon-3
-        img.sect-rgt-icons-imgs.sect-rgt-icon-img-3.icon.icon-category(src="https://begenone-images.s3.amazonaws.com/th-large-solid.svg", alt="")
-      .sect-rgt-icon-list-container.sect-rgt-icon-4
-        img.sect-rgt-icons-imgs.sect-rgt-icon-img-4.icon.icon-cart-shopping-solid(src="https://begenone-images.s3.amazonaws.com/cart-shopping-solid.svg", alt="")
-      .sect-rgt-icon-list-container.sect-rgt-icon-5
-        img.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid(src="https://begenone-images.s3.amazonaws.com/bell-solid.svg", alt="")
-      if userData 
-        a(href="/upload") 
-          .sect-rgt-icon-list-container.sect-rgt-icon-6
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid(src="https://begenone-images.s3.amazonaws.com/video-solid.svg", alt="")
-      else
-        a(href="/login") 
-          .sect-rgt-icon-list-container.sect-rgt-icon-6
-            img.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid(src="https://begenone-images.s3.amazonaws.com/video-solid.svg", alt="")
-    .sect-rgt-icon-list-container.sect-rgt-icon-7
-      img.sect-rgt-icons-imgs.sect-rgt-icon-img-7.icon.icon-bars-solid(src="https://begenone-images.s3.amazonaws.com/bars-solid.svg", alt="")
+          a(href="/login")
+            .sect-rgt-icon-list-container.sect-rgt-icon-1
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-1-image.icon.icon-circle-user-solid(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
+        .sect-rgt-icon-list-container.sect-rgt-icon-2
+          img.sect-rgt-icons-imgs.sect-rgt-icon-img-2.icon.icon-brain-solid(src="https://begenone-images.s3.amazonaws.com/brain-solid.svg", alt="")
+      section.sect-rgt-icon-2-list
+        .sect-rgt-icon-list-container.sect-rgt-icon-3
+          img.sect-rgt-icons-imgs.sect-rgt-icon-img-3.icon.icon-category(src="https://begenone-images.s3.amazonaws.com/th-large-solid.svg", alt="")
+        .sect-rgt-icon-list-container.sect-rgt-icon-4
+          img.sect-rgt-icons-imgs.sect-rgt-icon-img-4.icon.icon-cart-shopping-solid(src="https://begenone-images.s3.amazonaws.com/cart-shopping-solid.svg", alt="")
+        .sect-rgt-icon-list-container.sect-rgt-icon-5
+          img.sect-rgt-icons-imgs.sect-rgt-icon-img-5.icon.icon-bell-solid(src="https://begenone-images.s3.amazonaws.com/bell-solid.svg", alt="")
+        if userData 
+          a(href="/upload") 
+            .sect-rgt-icon-list-container.sect-rgt-icon-6
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid(src="https://begenone-images.s3.amazonaws.com/video-solid.svg", alt="")
+        else
+          a(href="/login") 
+            .sect-rgt-icon-list-container.sect-rgt-icon-6
+              img.sect-rgt-icons-imgs.sect-rgt-icon-img-6.icon.icon-video-solid(src="https://begenone-images.s3.amazonaws.com/video-solid.svg", alt="")
+      .sect-rgt-icon-list-container.sect-rgt-icon-7
+        img.sect-rgt-icons-imgs.sect-rgt-icon-img-7.icon.icon-bars-solid(src="https://begenone-images.s3.amazonaws.com/bars-solid.svg", alt="")
   
 //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
 //- script(src='/js/notification.js')

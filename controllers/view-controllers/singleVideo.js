@@ -5,6 +5,9 @@ const User = require('../../models/userModel');
 const Video = require('../../models/videoModel');
 const Channel = require('../../models/channelModel');
 
+const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345.cloudfront.net"
+const s3BucketDomain = `https://begenone-images.s3.us-east-1.amazonaws.com`;
+
 const singleVideo = catchAsync(async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.videoId);
@@ -23,19 +26,41 @@ const singleVideo = catchAsync(async (req, res, next) => {
     const thumbnails = thumbnailsResponse.data.urls;
 
     // Map thumbnails to easily look up URLs by thumbnail name
-    const thumbnailMap = new Map(
-      thumbnails.map((item) => [item.thumbnail, item.url]),
-    );
+    // const thumbnailMap = new Map(
+    //   thumbnails.map((item) => [item.thumbnail, item.url]),
+    // );
 
-    const thumbnailKey = video.thumbnail || null;
+    // const thumbnailKey = video.thumbnail || null;
 
     // Debugging Logs
     // console.log('Thumbnail Key:', thumbnailKey);
     // console.log('Thumbnail Map:', thumbnailMap);
 
-    video.thumbnailUrl = thumbnailMap.get(thumbnailKey) || null;
+    // video.thumbnailUrl = thumbnailMap.get(thumbnailKey) || null;
 
-    // console.log(`VIDEO FROM SINGLE UPLOAD: `, video.thumbnailUrl);
+    // Map thumbnails to easily look up CloudFront URLs by thumbnail name
+    const thumbnailMap = new Map(
+      thumbnails.map((item) => [
+        item.thumbnail,
+        `${cloudFrontDomain}/${item.thumbnail.replace('.jpeg', '.png')}`, // CloudFront URL for non-default thumbnails
+      ]),
+    );
+
+    const thumbnailKey = video.thumbnail || null;
+
+    // Logic to determine if the thumbnail should come from CloudFront or S3
+    if (
+      thumbnailKey === 'default-thumbnail.png' ||
+      thumbnailKey === 'default-thumbnail.jpeg'
+    ) {
+      // Use S3 URL for default thumbnail
+      video.thumbnailUrl = `${s3BucketDomain}/${thumbnailKey}`;
+    } else {
+      // Use CloudFront URL for other thumbnails
+      video.thumbnailUrl = thumbnailMap.get(thumbnailKey) || null;
+    }
+
+    console.log(`VIDEO FROM SINGLE UPLOAD: `, video.thumbnailUrl);
     // console.log(`THUMBNAILS FROM SINGLE UPLOAD: `, thumbnails);
 
     res.status(200).render(`../views/settings/channel/singleUpload`, {

@@ -55,7 +55,9 @@
 }
 
 .srd-link-texts {
-  font-size: 16px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 1.8px;
   padding: 1rem;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
@@ -85,6 +87,28 @@
 
 .bjenuine-text-header {
   font-size: 24px;
+}
+
+.container {
+  transform: scale(95%);
+  border: 1px solid #353535;
+  /* background-color: rgb(18, 18, 18, 0.3); */
+  background-color: transparent;
+  /* backdrop-filter: blur(15px); */
+  border-radius: 2rem;
+  padding: 2rem;
+  /* box-shadow:; */
+  box-shadow: 1px 2px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* .sect-mid-nav {
+  background-color: transparent;
+  position: relative;
+} */
+
+.searchBar-InputField {
+  background: rgb(18, 18, 18);
+  border: 1px solid rgba(120, 120, 120, 0.3);
 }
 
 .sect-mid-contentContainer {
@@ -637,4 +661,28 @@
   cursor: no-drop;
   /* background-color: #ff0d0d; */
   /* color: #fff; */
+}
+
+@media (max-width: 700px) {
+  .user-heading-h1 {
+    font-size: 2.5rem;
+  }
+  .channel_info h3 {
+    font-size: 1.6rem;
+  }
+
+  .submit_info {
+    align-self: center;
+  }
+  .buttons-submit_logout {
+    height: max-content;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column !important;
+  }
+  .logoutBtn,
+  .deleteBtn {
+    margin-top: 1rem;
+  }
 }

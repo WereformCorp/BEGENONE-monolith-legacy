@@ -36,9 +36,9 @@ block content
         section.sect-mid-vdoP-title
           h2.sect-mid-ctntTitle= video.title
         section.sect-mid-vdoP-dtls
-          if user && user.channel && user.channel.displayImage
+          if channel && channelLogoUrl
               a(href=`/channels/${video.channel._id}`)
-                img.sect-mid-vdoP-chLogo(src=`/imgs/users/${video.channel.user._id}/display-images/${video.channel.displayImage}`)
+                img.sect-mid-vdoP-chLogo(src=`${channelLogoUrl}`)
           else
             a(href=`/channels/${video.channel._id}`)
               img.chList-chnl-img(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
@@ -155,6 +155,8 @@ block content
                 showMoreButton.innerHTML = "Show Less"; // Change button text to "Show Less"
               }
             }
+          a(href="/pricings").banner-image-description
+            img.banner-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/banner-1.png")
         section.ctnt-comments
           section.ctnt-cmmnt-analytics
             h4.ctnt-cmmnt-count
@@ -188,6 +190,11 @@ block content
                     h4.cmmnt-accDtls= userOrChannelName
                     - const commentDate = new Date(comment.time)
                     h6.cmmnt-date= commentDate.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                  input(type="hidden" value=`${comment._id}`).delete-comment-id
+                  - const userIdString = userId ? userId.toString().trim() : '';
+                  - const commentUserIdString = comment.user._id.toString();
+                  if userIdString === commentUserIdString
+                    button.delete-comment-btn(data-owner-id=`${commentUserIdString}`) Delete Comment
                   //- .cmmnt-fltrs
                     svg.cmmnt-fltr-like.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
                       use(xlink:href='#icon-thumbs-up-solid')
@@ -207,14 +214,23 @@ block content
                           path(d='M14 12c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 5c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 19c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414z')
                 h4.ctnt-cmmnt-textCmmnt= comment.comment
                 button.ctnt-cmmnt-reply Reply
+              
+              // Modal for confirmation
+              div.delete-modal.modal
+                div.modal-content
+                  span.close-modal-btn &times;
+                  p Are you sure you want to delete this comment?
+                  button.confirm-delete-btn Yes, Delete
+                  button.cancel-delete-btn Cancel
       section.sect-mid-ctntRecom
         each singleVideo in manyVideos
           if singleVideo._id !== video._id
             a(href=`/watch/${singleVideo._id}`)
               .content-containers.content-container-1
+                img.sectionHead-thumbNail(src=`${singleVideo.thumbnailUrl}`)
                 section.section-Header
-                  if user && user.channel && user.channel.displayImage
-                    img.sectionHead-chLogo(src=`/imgs/users/${singleVideo.channel.user._id}/display-images/${singleVideo.channel.displayImage}`)
+                  if user && channel && singleVideo.channelLogoUrl
+                    img.sectionHead-chLogo(src=`${singleVideo.channelLogoUrl}`)
                   else
                     img.sectionHead-chLogo(src="https://begenone-images.s3.amazonaws.com/default-user-photo.jpg")
                   h3.sectionHead-chName= singleVideo.channel.name
@@ -222,7 +238,6 @@ block content
                 //- if singleVideo && singleVideo.thumbnail
                 //-   img.sectionHead-thumbNail(src=`/imgs/thumbnails/${singleVideo.thumbnail}`)
                 //- else
-                img.sectionHead-thumbNail(src=`${singleVideo.thumbnailUrl}`)
                 section.section-details
                   h4.section-details-title= singleVideo.title
                   hr(width='50px')
@@ -234,11 +249,50 @@ block content
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/subscribe.js")
   script(src="/js/comment.js")
+  script(src="/js/deleteComment.js")
   script(src="/js/engagement-video.js") 
   script(src="/js/shareVid.js") 
   script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
   script(src='path/to/plyr.js')
   script(src="https://cdn.skypack.dev/date-fns")
+  script(src='https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js')
   script(type='text/javascript').
-      const player = new Plyr('video', { captions: { active: true } });
-      window.player = player;
+    const player = new Plyr('video', { captions: { active: true } });
+    window.player = player;
+    //- const modal = document.getElementById("deleteModal");
+
+    //- // Get button to open modal
+    //- const deleteBtn = document.getElementById("deleteCommentBtn");
+
+    //- // Get the span element (to close the modal)
+    //- const closeBtn = document.getElementsByClassName("close")[0];
+
+    //- // Get the confirm and cancel buttons
+    //- const confirmDeleteBtn = document.getElementById("confirmDelete");
+    //- const cancelDeleteBtn = document.getElementById("cancelDelete");
+
+    //- // Open the modal when delete button is clicked
+    //- deleteBtn.onclick = function() {
+    //-   const commentId = deleteBtn.getAttribute('data-comment-id');
+    //-   // Use commentId in API call to delete the specific comment
+    //-   modal.style.display = "block";
+    //- };
+
+    //- // Close the modal when 'X' is clicked
+    //- closeBtn.onclick = function() {
+    //-   modal.style.display = "none";
+    //- };
+
+    //- // Close the modal when cancel button is clicked
+    //- cancelDeleteBtn.onclick = function() {
+    //-   modal.style.display = "none";
+    //- };
+
+    //- // Perform delete action when confirm button is clicked
+    //- confirmDeleteBtn.onclick = function() {
+    //-   // Add logic to delete the comment (e.g., make an API request to delete)
+    //-   console.log("Comment deleted"); // Placeholder action
+
+    //-   // Close the modal after deletion
+    //-   modal.style.display = "none";
+    //- };

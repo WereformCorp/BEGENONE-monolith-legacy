@@ -17,6 +17,23 @@ body {
 
 /* //////////////////////////////// */
 
+.container {
+  transform: scale(95%);
+  border: 1px solid #353535;
+  /* background-color: rgb(18, 18, 18, 0.3); */
+  background-color: transparent;
+  backdrop-filter: blur(15px);
+  border-radius: 2rem;
+  padding: 2rem;
+  /* box-shadow:; */
+  box-shadow: 1px 2px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* .sect-mid-nav {
+  backdrop-filter: blur(10px);
+  position: relative;
+} */
+
 .icon {
   display: inline-block;
   /* width: 1em;
@@ -92,7 +109,8 @@ body {
 .srd-link-texts {
   font-size: 16px;
   padding: 1rem;
-  font-weight: 900;
+  font-weight: 400;
+  letter-spacing: 2px;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
 }

@@ -13,7 +13,6 @@ const videoSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      default: 'default-thumbnail.jpeg',
     },
     views: {
       type: Number,

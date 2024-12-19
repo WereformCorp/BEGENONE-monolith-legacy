@@ -1,6 +1,7 @@
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');
+const Channel = require('../../models/channelModel');
 
 const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345.cloudfront.net"
 
@@ -8,14 +9,17 @@ const singleChannel = catchAsync(async (req, res, next) => {
   try {
     console.log('User:', res.locals.user);
     console.log('REQUESTED USER:', req.params.id);
-    console.log(`⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ URL PATH ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️`, urlPath);
-    const channelData = await axios.get(
-      `${urlPath}/api/v1/channels/${req.params.id}`,
+    console.log(
+      `⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ URL PATH ${'⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️'}:`,
+      urlPath,
     );
+    // const channelData = await axios.get(
+    //   `${urlPath}/api/v1/channels/${req.params.id}`,
+    // );
 
-    console.log(`Channel Data ⭕⭕⭕`, channelData.data);
+    const extractedData = await Channel.findById(req.params.id);
 
-    const extractedData = channelData.data.data;
+    console.log(`Channel Data ⭕⭕⭕`, extractedData);
 
     // Map channelLogo and bannerImage fields to CloudFront URLs
     if (extractedData.channelLogo) {
@@ -77,6 +81,7 @@ const singleChannel = catchAsync(async (req, res, next) => {
     // const channelData = await Channel.findById(extractedData._id);
     res.status(200).render(`../views/main/channels/userChannel`, {
       title: 'USER PROFILE',
+      userData: res.locals.user,
       user: res.locals.user,
       channel: extractedData,
       latestVideo,

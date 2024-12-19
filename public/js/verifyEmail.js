@@ -23,12 +23,12 @@
 //     const data = await response.json();
 
 //     if (data.status === 'success') {
-//       alert('Your account has been successfully activated!');
+//       notyf.error('Your account has been successfully activated!');
 //       window.location.assign('/'); // Or redirect to the main page
 //     } else {
-//       alert('Invalid or expired token.');
+//       notyf.error('Invalid or expired token.');
 //     }
 //   } else {
-//     alert('No token provided.');
+//     notyf.error('No token provided.');
 //   }
 // });

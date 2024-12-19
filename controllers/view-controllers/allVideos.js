@@ -4,6 +4,7 @@ const User = require('../../models/userModel');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');
 
 const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345.cloudfront.net"
+const s3BucketDomain = `https://begenone-images.s3.us-east-1.amazonaws.com`;
 
 const allVideos = catchAsync(async (req, res, next) => {
   try {
@@ -40,19 +41,42 @@ const allVideos = catchAsync(async (req, res, next) => {
     const thumbnailMap = new Map(
       thumbnails.map((item) => [
         item.thumbnail,
-        `${cloudFrontDomain}/${item.thumbnail}`, // Modify to use CloudFront URL
+        `${cloudFrontDomain}/${item.thumbnail.replace('.jpeg', '.png')}`, // Modify to use CloudFront URL
       ]),
     );
 
+    const subscriptionStatus = res.locals.subscriptionValid;
+    console.log(`SUBSCRIPTION STATUS:`, subscriptionStatus);
+
     // let thumbnail;
     // let videoTimeAgo;
-    if (videos)
+    // if (videos)
+    //   videos.forEach((videoData) => {
+    //     videoData.thumbnail =
+    //       thumbnailMap.get(videoData.thumbnail) || undefined;
+    //     console.log('Video Thumbnail:', videoData.thumbnail);
+    //   });
+    if (videos) {
       videos.forEach((videoData) => {
-        videoData.thumbnail =
-          thumbnailMap.get(videoData.thumbnail) || undefined;
-      });
+        const thumbnailName = videoData.thumbnail;
 
-    // console.log(`VIDEOS`, videos);
+        // Check if the thumbnail is the default one
+        if (
+          thumbnailName === 'default-thumbnail.png' ||
+          thumbnailName === 'default-thumbnail.jpeg'
+        ) {
+          // Use S3 bucket for the default thumbnail
+          videoData.thumbnail = `${s3BucketDomain}/${thumbnailName}`;
+        } else {
+          // Use CloudFront URL for other thumbnails
+          videoData.thumbnail = thumbnailMap.get(thumbnailName) || undefined;
+        }
+
+        console.log('Video Thumbnail:', videoData.thumbnail); // For debugging
+      });
+    }
+
+    console.log(`VIDEOS`, videos);
 
     // console.log(`Video Data:`, thumbnail);
 
@@ -65,6 +89,7 @@ const allVideos = catchAsync(async (req, res, next) => {
       userData,
       channel: userData.channel,
       userActiveStatus: userData.active,
+      subscriptionStatus,
     });
   } catch (err) {
     console.log(`ALL VIDEOS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

@@ -75,10 +75,6 @@ const userSchema = new mongoose.Schema({
   currentActiveSubscription: {
     type: mongoose.Schema.Types.ObjectId, // Direct reference to the active subscription
     ref: 'Subscription',
-    default: async () => {
-      const basicSubscription = await pricing.findOne({ name: 'signup' });
-      return basicSubscription ? basicSubscription._id : null; // Return the _id of the "basic" subscription
-    },
   },
   subscriptionStartDate: {
     type: Date,

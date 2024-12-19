@@ -18,11 +18,15 @@ const search = require('../controllers/view-controllers/search');
 const clipZ = require('../controllers/view-controllers/clipZ');
 const userProfile = require('../controllers/view-controllers/userProfile');
 const upload = require('../controllers/view-controllers/upload');
-const userChannel = require('../controllers/view-controllers/userChannel');
+// const userChannel = require('../controllers/view-controllers/userChannel');
 const singleChannel = require('../controllers/view-controllers/singleChannel');
 const channelSettings = require('../controllers/view-controllers/channelSettings');
 const allVideos = require('../controllers/view-controllers/allVideos');
 const singleVideo = require('../controllers/view-controllers/singleVideo');
+const {
+  checkSubscription,
+  checkUserSubscription,
+} = require('../controllers/util-controllers/checkSubscription');
 
 const router = express.Router();
 router.get(
@@ -37,6 +41,7 @@ router.get(
 router.get(
   '/pricings',
   isLoggedIn,
+  checkUserSubscription,
   // viewsController.pricings
   pricings,
 );
@@ -68,6 +73,7 @@ router.get(
 );
 router.get(
   '/watch/:videoId',
+  isLoggedIn,
   // authController.isLoggedIn,
   // viewsController.watchVideo,
   watchVideo,
@@ -92,21 +98,23 @@ router.get(
   '/user',
   // authController.protect, viewsController.userProfile
   protect,
+  checkUserSubscription,
   userProfile,
 );
 router.get(
   '/upload',
   // authController.protect, viewsController.upload
   protect,
+  checkSubscription,
   upload,
 );
-router.get(
-  '/user-channel',
-  // authController.protect,
-  protect,
-  // viewsController.userChannel,
-  userChannel,
-);
+// router.get(
+//   '/user-channel',
+//   // authController.protect,
+//   protect,
+//   // viewsController.userChannel,
+//   userChannel,
+// );
 
 router.get(
   '/channels/:id',
@@ -120,6 +128,7 @@ router.get(
   checkActiveStatus,
   // authController.protect,
   protect,
+  checkUserSubscription,
   // viewsController.channelSettings,
   channelSettings,
 );
@@ -127,13 +136,15 @@ router.get(
   '/all-uploads',
   // authController.protect, viewsController.allVideos
   protect,
+  checkUserSubscription,
   allVideos,
 );
 router.get(
   '/all-uploads/:videoId',
   // authController.protect,
-  protect,
   // viewsController.singleVideo,
+  protect,
+  checkUserSubscription,
   singleVideo,
 );
 

@@ -1,4 +1,23 @@
 /* eslint-disable */
+const notyf = new Notyf({
+  duration: 10000, // Notification display time in ms
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'info',
+      },
+    },
+  ],
+});
+
 const chCreateSaveBtn = document.querySelector('.ch-dtls-about-owner-save-btn');
 const createChannel = async (
   name,
@@ -50,13 +69,19 @@ const createChannel = async (
     console.log('RESPONSE:', res);
 
     if (res.data.status === 'Success') {
-      alert('Channel Created Successfully!');
+      notyf.success('Channel Created Successfully!');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
     }
   } catch (err) {
     console.log('error:', err);
+    if (err.response && err.response.data && err.response.data.message) {
+      notyf.error(`ERROR: ${err.response.data.message}`);
+    } else {
+      // Generic fallback error
+      notyf.error('An unexpected error occurred. Please try again.');
+    }
   }
 };
 

@@ -1,4 +1,22 @@
 /* eslint-disable */
+const notyf = new Notyf({
+  duration: 10000, // Notification display time in ms
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'info',
+      },
+    },
+  ],
+});
 
 const submit_info = document.querySelector('.submit_info');
 
@@ -26,7 +44,7 @@ const updateUser = async (firstName, secondName, username, mode, languages) => {
     }
 
     if (!firstName && !secondName && !username) {
-      alert(
+      notyf.error(
         `At least put some data in the input fields in order to update. \n It's like spinning an empty washing machine. \n Making request to server that please add some dust in it.`,
       );
       return;

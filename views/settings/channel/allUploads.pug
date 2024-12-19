@@ -19,7 +19,10 @@ block content
         if videos
           each video in videos
             .video-ctnt-cntnr.video-ctnt-cntnr-1
-              img.video-ctnt-thumb(src=`${video.thumbnail}`)
+              if video && video.thumbnail && video.thumbnail !== undefined && video.thumbnail !== null
+                img.video-ctnt-thumb(src=`${video.thumbnail}`)
+              else
+                img.video-ctnt-thumb(src=`https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`)
               .video-headers
                 a(href=`/watch/${video._id}`) 
                   h3.video-title= video.title
@@ -42,3 +45,10 @@ block content
                   button.video-btn-insights(value=`${video._id}`) INSIGHTS
         else
           h1.no-videos-found No Videos Found On Your Channel 🥲
+  script.
+    const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
+    userReverifyLinkBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      window.location.href = '/re-verify';
+    });

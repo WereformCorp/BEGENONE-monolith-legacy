@@ -15,10 +15,10 @@ const logout = async (req, res) => {
     });
 
     if (res.data.status === 'success') {
-      // showAlert('success', 'Logged In Successfully!');
+      // notyf.success('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/');
-      }, 1500);
+      }, 2000);
     }
   } catch (err) {
     console.log(err.response);

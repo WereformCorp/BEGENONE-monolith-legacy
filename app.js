@@ -15,12 +15,12 @@ const compression = require('compression');
 // const protect = require('./controllers/auth-controllers/protect');
 
 // const authController = require('./controllers/authController');
-const Pricing = require('./models/pricingModel');
-const User = require('./models/userModel');
+// const Pricing = require('./models/pricingModel');
+// const User = require('./models/userModel');
 // const Channel = require('./models/channelModel');
 // const Wires = require('./models/wireModel');
 // const Video = require('./models/videoModel');
-const Subscription = require('./models/subscriptionModel');
+// const Subscription = require('./models/subscriptionModel');
 
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
@@ -38,6 +38,10 @@ const pricingRouter = require('./routes/pricingRoutes');
 const webhookCheckout = require('./controllers/pricing-controllers/webhookCheckout');
 // const notificationRouter = require('./routes/notificationRoutes');
 const urlPathRoutes = require('./routes/urlPathRoutes');
+
+// const verifyStripeWebhook = require('./controllers/util-controllers/verifyStripeWebhook');
+// const calculateTotalPrice = require('./controllers/util-controllers/price');
+// const updateSubscriptionStatus = require('./utils/subscription');
 
 // Start Express App
 const app = express();
@@ -133,7 +137,7 @@ app.use((req, res, next) => {
 //     // Here we perform an "update" without any set field operation
 
 //     console.log(`SUBSCRIPTION DOCUMENT FROM APP.JS`, subscription);
-//     const result = await model.updateMany({}, { $set: { active: true } });
+//     const result = await model.updateMany({}, { $set: { stripeId: null } });
 //     console.log(
 //       `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents.`,
 //     );

@@ -1,5 +1,24 @@
 /* eslint-disable */
 // DOM ELEMENTS
+// const notyf = new Notyf({
+//   duration: 10000, // Notification display time in ms
+//   position: {
+//     x: 'right',
+//     y: 'top',
+//   },
+//   types: [
+//     {
+//       type: 'info',
+//       background: 'blue',
+//       icon: {
+//         className: 'material-icons',
+//         tagName: 'i',
+//         text: 'info',
+//       },
+//     },
+//   ],
+// });
+
 // import baseUrl from './controllers/baseUrlController.js';
 const loginForm = document.querySelector('.login-form');
 
@@ -27,13 +46,13 @@ const login = async (email, password) => {
     // console.log('RESPONSE:', res);
 
     if (res.data.status === 'success') {
-      // showAlert('success', 'Logged In Successfully!');
+      // notyf.success('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
     }
   } catch (err) {
-    alert(`Incorrect Email or Password`);
+    notyf.error(`Incorrect Email or Password`);
     console.log('error:', err);
   }
 };

@@ -5,8 +5,10 @@ const multer = require('multer');
 // const sponsorRouter = require('./sponsorRoutes');
 const commentRouter = require('./commentRoutes');
 // const authController = require('../controllers/authController');
-const checkActiveStatus = require('../utils/checkActiveStatus');
-
+// const checkActiveStatus = require('../utils/checkActiveStatus');
+const {
+  checkSubscription,
+} = require('../controllers/util-controllers/checkSubscription');
 // const { uploadContentToS3 } = require('../controllers/aws_S3_controller');
 const protect = require('../controllers/auth-controllers/protect');
 const uploadThumbnailFunction = require('../controllers/util-controllers/uploadThumbnailFunction');
@@ -44,6 +46,7 @@ router
   .get(getAllVideos)
   .post(
     protect,
+    checkSubscription,
     authMiddleware,
     upload.single('video'),
     async (req, res, next) => {

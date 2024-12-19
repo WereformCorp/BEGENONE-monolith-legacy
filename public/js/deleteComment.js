@@ -1,8 +1,9 @@
 /* eslint-disable */
-const deleteCommentBtn = document.querySelector('.delete-comment-Btn');
-const commentId = document.querySelector('.delete-comment-Btn').value;
+const deleteCommentBtn = document.querySelector('.delete-comment-btn');
 
-const deleteComment = async () => {
+console.log(`DELETE COMMENT BUTTON`, deleteCommentBtn);
+
+const deleteComment = async (commentId) => {
   try {
     const baseUrl = await axios({
       method: 'GET',
@@ -21,5 +22,16 @@ const deleteComment = async () => {
 deleteCommentBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
-  deleteComment();
+  const commentId = document.querySelector('.delete-comment-id').value;
+  const userId = e.target.dataset.ownerId;
+
+  const loggedInUserId = document.querySelector('.userId').value;
+
+  // Check if the logged-in user is the owner of the comment
+  if (userId === loggedInUserId) {
+    deleteComment(commentId); // Proceed to delete the comment
+  } else {
+    alert('You can only delete your own comments.');
+  }
+  // deleteComment(commentId);
 });

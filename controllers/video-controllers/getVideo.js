@@ -5,6 +5,8 @@ const catchAsync = require('../../utils/catchAsync');
 const getVideo = catchAsync(async (req, res, next) => {
   try {
     const data = await Video.findById(req.params.id);
+
+    console.log(`DATA FROM GETVIDEO FUNCTION:`, data);
     if (!data)
       return next(new AppError(`Data you are looking for, do not exist.`, 404));
     // console.log(data);

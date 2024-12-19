@@ -4,18 +4,27 @@
   grid-template-rows: max-content;
   align-items: center;
   column-gap: 0.5rem;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  /* padding-top: 20px; */
+
+  /* padding-bottom: 20px; */
   padding-right: 15px;
   padding-left: 5px;
   position: sticky;
-  top: 0 !important;
-  background-color: rgb(17, 17, 17);
-  border-bottom: 1px solid rgb(34, 34, 34);
+  top: 0.5rem !important;
+  /* background-color: rgb(17, 17, 17); */
+  backdrop-filter: blur(8px);
+  /* border-bottom: 1px solid rgb(34, 34, 34); */
 
   /* border-bottom: 0.5px solid rgba(120, 120, 120, 0.2); */
-
+  /* height: 100%; */
+  height: 6rem;
+  /* max-width: max-content; */
+  align-content: center;
+  box-shadow: 0px 2px 35px rgb(24, 24, 24, 0.5);
+  /* width: 100%; */
   z-index: 1000 !important;
+  transform: scale(95%);
+  border-radius: 1rem;
 }
 
 .searchBar-search-Icon {
@@ -44,7 +53,7 @@
   font-weight: 600;
   flex-shrink: 0;
   border-radius: 8px;
-  background: rgb(23, 23, 23);
+  background: rgb(23, 23, 23, 0.5);
   border: 1px solid rgba(120, 120, 120, 0.098);
   box-shadow: 1px 1px 15px #00000022;
   /* background: transparent; */

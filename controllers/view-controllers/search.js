@@ -52,6 +52,7 @@ const search = catchAsync(async (req, res, next) => {
     res.status(200).render('../views/main/search/_listSearch', {
       title: 'Search Videos',
       user: res.locals.user,
+      userData: res.locals.user,
       videos: videosWithThumbnails,
       // channelLogo: videosWithThumbnails.channel.channelLogo,
     });

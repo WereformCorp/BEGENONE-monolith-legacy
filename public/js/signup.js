@@ -6,6 +6,25 @@
 // const axios = require('axios');
 
 // DOM ELEMENTS
+// const notyf = new Notyf({
+//   duration: 10000, // Notification display time in ms
+//   position: {
+//     x: 'right',
+//     y: 'top',
+//   },
+//   types: [
+//     {
+//       type: 'info',
+//       background: 'blue',
+//       icon: {
+//         className: 'material-icons',
+//         tagName: 'i',
+//         text: 'info',
+//       },
+//     },
+//   ],
+// });
+
 const signupForm = document.querySelector('.signup-form');
 const submitFormBtn = document.querySelector('.submit-form-btn');
 
@@ -52,13 +71,14 @@ const signup = async (
 
     if (res.data.status === 'success') {
       submitFormBtn.textContent = 'Signed Up Successfully!';
-      // showAlert('success', 'Logged In Successfully!');
+      // notyf.success('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/email-confirmation');
       }, 1500);
     }
   } catch (err) {
     console.log('error:', err);
+    alert('failed', 'Sign Up Failed, Please Try Again Later!');
   }
 };
 

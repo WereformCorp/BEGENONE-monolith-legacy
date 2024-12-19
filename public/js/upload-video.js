@@ -22,12 +22,37 @@ import {
 // import '@uppy/dashboard/dist/style.css';
 // import '@uppy/status-bar/dist/style.css';
 
-const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
-userReverifyLinkBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-
-  window.location.href = '/re-verify';
+const notyf = new Notyf({
+  duration: 10000, // Notification display time in ms
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'info',
+      },
+    },
+  ],
 });
+
+const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
+
+if (userReverifyLinkBtn)
+  userReverifyLinkBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Disable button to prevent accidental clicks during video upload
+    userReverifyLinkBtn.disabled = true;
+
+    // Redirect to verification page
+    window.location.href = '/re-verify';
+  });
 
 const uppyVid = new Uppy({
   autoUpload: true,
@@ -59,7 +84,13 @@ uppyVid
       console.log('Upload succeeded:', response);
     },
     onError: (error) => {
-      // Handle upload failure response if needed
+      if (error.response) {
+        const errorMessage =
+          error.response.data.message || 'An unknown error occurred.';
+        notyf.error(errorMessage);
+      } else {
+        notyf.error('Network error, please try again.');
+      }
       console.error('Upload failed:', error);
     },
   })
@@ -176,14 +207,21 @@ uppyThumb.on('file-added', (file) => {
 });
 
 uppyVid.on('complete', (result) => {
-  console.log('Upload complete!');
+  console.log('Upload complete!', result);
 
   // Perform any actions you need after upload completes
   // For example, you can log the uploaded files
   console.log(result.successful);
 
   // Redirect to the desired URL
-  window.location.href = '/'; // Replace with your actual redirect URL
+  // window.location.href = '/'; // Replace with your actual redirect URL
+  if (result.successful.length > 0) {
+    // Successfully uploaded
+    window.location.href = '/'; // Redirect or show success message
+  } else {
+    // Handle failure
+    notyf.error('Video upload failed.');
+  }
 });
 
 document
@@ -196,7 +234,7 @@ document
       const title = document.getElementById('title').value;
       const description = document.getElementById('description').value;
       if (!title) {
-        alert('Title is required.');
+        notyf.error('Title is required.');
         return;
       }
 
@@ -221,5 +259,9 @@ document
       // }
     } catch (error) {
       console.error('Error:', error);
+      setTimeout(() => {
+        console.log('Execution resumed after 5 seconds');
+        // Continue the execution or perform additional actions here
+      }, 5000);
     }
   });

@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 const videoLinkShareOverlay = document.querySelector(
   '.sect-video-linkshare-overlay',
 );

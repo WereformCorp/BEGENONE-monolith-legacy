@@ -13,6 +13,9 @@ const pricings = catchAsync(async (req, res, next) => {
     const priceData = await axios.get(`${urlPath}/api/v1/pricings/`);
     const pricingsData = priceData.data.pricings;
 
+    const subscriptionStatus = res.locals.subscriptionValid;
+    console.log(`SUBSCRIPTION STATUS:`, subscriptionStatus);
+
     // Initialize the categories with empty arrays for each
     const pricingCategories = [
       'early-access',
@@ -38,7 +41,7 @@ const pricings = catchAsync(async (req, res, next) => {
       }
     });
 
-    console.log('PRICING IDS BY NAME:', idsByName);
+    // console.log('PRICING IDS BY NAME:', idsByName);
     // const { videos } = userData.channel;
     res.status(200).render(`../views/main/pricing/allPricings`, {
       title: `BEGENONE | Pricing`,
@@ -55,6 +58,8 @@ const pricings = catchAsync(async (req, res, next) => {
       },
       useCustomLeftNav: false,
       userActiveStatus: userData ? userData.active : null,
+      isPricingPage: true,
+      subscriptionStatus,
     });
   } catch (err) {
     console.log(

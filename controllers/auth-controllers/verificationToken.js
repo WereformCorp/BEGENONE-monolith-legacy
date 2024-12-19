@@ -73,7 +73,7 @@ const resendVerificationLink = catchAsync(async (req, res, next) => {
   }
 
   // 2) If attempts have reached 3, block further resends and trigger cooldown
-  if (user.resendAttempts >= 3) {
+  if (user.resendAttempts > 3) {
     if (!user.resendCooldownExpires) {
       // Set cooldown for 1 hour
       user.resendCooldownExpires = Date.now() + 60 * 60 * 1000; // 1-hour cooldown

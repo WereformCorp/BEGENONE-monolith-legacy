@@ -8,6 +8,25 @@ import {
   // } from 'https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs';
 } from 'https://releases.transloadit.com/uppy/v4.7.0/uppy.min.mjs';
 
+const notyf = new Notyf({
+  duration: 10000, // Notification display time in ms
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'info',
+      },
+    },
+  ],
+});
+
 const uppyPfp = new Uppy({
   autoUpload: true,
   debug: true,
@@ -28,11 +47,11 @@ uppyPfp
     formData: true,
     timeout: 600000,
     onSuccess: (response) => {
-      alert('Upload successful!');
+      notyf.success('Upload successful!');
       console.log('Upload response:', response);
     },
     onError: (error) => {
-      alert('Upload failed. Please try again.');
+      notyf.error('Upload failed. Please try again.');
       console.error('Upload error:', error);
     },
   })
@@ -88,11 +107,11 @@ uppyBanner
     formData: true,
     timeout: 600000,
     onSuccess: (response) => {
-      alert('Upload successful!');
+      notyf.success('Upload successful!');
       console.log('Upload response:', response);
     },
     onError: (error) => {
-      alert('Upload failed. Please try again.');
+      notyf.error('Upload failed. Please try again.');
       console.error('Upload error:', error);
     },
   })
@@ -156,7 +175,7 @@ uppyBanner.on('file-added', (file) => {
 //       const title = document.getElementById('title').value;
 //       const description = document.getElementById('description').value;
 //       if (!title) {
-//         alert('Title is required.');
+//         notyf.error('Title is required.');
 //         return;
 //       }
 

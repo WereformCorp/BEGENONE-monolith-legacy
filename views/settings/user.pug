@@ -122,3 +122,10 @@ block content
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script(src="/js/logout.js")
   script(src="/js/user-update.js")
+  script.
+    const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
+    userReverifyLinkBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      window.location.href = '/re-verify';
+    });

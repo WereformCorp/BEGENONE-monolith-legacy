@@ -9,6 +9,7 @@ const {
 } = require('../util-controllers/urlPath-TimeController');
 
 const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // e.g., "https://d12345.cloudfront.net"
+const s3BucketDomain = `https://begenone-images.s3.us-east-1.amazonaws.com`;
 
 const getOverview = catchAsync(async (req, res, next) => {
   try {
@@ -49,14 +50,25 @@ const getOverview = catchAsync(async (req, res, next) => {
     const channelLogoArray = [];
     filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
+      // if (
+      //   // video.thumbnail &&
+      //   // video.thumbnail.includes('default-thumbnail.jpeg')
+      //   !video.thumbnail ||
+      //   video.thumbnail === 'default-thumbnail.jpeg'
+      // ) {
+      //   video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
+      // } else {
+      //   video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
+      // }
+      // Check if thumbnail is the default or missing, use S3 if so
       if (
-        // video.thumbnail &&
-        // video.thumbnail.includes('default-thumbnail.jpeg')
         !video.thumbnail ||
-        video.thumbnail === 'default-thumbnail.jpeg'
+        video.thumbnail === 'default-thumbnail.jpeg' ||
+        video.thumbnail === 'default-thumbnail.png'
       ) {
-        video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
+        video.thumbUrl = `${s3BucketDomain}/default-thumbnail.png`; // S3 URL for default thumbnail
       } else {
+        // Use CloudFront URL for valid thumbnails
         video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
       }
 
@@ -93,13 +105,15 @@ const getOverview = catchAsync(async (req, res, next) => {
 
     shuffleArray(filteredVideos); // Shuffle the videos
 
+    const limitedVideos = filteredVideos.slice(0, 21);
+
     /////////////////////////////////////////////////////////////////////////
 
     const featuredVideoId = '673f74ba66154c6994b9460f';
-    const featuredVideo = filteredVideos.find(
+    const featuredVideo = limitedVideos.find(
       (video) => video._id.toString() === featuredVideoId,
     );
-    const otherVideos = filteredVideos.filter(
+    const otherVideos = limitedVideos.filter(
       (video) => video._id.toString() !== featuredVideoId,
     );
     const sortedVideos = featuredVideo
