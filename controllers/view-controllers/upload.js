@@ -8,8 +8,8 @@ const upload = catchAsync(async (req, res, next) => {
       .populate('channel')
       .populate('currentActiveSubscription');
 
-    const subscriptionStatus = res.locals.subscriptionValid;
-    console.log(`SUBSCRIPTION STATUS:`, subscriptionStatus);
+    const subscriptionActivityStatus = res.locals.subscriptionValid;
+    console.log(`SUBSCRIPTION STATUS:`, subscriptionActivityStatus);
 
     console.log(`USER DATA FROM THE UPLOAD FILES:`, userData.active);
 
@@ -22,12 +22,12 @@ const upload = catchAsync(async (req, res, next) => {
     const { currentActiveSubscription } = userData;
 
     let subscriptionFeatures = {};
-    let subscriptionActivityStatus = 'inactive';
+    let subscriptionStatus = 'inactive';
     let canUpload = false;
 
     // Check if the user has an active subscription
     if (currentActiveSubscription && currentActiveSubscription.active) {
-      subscriptionActivityStatus = currentActiveSubscription.status;
+      subscriptionStatus = currentActiveSubscription.status;
 
       // Fetch the pricing model associated with the subscription
       const pricing = await Pricing.findById(
@@ -57,6 +57,7 @@ const upload = catchAsync(async (req, res, next) => {
       userActiveStatus: userData.active,
       subscriptionStatus,
       subscriptionActivityStatus,
+      canUpload,
       // subscriptionStatus, // Pass these to the view
       // subscriptionMessage, // Pass these to the view
     });

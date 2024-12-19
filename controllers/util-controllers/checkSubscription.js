@@ -66,6 +66,7 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
     console.log(`USER:`, user);
     if (!user || !user.currentActiveSubscription) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription is not valid
+      res.locals.showAds = true;
       return next();
     }
 
@@ -77,20 +78,24 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
     if (
       !subscription ||
       subscription.active === false ||
-      subscription.status !== 'active'
+      subscription.status !== 'active' ||
+      subscription.status === 'inactive'
     ) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription is not valid
+      res.locals.showAds = true;
       return next();
     }
 
     const pricing = await Pricing.findById(subscription.pricings);
     if (!pricing) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription doesn't support video upload
+      res.locals.showAds = true;
       return next();
     }
     console.log(`PRICING ITSELF:`, pricing);
 
     res.locals.subscriptionValid = true; // Subscription is valid and can upload videos
+    res.locals.showAds = false;
     return next(); // Proceed to the next middleware or handler
   } catch (err) {
     console.error('Subscription check failed:', err);

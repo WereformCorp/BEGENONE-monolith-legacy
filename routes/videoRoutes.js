@@ -7,7 +7,8 @@ const commentRouter = require('./commentRoutes');
 // const authController = require('../controllers/authController');
 // const checkActiveStatus = require('../utils/checkActiveStatus');
 const {
-  checkSubscription,
+  // checkSubscription,
+  checkUserSubscription,
 } = require('../controllers/util-controllers/checkSubscription');
 // const { uploadContentToS3 } = require('../controllers/aws_S3_controller');
 const protect = require('../controllers/auth-controllers/protect');
@@ -46,7 +47,8 @@ router
   .get(getAllVideos)
   .post(
     protect,
-    checkSubscription,
+    // checkSubscription,
+    checkUserSubscription,
     authMiddleware,
     upload.single('video'),
     async (req, res, next) => {

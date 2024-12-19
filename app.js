@@ -21,6 +21,7 @@ const compression = require('compression');
 // const Wires = require('./models/wireModel');
 // const Video = require('./models/videoModel');
 // const Subscription = require('./models/subscriptionModel');
+// const isLoggedIn = require('./controllers/auth-controllers/isLoggedIn');
 
 const AppError = require('./utils/appError');
 const channelRouter = require('./routes/channelRoutes');
@@ -42,6 +43,11 @@ const urlPathRoutes = require('./routes/urlPathRoutes');
 // const verifyStripeWebhook = require('./controllers/util-controllers/verifyStripeWebhook');
 // const calculateTotalPrice = require('./controllers/util-controllers/price');
 // const updateSubscriptionStatus = require('./utils/subscription');
+
+// const {
+//   // checkSubscription,
+//   checkUserSubscription,
+// } = require('./controllers/util-controllers/checkSubscription');
 
 // Start Express App
 const app = express();
