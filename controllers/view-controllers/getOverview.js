@@ -129,6 +129,7 @@ const getOverview = catchAsync(async (req, res, next) => {
       user: res.locals.user,
       userData,
       extractedChannelLogo,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`GET OVERVIEW | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

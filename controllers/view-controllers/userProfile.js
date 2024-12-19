@@ -28,6 +28,7 @@ const userProfile = catchAsync(async (req, res, next) => {
       useCustomLeftNav: true,
       userActiveStatus: userData.active,
       subscriptionStatus,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`USER PROFILE | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

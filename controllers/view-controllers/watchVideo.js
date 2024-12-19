@@ -174,6 +174,7 @@ const watchVideo = catchAsync(async (req, res, next) => {
       videoTimeAgo,
       btnClass,
       btnText,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`WATCH VIDEO | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

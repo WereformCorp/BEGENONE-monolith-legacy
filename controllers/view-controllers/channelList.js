@@ -53,6 +53,7 @@ const channelsList = catchAsync(async (req, res, next) => {
       user: res.locals.user,
       userData,
       thumbnailUrl,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`ALL VIDEOS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

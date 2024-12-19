@@ -90,6 +90,7 @@ const singleChannel = catchAsync(async (req, res, next) => {
       videos,
       LatestVideoThumbnail: latestVideo ? latestVideo.thumbnailUrl : null,
       wiresData,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     res.json({

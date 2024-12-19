@@ -71,6 +71,7 @@ const singleVideo = catchAsync(async (req, res, next) => {
       channel,
       comments,
       useCustomLeftNav: true,
+      showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`SINGLE VIDEO | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);
