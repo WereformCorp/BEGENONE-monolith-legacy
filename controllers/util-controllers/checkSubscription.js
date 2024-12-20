@@ -78,8 +78,8 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
     if (
       !subscription ||
       subscription.active === false ||
-      subscription.status !== 'active' ||
-      subscription.status === 'inactive'
+      subscription.status !== 'active'
+      // subscription.status === 'inactive'
     ) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription is not valid
       res.locals.showAds = true;

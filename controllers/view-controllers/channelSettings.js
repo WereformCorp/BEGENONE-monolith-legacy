@@ -94,7 +94,7 @@ const channelSettings = catchAsync(async (req, res, next) => {
       subscriptionStatus,
       subscriptionFeatures,
       canCreateChannel,
-      // showAds: res.locals.showAds || null,
+      showAds: res.locals.showAds,
     });
   } catch (err) {
     console.log(`CHANNEL SETTINGS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

@@ -8,7 +8,7 @@ const signup = catchAsync(async (req, res, next) => {
     }
     res.status(200).render('../views/main/signup', {
       title: `Sign Up | BEGENONE`,
-      // showAds: res.locals.showAds || null,
+      showAds: res.locals.showAds,
     });
   } catch (err) {
     console.log(`SIGN UP | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

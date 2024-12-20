@@ -27,28 +27,27 @@ html(lang='en')
       link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css')
       
       script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
-      if !showAds
-        - console.log(`Ads are hidden for users with an ad-free subscription`)
+      - console.log('showAds:', showAds)
+      if showAds === true
+        script.
+          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
+        script.
+          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
+        script.
+          (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
+        script.
+          (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
+        script.
+          (function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',8529653,document.createElement('script'))
       else
-        script.
-          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
-        script.
-          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
-        script.
-          (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
-        script.
-          (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
-        script.
-          (function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',8529407,document.createElement('script'))
-        script.
-          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('offfurreton.com',8677822,document.createElement('script'),_pitlbu)
+        // Check if ads should be displayed
+        - console.log('Ads are hidden for users with an ad-free subscription')
 
       //- script.
         (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
       //- script.
         (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
-      //- script.
-        (function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',8529653,document.createElement('script'))
+      
       //- script.
         (function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',8533342,document.createElement('script'))
       //- script.

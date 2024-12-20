@@ -120,6 +120,8 @@ const getOverview = catchAsync(async (req, res, next) => {
       ? [featuredVideo, ...otherVideos]
       : otherVideos;
 
+    console.log(`res.showAds in getOverview:`, res.locals.showAds);
+
     // console.log(`Sorted Videos 🔥🔥🔥🔥🔥🔥🔥`, sortedVideos);
     res.status(200).render('../views/main/mainVideoCard', {
       title: 'BEGENONE',
@@ -129,7 +131,7 @@ const getOverview = catchAsync(async (req, res, next) => {
       user: res.locals.user,
       userData,
       extractedChannelLogo,
-      // showAds: res.locals.showAds || null,
+      showAds: res.locals.showAds,
     });
   } catch (err) {
     console.log(`GET OVERVIEW | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

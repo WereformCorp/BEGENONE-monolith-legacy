@@ -9,7 +9,7 @@ const clipZ = catchAsync(async (req, res, next) => {
     res.status(200).render('../views/main/contents/clipZ', {
       title: `Search Videos`,
       videos: videosData,
-      // showAds: res.locals.showAds || null,
+      showAds: res.locals.showAds,
     });
   } catch (err) {
     console.log(`CLIPZ | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

@@ -15,7 +15,7 @@ const login = catchAsync(async (req, res, next) => {
       )
       .render('../views/main/login', {
         title: `Log In | BEGENONE`,
-        // showAds: res.locals.showAds || null,
+        showAds: res.locals.showAds,
       });
   } catch (err) {
     console.log(`LOGIN | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

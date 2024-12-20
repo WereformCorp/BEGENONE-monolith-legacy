@@ -137,7 +137,7 @@ const allVideos = catchAsync(async (req, res, next) => {
       userActiveStatus: userData.active,
       subscriptionActiveStatus,
       subscriptionStatus,
-      // showAds: res.locals.showAds || null,
+      showAds: res.locals.showAds,
     });
   } catch (err) {
     console.log(`ALL VIDEOS | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);
