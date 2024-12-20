@@ -54,7 +54,7 @@ const search = catchAsync(async (req, res, next) => {
       user: res.locals.user,
       userData: res.locals.user,
       videos: videosWithThumbnails,
-      showAds: res.locals.showAds || null,
+      // showAds: res.locals.showAds || null,
       // channelLogo: videosWithThumbnails.channel.channelLogo,
     });
   } catch (err) {

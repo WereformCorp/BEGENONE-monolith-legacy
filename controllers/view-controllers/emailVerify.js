@@ -12,7 +12,7 @@ const emailVerifyPage = catchAsync(async (req, res, next) => {
     res.status(200).render('../views/main/verifyEmail.pug', {
       status: 'success',
       message: 'Congradulations! You are now verified',
-      showAds: res.locals.showAds || null,
+      // showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`EMAIL VERIFY | VIEWS CONTROLLER | ERROR ⭕⭕⭕`, err);

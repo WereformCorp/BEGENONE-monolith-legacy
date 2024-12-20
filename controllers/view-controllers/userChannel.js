@@ -35,7 +35,7 @@ const userChannel = catchAsync(async (req, res, next) => {
       wiresData,
       wireTime,
       isItMyChannel,
-      showAds: res.locals.showAds || null,
+      // showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(`USER CHANNEL | Views Controller | ERROR ⭕⭕⭕`, err);

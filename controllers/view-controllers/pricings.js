@@ -60,7 +60,7 @@ const pricings = catchAsync(async (req, res, next) => {
       userActiveStatus: userData ? userData.active : null,
       isPricingPage: true,
       subscriptionStatus,
-      showAds: res.locals.showAds || null,
+      // showAds: res.locals.showAds || null,
     });
   } catch (err) {
     console.log(

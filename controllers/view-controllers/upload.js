@@ -58,7 +58,7 @@ const upload = catchAsync(async (req, res, next) => {
       subscriptionStatus,
       subscriptionActivityStatus,
       canUpload,
-      showAds: res.locals.showAds || null,
+      // showAds: res.locals.showAds || null,
       // subscriptionStatus, // Pass these to the view
       // subscriptionMessage, // Pass these to the view
     });
