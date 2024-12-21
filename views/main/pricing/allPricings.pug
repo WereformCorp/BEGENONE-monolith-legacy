@@ -4,13 +4,16 @@ block append head
   link(rel='stylesheet', href='/css/pricing.css')
   link(rel='stylesheet', href='/css/pricingMediaQueries.css')
   script(src='https://js.stripe.com/v3/')
-
+  link(rel='stylesheet', href='https://cdn.plyr.io/3.7.8/plyr.css')
+  script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
 block content
   a(href="#pricingsPanel").overview-banner-container
-    img.overview-banner-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/banner-main.png" alt="Banner Image")
+    //- img.overview-banner-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/Banner-Front-Page-75OFF.png" alt="Banner Image")
+    img.overview-banner-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/Blue+and+Purple+Modern+Black+Friday+Sale+Email+Header.png", width="100%", alt="Banner Image" style="border-radius: 1.5rem;")
   section.sect-mid-contentContainer
     img.pricing-heading-image(src="https://begenone-images.s3.us-east-1.amazonaws.com/begenone-white-transparent-logo-beta-min.png", alt="")
     h1.pricing-heading-h1 PRICING BUILT FOR INDIVIDUALS and BUSINESSES OF ALL SIZES
+    //- img(src="https://begenone-images.s3.us-east-1.amazonaws.com/Blue+and+Purple+Modern+Black+Friday+Sale+Email+Header.png", width="100%", alt="Banner Image" style="border-radius: 1.5rem;")
     .pricing-container#pricingsPanel
       //- .pricing-cntnrs.pricing-cntnr-crown
       //-   img.pricing-crown-img(src='/imgs/crown-pricing.png')
@@ -94,25 +97,29 @@ block content
         h2.pricing-ea-h2
           | EARLY ACCESS
           br
-          span.pricing-ea-h2-span
-            | ( Charged Monthly )
-            br
-            | [Prices May Increase in future, get your lucky offer now!]
         h2.pricing-price(style="display: flex; flex-direction: column; align-items: center;")
-          sup.actual-pricing(style="font-size: .8rem;")
-            del ($29.99/monthly)
+          sup.actual-pricing(style="font-size: .9rem; text-decoration: line-through; color: #ff0000;") $29.99/monthly
+            //- del ($29.99/monthly)
           span.new-pricing
-            |  $19.99
+            |  $8.99
             span.new-pricing-time-span
-              | per month
-            
-          
+              i 
+                | /month 
+                span(style='font-size: 1.2rem; font-weight: 500; text-shadow: none; letter-spacing: 1px;') (70% off 🥳)
+          //- br
+        span(style="font-size: .75rem; margin-top: .5rem;")
+          i (Limited Time Offer Only, ENDING ON NEW YEAR!!!)
+          //- br
+          span.pricing-ea-h2-span(style="font-size: .75rem; margin-top: .5rem;")
+            br(style="font-size: .75rem; margin-top: .5rem;")
+            | [Prices May Increase in future, get your lucky offer now!]
           //- p(style="font-size: .75rem;") per month
         .pricing-features.pricing-feature-ea
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-beta-launch
-              span Become a <b>BETA TESTER</b>
+              span(style="display:flex; flex-wrap: nowrap; column-gap: .5rem") Become a 
+                | <b>BETA TESTER</b>
               <b class="available-pricing">(Avaliable)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
@@ -139,6 +146,11 @@ block content
             h3.pricing-features-lists.pricing-features-list-5
               span Event Notifications
               <b class="available-pricing">(Avaliable)</b>
+          .pricing-feature-item
+            i.fa-solid.fa-circle-check
+            h3.pricing-features-lists.pricing-features-list-5
+              span Get Featured (Left Nav) <i class="fa-solid fa-circle-info info-circle-getFeature" title="Get Featured on the Left Navigation Bar where all platform users can see your channel."></i>
+              <b class="available-pricing">(REQUEST US)</b>
           .pricing-feature-item
             i.fa-solid.fa-circle-check
             h3.pricing-features-lists.pricing-features-list-6
@@ -207,7 +219,18 @@ block content
             span As more users join the platform, Early Access members will have a distinct advantage. With fewer content creators and a rapidly growing audience, your content will receive higher visibility and engagement, giving you a significant edge in building your audience. Additionally, the High Content Boost ensures that your videos are prioritized throughout Early Access and continue to receive prominent placement for a month after it concludes.
             br
             br
-            span <b>Please note:</b> The price for Early Access may fluctuate and is likely to increase as the platform expands. Securing your membership now locks in your benefits at the current rate, ensuring you don't miss out on this exclusive opportunity. Act fast—sign up today and take full advantage of the benefits while the offer lasts.
+            span(style="color: red; font-weight: bold;") <b>Please note:</b> The price for Early Access may fluctuate and is likely to increase as the platform expands. Securing your membership now locks in your benefits at the current rate, ensuring you don't miss out on this exclusive opportunity. Act fast—sign up today and take full advantage of the benefits while the offer lasts. And If we add new features during your current subscription, you'll get to use them for free And If you're not satisfied with the service, you can cancel your subscription at any time. No questions asked.
+            br
+            br
+            span Have Questions? Contact us at: 
+              b
+               a(href="https://mail.google.com/mail/?view=cm&fs=1&to=info@begenone.com" style="text-decoration: underline;" target="_blank") Info@begenone.com
+        .pricing-saleOFFER(style="transform: scale(0.9);")
+          video(controls, crossorigin="anonymous", playsinline, poster="https://begenone-images.s3.us-east-1.amazonaws.com/Black+White+Minimalist+Black+Friday+Sale+Instagram+Story+Landscape-1.png", style="border-radius: 1.5rem; width: 100%;")
+            source(src="https://begenone-images.s3.us-east-1.amazonaws.com/Introduction+To+BEGENONE.mp4", type="video/mp4", alt)
+
+              //- | &#x9;&#x9;&#x9;
+          //- video(src="", )
     if userActiveStatus === false
       .userActiveStatusCheckContainer
         h1.userActiveStatus-h1
@@ -386,8 +409,31 @@ block content
       a.social-link.social-link-linkedIn(href="https://www.linkedin.com/company/world-ecosystem-reform/" target="_blank") LinkedIn
 
   script(src="/js/stripe.js")
+  //- script(type='text/javascript').
+  //-   const player = new Plyr('video', { captions: { active: true } });
+  //-   window.player = player;
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
   script.
+    const player = new Plyr('video', { captions: { 
+      active: true 
+      }, // your other configs
+      //- thumbnail: {
+      //-   enabled:true,
+      //-   pic_num: 184,// total thumbnail numbers
+      //-   width: 178,// per thumbnail item width
+      //-   height: 100,// per thumbnail item height
+      //-   col: 7,// per thumbnail image columns
+      //-   row: 7,// per thumbnail image rows
+      //-   offsetX:0,
+      //-   offsetY:0,
+      //-   urls: ['https://cdn.plyr.io/static/demo/thumbs/100p-00001.jpg',
+      //-   'https://cdn.plyr.io/static/demo/thumbs/100p-00002.jpg',
+      //-   'https://cdn.plyr.io/static/demo/thumbs/100p-00003.jpg',
+      //-   'https://cdn.plyr.io/static/demo/thumbs/100p-00004.jpg'] // thumbnail images
+      //- },
+    });
+    window.player = player;
+
     const userReverifyLinkBtn = document.querySelector('.userReverifyLinkBtn');
     userReverifyLinkBtn.addEventListener('click', function (e) {
       e.preventDefault();

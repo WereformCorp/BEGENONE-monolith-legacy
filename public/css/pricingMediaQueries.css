@@ -81,3 +81,9 @@
     padding: 0;
   }
 }
+
+@media (max-width: 400px) {
+  .pricing-feature-item {
+    column-gap: 2rem;
+  }
+}

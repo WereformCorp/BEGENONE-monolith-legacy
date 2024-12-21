@@ -99,7 +99,7 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
     return next(); // Proceed to the next middleware or handler
   } catch (err) {
     console.error('Subscription check failed:', err);
-    return next(new AppError('Subscription validation failed.', 500)); // Send to global error handler
+    return next(); // Send to global error handler
   }
 });
 

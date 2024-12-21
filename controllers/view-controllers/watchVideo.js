@@ -147,7 +147,7 @@ const watchVideo = catchAsync(async (req, res, next) => {
         ? `${cloudFrontDomain}/${channel.channelLogo}`
         : null;
 
-    // console.log(`LOCAL USER:`, localUser);
+    console.log(`LOCAL USER:`, localUser);
 
     const videoTimeAgo = calculateTimeAgo(videoData.time);
     res.status(200).render('../views/main/contents/mainVideo', {

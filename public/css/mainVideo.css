@@ -786,7 +786,7 @@
 }
 
 /* //////////////////////////////////////////// PLYR VIDEO PLAYER /////////////////////////////// */
-.plyr {
+/* .plyr {
   border-radius: 10px;
 }
 
@@ -802,7 +802,7 @@
 
 .plyr__menu__value span {
   --plyr-video-control-color: #fff;
-}
+} */
 
 /* /////////////////////////////////////////////////////////// */
 .sect-video-linkshare-overlay {

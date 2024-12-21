@@ -26,15 +26,12 @@ html(lang='en')
       script(src='https://kit.fontawesome.com/287ab0fb77.js', crossorigin='anonymous')
       link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css')
       
+      link(rel='stylesheet', href='https://cdn.plyr.io/3.7.8/plyr.css')
       script(src='https://cdn.plyr.io/3.7.8/plyr.polyfilled.js')
       - console.log('showAds:', showAds)
       if showAds === true
         script.
           (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
-        script.
-          (function(d,z,s,c){s.src='//'+d+'/400/'+z;s.onerror=s.onload=E;function E(){c&&c();c=null}try{(document.body||document.documentElement).appendChild(s)}catch(e){E()}})('cupoabie.net',8529407,document.createElement('script'),_ysuszw)
-        script.
-          (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
         script.
           (function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8548086,document.createElement('script'))
         script.
@@ -152,6 +149,9 @@ html(lang='en')
     script(src='/js/notification.js')
     script(src='/js/welcome.js')
     script(src='https://js.stripe.com/v3/')
+    script(type='text/javascript').
+      const player = new Plyr('video', { captions: { active: true } });
+      window.player = player;
     script.
       export const promiseHints = (() => {
         if (window.navigator === undefined) {
