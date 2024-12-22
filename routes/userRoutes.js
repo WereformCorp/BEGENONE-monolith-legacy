@@ -15,6 +15,7 @@ const forgotPassword = require('../controllers/auth-controllers/forgotPassword')
 const resetPassword = require('../controllers/auth-controllers/resetPassword');
 const protect = require('../controllers/auth-controllers/protect');
 const me = require('../controllers/user-controllers/getMe');
+const checkEmailUsernameExistence = require('../controllers/util-controllers/checkEmailUsernameExistence');
 const updatePassword = require('../controllers/auth-controllers/updatePassword');
 const updateMe = require('../controllers/user-controllers/updateMe');
 const deleteMe = require('../controllers/user-controllers/deleteMe');
@@ -25,6 +26,8 @@ const deleteUser = require('../controllers/user-controllers/deleteUser');
 // const viewsController = require('../controllers/viewsController');
 
 const router = express.Router({ mergeParams: true });
+
+router.post('/check-existence', checkEmailUsernameExistence);
 
 router.post('/resend-verification', resendVerificationLink);
 router.post('/signup', signup, signupAuth);

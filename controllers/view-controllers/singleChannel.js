@@ -66,7 +66,8 @@ const singleChannel = catchAsync(async (req, res, next) => {
     if (latestVideo) {
       if (
         latestVideo.thumbnail &&
-        latestVideo.thumbnail.includes('default-thumbnail.jpeg')
+        (latestVideo.thumbnail.includes('default-thumbnail.jpeg') ||
+          latestVideo.thumbnail.includes('default-thumbnail.png'))
       ) {
         latestVideo.thumbnailUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
       } else {

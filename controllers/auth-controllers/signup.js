@@ -7,46 +7,6 @@ const sendMail = require('../../utils/email');
 
 const signup = catchAsync(async (req, res, next) => {
   try {
-    // const newUserPricing = await Pricing.findOne({
-    //   name: 'signup',
-    //   active: true,
-    // });
-
-    // console.log(`BASIC pricing:`, newUserPricing);
-
-    // if (!newUserPricing)
-    //   return next(new AppError('Default PRICING not found', 404));
-
-    // // 1. Create a new Subscription based on the pricing found
-    // const newSubscription = await Subscription.create({
-    //   user: req.body.user._id, // Assuming newUser is created after this step
-    //   pricingName: 'signup', // Link the pricing name
-    //   pricings: newUserPricing._id, // Link the pricing object
-    //   status: 'active', // Set subscription status to 'active'
-    // });
-
-    // console.log(`NEW SUBSCRIPTION CREATED:`, newSubscription);
-
-    // // 2. Add the new subscription's ID to the user's subscriptions array
-    // const userData = {
-    //   ...req.body,
-    //   subscriptions: [newSubscription._id], // Add the new subscription's _id
-    //   currentActiveSubscription: newSubscription._id, // Set it as the active subscription
-    // };
-
-    // console.log(`USER DATA FROM SIGN UP:`, userData);
-
-    // const newUser = await User.create(userData);
-
-    // console.log(`NEW USER FROM SIGNUP:`, newUser);
-
-    // await newUser.save();
-
-    // if (!newUser) return next(new AppError(`Data Not Found!`, 404));
-    // // createSendToken(newUser, 201, res);
-    // req.newUser = newUser;
-    // next();
-
     // Step 1: Create the new user first, without the subscription
     const newUser = await User.create(req.body);
 

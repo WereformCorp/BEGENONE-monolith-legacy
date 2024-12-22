@@ -137,13 +137,13 @@ app.use((req, res, next) => {
 
 // const updateMany = async (model) => {
 //   try {
-//     const subscription = await Subscription.findOne({
-//       pricingName: 'signup',
-//     });
+//     // const subscription = await User.findOne({
+//     //   pricingName: 'signup',
+//     // });
 //     // Here we perform an "update" without any set field operation
 
-//     console.log(`SUBSCRIPTION DOCUMENT FROM APP.JS`, subscription);
-//     const result = await model.updateMany({}, { $set: { stripeId: null } });
+//     // console.log(`SUBSCRIPTION DOCUMENT FROM APP.JS`, subscription);
+//     const result = await model.updateMany({});
 //     console.log(
 //       `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents.`,
 //     );

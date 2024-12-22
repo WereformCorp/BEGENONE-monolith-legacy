@@ -36,14 +36,33 @@ const signup = async (
   passwordConfirm,
   username,
 ) => {
+  submitFormBtn.textContent = 'Signing Up...';
+
+  if (password !== passwordConfirm) {
+    alert('Passwords do not match!');
+    return;
+  }
+
+  // Check if username or email exists
+  const existenceCheckRes = await axios({
+    method: 'POST',
+    url: `/api/v1/users/check-existence`,
+    data: { username, email },
+  });
+
+  console.log('EXISTENCE CHECK RESPONSE:', existenceCheckRes);
+
+  if (existenceCheckRes.data.message === 'username-exist') {
+    submitFormBtn.textContent = 'Submit';
+    return alert('Username already exists. Please choose another one.');
+  }
+
+  if (existenceCheckRes.data.message === 'email-exist') {
+    submitFormBtn.textContent = 'Submit';
+    return alert('Email already exists. Please use another email.');
+  }
+
   try {
-    submitFormBtn.textContent = 'Signing Up...';
-
-    if (password !== passwordConfirm) {
-      alert('Passwords do not match!');
-      return;
-    }
-
     const baseUrl = await axios({
       method: 'GET',
       url: `/url/get-env-url`,
@@ -78,7 +97,7 @@ const signup = async (
     }
   } catch (err) {
     console.log('error:', err);
-    alert('failed', 'Sign Up Failed, Please Try Again Later!');
+    alert('Sign Up Failed, Please Try Again Later!');
   }
 };
 

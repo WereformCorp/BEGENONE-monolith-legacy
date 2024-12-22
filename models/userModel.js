@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     secondName: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   photo: {
@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     maxLength: 50,
   },
@@ -39,7 +38,6 @@ const userSchema = new mongoose.Schema({
     phoneNumber: Number,
     email: {
       type: String,
-      unique: true,
       required: true,
       lowercase: true,
     },
