@@ -42,7 +42,9 @@ const singleVideo = catchAsync(async (req, res, next) => {
     const thumbnailMap = new Map(
       thumbnails.map((item) => [
         item.thumbnail,
-        `${cloudFrontDomain}/${item.thumbnail.replace('.jpeg', '.png')}`, // CloudFront URL for non-default thumbnails
+        item.thumbnail
+          ? `${cloudFrontDomain}/${item.thumbnail.replace('.jpeg', '.png')}`
+          : `${cloudFrontDomain}/${item.thumbnail}`, // CloudFront URL for non-default thumbnails
       ]),
     );
 

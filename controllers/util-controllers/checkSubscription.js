@@ -63,6 +63,11 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
     const user = await User.findById(res.locals.user._id).populate(
       'currentActiveSubscription',
     );
+    const subscription = await Subscription.findById(
+      user.currentActiveSubscription,
+    );
+    const pricing = await Pricing.findById(subscription.pricings);
+
     console.log(`USER:`, user);
     if (!user || !user.currentActiveSubscription) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription is not valid
@@ -70,13 +75,11 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
       return next();
     }
 
-    const subscription = await Subscription.findById(
-      user.currentActiveSubscription,
-    );
     console.log(`SUBSCRIPTION ITSELF:`, subscription);
 
     if (
       !subscription ||
+      subscription.pricingName === 'signup' ||
       subscription.active === false ||
       subscription.status !== 'active'
       // subscription.status === 'inactive'
@@ -86,7 +89,6 @@ const checkUserSubscription = catchAsync(async (req, res, next) => {
       return next();
     }
 
-    const pricing = await Pricing.findById(subscription.pricings);
     if (!pricing) {
       res.locals.subscriptionValid = false; // Set a flag indicating subscription doesn't support video upload
       res.locals.showAds = true;

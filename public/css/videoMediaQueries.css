@@ -8,6 +8,15 @@
   .vdoPlayer-controls {
     grid-template-rows: 80% 20%;
   }
+
+  .video-ctnt-cntnr {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: 1fr max-content;
+    justify-content: center;
+    row-gap: 1rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 1280px) {
@@ -27,15 +36,6 @@
 }
 
 @media (max-width: 1150px) {
-  .video-ctnt-cntnr {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    grid-template-rows: 1fr max-content;
-    justify-content: center;
-    row-gap: 1rem;
-    width: 100%;
-  }
-
   .video-btn-insights {
     justify-self: end;
   }

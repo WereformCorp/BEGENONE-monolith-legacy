@@ -103,7 +103,7 @@ uppyVid
     restrictions: {
       maxNumberOfFiles: 1,
       allowedFileTypes: ['video/*'],
-      maxFileSize: 250 * 1024 * 1024,
+      maxFileSize: 200 * 1024 * 1024,
     },
   });
 
@@ -177,7 +177,7 @@ uppyThumb
     restrictions: {
       maxNumberOfFiles: 1,
       allowedFileTypes: ['image/*'],
-      maxFileSize: 2 * 1024 * 1024,
+      maxFileSize: 1 * 1024 * 1024,
     },
   });
 

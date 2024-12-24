@@ -53,6 +53,7 @@ router
     upload.single('video'),
     async (req, res, next) => {
       req.thumbnailImage = thumbnailImage || null;
+
       next();
     },
     s3UploadVideo,

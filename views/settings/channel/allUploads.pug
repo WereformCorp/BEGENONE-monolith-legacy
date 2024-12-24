@@ -4,6 +4,7 @@ block append head
   link(rel="stylesheet", href="/css/video.css")
   link(rel="stylesheet", href="/css/chSettings.css")
   link(rel="stylesheet", href="/css/videoMediaQueries.css")
+  link(rel="stylesheet", href="/css/allVidsMediaQueries.css")
 
 block content
   section.sect-mid-contentContainer
@@ -19,30 +20,31 @@ block content
         if videos
           each video in videos
             .video-ctnt-cntnr.video-ctnt-cntnr-1
-              if video && video.thumbnail && video.thumbnail !== undefined && video.thumbnail !== null
-                img.video-ctnt-thumb(src=`${video.thumbnail}`)
-              else
-                img.video-ctnt-thumb(src=`https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`)
+              .video-ctnt-thumb-container
+                if video && video.thumbnail && video.thumbnail !== undefined && video.thumbnail !== null
+                  img.video-ctnt-thumb(src=`${video.thumbnail}`)
+                else
+                  img.video-ctnt-thumb(src=`https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`)
+                .video-details
+                  .video-date
+                    h3.video-date-h3 Date:
+                    - const videoTime = new Date(video.time)
+                    h4.video-date-h4= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
+                  .video-views
+                    h3.video-views-h3 Views:
+                    h4.video-views-h4= video.views
+                  .video-visibillity
+                    h3.video-visibillity-h3 Visibility:
+                    h4.video-visibillity-h4 Everyone
               .video-headers
                 a(href=`/watch/${video._id}`) 
                   h3.video-title= video.title
                 h4.video-description= video.description || `There is no description.`
-              .video-details
-                .video-date
-                  h3.video-date-h3 Date:
-                  - const videoTime = new Date(video.time)
-                  h4.video-date-h4= videoTime.toLocaleString('en-uk', {day: 'numeric', month: 'long', year: 'numeric'})
-                .video-views
-                  h3.video-views-h3 Views:
-                  h4.video-views-h4= video.views
-                .video-visibillity
-                  h3.video-visibillity-h3 Visibility:
-                  h4.video-visibillity-h4 Everyone
-              .videoBtns
-                a(href=`/watch/${video._id}` target="_blank")
-                  button.video-btn-insights(value=`${video._id}`) VIEW
-                a(href=`/all-uploads/${video._id}`)
-                  button.video-btn-insights(value=`${video._id}`) INSIGHTS
+                .videoBtns
+                  a(href=`/watch/${video._id}` target="_blank")
+                    button.video-btn-insights(value=`${video._id}`) VIEW
+                  a(href=`/all-uploads/${video._id}`)
+                    button.video-btn-insights(value=`${video._id}`) INSIGHTS
         else
           h1.no-videos-found No Videos Found On Your Channel 🥲
   script.
