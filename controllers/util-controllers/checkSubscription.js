@@ -60,6 +60,11 @@ const checkSubscription = async (req, res, next) => {
 
 const checkUserSubscription = catchAsync(async (req, res, next) => {
   try {
+    if (!res.locals.user) {
+      res.locals.subscriptionValid = false; // Set a flag indicating subscription is not valid
+      res.locals.showAds = true;
+      return next();
+    }
     const user = await User.findById(res.locals.user._id).populate(
       'currentActiveSubscription',
     );

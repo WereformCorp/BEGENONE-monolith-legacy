@@ -15,21 +15,21 @@ block content
           input.videoId(type="hidden", value=`${videoIdForComment}`)
           input.userId(type="hidden", value=`${userId}`)
           video.sect-mid-vdoPlayer-video(controls='', crossorigin='anonymous', playsinline='', poster='')
-              source(src=`${videoUrl}`, type='video/mp4', size='576' width='100%')
-              | &#x9;&#x9;&#x9;
-              //- source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
-              //- | &#x9;&#x9;&#x9;
-              //- source(src=`/video/${video.video}`, type='video/mp4', size='720')
-              //- | &#x9;&#x9;&#x9;
-              //- source(src=`/video/${video.video}`, type='video/mp4', size='1080')
-              //- | &#x9;&#x9;&#x9;
-              //- source(src=`/video/${video.video}`, type='video/mp4', size='1440')
-              // Caption files
-              //- track(kind='captions', label='English', srclang='en', src=`/video/${video.video}`, default='')
-              //- | &#x9;&#x9;&#x9;
-              //- track(kind='captions', label='Français', srclang='fr', src=`/video/${video.video}`)
-              //- // Fallback for browsers that don't support the <video> element
-              a(href=videoUrl, download='') Download
+            source(src=`${videoUrl}`, type='video/mp4', width='100%')
+            | &#x9;&#x9;&#x9;
+            //- source(src=`/video/${video.video}`, type='video/mp4', size='576' width='100%')
+            //- | &#x9;&#x9;&#x9;
+            //- source(src=`/video/${video.video}`, type='video/mp4', size='720')
+            //- | &#x9;&#x9;&#x9;
+            //- source(src=`/video/${video.video}`, type='video/mp4', size='1080')
+            //- | &#x9;&#x9;&#x9;
+            //- source(src=`/video/${video.video}`, type='video/mp4', size='1440')
+            //- Caption files
+            //- track(kind='captions', label='English', srclang='en', src=`/video/${video.video}`, default='')
+            //- | &#x9;&#x9;&#x9;
+            //- track(kind='captions', label='Français', srclang='fr', src=`/video/${video.video}`)
+            //- // Fallback for browsers that don't support the <video> element
+            //- a(href=videoUrl, download='') Download
 
           //- //////////////////////////
         
@@ -99,44 +99,35 @@ block content
         //- div.sect-mid-vdo-meta
         //-   h2.sect-mid-vdo-time= videoTimeAgo
         //-   h2.sect-mid-vdo-views= `| ${video.views} Views`
-      section.sect-mid-vdoP-nav
-        .sect-mid-vdoP-items.sect-mid-vdoP-navLike
-          svg.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
-            use(xlink:href='#icon-thumbs-up-solid')
-              symbol#icon-thumbs-up-solid(viewBox='0 0 32 32')
-                path(d='M19.587 2.056c1.625 0.325 2.681 1.906 2.356 3.531l-0.144 0.713c-0.331 1.669-0.944 3.256-1.8 4.7h9c1.656 0 3 1.344 3 3 0 1.156-0.656 2.163-1.619 2.663 0.681 0.55 1.119 1.394 1.119 2.337 0 1.462-1.050 2.681-2.431 2.944 0.275 0.456 0.431 0.988 0.431 1.556 0 1.331-0.869 2.462-2.069 2.85 0.044 0.206 0.069 0.425 0.069 0.65 0 1.656-1.344 3-3 3h-6.094c-1.188 0-2.344-0.35-3.331-1.006l-2.406-1.606c-1.669-1.113-2.669-2.988-2.669-4.994v-6.95c0-1.825 0.831-3.544 2.25-4.688l0.463-0.369c1.656-1.325 2.787-3.188 3.2-5.263l0.144-0.713c0.325-1.625 1.906-2.681 3.531-2.356zM2 12h4c1.106 0 2 0.894 2 2v14c0 1.106-0.894 2-2 2h-4c-1.106 0-2-0.894-2-2v-14c0-1.106 0.894-2 2-2z')
-          h4.likesCount= `Likes - ${video.likes || '0'}`
-        .sect-mid-vdoP-items.sect-mid-vdoP-navDislike
-          svg.vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
-            use(xlink:href='#icon-thumbs-down-solid')
-              symbol#icon-thumbs-down-solid(viewBox='0 0 32 32')
-                path(d='M19.587 29.944c1.625-0.325 2.681-1.906 2.356-3.531l-0.144-0.712c-0.331-1.669-0.944-3.256-1.8-4.7h9c1.656 0 3-1.344 3-3 0-1.156-0.656-2.162-1.619-2.662 0.681-0.55 1.119-1.394 1.119-2.338 0-1.463-1.050-2.681-2.431-2.944 0.275-0.456 0.431-0.988 0.431-1.556 0-1.331-0.869-2.463-2.069-2.85 0.044-0.206 0.069-0.425 0.069-0.65 0-1.656-1.344-3-3-3h-6.094c-1.188 0-2.344 0.35-3.331 1.006l-2.406 1.606c-1.669 1.112-2.669 2.987-2.669 4.994v6.95c0 1.825 0.831 3.544 2.25 4.688l0.463 0.369c1.656 1.325 2.787 3.188 3.2 5.262l0.144 0.712c0.325 1.625 1.906 2.681 3.531 2.356zM2 24h4c1.106 0 2-0.894 2-2v-14c0-1.106-0.894-2-2-2h-4c-1.106 0-2 0.894-2 2v14c0 1.106 0.894 2 2 2z')
-          h4.dislikesCount= `Dislike - ${video.dislikes || '0'}`
-        .sect-mid-vdoP-items.sect-mid-vdoP-navShare
-          svg.vdoPlayer-icon-imgs.vdoP-shareIcon.icon.icon-share-nodes-solid
-            use(xlink:href='#icon-share-nodes-solid')
-              symbol#icon-share-nodes-solid(viewBox='0 0 28 32')
-                path(d='M22 14c3.313 0 6-2.688 6-6s-2.688-6-6-6-6 2.688-6 6c0 0.25 0.012 0.5 0.044 0.744l-5.881 2.938c-1.075-1.044-2.544-1.681-4.162-1.681-3.313 0-6 2.688-6 6s2.688 6 6 6c1.619 0 3.088-0.637 4.162-1.681l5.881 2.938c-0.031 0.244-0.044 0.488-0.044 0.744 0 3.313 2.688 6 6 6s6-2.688 6-6-2.688-6-6-6c-1.619 0-3.087 0.637-4.163 1.681l-5.881-2.938c0.031-0.244 0.044-0.488 0.044-0.744s-0.012-0.5-0.044-0.744l5.881-2.938c1.075 1.044 2.544 1.681 4.163 1.681z')
-          h4.vidShareText= `Share`
-        .sect-mid-vdoP-items.sect-mid-vdoP-navAudio
-          svg.vdoPlayer-icon-imgs.vdoP-audioIcon.icon.icon-music-solid
-            use(xlink:href='#icon-music-solid')
-              symbol#icon-music-solid(viewBox='0 0 32 32')
-                path(d='M31.194 0.394c0.506 0.375 0.806 0.975 0.806 1.606v21c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-9.1l-16 4.8v13.012c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-14.287c0-0.881 0.581-1.662 1.425-1.919l20-6c0.606-0.181 1.262-0.069 1.769 0.313z')
-        .sect-mid-vdoP-items.sect-mid-vdoP-navOpts
-          svg.vdoPlayer-icon-imgs.vdoP-optsIcon.icon.icon-menu
-            use(xlink:href='#icon-menu')
-              symbol#icon-menu(viewBox='0 0 32 32')
-                path(d='M2 6h28v6h-28zM2 14h28v6h-28zM2 22h28v6h-28z')
+      if userData
+        section.sect-mid-vdoP-nav
+          .sect-mid-vdoP-items.sect-mid-vdoP-navLike
+            .vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
+              i.fa-solid.fa-thumbs-up
+            h4.likesCount= `Likes - ${video.likes || '0'}`
+          .sect-mid-vdoP-items.sect-mid-vdoP-navDislike
+            .vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
+              i.fa-solid.fa-thumbs-down
+            h4.dislikesCount= `Dislike - ${video.dislikes || '0'}`
+          .sect-mid-vdoP-items.sect-mid-vdoP-navShare
+            .vdoPlayer-icon-imgs.vdoP-shareIcon.icon.icon-share-nodes-solid
+              i.fa-solid.fa-share
+            h4.vidShareText= `Share`
+          .sect-mid-vdoP-items.sect-mid-vdoP-navAudio
+            svg.vdoPlayer-icon-imgs.vdoP-audioIcon.icon.icon-music-solid
+              use(xlink:href='#icon-music-solid')
+                symbol#icon-music-solid(viewBox='0 0 32 32')
+                  path(d='M31.194 0.394c0.506 0.375 0.806 0.975 0.806 1.606v21c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-9.1l-16 4.8v13.012c0 2.762-2.688 5-6 5s-6-2.238-6-5 2.688-5 6-5c0.7 0 1.375 0.1 2 0.288v-14.287c0-0.881 0.581-1.662 1.425-1.919l20-6c0.606-0.181 1.262-0.069 1.769 0.313z')
+          .sect-mid-vdoP-items.sect-mid-vdoP-navOpts
+            svg.vdoPlayer-icon-imgs.vdoP-optsIcon.icon.icon-menu
+              use(xlink:href='#icon-menu')
+                symbol#icon-menu(viewBox='0 0 32 32')
+                  path(d='M2 6h28v6h-28zM2 14h28v6h-28zM2 22h28v6h-28z')
     section.sect-mid-ctntDtls_N_recom
       section.sect-mid-ctntDtls
         section.ctnt-des_sects_spnsr
           section.ctnt-des-sect-spns-heading
             h4.ctnt-description-h4 Description
-            //- hr.ctnt-desSectSpns-separator
-            //- h4.ctnt-sections-h4 Sections
-            //- hr.ctnt-desSectSpns-separator
-            //- h4.ctnt-sponsors-h4 Sponsors
           hr.head_N_des-separator
           .description-container
             p.ctnt-description(id="description")= video.description
@@ -162,15 +153,7 @@ block content
             h4.ctnt-cmmnt-count
               span.ctnt-cmmnts-text Comments:
               span.ctnt-cmmnts-amount= video.comments.length
-            //- .ctnt-cmmnt-filter
-              h4.ctnt-cmmnt-filter-h4 Filter:
-              button.ctnt-cmmntFltr-date Recent
-              svg.ctnt-cmmntFltr-popular.icon.icon-fire
-                use(xlink:href='#icon-fire')
-                  symbol#icon-fire(viewBox='0 0 32 32')
-                    path(d='M19.031 0.069c-0.269 0.156-0.962 0.738-1.569 1.306-1.569 1.469-2.781 3.119-3.744 5.075-1.106 2.244-1.556 4.475-1.694 8.325l-0.044 1.15-0.225-0.063c-0.463-0.131-0.863-0.394-1.35-0.887-0.769-0.781-1.244-1.706-1.619-3.181-0.244-0.938-0.363-1.106-0.781-1.106-0.475 0-1.519 0.9-2.15 1.863-1.219 1.85-1.8 4.162-1.819 7.2-0.006 1.512 0.063 2.131 0.369 3.294 1.1 4.162 4.387 7.45 8.55 8.55 1.069 0.281 1.806 0.369 3.044 0.369 1.606 0 2.769-0.206 4.25-0.756 3.144-1.169 5.781-3.819 6.962-6.975 0.637-1.712 0.869-3.331 0.731-5.2-0.163-2.244-0.606-3.981-1.475-5.825-0.706-1.494-1.275-2.387-3.188-5.019-1.4-1.931-1.831-2.588-2.288-3.5-0.594-1.188-0.881-2.244-0.981-3.612-0.050-0.637-0.075-0.725-0.212-0.863-0.181-0.181-0.575-0.256-0.769-0.144zM17.331 20.406c0.087 0.175 0.512 0.844 0.956 1.5 0.875 1.306 1.262 2.056 1.456 2.813 0.387 1.512 0.325 2.512-0.225 3.656-0.238 0.494-0.369 0.675-0.794 1.094-0.813 0.806-1.663 1.175-2.725 1.175s-1.912-0.369-2.725-1.175c-0.425-0.413-0.556-0.6-0.794-1.094-0.387-0.8-0.512-1.431-0.463-2.35 0.037-0.681 0.175-1.431 0.325-1.794l0.075-0.181 0.156 0.275c0.287 0.481 0.662 0.85 1.069 1.044 0.688 0.331 1.281 0.319 1.519-0.044 0.094-0.137 0.119-0.369 0.156-1.262 0.050-1.175 0.119-1.712 0.319-2.406 0.15-0.525 0.613-1.438 0.988-1.931l0.269-0.356 0.137 0.363c0.081 0.2 0.212 0.506 0.3 0.675z')
           section.ctnt-cmmnt-inputbox
-            //- input.ctnt-cmmnt-inputField(type='text', placeholder='Enter Your Comment Here!')
             form#commentForm.ctnt-cmmnt-inputField
               textarea#commentInput(type='text', placeholder='Type your comment...')
               button#commentBtn(type='submit') Send
@@ -196,26 +179,13 @@ block content
                   if userIdString === commentUserIdString
                     button.delete-comment-btn(data-owner-id=`${commentUserIdString}`) Delete Comment
                   //- .cmmnt-fltrs
-                    svg.cmmnt-fltr-like.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
-                      use(xlink:href='#icon-thumbs-up-solid')
-                        symbol#icon-thumbs-up-solid(viewBox='0 0 32 32')
-                          path(d='M19.587 2.056c1.625 0.325 2.681 1.906 2.356 3.531l-0.144 0.713c-0.331 1.669-0.944 3.256-1.8 4.7h9c1.656 0 3 1.344 3 3 0 1.156-0.656 2.163-1.619 2.663 0.681 0.55 1.119 1.394 1.119 2.337 0 1.462-1.050 2.681-2.431 2.944 0.275 0.456 0.431 0.988 0.431 1.556 0 1.331-0.869 2.462-2.069 2.85 0.044 0.206 0.069 0.425 0.069 0.65 0 1.656-1.344 3-3 3h-6.094c-1.188 0-2.344-0.35-3.331-1.006l-2.406-1.606c-1.669-1.113-2.669-2.988-2.669-4.994v-6.95c0-1.825 0.831-3.544 2.25-4.688l0.463-0.369c1.656-1.325 2.787-3.188 3.2-5.263l0.144-0.713c0.325-1.625 1.906-2.681 3.531-2.356zM2 12h4c1.106 0 2 0.894 2 2v14c0 1.106-0.894 2-2 2h-4c-1.106 0-2-0.894-2-2v-14c0-1.106 0.894-2 2-2z')
-                    svg.cmmnt-fltr-dislike.vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
-                      use(xlink:href='#icon-thumbs-down-solid')
-                        symbol#icon-thumbs-down-solid(viewBox='0 0 32 32')
-                          path(d='M19.587 29.944c1.625-0.325 2.681-1.906 2.356-3.531l-0.144-0.712c-0.331-1.669-0.944-3.256-1.8-4.7h9c1.656 0 3-1.344 3-3 0-1.156-0.656-2.162-1.619-2.662 0.681-0.55 1.119-1.394 1.119-2.338 0-1.463-1.050-2.681-2.431-2.944 0.275-0.456 0.431-0.988 0.431-1.556 0-1.331-0.869-2.463-2.069-2.85 0.044-0.206 0.069-0.425 0.069-0.65 0-1.656-1.344-3-3-3h-6.094c-1.188 0-2.344 0.35-3.331 1.006l-2.406 1.606c-1.669 1.112-2.669 2.987-2.669 4.994v6.95c0 1.825 0.831 3.544 2.25 4.688l0.463 0.369c1.656 1.325 2.787 3.188 3.2 5.262l0.144 0.712c0.325 1.625 1.906 2.681 3.531 2.356zM2 24h4c1.106 0 2-0.894 2-2v-14c0-1.106-0.894-2-2-2h-4c-1.106 0-2 0.894-2 2v14c0 1.106 0.894 2 2 2z')
-                    svg.cmmnt-fltr-bkmark.vdoPlayer-icon-imgs.vdoP-bookmarkIcon.icon.icon-bookmark-regular
-                      use(xlink:href='#icon-bookmark-regular')
-                        symbol#icon-bookmark-regular(viewBox='0 0 24 32')
-                          path(d='M0 3c0-1.656 1.344-3 3-3v27.587l8.131-5.806c0.519-0.375 1.225-0.375 1.744 0l8.125 5.806v-24.587h-18v-3h18c1.656 0 3 1.344 3 3v27.5c0 0.563-0.313 1.075-0.813 1.331s-1.1 0.213-1.556-0.113l-9.631-6.875-9.631 6.875c-0.456 0.325-1.056 0.369-1.556 0.113s-0.813-0.769-0.813-1.331v-27.5z')
-                    svg.cmmnt-fltr-menu.vdoPlayer-icon-imgs.vdoP-optsIcon.icon.icon-menu.icon.icon-more-vertical
-                      use(xlink:href='#icon-more-vertical')
-                        symbol#icon-more-vertical(viewBox='0 0 24 24')
-                          path(d='M14 12c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 5c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 19c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414z')
+                    .cmmnt-fltr-like.vdoPlayer-icon-imgs.vdoP-likeIcon.icon.icon-thumbs-up-solid
+                    .cmmnt-fltr-dislike.vdoPlayer-icon-imgs.vdoP-dislikeIcon.icon.icon-thumbs-down-solid
+                    .cmmnt-fltr-bkmark.vdoPlayer-icon-imgs.vdoP-bookmarkIcon.icon.icon-bookmark-regular
+                    .cmmnt-fltr-menu.vdoPlayer-icon-imgs.vdoP-optsIcon.icon.icon-menu.icon.icon-more-vertical
                 h4.ctnt-cmmnt-textCmmnt= comment.comment
                 button.ctnt-cmmnt-reply Reply
-              
-              // Modal for confirmation
+              //- Modal for confirmation
               div.delete-modal.modal
                 div.modal-content
                   span.close-modal-btn &times;

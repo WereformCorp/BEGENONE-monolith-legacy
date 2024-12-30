@@ -67,17 +67,6 @@ const updateLikesDislikes = catchAsync(async (req, res, next) => {
       return new Error(
         `You Cannot Like a Video in Minus, What kinda guy does that? Ik there's probably a bug, just let us know about the error. `,
       );
-    // else if (action === 'remove') {
-    //   // Handle removing the like or dislike
-    //   if (userLiked) {
-    //     video.likes -= 1;
-    //     const index = video.likedBy.indexOf(userId);
-    //     video.likedBy.splice(index, 1);
-    //   } else {
-    //     // Handle removing dislikes similarly
-    //     // ...
-    //   }
-    // }
 
     // Save the updated video
     await video.save();

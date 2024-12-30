@@ -98,8 +98,9 @@ router.get(
   search,
 );
 router.get(
-  '/clipZ/watch/',
+  '/clipZ/:videoId',
   // viewsController.clipZ
+  isLoggedIn,
   checkUserSubscription,
   clipZ,
 );

@@ -44,6 +44,13 @@ const signup = catchAsync(async (req, res, next) => {
     await newUser.save(); // Save the updated user with the new subscription
 
     console.log(`NEW USER AFTER ALL THE CHANGES`, newUser);
+    const message = `A new user has signed up! Name: ${newUser.name} and email address: ${newUser.eAddress.email}`;
+
+    await sendMail({
+      email: `areeshpersonal5@gmail.com`,
+      subject: `A New User Signed Up!`,
+      message,
+    });
 
     // Step 5: Proceed with the rest of your flow
     req.newUser = newUser;

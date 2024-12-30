@@ -100,7 +100,7 @@ html(lang='en')
       a(href="/pricings").right-nav-menu-5 
         | PRICING
 
-    .notice-bar
+    //- .notice-bar
       .span.important-notice-span= "🚨 Important Notice: "
       
       .span.notice-message= "This is a Beta version; data may not persist. Please review the terms and conditions before starting."
@@ -144,15 +144,16 @@ html(lang='en')
       include _bottomNav
       include _notificationPanel
 
+    //- script(src="/js/videoPlayer.js")
+    //- script(src="/js/engagement-video.js")
+    //- script(src="/js/comment.js")
+    //- script(src="/js/deleteComment.js")
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js')
     script(src='/js/index.js')
     script(src='/js/responsive-nav-modal.js')
     script(src='/js/notification.js')
     script(src='/js/welcome.js')
     script(src='https://js.stripe.com/v3/')
-    script(type='text/javascript').
-      const player = new Plyr('video', { captions: { active: true } });
-      window.player = player;
     script.
       export const promiseHints = (() => {
         if (window.navigator === undefined) {
@@ -179,3 +180,4 @@ html(lang='en')
 
     //- script(type="module" src="/js/upload-video.js")
     script(src='https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js')
+  

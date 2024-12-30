@@ -21,9 +21,12 @@
 
 // import baseUrl from './controllers/baseUrlController.js';
 const loginForm = document.querySelector('.login-form');
+const submitFormBtn = document.querySelector('.submit-form-btn');
 
 const login = async (email, password) => {
   try {
+    submitFormBtn.textContent = 'Logging In...';
+
     const baseUrl = await axios({
       method: 'GET',
       url: `/url/get-env-url`,
@@ -46,6 +49,7 @@ const login = async (email, password) => {
     // console.log('RESPONSE:', res);
 
     if (res.data.status === 'success') {
+      submitFormBtn.textContent = 'Logged In successfully.';
       // notyf.success('success', 'Logged In Successfully!');
       window.setTimeout(() => {
         location.assign('/');

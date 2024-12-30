@@ -21,40 +21,42 @@ body {
   /* background-color: rgb(17, 17, 17); */
   background: radial-gradient(
       circle at top left,
-      rgba(255, 94, 0, 0.2),
+      rgba(255, 94, 0, 0.1),
       rgba(255, 140, 0, 0) 20%
     ),
     radial-gradient(
       circle at top right,
-      rgba(255, 140, 0, 0.2),
+      rgba(255, 140, 0, 0.1),
       rgba(255, 140, 0, 0) 20%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(255, 94, 0, 0.2),
+      rgba(255, 94, 0, 0.05),
       rgba(255, 140, 0, 0) 20%
     ),
     radial-gradient(
       circle at bottom right,
-      rgba(255, 140, 0, 0.2),
+      rgba(255, 140, 0, 0.05),
       rgba(255, 140, 0, 0) 20%
     ),
     radial-gradient(
       circle at 20% 30%,
-      rgba(255, 94, 0, 0.05),
+      rgba(255, 140, 0, 0.03),
       rgba(255, 140, 0, 0) 10%
     ),
     radial-gradient(
       circle at 60% 40%,
-      rgba(255, 140, 0, 0.15),
+      rgba(255, 140, 0, 0.03),
       rgba(255, 140, 0, 0) 10%
     ),
     radial-gradient(
       circle at 50% 80%,
-      rgba(255, 94, 0, 0.05),
+      rgba(255, 94, 0, 0.03),
       rgba(255, 140, 0, 0) 10%
     ),
-    #202020; /* Dark background */
+    #161616; /* Dark background */
+
+  height: 100vh;
 }
 
 body::-webkit-scrollbar {

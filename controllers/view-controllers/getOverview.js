@@ -50,17 +50,6 @@ const getOverview = catchAsync(async (req, res, next) => {
     const channelLogoArray = [];
     filteredVideos.forEach((video) => {
       video.videoTimeAgo = calculateTimeAgo(video.time);
-      // if (
-      //   // video.thumbnail &&
-      //   // video.thumbnail.includes('default-thumbnail.jpeg')
-      //   !video.thumbnail ||
-      //   video.thumbnail === 'default-thumbnail.jpeg'
-      // ) {
-      //   video.thumbUrl = `https://begenone-images.s3.us-east-1.amazonaws.com/default-thumbnail.png`;
-      // } else {
-      //   video.thumbUrl = thumbnailMap.get(video.thumbnail) || null;
-      // }
-      // Check if thumbnail is the default or missing, use S3 if so
       if (
         !video.thumbnail ||
         video.thumbnail === 'default-thumbnail.jpeg' ||
