@@ -106,11 +106,97 @@
 /* eslint-disable */
 
 // Select all comment forms and comment containers for each video
-const commentForms = document.querySelectorAll('.commentForm');
-const commentsContainers = document.querySelectorAll('.ctnt-cmmnt-list');
-const commentsAmounts = document.querySelectorAll('.ctnt-cmmnts-amount');
-const commentHtmlHeads = document.querySelectorAll('.ctnt-cmmnt-listItems');
+// const commentForms = document.querySelectorAll('.commentForm');
+// const commentsContainers = document.querySelectorAll('.ctnt-cmmnt-list');
+// const commentsAmounts = document.querySelectorAll('.ctnt-cmmnts-amount');
+// const commentHtmlHeads = document.querySelectorAll('.ctnt-cmmnt-listItems');
 
+// const postComment = async (videoId, comment) => {
+//   try {
+//     const commentText = comment.trim();
+
+//     if (commentText === '') {
+//       alert('Please input a comment to proceed.');
+//       return;
+//     }
+
+//     const baseUrl = await axios({
+//       method: 'GET',
+//       url: `/url/get-env-url`,
+//     });
+//     const urlPath = baseUrl.data.url;
+
+//     const res = await axios({
+//       method: 'POST',
+//       url: `${urlPath}/api/v1/videos/${videoId}/comments`,
+//       data: {
+//         comment: commentText,
+//       },
+//     });
+
+//     if (res.data.status.toLowerCase() !== 'success') {
+//       return alert(`Couldn't post the comment\n${res.data.message}`);
+//     }
+
+//     // Getting the comment data
+//     const commentData = res.data.data;
+
+//     console.log(`comment data:`, commentData);
+
+//     const compiledCommentRes = await axios({
+//       url: `${urlPath}/api/v1/comments/comment.pug`,
+//       method: 'POST',
+//       data: commentData,
+//     });
+
+//     console.log(`COMPILED COMMENT RESPONSE: `, compiledCommentRes.data);
+
+//     if (compiledCommentRes.data.status !== 'success')
+//       return alert(
+//         `Couldn't load the comment\n${res.data.message}\nPlease reload to see the comment`,
+//       );
+
+//     // Inserting the compiled comment template
+//     const commentContainer = document.querySelector(
+//       `#comments-container-${videoId}`,
+//     );
+//     if (commentContainer) {
+//       commentContainer.insertAdjacentHTML(
+//         'afterbegin',
+//         compiledCommentRes.data.data.compiledTemplate,
+//       );
+//     }
+
+//     // Updating the comments count for the current video
+//     const commentsAmount = document.querySelector(
+//       `#comments-amount-${videoId}`,
+//     );
+//     if (commentsAmount) {
+//       commentsAmount.textContent = String(
+//         parseInt(commentsAmount.textContent) + 1,
+//       );
+//     }
+//   } catch (err) {
+//     console.log(`ERROR MESSAGE: ${err.message}`, err);
+//   }
+// };
+
+// // Adding event listeners to each comment form for each video
+// commentForms.forEach((commentForm) => {
+//   commentForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     const videoId = commentForm
+//       .closest('.video-container')
+//       .querySelector('.videoId').value;
+//     const commentInput = commentForm.querySelector('.commentInput');
+//     const comment = commentInput ? commentInput.value : '';
+
+//     console.log(`COMMENT for video ${videoId}: ${comment}`);
+//     postComment(videoId, comment);
+//   });
+// });
+
+// Function to post a comment
 const postComment = async (videoId, comment) => {
   try {
     const commentText = comment.trim();
@@ -156,7 +242,7 @@ const postComment = async (videoId, comment) => {
         `Couldn't load the comment\n${res.data.message}\nPlease reload to see the comment`,
       );
 
-    // Inserting the compiled comment template
+    // Find the correct comment container by videoId
     const commentContainer = document.querySelector(
       `#comments-container-${videoId}`,
     );
@@ -167,7 +253,7 @@ const postComment = async (videoId, comment) => {
       );
     }
 
-    // Updating the comments count for the current video
+    // Update the comments count for the current video
     const commentsAmount = document.querySelector(
       `#comments-amount-${videoId}`,
     );
@@ -182,16 +268,24 @@ const postComment = async (videoId, comment) => {
 };
 
 // Adding event listeners to each comment form for each video
-commentForms.forEach((commentForm) => {
-  commentForm.addEventListener('submit', (e) => {
+const observeCommentForms = () => {
+  document.addEventListener('submit', (e) => {
     e.preventDefault();
-    const videoId = commentForm
-      .closest('.video-container')
-      .querySelector('.videoId').value;
-    const commentInput = commentForm.querySelector('.commentInput');
-    const comment = commentInput ? commentInput.value : '';
+    const commentForm = e.target.closest('.commentForm');
+    if (commentForm) {
+      e.preventDefault(); // Prevent page refresh
 
-    console.log(`COMMENT for video ${videoId}: ${comment}`);
-    postComment(videoId, comment);
+      const videoId = commentForm
+        .closest('.video-container')
+        .querySelector('.videoId').value;
+      const commentInput = commentForm.querySelector('.commentInput');
+      const comment = commentInput ? commentInput.value : '';
+
+      console.log(`COMMENT for video ${videoId}: ${comment}`);
+      postComment(videoId, comment);
+    }
   });
-});
+};
+
+// Initialize the observer
+observeCommentForms();

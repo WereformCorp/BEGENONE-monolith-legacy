@@ -120,14 +120,14 @@
 }
 
 .sect-lft-dwn-link-1,
-/* .sect-lft-dwn-link-2, */
+.sect-lft-dwn-link-2,
 .sect-lft-dwn-link-3,
 .sect-lft-dwn-link-4,
 .sect-lft-dwn-link-5,
 .sect-lft-dwn-link-6,
 .sect-lft-dwn-link-7,
 .srd-link-lockText,
-/* .srd-link-clipZ, */
+.srd-link-clipZ,
 .srd-link-playlistText,
 .srd-link-subsText,
 .srd-link-servicesText,
@@ -138,14 +138,14 @@
 }
 
 .section-left:hover .sect-lft-dwn-link-1,
-/* .section-left:hover .sect-lft-dwn-link-2, */
+.section-left:hover .sect-lft-dwn-link-2,
 .section-left:hover .sect-lft-dwn-link-3,
 .section-left:hover .sect-lft-dwn-link-4,
 .section-left:hover .sect-lft-dwn-link-5,
 .section-left:hover .sect-lft-dwn-link-6,
 .section-left:hover .sect-lft-dwn-link-7,
 .srd-link-lockText:hover,
-/* .srd-link-clipZ:hover, */
+.srd-link-clipZ:hover,
 .srd-link-playlistText:hover,
 .srd-link-subsText:hover,
 .srd-link-servicesText:hover,
