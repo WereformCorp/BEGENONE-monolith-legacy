@@ -13,7 +13,7 @@ exports.getBaseUrl = (req, res) => {
     // Use localhost for development
     return res.json({
       status: 'success',
-      url: `http://127.0.0.1:3000`,
+      url: `http://127.0.0.1:${process.env.PORT}`,
     });
   } else {
     return res.status(400).json({
