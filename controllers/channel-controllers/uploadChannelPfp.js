@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Channel profile picture URL persistence
+ * @module controllers/channel-controllers/uploadChannelPfp
+ * @layer Controller
+ *
+ * @description
+ * Persists the S3 object key for a channel's profile picture (channelLogo field)
+ * after the image has been uploaded to S3 by the s3UploadPfp controller.
+ * Receives the S3 data from req.s3Data set by the upstream upload handler.
+ *
+ * @dependencies
+ * - Upstream: s3UploadPfp controller (called after S3 upload completes)
+ * - Downstream: Channel model, AppError, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

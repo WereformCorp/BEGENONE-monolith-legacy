@@ -1,3 +1,17 @@
+/**
+ * @fileoverview User profile page view renderer
+ * @module controllers/view-controllers/userProfile
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the authenticated user's profile settings page. Fetches user data
+ * with populated channel information and passes subscription status to the
+ * template.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: User model, catchAsync
+ */
 const catchAsync = require('../../utils/catchAsync');
 const User = require('../../models/userModel');
 

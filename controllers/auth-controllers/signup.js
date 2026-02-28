@@ -1,3 +1,20 @@
+/**
+ * @fileoverview User registration and signup verification controller
+ * @module controllers/auth-controllers/signup
+ * @layer Controller
+ *
+ * @description
+ * Handles new user creation, assigns the default "signup" pricing plan and
+ * corresponding subscription, then dispatches a notification email. A second
+ * export (signupAuth) generates a time-limited email verification token and
+ * sends the verification link to the newly registered user.
+ *
+ * @dependencies
+ * - Upstream: Auth route (POST /signup)
+ * - Downstream: User model, Pricing model, Subscription model, sendMail, catchAsync, AppError
+ *
+ * @sideeffect Creates User, Subscription documents; sends notification and verification emails.
+ */
 const User = require('../../models/userModel');
 const Pricing = require('../../models/pricingModel');
 const Subscription = require('../../models/subscriptionModel');

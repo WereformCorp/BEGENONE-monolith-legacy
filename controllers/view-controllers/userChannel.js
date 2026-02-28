@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Authenticated user's own channel page view renderer
+ * @module controllers/view-controllers/userChannel
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the authenticated user's own channel page. Fetches user data with
+ * populated channel and videos (sorted by creation date), extracts wires data,
+ * and passes them to the userChannel template.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: User model, catchAsync
+ */
 const catchAsync = require('../../utils/catchAsync');
 const User = require('../../models/userModel');
 

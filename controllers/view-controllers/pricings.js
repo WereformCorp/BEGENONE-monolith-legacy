@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Pricing plans page view renderer
+ * @module controllers/view-controllers/pricings
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the pricing/subscription plans page. Fetches all pricing tiers,
+ * categorizes them by name, and passes the categorized IDs along with
+ * user data and subscription status to the allPricings template.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), User model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');

@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Video listing endpoint
+ * @module controllers/video-controllers/getAllVideos
+ * @layer Controller
+ *
+ * @description
+ * Retrieves all video documents across all channels. Collects all channel IDs
+ * and queries videos whose channel field matches any of those IDs.
+ *
+ * @dependencies
+ * - Upstream: video route handler
+ * - Downstream: Channel model, Video model, AppError, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const Video = require('../../models/videoModel');
 const AppError = require('../../utils/appError');

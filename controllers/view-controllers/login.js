@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Login page view renderer
+ * @module controllers/view-controllers/login
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the login page template. Redirects authenticated users to the home page.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: catchAsync
+ */
 const catchAsync = require('../../utils/catchAsync');
 
 const login = catchAsync(async (req, res, next) => {

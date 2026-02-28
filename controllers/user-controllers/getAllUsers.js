@@ -1,3 +1,16 @@
+/**
+ * @fileoverview All users retrieval controller
+ * @module controllers/user-controllers/getAllUsers
+ * @layer Controller
+ *
+ * @description
+ * Returns the complete list of user documents with populated channel
+ * references. Includes a result count in the response payload.
+ *
+ * @dependencies
+ * - Upstream: User route (GET /users), typically admin-restricted
+ * - Downstream: User model, catchAsync, AppError
+ */
 const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

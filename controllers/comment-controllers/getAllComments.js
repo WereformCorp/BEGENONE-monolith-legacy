@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Comment listing endpoint
+ * @module controllers/comment-controllers/getAllComments
+ * @layer Controller
+ *
+ * @description
+ * Retrieves all Comment documents from the database and returns them
+ * with a result count in the JSON response.
+ *
+ * @dependencies
+ * - Upstream: comment route handler
+ * - Downstream: Comment model, AppError, catchAsync
+ */
 const Comment = require('../../models/commentModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

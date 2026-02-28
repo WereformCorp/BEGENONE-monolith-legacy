@@ -1,6 +1,30 @@
+/**
+ * @fileoverview Engagement metric toggling (like/dislike) for videos
+ * @module controllers/video-controllers/updateLikesDislikes
+ * @layer Controller
+ *
+ * @description
+ * Handles idempotent like and dislike toggling for a video. When a user likes
+ * a video they have already liked, the like is removed (toggle off). When a
+ * user likes a video they previously disliked, the dislike is removed and the
+ * like is applied (mutual exclusion). The same logic applies symmetrically
+ * for dislikes. Maintains likedBy/dislikedBy arrays for per-user tracking.
+ *
+ * @dependencies
+ * - Upstream: video route handler (authenticated)
+ * - Downstream: Video model, catchAsync
+ */
 const Video = require('../../models/videoModel');
 const catchAsync = require('../../utils/catchAsync');
 
+/**
+ * Toggles like or dislike state for a video on behalf of the authenticated user.
+ * Enforces mutual exclusion between like and dislike, and supports toggle-off
+ * when the same action is repeated. Persists updated counts via Video.save().
+ * @param {import('express').Request} req - Express request with params.videoId, params.action, and user._id
+ * @param {import('express').Response} res - Express response
+ * @param {import('express').NextFunction} next - Express next middleware
+ */
 const updateLikesDislikes = catchAsync(async (req, res, next) => {
   try {
     const { videoId } = req.params;

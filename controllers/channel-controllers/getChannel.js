@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Single channel retrieval by ID
+ * @module controllers/channel-controllers/getChannel
+ * @layer Controller
+ *
+ * @description
+ * Fetches a single Channel document by its route parameter ID and returns it
+ * in the JSON response. Returns a 404 error when the channel is not found.
+ *
+ * @dependencies
+ * - Upstream: channel route handler
+ * - Downstream: Channel model, AppError, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

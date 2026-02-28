@@ -1,8 +1,33 @@
+/**
+ * @fileoverview Authenticated password change controller
+ * @module controllers/auth-controllers/updatePassword
+ * @layer Controller
+ *
+ * @description
+ * Allows an already-authenticated user to change their password by first
+ * re-verifying the current password. On successful verification, updates the
+ * password fields and triggers a new JWT issuance so the session remains valid
+ * after the credential change.
+ *
+ * @dependencies
+ * - Upstream: Auth route (PATCH /updateMyPassword), requires protect middleware
+ * - Downstream: User model, createSendToken, catchAsync, AppError
+ *
+ * @security Re-authenticates current password before allowing change; invalidates old JWT via new token issuance.
+ */
 const User = require('../../models/userModel');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
 const { createSendToken } = require('./createSignToken');
 
+/**
+ * Re-verifies the user's current password, then updates to the new password and reissues a JWT.
+ * @param {Object} req - Express request; expects req.user.id and req.body.eAddress password fields
+ * @param {Object} res - Express response
+ * @param {Function} next - Express next middleware
+ * @returns {void}
+ * @throws {AppError} 401 if current password verification fails
+ */
 const updatePassword = catchAsync(async (req, res, next) => {
   try {
     // 1) Get User from Collection

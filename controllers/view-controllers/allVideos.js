@@ -1,3 +1,17 @@
+/**
+ * @fileoverview All uploads listing page view renderer
+ * @module controllers/view-controllers/allVideos
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the channel's all-uploads management page. Fetches the user's channel
+ * videos, resolves thumbnail URLs via CloudFront or S3, and checks subscription
+ * features to determine upload eligibility.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: axios (internal API), User model, Pricing model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const User = require('../../models/userModel');

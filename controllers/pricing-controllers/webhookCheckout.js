@@ -1,3 +1,25 @@
+/**
+ * @fileoverview Stripe webhook event handler for subscription lifecycle management
+ * @module controllers/pricing-controllers/webhookCheckout
+ * @layer Controller
+ *
+ * @description
+ * Receives and processes Stripe webhook events. Verifies the webhook signature
+ * against STRIPE_WEBHOOK_SECRET to ensure event authenticity. Handles two primary
+ * event types: checkout.session.completed (provisions a new subscription, deactivates
+ * any prior active subscription, and links the subscription to the user) and
+ * customer.subscription.updated (handles cancellation by marking the subscription
+ * as inactive).
+ *
+ * @dependencies
+ * - Upstream: Express raw body route (Stripe webhook endpoint)
+ * - Downstream: Stripe API (signature verification), Subscription model, User model,
+ *   subscriptionHandler, updateSubscriptionStatus, winstonLogger
+ *
+ * @security
+ * Validates Stripe webhook signature before processing any event data.
+ * Requires STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET environment variables.
+ */
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const catchAsync = require('../../utils/catchAsync');
 const Subscription = require('../../models/subscriptionModel');
@@ -6,6 +28,12 @@ const { logInfo, logError } = require('../util-controllers/winstonLogger');
 const User = require('../../models/userModel');
 const updateSubscriptionStatus = require('../util-controllers/updateSubscriptionStatus');
 
+/**
+ * Marks a subscription as inactive in the database following a Stripe cancellation event.
+ * Locates the subscription by its Stripe ID, sets status to inactive, disables auto-renew,
+ * and records the current timestamp as the end date.
+ * @param {Object} subscriptionData - Stripe subscription object from the webhook event
+ */
 const deleteSubscriptionStatus = catchAsync(async (subscriptionData) => {
   try {
     console.log('Updating subscription for:', subscriptionData);
@@ -56,6 +84,13 @@ const deleteSubscriptionStatus = catchAsync(async (subscriptionData) => {
   }
 });
 
+/**
+ * Provisions a new subscription after a successful Stripe checkout session.
+ * Deactivates any existing active subscription for the user, creates a new
+ * Subscription document with active status, links it to the User document,
+ * and delegates to applySubscription for feature enablement.
+ * @param {Object} session - Stripe checkout.session.completed event data object
+ */
 const createBookingCheckout = catchAsync(async (session) => {
   // 1) If User Purchaases A Subscription, a New Subscription is created.
   // 2) The new created subscription gets added to the user's subscription field and currectActiveSubscription Field and all previous subscriptions remain in the same subscruption field and not get removed.
@@ -143,6 +178,14 @@ const createBookingCheckout = catchAsync(async (session) => {
   applySubscription(newSubscription);
 });
 
+/**
+ * Receives Stripe webhook events, verifies the signature, and dispatches to the
+ * appropriate handler based on event type. Returns 200 on success, 400 on
+ * signature failure, or 500 on internal processing errors.
+ * @param {import('express').Request} req - Express request with raw body and stripe-signature header
+ * @param {import('express').Response} res - Express response
+ * @param {import('express').NextFunction} next - Express next middleware
+ */
 const webhookCheckout = catchAsync(async (req, res, next) => {
   const signature = req.headers['stripe-signature'];
 

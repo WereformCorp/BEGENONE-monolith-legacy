@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Environment-aware base URL resolution controller
+ * @module controllers/util-controllers/baseUrlController
+ * @layer Controller
+ *
+ * @description
+ * Returns the application's base URL as a JSON response, selecting between
+ * the production domain and the localhost development URL based on the
+ * NODE_ENV environment variable. Sets a permissive CORS header to allow
+ * cross-origin access from any domain.
+ *
+ * @dependencies
+ * - Upstream: Utility route (GET /baseUrl)
+ * - Downstream: catchAsync
+ */
 /* eslint-disable */
 const catchAsync = require('../../utils/catchAsync');
 const getBaseUrl = catchAsync((req, res) => {

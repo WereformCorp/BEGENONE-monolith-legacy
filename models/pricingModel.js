@@ -1,3 +1,25 @@
+/**
+ * @fileoverview Pricing tier schema defining subscription plans and feature flags.
+ * @module models/pricingModel
+ * @layer Model
+ * @collection pricings
+ *
+ * @description
+ * Defines the Pricing document schema representing available subscription tiers
+ * (e.g., early-access, basic, standard, premium). Each tier carries a description,
+ * price, a Map of boolean feature flags controlling platform capabilities, and an
+ * optional Map of numeric service limits. Used as the canonical source of truth for
+ * plan definitions referenced by the Subscription model.
+ *
+ * @relationships
+ * - Referenced by: Subscription.pricings (ObjectId ref -> Pricing)
+ * - Referenced by: User.subscriptions default resolver (lookup by name 'signup')
+ *
+ * @dependencies
+ * - Upstream: controllers/pricing-controllers/*, models/userModel (default subscription lookup)
+ * - Downstream: mongoose
+ */
+
 const mongoose = require('mongoose');
 
 // Define the schema for the Subscription model

@@ -1,3 +1,27 @@
+/**
+ * @fileoverview Subscription schema binding users to pricing plans with Stripe integration.
+ * @module models/subscriptionModel
+ * @layer Model
+ * @collection subscriptions
+ *
+ * @description
+ * Defines the Subscription document schema that associates a User with a Pricing plan.
+ * Tracks Stripe identifiers, payment method details, subscription lifecycle dates,
+ * status (active, canceled, expired, pending, inactive), and auto-renewal preference.
+ * Pre-find hooks auto-populate the referenced User and Pricing documents.
+ *
+ * @relationships
+ * - user: ObjectId ref -> User
+ * - pricings: ObjectId ref -> Pricing
+ *
+ * @dependencies
+ * - Upstream: controllers/pricing-controllers/*, User.subscriptions, User.currentActiveSubscription
+ * - Downstream: mongoose, models/User, models/Pricing
+ *
+ * @security
+ * stripeId and paymentDetails.transactionId store third-party payment identifiers.
+ */
+
 const mongoose = require('mongoose');
 
 const subscriptionSchema = new mongoose.Schema({

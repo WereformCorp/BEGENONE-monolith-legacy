@@ -1,3 +1,27 @@
+# ============================================================================
+# Kubernetes Deployment and Service - BEGENONE Production
+# ============================================================================
+# Operational Role:
+#   Defines a Kubernetes Deployment (single replica) and a LoadBalancer
+#   Service to expose the BEGENONE monolith to external traffic on port 80.
+#
+# Deployment Assumptions:
+#   - A ConfigMap named "data-store-env" must exist in the same namespace,
+#     containing keys: DATABASE, DATABASE_PASSWORD, JWT_SECRET,
+#     JWT_EXPIRES_IN, JWT_COOKIE_EXPIRES_IN, AWS_ACCESS_KEY_ID,
+#     AWS_SECRET_ACCESS_KEY, and S3_BUCKET_NAME.
+#   - The container image (areeshalam/prod-v1-begenone:1) must be pushed
+#     to the registry before applying this manifest.
+#   - TLS termination is expected at the load balancer or ingress layer.
+#
+# Security Implications:
+#   - Sensitive values (JWT_SECRET, AWS credentials) are sourced from a
+#     ConfigMap. For production hardening, migrate these to Kubernetes
+#     Secrets with appropriate RBAC restrictions.
+#   - Resource limits are commented out; enabling them is recommended to
+#     prevent resource exhaustion in shared clusters.
+# ============================================================================
+
 apiVersion: v1
 kind: Service
 metadata:

@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Channel document update with file upload handling
+ * @module controllers/channel-controllers/updateChannel
+ * @layer Controller
+ *
+ * @description
+ * Updates an existing Channel document for the authenticated user's channel.
+ * Handles optional file uploads for displayImage and bannerImage fields,
+ * removing the previous file from the local filesystem before persisting
+ * the new filename.
+ *
+ * @dependencies
+ * - Upstream: channel route handler (authenticated, with multer middleware)
+ * - Downstream: Channel model, AppError, catchAsync, fs (node:fs)
+ */
 const fs = require('fs');
 const Channel = require('../../models/channelModel');
 const AppError = require('../../utils/appError');

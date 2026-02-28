@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Wire listing endpoint
+ * @module controllers/wires-controller/getAllWires
+ * @layer Controller
+ *
+ * @description
+ * Retrieves all Wire documents from the database and returns them
+ * with a result count in the JSON response.
+ *
+ * @dependencies
+ * - Upstream: wire route handler
+ * - Downstream: Wire model, AppError, catchAsync
+ */
 const Wire = require('../../models/wireModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

@@ -1,3 +1,20 @@
+/**
+ * @fileoverview User login controller
+ * @module controllers/auth-controllers/login
+ * @layer Controller
+ *
+ * @description
+ * Validates user-supplied email and password credentials against stored records.
+ * On successful authentication, delegates JWT creation and cookie attachment to
+ * createSendToken. Returns 401 on credential mismatch without revealing which
+ * field was incorrect.
+ *
+ * @dependencies
+ * - Upstream: Auth route (POST /login)
+ * - Downstream: User model, createSendToken, catchAsync, AppError
+ *
+ * @security Credential verification uses bcrypt comparison via User.correctPassword.
+ */
 const User = require('../../models/userModel');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');

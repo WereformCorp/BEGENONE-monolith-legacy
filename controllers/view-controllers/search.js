@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Search results page view renderer
+ * @module controllers/view-controllers/search
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the search results page. Fetches search results from the internal
+ * search API, resolves thumbnail and channel logo CloudFront URLs, and
+ * passes the enriched video list to the listSearch template.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 
 const catchAsync = require('../../utils/catchAsync');

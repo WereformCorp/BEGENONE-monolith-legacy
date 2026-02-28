@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Non-blocking authentication check for view routes
+ * @module controllers/auth-controllers/isLoggedIn
+ * @layer Middleware
+ *
+ * @description
+ * Inspects the `jwt` cookie to determine whether a valid, authenticated user
+ * session exists. Unlike the protect middleware, this does not reject
+ * unauthenticated requests; it silently calls next() so views can conditionally
+ * render authenticated content via `res.locals.user`.
+ *
+ * @dependencies
+ * - Upstream: View/template routes that optionally display user-specific content
+ * - Downstream: jsonwebtoken, User model, catchAsync
+ */
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');

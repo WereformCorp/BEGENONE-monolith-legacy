@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Single user retrieval by ID controller
+ * @module controllers/user-controllers/getUser
+ * @layer Controller
+ *
+ * @description
+ * Fetches a single user document by the ID supplied in req.params.id and
+ * populates the associated channel reference. Returns 404 if no matching
+ * user is found.
+ *
+ * @dependencies
+ * - Upstream: User route (GET /users/:id)
+ * - Downstream: User model, catchAsync, AppError
+ */
 const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

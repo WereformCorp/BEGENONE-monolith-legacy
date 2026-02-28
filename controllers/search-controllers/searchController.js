@@ -1,9 +1,31 @@
+/**
+ * @fileoverview In-memory fuzzy search across video titles using Fuse.js
+ * @module controllers/search-controllers/searchController
+ * @layer Controller
+ *
+ * @description
+ * Performs a fuzzy text search against all Video documents. Loads the full Video
+ * collection into memory, initializes a Fuse.js instance keyed on the title field,
+ * and executes the search against the query string parameter. This approach trades
+ * memory for simplicity; it is suitable for moderate dataset sizes.
+ *
+ * @dependencies
+ * - Upstream: search route handler
+ * - Downstream: Video model, Fuse.js, catchAsync
+ */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Fuse = require('fuse.js');
 
 const Video = require('../../models/videoModel');
 const catchAsync = require('../../utils/catchAsync');
 
+/**
+ * Loads all Video documents, builds a Fuse.js index on the title field,
+ * and returns fuzzy-matched results for the provided query string parameter.
+ * @param {import('express').Request} req - Express request with query.query search term
+ * @param {import('express').Response} res - Express response returning matched results
+ * @param {import('express').NextFunction} next - Express next middleware
+ */
 const searchAll = catchAsync(async (req, res, next) => {
   const searchTerm = req.query.query;
   try {

@@ -1,3 +1,26 @@
+/**
+ * @fileoverview Express application configuration and middleware pipeline
+ * @module app
+ * @layer Infrastructure
+ *
+ * @description
+ * Constructs and configures the Express application instance. Assembles the middleware
+ * pipeline in a security-first order (CORS, Helmet, sanitization) before body parsing
+ * and route mounting. Aggregates all feature routers under their respective URL prefixes
+ * and defines the final catch-all error handlers.
+ *
+ * @dependencies
+ * - Upstream: server.js (requires this module to obtain the app instance)
+ * - Downstream: All route modules (channelRoutes, userRoutes, videoRoutes, etc.),
+ *   utils/appError, controllers/pricing-controllers/webhookCheckout
+ *
+ * @design
+ * Middleware ordering is intentional: CORS and Helmet run first to enforce security
+ * headers on every response. The Stripe webhook route is mounted before the JSON body
+ * parser because Stripe signature verification requires the raw request body. NoSQL
+ * injection and XSS sanitization follow body parsing to cleanse all parsed input.
+ * Route mounting is grouped by API version prefix to support future versioning.
+ */
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');

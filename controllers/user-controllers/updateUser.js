@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Admin user update controller
+ * @module controllers/user-controllers/updateUser
+ * @layer Controller
+ *
+ * @description
+ * Performs an administrative update on any user document identified by
+ * req.params.id. Uses findByIdAndUpdate with the full request body,
+ * returning the updated document.
+ *
+ * @dependencies
+ * - Upstream: User route (PATCH /users/:id), typically admin-restricted
+ * - Downstream: User model, catchAsync, AppError
+ */
 const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

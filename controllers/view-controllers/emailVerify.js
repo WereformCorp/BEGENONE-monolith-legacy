@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Email verification confirmation page view renderer
+ * @module controllers/view-controllers/emailVerify
+ * @layer Controller (View)
+ *
+ * @description
+ * Triggers email verification via the internal API using the token from route
+ * parameters, then renders the verification success page.
+ *
+ * @dependencies
+ * - Upstream: view route handler (email verification link)
+ * - Downstream: axios (internal API), urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');

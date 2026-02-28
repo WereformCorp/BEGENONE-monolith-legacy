@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Video upload page view renderer
+ * @module controllers/view-controllers/upload
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the video upload form page. Checks the user's active subscription
+ * and pricing features to determine whether video upload is permitted,
+ * then passes the upload eligibility flag to the template.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: User model, Pricing model, catchAsync
+ */
 const catchAsync = require('../../utils/catchAsync');
 const User = require('../../models/userModel');
 const Pricing = require('../../models/pricingModel');

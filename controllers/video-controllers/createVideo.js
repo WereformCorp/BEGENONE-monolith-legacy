@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Video document creation with channel linkage
+ * @module controllers/video-controllers/createVideo
+ * @layer Controller
+ *
+ * @description
+ * Creates a new Video document from S3 upload results and associates it with the
+ * uploading user's channel. Validates user activation status before persisting.
+ * After creation, pushes the video ID into the parent Channel's videos array.
+ *
+ * @dependencies
+ * - Upstream: s3UploadVideo controller (called after S3 upload completes)
+ * - Downstream: Video model, Channel model, User model, AppError, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const Video = require('../../models/videoModel');
 const User = require('../../models/userModel');

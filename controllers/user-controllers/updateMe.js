@@ -1,7 +1,32 @@
+/**
+ * @fileoverview Self-service profile update controller
+ * @module controllers/user-controllers/updateMe
+ * @layer Controller
+ *
+ * @description
+ * Allows the authenticated user to update their own non-sensitive profile
+ * fields. Explicitly rejects attempts to change password, passwordConfirm,
+ * or phoneNumber through this route. Supports optional file upload for the
+ * user photo when req.file is present.
+ *
+ * @dependencies
+ * - Upstream: User route (PATCH /updateMe), requires protect middleware
+ * - Downstream: User model, catchAsync, AppError
+ *
+ * @security Blocks password and sensitive field updates; enforces dedicated password change route.
+ */
 const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');
 
+/**
+ * Updates the authenticated user's profile, rejecting sensitive field changes.
+ * @param {Object} req - Express request; expects req.user._id and non-sensitive fields in req.body
+ * @param {Object} res - Express response
+ * @param {Function} next - Express next middleware
+ * @returns {void}
+ * @throws {AppError} 400 if request body contains password or other sensitive fields
+ */
 const updateMe = catchAsync(async (req, res, next) => {
   try {
     // 1) Create error if user posts password data

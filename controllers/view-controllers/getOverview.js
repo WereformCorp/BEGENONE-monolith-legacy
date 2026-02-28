@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Overview/home page view renderer
+ * @module controllers/view-controllers/getOverview
+ * @layer Controller (View)
+ *
+ * @description
+ * Aggregates video, channel, and thumbnail data to render the main homepage
+ * template. Resolves CloudFront URLs for thumbnails and channel logos, shuffles
+ * the video list, and renders the mainVideoCard view.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), User model, urlPath-TimeController, AppError, catchAsync
+ */
 const axios = require('axios');
 const User = require('../../models/userModel');
 

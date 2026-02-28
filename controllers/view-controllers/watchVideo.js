@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Video watch page view renderer
+ * @module controllers/view-controllers/watchVideo
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the video playback page. Fetches video data, thumbnail URLs, channel
+ * information, and recommended videos. Resolves CloudFront URLs, increments the
+ * view count, and determines subscription state for the subscribe button.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), Video model, AppError, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const Video = require('../../models/videoModel');
 

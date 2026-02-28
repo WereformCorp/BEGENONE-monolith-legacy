@@ -1,3 +1,23 @@
+/**
+ * @fileoverview Channel CRUD, subscription, and image upload route definitions.
+ * @module routes/channelRoutes
+ * @layer Route
+ * @basepath /api/v1/channels
+ *
+ * @description
+ * Registers endpoints for channel listing, creation, retrieval, deletion,
+ * subscribe/unsubscribe actions, and image uploads (banner, profile picture).
+ * Multer is configured with memoryStorage for in-memory buffering before
+ * S3 upload of channel branding assets.
+ *
+ * Middleware chain: protect and authMiddleware guard mutating and upload
+ * operations; public GET routes are unauthenticated.
+ *
+ * @dependencies
+ * - Upstream: app.js (mounted at /api/v1/channels)
+ * - Downstream: controllers/channel-controllers/*, controllers/auth-controllers/protect, controllers/util-controllers/authMiddleware, multer
+ */
+
 // MULTER & EXPRESS
 const express = require('express');
 const multer = require('multer');

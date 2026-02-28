@@ -1,3 +1,26 @@
+/**
+ * @fileoverview Server-side rendered view route definitions with auth and subscription middleware.
+ * @module routes/viewsRoutes
+ * @layer Route
+ * @basepath / (root-level view routes)
+ *
+ * @description
+ * Registers GET endpoints that render Pug templates for all client-facing pages including
+ * the overview/homepage, pricing, signup, login, email verification flows, video watch,
+ * channel list/detail, search, clipZ player, user profile, upload, channel settings, and
+ * uploaded-video management pages. Each route applies a combination of isLoggedIn, protect,
+ * checkActiveStatus, and checkUserSubscription middleware to enforce authentication and
+ * subscription-tier gating before rendering.
+ *
+ * Middleware chain pattern: isLoggedIn is used for optional auth (sets res.locals.user
+ * without blocking); protect is used for mandatory auth; checkUserSubscription injects
+ * subscription state into the template context.
+ *
+ * @dependencies
+ * - Upstream: app.js (mounted at /)
+ * - Downstream: controllers/view-controllers/*, controllers/auth-controllers/isLoggedIn, controllers/auth-controllers/protect, controllers/util-controllers/checkSubscription, utils/checkActiveStatus
+ */
+
 const express = require('express');
 // const viewsController = require('../controllers/viewsController');
 const checkActiveStatus = require('../utils/checkActiveStatus');

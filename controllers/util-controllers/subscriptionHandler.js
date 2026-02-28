@@ -1,3 +1,20 @@
+/**
+ * @fileoverview Post-payment subscription application handler
+ * @module controllers/util-controllers/subscriptionHandler
+ * @layer Controller
+ *
+ * @description
+ * Applies a newly created subscription to the owning user after successful
+ * payment. Deactivates any existing active subscription for the user, then
+ * links the new subscription document to the user's subscriptions array and
+ * sets it as the currentActiveSubscription.
+ *
+ * @dependencies
+ * - Upstream: Payment/webhook handlers that create Subscription documents
+ * - Downstream: User model, Subscription model, catchAsync
+ *
+ * @sideeffect Mutates User and Subscription documents in the database.
+ */
 // THIS FILE HANDLES WHAT HAPPENS AFTER A CERTAIN SUBSCRIPTION IS SUCCESSFULL
 // const axios = require('axios');
 
@@ -8,6 +25,13 @@ const Subscription = require('../../models/subscriptionModel');
 // const Wire = require('../../models/wireModel');
 const catchAsync = require('../../utils/catchAsync');
 
+/**
+ * Deactivates the prior subscription and assigns the new one to the user.
+ * @param {Object} subscription - Mongoose Subscription document with populated user reference
+ * @returns {void}
+ * @throws {Error} If the referenced user is not found
+ * @sideeffect Updates User.subscriptions, User.currentActiveSubscription; deactivates prior subscription
+ */
 const applySubscription = catchAsync(async (subscription) => {
   try {
     // 1) Get User From Subscriptions.

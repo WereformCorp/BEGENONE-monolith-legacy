@@ -1,3 +1,32 @@
+/**
+ * @fileoverview User schema definition with authentication and account management fields.
+ * @module models/userModel
+ * @layer Model
+ * @collection users
+ *
+ * @description
+ * Defines the User document schema including identity fields, nested electronic address
+ * (email, password, tokens), subscription references, platform settings, and account
+ * lifecycle flags. Provides pre-save password hashing via bcrypt, instance methods for
+ * password verification, JWT-timestamp comparison, and cryptographic token generation
+ * for signup verification and password reset flows.
+ *
+ * @relationships
+ * - channel: ObjectId ref -> Channel (one-to-one)
+ * - subscriptions: [ObjectId] ref -> Subscription
+ * - currentActiveSubscription: ObjectId ref -> Subscription
+ * - subscribedChannels: [ObjectId] ref -> Channel
+ *
+ * @dependencies
+ * - Upstream: controllers/auth-controllers/*, controllers/user-controllers/*
+ * - Downstream: mongoose, bcryptjs, crypto, models/pricingModel
+ *
+ * @security
+ * Password is hashed with bcrypt (cost 12) on save. Password field excluded from
+ * query results by default (select: false). Reset and signup tokens are SHA-256
+ * hashed before persistence; only the plain token is returned to the caller.
+ */
+
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -171,6 +200,11 @@ const userSchema = new mongoose.Schema({
 //   next();
 // });
 
+/**
+ * Pre-save hook: hashes eAddress.password with bcrypt (cost 12) when the document
+ * is new or the password field has been modified. Clears passwordConfirm after hashing
+ * to prevent persisting the plaintext confirmation value.
+ */
 userSchema.pre('save', async function (next) {
   // Only run this function if the password is being set for the first time (signup)
   if (this.isNew || this.isModified('eAddress.password')) {
@@ -183,6 +217,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+/**
+ * Compares a plaintext candidate password against the stored bcrypt hash.
+ * @param {string} candidatePassword - Plaintext password from the login request.
+ * @param {string} userPassword - Bcrypt hash stored on the user document.
+ * @returns {Promise<boolean>} Resolves true if the passwords match.
+ */
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
@@ -190,6 +230,12 @@ userSchema.methods.correctPassword = async function (
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
+/**
+ * Determines whether the user changed their password after a given JWT was issued.
+ * Used during token verification to invalidate JWTs issued before a password change.
+ * @param {number} JWTTimestamp - The iat (issued-at) value from the decoded JWT, in seconds.
+ * @returns {boolean} True if password was changed after the token was issued.
+ */
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.eAddress.passwordChangedAt) {
     const changedTimeStamp = parseInt(
@@ -203,6 +249,12 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
+/**
+ * Generates a cryptographic signup verification token. Stores a SHA-256 hash of the
+ * token on eAddress.signupAuthToken and sets a 7-day expiry. Returns the unhashed
+ * token for inclusion in the verification email link.
+ * @returns {string} The plaintext hex token to be sent to the user.
+ */
 userSchema.methods.createSignupAuthToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
@@ -218,6 +270,12 @@ userSchema.methods.createSignupAuthToken = function () {
   return resetToken;
 };
 
+/**
+ * Generates a cryptographic password reset token. Stores a SHA-256 hash of the
+ * token on eAddress.passwordResetToken and sets a 10-minute expiry. Returns the
+ * unhashed token for inclusion in the password reset email link.
+ * @returns {string} The plaintext hex token to be sent to the user.
+ */
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 

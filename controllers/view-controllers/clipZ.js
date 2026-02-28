@@ -1,3 +1,17 @@
+/**
+ * @fileoverview ClipZ (short-form video) page view renderer
+ * @module controllers/view-controllers/clipZ
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the ClipZ short-form video player page. Fetches video and channel
+ * data, resolves the CloudFront video URL and channel logo, and passes
+ * comment data to the clipZ template.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), Channel model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 // const Video = require('../../models/videoModel');

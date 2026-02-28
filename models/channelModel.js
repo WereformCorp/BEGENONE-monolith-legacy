@@ -1,3 +1,27 @@
+/**
+ * @fileoverview Channel schema definition with subscriber tracking and content aggregation.
+ * @module models/channelModel
+ * @layer Model
+ * @collection channels
+ *
+ * @description
+ * Defines the Channel document schema including identity fields (channelUserName, name),
+ * branding assets (logo, banner), subscriber list with count, and arrays referencing
+ * associated Videos, Wires, and Comments. Pre-find hooks auto-populate related
+ * sub-documents (sponsors, reviews, videos, products, comments, stories, wires, user).
+ *
+ * @relationships
+ * - user: ObjectId ref -> User (owning user)
+ * - subscribers: [ObjectId] ref -> User
+ * - videos: [ObjectId] ref -> Video
+ * - wires: [ObjectId] ref -> Wire
+ * - comments: [ObjectId] ref -> Comment
+ *
+ * @dependencies
+ * - Upstream: controllers/channel-controllers/*, routes/channelRoutes
+ * - Downstream: mongoose, models/User, models/Video, models/Wire, models/Comment
+ */
+
 const mongoose = require('mongoose');
 
 const channelSchema = new mongoose.Schema({

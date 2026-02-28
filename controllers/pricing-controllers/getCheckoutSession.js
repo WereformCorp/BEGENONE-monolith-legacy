@@ -1,9 +1,36 @@
+/**
+ * @fileoverview Stripe Checkout Session creation for subscription purchases
+ * @module controllers/pricing-controllers/getCheckoutSession
+ * @layer Controller
+ *
+ * @description
+ * Creates a Stripe Checkout Session in subscription mode for the selected pricing
+ * tier. Looks up the Pricing document by route parameter, constructs a recurring
+ * line item with the pricing details, and returns the session object to the client
+ * for redirect to Stripe's hosted checkout page.
+ *
+ * @dependencies
+ * - Upstream: pricing route handler (authenticated)
+ * - Downstream: Stripe API (stripe.checkout.sessions.create), Pricing model, catchAsync
+ *
+ * @security
+ * Requires STRIPE_SECRET_KEY environment variable. Embeds user email and pricing ID
+ * in the session for downstream webhook reconciliation.
+ */
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const catchAsync = require('../../utils/catchAsync');
 const Pricing = require('../../models/pricingModel');
 // const User = require('../../models/userModel');
 
+/**
+ * Creates a Stripe Checkout Session for a monthly subscription based on the
+ * selected pricing tier. Attaches userId and pricingName as session metadata
+ * for reconciliation in the webhook handler.
+ * @param {import('express').Request} req - Express request with params.pricingID and authenticated user
+ * @param {import('express').Response} res - Express response returning the Stripe session
+ * @param {import('express').NextFunction} next - Express next middleware
+ */
 const getCheckoutSession = catchAsync(async (req, res, next) => {
   try {
     // 1) Get the Currectly Selected Subscription

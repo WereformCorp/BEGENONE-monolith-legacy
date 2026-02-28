@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Channel banner image S3 upload pipeline
+ * @module controllers/channel-controllers/s3UploadBanner
+ * @layer Controller
+ *
+ * @description
+ * Uploads the channel banner image file to AWS S3 via the shared S3 upload
+ * utility. After a successful upload, attaches the S3 result to req.s3Data
+ * and delegates to the uploadChannelBanner controller to persist the S3 key
+ * on the Channel document.
+ *
+ * @dependencies
+ * - Upstream: channel route handler (after multer middleware)
+ * - Downstream: s3Controller.uploadContentToS3, uploadChannelBanner controller, catchAsync
+ */
 const uploadChannelBanner = require('./uploadChannelBanner');
 const { uploadContentToS3 } = require('../aws_s3-controller/s3Controller');
 const catchAsync = require('../../utils/catchAsync');

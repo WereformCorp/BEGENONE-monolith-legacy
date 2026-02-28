@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Video document update by ID
+ * @module controllers/video-controllers/updateVideo
+ * @layer Controller
+ *
+ * @description
+ * Updates an existing Video document identified by its route parameter ID.
+ * Merges request body fields into the document and optionally sets the
+ * display image when a file is attached to the request.
+ *
+ * @dependencies
+ * - Upstream: video route handler
+ * - Downstream: Video model, AppError, catchAsync
+ */
 const Video = require('../../models/videoModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

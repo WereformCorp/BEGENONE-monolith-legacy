@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Comment creation with video and channel linkage
+ * @module controllers/comment-controllers/createComment
+ * @layer Controller
+ *
+ * @description
+ * Creates a new Comment document and establishes bidirectional references.
+ * After persisting the comment, pushes the comment ID into the parent Video's
+ * comments array and updates the Channel's comments reference.
+ *
+ * @dependencies
+ * - Upstream: comment route handler (authenticated)
+ * - Downstream: Comment model, Video model, Channel model, AppError, catchAsync
+ */
 const Comment = require('../../models/commentModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

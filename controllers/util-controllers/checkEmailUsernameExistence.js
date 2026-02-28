@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Pre-registration uniqueness validation controller
+ * @module controllers/util-controllers/checkEmailUsernameExistence
+ * @layer Controller
+ *
+ * @description
+ * Checks whether a given username or email address is already registered
+ * in the system before the user completes the full signup form. Returns a
+ * descriptive status indicating which field, if any, conflicts with an
+ * existing record.
+ *
+ * @dependencies
+ * - Upstream: Pre-registration route (POST /checkExistence)
+ * - Downstream: User model, catchAsync
+ */
 const User = require('../../models/userModel'); // Adjust the path as needed
 const catchAsync = require('../../utils/catchAsync'); // Adjust the path as needed
 

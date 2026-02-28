@@ -1,3 +1,20 @@
+/**
+ * @fileoverview Video upload pipeline via AWS S3
+ * @module controllers/video-controllers/s3UploadVideo
+ * @layer Controller
+ *
+ * @description
+ * Orchestrates the video upload flow: validates user activation status, uploads
+ * the video file to S3, optionally uploads an accompanying thumbnail to S3,
+ * then delegates to the createVideo controller to persist the Video document.
+ * S3 upload results are attached to `req.s3Data` before delegation.
+ *
+ * @dependencies
+ * - Upstream: video route handler (after multer middleware)
+ * - Downstream: s3Controller.uploadContentToS3, createVideo controller, User model
+ *
+ * @security Rejects uploads from inactive (unverified) user accounts.
+ */
 const { uploadContentToS3 } = require('../aws_s3-controller/s3Controller');
 const createVideo = require('./createVideo');
 // const AppError = require('../../utils/appError');

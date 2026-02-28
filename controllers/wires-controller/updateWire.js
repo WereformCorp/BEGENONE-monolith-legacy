@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Wire document update by ID
+ * @module controllers/wires-controller/updateWire
+ * @layer Controller
+ *
+ * @description
+ * Updates an existing Wire document identified by its route parameter ID.
+ * Merges request body fields into the document and returns the updated version.
+ *
+ * @dependencies
+ * - Upstream: wire route handler
+ * - Downstream: Wire model, AppError, catchAsync
+ */
 const Wire = require('../../models/wireModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

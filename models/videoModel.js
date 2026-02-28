@@ -1,3 +1,26 @@
+/**
+ * @fileoverview Video schema definition with engagement metrics and S3 media references.
+ * @module models/videoModel
+ * @layer Model
+ * @collection videos
+ *
+ * @description
+ * Defines the Video document schema including title, description, thumbnail, engagement
+ * counters (views, likes, dislikes), section timestamps, tag arrays, and references to
+ * the owning Channel and User. Pre-save validation enforces the presence of a video path.
+ * Pre-find hooks auto-populate associated Channel, Comment, and Sponsor documents.
+ *
+ * @relationships
+ * - channel: ObjectId ref -> Channel
+ * - user: ObjectId ref -> User
+ * - comments: [ObjectId] ref -> Comment
+ * - likedBy / dislikedBy: [ObjectId] ref -> User
+ *
+ * @dependencies
+ * - Upstream: controllers/video-controllers/*, routes/videoRoutes
+ * - Downstream: mongoose, models/Channel, models/Comment, models/User
+ */
+
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema(

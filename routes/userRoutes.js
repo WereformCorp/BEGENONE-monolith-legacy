@@ -1,3 +1,23 @@
+/**
+ * @fileoverview User authentication and account management route definitions.
+ * @module routes/userRoutes
+ * @layer Route
+ * @basepath /api/v1/users
+ *
+ * @description
+ * Registers public endpoints for signup, login, logout, email verification, password
+ * reset flows, and existence checks. Protected endpoints handle profile retrieval (me),
+ * password update, self-update, and self-delete. Administrative CRUD routes for user
+ * management are mounted without role-restriction middleware at present.
+ *
+ * Middleware chain: individual routes apply the protect middleware for authenticated
+ * access; public auth routes (signup, login, forgot/reset password) have no guard.
+ *
+ * @dependencies
+ * - Upstream: app.js (mounted at /api/v1/users)
+ * - Downstream: controllers/auth-controllers/*, controllers/user-controllers/*, controllers/util-controllers/checkEmailUsernameExistence
+ */
+
 const express = require('express');
 // const userController = require('../controllers/userController');
 // const authController = require('../controllers/authController');

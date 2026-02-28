@@ -1,3 +1,21 @@
+/**
+ * @fileoverview Email verification token handling with resend cooldown
+ * @module controllers/auth-controllers/verificationToken
+ * @layer Controller
+ *
+ * @description
+ * Provides two exports: verifySignupToken hashes the URL-supplied token, matches
+ * it against stored signup or resend tokens, activates the user account on success,
+ * and issues a JWT. resendVerificationLink enforces a per-user attempt limit with
+ * a one-hour cooldown, regenerates a verification token, and dispatches the
+ * verification email.
+ *
+ * @dependencies
+ * - Upstream: Auth routes (GET /verifyEmail/:token, POST /resendVerification)
+ * - Downstream: crypto, User model, createSendToken, sendMail, catchAsync, AppError
+ *
+ * @security Token comparison uses SHA-256 hashing; rate-limited to 3 resend attempts per cooldown window.
+ */
 const crypto = require('crypto');
 
 const User = require('../../models/userModel');

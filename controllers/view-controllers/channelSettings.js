@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Channel settings page view renderer
+ * @module controllers/view-controllers/channelSettings
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the channel settings management page. Fetches the user's channel and
+ * subscription data, resolves CloudFront URLs for channel logo and banner,
+ * and checks subscription features to determine channel creation eligibility.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: User model, Pricing model, catchAsync
+ */
 const catchAsync = require('../../utils/catchAsync');
 const User = require('../../models/userModel');
 const Pricing = require('../../models/pricingModel');

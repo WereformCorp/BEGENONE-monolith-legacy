@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Channel listing endpoint
+ * @module controllers/channel-controllers/getAllChannels
+ * @layer Controller
+ *
+ * @description
+ * Retrieves all Channel documents from the database and returns them
+ * with a result count in the JSON response.
+ *
+ * @dependencies
+ * - Upstream: channel route handler
+ * - Downstream: Channel model, AppError, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

@@ -1,3 +1,20 @@
+/**
+ * @fileoverview Channel creation with subscription and pricing feature validation
+ * @module controllers/channel-controllers/createChannel
+ * @layer Controller
+ *
+ * @description
+ * Creates a new Channel document for the authenticated user after verifying that
+ * the user holds an active subscription whose pricing tier enables channel creation.
+ * Prevents duplicate channels per user. After creation, links the channel back to
+ * the User document and aggregates sponsor and comment references from existing videos.
+ *
+ * @dependencies
+ * - Upstream: channel route handler (authenticated)
+ * - Downstream: Channel model, User model, Video model, Subscription model, Pricing model, AppError, catchAsync
+ *
+ * @security Requires active subscription with channelCreation feature enabled.
+ */
 const Channel = require('../../models/channelModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

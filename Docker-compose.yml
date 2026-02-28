@@ -1,3 +1,23 @@
+# ============================================================================
+# Docker Compose - BEGENONE Development Environment
+# ============================================================================
+# Operational Role:
+#   Defines a single-service development stack for the BEGENONE monolith.
+#   Builds from the local Dockerfile and exposes the application on port 80.
+#
+# Deployment Assumptions:
+#   - Intended for local development only; not suitable for production.
+#   - MongoDB is hosted externally on MongoDB Atlas; no local database
+#     container is required.
+#   - NODE_ENV is set to development to enable verbose logging and
+#     development-only middleware (e.g., Morgan).
+#
+# Security Implications:
+#   - The MongoDB Atlas connection string is inlined here for development
+#     convenience. In production, credentials must be injected via secrets
+#     management, not hardcoded in compose files.
+# ============================================================================
+
 version: '3.8'
 
 services:

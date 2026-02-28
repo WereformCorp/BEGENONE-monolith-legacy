@@ -1,3 +1,20 @@
+/**
+ * @fileoverview Subscription validation middleware with feature-flag checks
+ * @module controllers/util-controllers/checkSubscription
+ * @layer Middleware
+ *
+ * @description
+ * Exports two middleware functions. checkSubscription enforces that the
+ * current user holds an active subscription whose associated pricing plan
+ * enables the videoUpload feature; rejects with 400 otherwise.
+ * checkUserSubscription is a non-blocking variant that sets res.locals flags
+ * (subscriptionValid, showAds) for downstream view rendering without
+ * terminating the request on failure.
+ *
+ * @dependencies
+ * - Upstream: Routes requiring subscription verification (video upload, ad-gated views)
+ * - Downstream: Subscription model, Pricing model, User model, catchAsync, AppError
+ */
 // middlewares/checkSubscription.js
 const Subscription = require('../../models/subscriptionModel');
 const Pricing = require('../../models/pricingModel');

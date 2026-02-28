@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Current authenticated user retrieval controller
+ * @module controllers/user-controllers/getMe
+ * @layer Controller
+ *
+ * @description
+ * Returns the profile of the currently authenticated user identified by
+ * req.user._id. Sensitive fields (password, phone number) are excluded
+ * from the response projection.
+ *
+ * @dependencies
+ * - Upstream: User route (GET /me), requires protect middleware
+ * - Downstream: User model, catchAsync, AppError
+ */
 const User = require('../../models/userModel');
 const AppError = require('../../utils/appError');
 const catchAsync = require('../../utils/catchAsync');

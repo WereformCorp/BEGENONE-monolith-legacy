@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Single channel public profile page view renderer
+ * @module controllers/view-controllers/singleChannel
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders a channel's public profile page. Fetches channel data, resolves
+ * CloudFront URLs for channel logo, banner, and video thumbnails, and passes
+ * the latest video and wires data to the userChannel template.
+ *
+ * @dependencies
+ * - Upstream: view route handler
+ * - Downstream: axios (internal API), Channel model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');

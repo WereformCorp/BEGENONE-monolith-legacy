@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Thumbnail data retrieval with presigned S3 URLs
+ * @module controllers/video-controllers/getThumbnailData
+ * @layer Controller
+ *
+ * @description
+ * Retrieves thumbnail keys for all videos and generates S3 presigned URLs
+ * for each thumbnail. Returns an array of thumbnail-key-to-URL mappings.
+ * Gracefully handles individual URL generation failures.
+ *
+ * @dependencies
+ * - Upstream: video route handler
+ * - Downstream: Video model, s3Controller.generatePresignedUrl, catchAsync
+ */
 const Video = require('../../models/videoModel');
 const catchAsync = require('../../utils/catchAsync');
 const { generatePresignedUrl } = require('../aws_s3-controller/s3Controller');

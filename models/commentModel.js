@@ -1,3 +1,26 @@
+/**
+ * @fileoverview Comment schema with self-referential reply support.
+ * @module models/commentModel
+ * @layer Model
+ * @collection comments
+ *
+ * @description
+ * Defines the Comment document schema supporting both top-level comments and threaded
+ * replies via a self-referential reply.comment ObjectId. Each comment is associated with
+ * a User, a Channel, and optionally a Video. Pre-find hooks populate the authoring User
+ * and Channel. A pre-save hook clears the reply reference when isReply is false.
+ *
+ * @relationships
+ * - user: ObjectId ref -> User
+ * - channel: ObjectId ref -> Channel
+ * - video: ObjectId ref -> Video
+ * - reply.comment: ObjectId ref -> Comment (self-referential)
+ *
+ * @dependencies
+ * - Upstream: controllers/comment-controllers/*, routes/commentRoutes
+ * - Downstream: mongoose, models/User, models/Channel, models/Video
+ */
+
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema(

@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Single video management page view renderer
+ * @module controllers/view-controllers/singleVideo
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the single video detail/management page within channel settings.
+ * Fetches video data, resolves thumbnail CloudFront/S3 URLs, and passes
+ * channel and comment data to the singleUpload template.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: axios (internal API), Video model, User model, Channel model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const catchAsync = require('../../utils/catchAsync');
 const { urlPath } = require('../util-controllers/urlPath-TimeController');

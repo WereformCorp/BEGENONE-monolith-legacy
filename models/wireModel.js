@@ -1,3 +1,23 @@
+/**
+ * @fileoverview Wire schema for short-form text content posts.
+ * @module models/wireModel
+ * @layer Model
+ * @collection wires
+ *
+ * @description
+ * Defines the Wire document schema representing short-form text content with heading,
+ * subheading, body text (wireText), engagement counters (views, likes), and a bookmark
+ * flag. Each Wire is associated with a Channel. Pre-find hooks auto-populate the
+ * referenced Channel document.
+ *
+ * @relationships
+ * - channel: ObjectId ref -> Channel
+ *
+ * @dependencies
+ * - Upstream: controllers/wires-controller/*, routes/wireRoutes
+ * - Downstream: mongoose, models/Channel
+ */
+
 const mongoose = require('mongoose');
 
 const wireSchema = new mongoose.Schema({

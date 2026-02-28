@@ -1,3 +1,20 @@
+/**
+ * @fileoverview JWT authentication guard middleware
+ * @module controllers/auth-controllers/protect
+ * @layer Middleware
+ *
+ * @description
+ * Extracts a JWT from the Authorization header (Bearer scheme) or the `jwt` cookie,
+ * verifies the token signature and expiry, confirms the referenced user still exists,
+ * and rejects requests where the password was changed after token issuance.
+ * On success, attaches the authenticated user to `req.user` and `res.locals.user`.
+ *
+ * @dependencies
+ * - Upstream: Express route definitions that require authenticated access
+ * - Downstream: jsonwebtoken, User model, catchAsync, AppError
+ *
+ * @security Bearer-token and cookie-based JWT verification; rejects stale tokens after password change.
+ */
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');

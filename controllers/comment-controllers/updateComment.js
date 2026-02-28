@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Comment document update by ID
+ * @module controllers/comment-controllers/updateComment
+ * @layer Controller
+ *
+ * @description
+ * Updates an existing Comment document identified by its route parameter ID.
+ * Merges request body fields into the document and returns the updated version.
+ *
+ * @dependencies
+ * - Upstream: comment route handler
+ * - Downstream: Comment model, AppError, catchAsync
+ */
 const Comment = require('../../models/commentModel');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');

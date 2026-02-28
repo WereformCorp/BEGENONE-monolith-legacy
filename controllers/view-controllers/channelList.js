@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Subscribed channels listing page view renderer
+ * @module controllers/view-controllers/channelList
+ * @layer Controller (View)
+ *
+ * @description
+ * Renders the user's subscribed channels list page. Fetches the user's channel
+ * data, all videos, and thumbnail URLs, then passes them to the channelsList
+ * template.
+ *
+ * @dependencies
+ * - Upstream: view route handler (authenticated)
+ * - Downstream: axios (internal API), User model, urlPath-TimeController, catchAsync
+ */
 const axios = require('axios');
 const User = require('../../models/userModel');
 

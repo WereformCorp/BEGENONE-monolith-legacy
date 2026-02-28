@@ -1,3 +1,24 @@
+/**
+ * @fileoverview Video CRUD, engagement interaction, and nested comment route definitions.
+ * @module routes/videoRoutes
+ * @layer Route
+ * @basepath /api/v1/videos
+ *
+ * @description
+ * Registers endpoints for video listing, creation (with S3 upload via multer memory
+ * storage), retrieval, update, deletion, and like/dislike interactions. Thumbnail
+ * upload is handled on a dedicated sub-route. Comment routes are nested under
+ * /:videoId/comments via the commentRouter.
+ *
+ * Middleware chain: protect is applied to mutating operations; checkUserSubscription
+ * and authMiddleware gate video creation. Multer is configured with memoryStorage for
+ * in-memory buffering before S3 upload.
+ *
+ * @dependencies
+ * - Upstream: app.js (mounted at /api/v1/videos)
+ * - Downstream: controllers/video-controllers/*, controllers/auth-controllers/protect, controllers/util-controllers/*, routes/commentRoutes, multer
+ */
+
 const express = require('express');
 const multer = require('multer');
 

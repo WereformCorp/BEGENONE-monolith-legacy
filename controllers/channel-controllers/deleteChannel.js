@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Channel document deletion by ID
+ * @module controllers/channel-controllers/deleteChannel
+ * @layer Controller
+ *
+ * @description
+ * Deletes a single Channel document identified by its route parameter ID.
+ * Returns HTTP 204 on success.
+ *
+ * @dependencies
+ * - Upstream: channel route handler
+ * - Downstream: Channel model, catchAsync
+ */
 const Channel = require('../../models/channelModel');
 const catchAsync = require('../../utils/catchAsync');
 

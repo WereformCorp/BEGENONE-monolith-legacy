@@ -1,3 +1,23 @@
+/**
+ * @fileoverview AWS S3 upload utilities and presigned URL generation
+ * @module controllers/aws_s3-controller/s3Controller
+ * @layer Controller
+ *
+ * @description
+ * Provides shared S3 integration utilities used across the application. Exports
+ * three functions: uploadVideoToS3 (video-specific upload), uploadContentToS3
+ * (generic content upload with content-type detection), and generatePresignedUrl
+ * (generates time-limited signed GET URLs for private S3 objects). All uploads
+ * use the AWS SDK v3 managed Upload class for multipart support.
+ *
+ * @dependencies
+ * - Upstream: s3UploadVideo, s3UploadPfp, s3UploadBanner, getThumbnailData controllers
+ * - Downstream: @aws-sdk/client-s3, @aws-sdk/lib-storage, @aws-sdk/s3-request-presigner
+ *
+ * @security
+ * Requires AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, and S3_BUCKET_NAME
+ * environment variables. Presigned URLs expire after 300 seconds.
+ */
 // eslint-disable-next-line import/no-extraneous-dependencies, node/no-extraneous-require
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
 // eslint-disable-next-line import/no-extraneous-dependencies, node/no-extraneous-require
@@ -41,6 +61,15 @@ const uploadVideoToS3 = async (file, channelId) => {
   }
 };
 
+/**
+ * Uploads a file buffer to S3 with a generated key following the pattern
+ * `{filetype}-{channelId}-{timestamp}.{ext}`. Sets the ContentType header
+ * from the file's mimetype for correct browser rendering.
+ * @param {Object} file - Multer-style file object with buffer and mimetype properties
+ * @param {string} channelId - Channel ID used in the S3 object key
+ * @param {string} filetype - Content category prefix (e.g., 'video', 'image', 'thumbnail')
+ * @returns {Promise<{result: string, key: string}>} S3 URL and object key
+ */
 const uploadContentToS3 = async (file, channelId, filetype) => {
   if (!file || !file.mimetype) {
     console.error('Invalid file object:', file);
@@ -78,6 +107,12 @@ const uploadContentToS3 = async (file, channelId, filetype) => {
   }
 };
 
+/**
+ * Generates a time-limited presigned GET URL for a private S3 object.
+ * URL expires after 300 seconds (5 minutes).
+ * @param {string} key - S3 object key
+ * @returns {Promise<string>} Presigned URL
+ */
 const generatePresignedUrl = async (key) => {
   const command = new GetObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,

@@ -1,3 +1,18 @@
+/**
+ * @fileoverview URL path and relative-timestamp utility
+ * @module controllers/util-controllers/urlPath-TimeController
+ * @layer Utility
+ *
+ * @description
+ * Exports a pre-resolved urlPath string (production or development base URL)
+ * and a calculateTimeAgo function that converts a Date into a human-readable
+ * relative time string (e.g., "3 hours ago", "Yesterday"). Falls back to
+ * date-fns formatDistanceToNow for intervals exceeding one week.
+ *
+ * @dependencies
+ * - Upstream: View/template rendering logic, video display controllers
+ * - Downstream: date-fns (formatDistanceToNow)
+ */
 const { formatDistanceToNow } = require('date-fns');
 
 let urlPath;
